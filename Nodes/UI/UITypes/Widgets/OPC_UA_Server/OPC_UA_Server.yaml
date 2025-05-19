@@ -1,0 +1,2901 @@
+Name: OPC UA Server
+Id: g=916875867d33fea82ca5d6bbb28379d1
+Type: FolderType
+Children:
+- Name: OPCUAServerStationUIObj
+  Id: g=132d1f07fababa488aeac7cdad0296f8
+  Supertype: BaseStationUIObject
+  ReferenceType: HasComponent
+  Children:
+  - Name: Header
+    Type: AccordionHeader
+    Children:
+    - Name: Rectangle1
+      Type: Rectangle
+    - Name: Content
+      Type: RowLayout
+      Children:
+      - Name: StationName
+        Type: TextBox
+        Children:
+        - Name: Text
+          Type: BaseDataVariableType
+          DataType: LocalizedText
+          Children:
+          - Name: DynamicLink
+            Type: DynamicLink
+            DataType: NodePath
+            Value: "../../../..@BrowseName"
+      - Name: StationActions
+        Type: StationProps
+        Children:
+        - Name: Content
+          Type: RowLayout
+          Children:
+          - Name: ApplyButton
+            Type: Panel
+            Children:
+            - Name: Icon
+              Type: Image
+              Children:
+              - Name: Path
+                Type: BaseDataVariableType
+                DataType: ResourceUri
+                Value: "ns=7;%PROJECTDIR%/imgs/icons/save.svg"
+              - Name: Enabled
+                Type: BaseDataVariableType
+                DataType: ns=0;Boolean
+                Value: true
+                Children:
+                - Name: DynamicLink
+                  Type: DynamicLink
+                  DataType: NodePath
+                  Value: "../../../../EnableSave"
+            - Name: ApplyAction
+              Type: Button
+              Children:
+              - Name: Enabled
+                Type: BaseDataVariableType
+                DataType: ns=0;Boolean
+                Value: true
+                Children:
+                - Name: DynamicLink
+                  Type: DynamicLink
+                  DataType: NodePath
+                  Value: "../../../../EnableSave"
+            - Name: Enabled
+              Type: BaseDataVariableType
+              DataType: ns=0;Boolean
+              Value: true
+            - Name: Visible
+              Type: BaseDataVariableType
+              DataType: ns=0;Boolean
+              Value: true
+              Children:
+              - Name: DynamicLink
+                Type: DynamicLink
+                DataType: NodePath
+                Value: "../../../ShowSave"
+          - Name: TagsImport
+            Type: Panel
+            Children:
+            - Name: Icon
+              Type: Image
+              Children:
+              - Name: Path
+                Type: BaseDataVariableType
+                DataType: ResourceUri
+                Value: "ns=7;%PROJECTDIR%/imgs/icons/tag.svg"
+              - Name: Enabled
+                Type: BaseDataVariableType
+                DataType: ns=0;Boolean
+                Value: true
+                Children:
+                - Name: DynamicLink
+                  Type: DynamicLink
+                  DataType: NodePath
+                  Value: "../../../../EnableImport"
+            - Name: TagsImportAction
+              Type: Button
+              Children:
+              - Name: Enabled
+                Type: BaseDataVariableType
+                DataType: ns=0;Boolean
+                Value: true
+                Children:
+                - Name: DynamicLink
+                  Type: DynamicLink
+                  DataType: NodePath
+                  Value: "../../../../EnableImport"
+            - Name: Enabled
+              Type: BaseDataVariableType
+              DataType: ns=0;Boolean
+              Value: true
+            - Name: Visible
+              Type: BaseDataVariableType
+              DataType: ns=0;Boolean
+              Value: true
+              Children:
+              - Name: DynamicLink
+                Type: DynamicLink
+                DataType: NodePath
+                Value: "../../../ShowImport"
+          - Name: TagsView
+            Type: Panel
+            Children:
+            - Name: Icon
+              Type: Image
+              Children:
+              - Name: Path
+                Type: BaseDataVariableType
+                DataType: ResourceUri
+                Value: "ns=7;%PROJECTDIR%/imgs/icons/artifacts-linked-md.svg"
+              - Name: Enabled
+                Type: BaseDataVariableType
+                DataType: ns=0;Boolean
+                Value: true
+                Children:
+                - Name: DynamicLink
+                  Type: DynamicLink
+                  DataType: NodePath
+                  Value: "../../../../EnableView"
+            - Name: TagsViewAction
+              Type: Button
+              Children:
+              - Name: Enabled
+                Type: BaseDataVariableType
+                DataType: ns=0;Boolean
+                Value: true
+                Children:
+                - Name: DynamicLink
+                  Type: DynamicLink
+                  DataType: NodePath
+                  Value: "../../../../EnableView"
+            - Name: Enabled
+              Type: BaseDataVariableType
+              DataType: ns=0;Boolean
+              Value: true
+            - Name: Visible
+              Type: BaseDataVariableType
+              DataType: ns=0;Boolean
+              Value: true
+              Children:
+              - Name: DynamicLink
+                Type: DynamicLink
+                DataType: NodePath
+                Value: "../../../ShowView"
+          - Name: DeleteButton
+            Type: Panel
+            Children:
+            - Name: Icon
+              Type: Image
+              Children:
+              - Name: Path
+                Type: BaseDataVariableType
+                DataType: ResourceUri
+                Value: "ns=7;%PROJECTDIR%/imgs/icons/Delete-md.svg"
+              - Name: Enabled
+                Type: BaseDataVariableType
+                DataType: ns=0;Boolean
+                Value: true
+                Children:
+                - Name: DynamicLink
+                  Type: DynamicLink
+                  DataType: NodePath
+                  Value: "../../../../EnableDelete"
+            - Name: DeleteAction
+              Type: Button
+              Children:
+              - Name: Enabled
+                Type: BaseDataVariableType
+                DataType: ns=0;Boolean
+                Value: true
+                Children:
+                - Name: DynamicLink
+                  Type: DynamicLink
+                  DataType: NodePath
+                  Value: "../../../../EnableDelete"
+            - Name: Enabled
+              Type: BaseDataVariableType
+              DataType: ns=0;Boolean
+              Value: true
+            - Name: Visible
+              Type: BaseDataVariableType
+              DataType: ns=0;Boolean
+              Value: true
+              Children:
+              - Name: DynamicLink
+                Type: DynamicLink
+                DataType: NodePath
+                Value: "../../../ShowDelete"
+        - Name: EnableSave
+          Type: BaseDataVariableType
+          DataType: ns=0;Boolean
+        - Name: EnableImport
+          Type: BaseDataVariableType
+          DataType: ns=0;Boolean
+        - Name: EnableDelete
+          Type: BaseDataVariableType
+          DataType: ns=0;Boolean
+          Value: true
+        - Name: EnableView
+          Type: BaseDataVariableType
+          DataType: ns=0;Boolean
+          Value: true
+          Children:
+          - Name: DynamicLink
+            Type: DynamicLink
+            DataType: NodePath
+            Value: "../EnableImport"
+        - Name: ShowSave
+          Type: BaseDataVariableType
+          DataType: ns=0;Boolean
+          Value: true
+        - Name: ShowImport
+          Type: BaseDataVariableType
+          DataType: ns=0;Boolean
+        - Name: ShowDelete
+          Type: BaseDataVariableType
+          DataType: ns=0;Boolean
+          Value: true
+        - Name: ShowView
+          Type: BaseDataVariableType
+          DataType: ns=0;Boolean
+          Value: true
+          Children:
+          - Name: DynamicLink
+            Type: DynamicLink
+            DataType: NodePath
+            Value: "../ShowImport"
+  - Name: Content
+    Type: AccordionContent
+    Children:
+    - Name: Content
+      Type: ColumnLayout
+      Children:
+      - Name: Server
+        Type: Accordion
+        Children:
+        - Name: Header
+          Type: AccordionHeader
+          Children:
+          - Name: Title
+            Type: H5
+            Children:
+            - Name: Text
+              Type: BaseDataVariableType
+              DataType: LocalizedText
+              ModellingRule: Optional
+              Value: {"LocaleId":"en-US","Text":"Server"}
+            - Name: LeftMargin
+              Type: BaseVariableType
+              DataType: Size
+              ModellingRule: Optional
+              Value: 40.0
+            - Name: GridLayoutProperties
+              Type: GridLayoutProperties
+        - Name: Content
+          Type: AccordionContent
+          Children:
+          - Name: ServerPropertiesGrid
+            Type: GridLayout
+            Children:
+            - Name: Width
+              Type: BaseVariableType
+              DataType: Size
+              ModellingRule: Optional
+              Value: 300.0
+            - Name: Rows
+              Type: BaseDataVariableType
+              DataType: String
+              ValueRank: OneDimension
+              ArrayDimensions: [0]
+              Value: ["Auto","Auto","Auto","Auto","Auto","Auto"]
+            - Name: Columns
+              Type: BaseDataVariableType
+              DataType: String
+              ValueRank: OneDimension
+              ArrayDimensions: [0]
+              Value: ["1fr","1fr"]
+            - Name: HorizontalGap
+              Type: BaseDataVariableType
+              DataType: Size
+              ModellingRule: Optional
+              Value: 16.0
+            - Name: VerticalGap
+              Type: BaseDataVariableType
+              DataType: Size
+              ModellingRule: Optional
+              Value: 16.0
+            - Name: HorizontalAlignment
+              Type: BaseVariableType
+              DataType: HorizontalAlignment
+              ModellingRule: Optional
+              Value: 3
+            - Name: EndpointURLString
+              Type: GridContent1
+              Children:
+              - Name: Text
+                Type: BaseDataVariableType
+                DataType: LocalizedText
+                Children:
+                - Name: DynamicLink
+                  Type: DynamicLink
+                  DataType: NodePath
+                  Value: "{EditModel}/EndpointURL@DisplayName"
+              - Name: GridLayoutProperties
+                Type: GridLayoutProperties
+            - Name: EndpointURLValue
+              Type: TextBox
+              Children:
+              - Name: Text
+                Type: BaseDataVariableType
+                DataType: LocalizedText
+                Children:
+                - Name: DynamicLink
+                  Type: DynamicLink
+                  DataType: NodePath
+                  Value: "{EditModel}/EndpointURL"
+                  Children:
+                  - Name: Mode
+                    Type: BaseVariableType
+                    DataType: DynamicLinkMode
+                    ModellingRule: Optional
+                    Value: 2
+              - Name: Height
+                Type: BaseVariableType
+                DataType: Size
+                ModellingRule: Optional
+                Value: 32.0
+            - Name: MaxNumberOfConnectionsString
+              Type: GridContent1
+              Children:
+              - Name: Text
+                Type: BaseDataVariableType
+                DataType: LocalizedText
+                Children:
+                - Name: DynamicLink
+                  Type: DynamicLink
+                  DataType: NodePath
+                  Value: "{EditModel}/MaxNumberOfConnections@DisplayName"
+              - Name: GridLayoutProperties
+                Type: GridLayoutProperties
+            - Name: MaxNumberOfConnectionsValue
+              Type: SpinBox
+              Children:
+              - Name: Value
+                Type: BaseDataVariableType
+                DataType: Double
+                Children:
+                - Name: DynamicLink
+                  Type: DynamicLink
+                  DataType: NodePath
+                  Value: "{EditModel}/MaxNumberOfConnections"
+                  Children:
+                  - Name: Mode
+                    Type: BaseVariableType
+                    DataType: DynamicLinkMode
+                    ModellingRule: Optional
+                    Value: 2
+              - Name: Height
+                Type: BaseVariableType
+                DataType: Size
+                ModellingRule: Optional
+                Value: 32.0
+              - Name: Format
+                Type: BaseDataVariableType
+                DataType: String
+                ModellingRule: Optional
+                Value: "d"
+            - Name: UseNodePathInNodeIdsString
+              Type: GridContent1
+              Children:
+              - Name: Text
+                Type: BaseDataVariableType
+                DataType: LocalizedText
+                Children:
+                - Name: DynamicLink
+                  Type: DynamicLink
+                  DataType: NodePath
+                  Value: "{EditModel}/UseNodePathInNodeIds@DisplayName"
+              - Name: GridLayoutProperties
+                Type: GridLayoutProperties
+            - Name: UseNodePathInNodeIdsValue
+              Type: ComboBox
+              Children:
+              - Class: Reference
+                Target: ns=3;i=480
+                Direction: Forward
+              - Name: Text
+                Type: BaseDataVariableType
+                DataType: LocalizedText
+              - Name: Model
+                Type: NodePointer
+                DataType: NodeId
+                Value: "/Objects/Optix_DefaultApplication_OptixEdge/Model/Enumerators/Boolean"
+                Children:
+                - Name: ItemKind
+                  Type: PropertyType
+                  DataType: NodeId
+                  Value: "/Types/VariableTypes/BaseVariableType/BaseDataVariableType"
+                - Name: Kind
+                  Type: PropertyType
+                  DataType: NodeId
+              - Name: SelectedValue
+                Type: BaseDataVariableType
+                DataType: BaseDataType
+                Children:
+                - Name: DynamicLink
+                  Type: DynamicLink
+                  DataType: NodePath
+                  Value: "{EditModel}/UseNodePathInNodeIds"
+                  Children:
+                  - Name: Mode
+                    Type: BaseVariableType
+                    DataType: DynamicLinkMode
+                    ModellingRule: Optional
+                    Value: 2
+              - Name: SelectedItem
+                Type: NodePointer
+                DataType: NodeId
+                Children:
+                - Name: Kind
+                  Type: PropertyType
+                  DataType: NodeId
+                  Value: "/Types/VariableTypes/BaseVariableType/BaseDataVariableType"
+              - Name: UISelectedItem
+                Type: BaseDataVariableType
+                DataType: NodeId
+                AccessLevel: Read
+              - Name: UISelectedValue
+                Type: BaseDataVariableType
+                DataType: BaseDataType
+                AccessLevel: Read
+              - Name: Item
+                Type: Alias
+                DataType: NodeId
+                Children:
+                - Name: Kind
+                  Type: PropertyType
+                  DataType: NodeId
+                  Value: "/Types/VariableTypes/BaseVariableType/BaseDataVariableType"
+              - Name: LeftMargin
+                Type: BaseVariableType
+                DataType: Size
+                ModellingRule: Optional
+              - Name: TopMargin
+                Type: BaseVariableType
+                DataType: Size
+                ModellingRule: Optional
+              - Name: Height
+                Type: BaseVariableType
+                DataType: Size
+                ModellingRule: Optional
+                Value: 32.0
+              - Name: DisplayValuePath
+                Type: BaseDataVariableType
+                DataType: LocalizedText
+                Children:
+                - Name: DynamicLink
+                  Type: DynamicLink
+                  DataType: NodePath
+                  Value: "{Item}@DisplayName"
+              - Name: SelectedValuePath
+                Type: BaseDataVariableType
+                DataType: BaseDataType
+                Children:
+                - Name: DynamicLink
+                  Type: DynamicLink
+                  DataType: NodePath
+                  Value: "{Item}@Value"
+            - Name: SamplingIntervalString
+              Type: GridContent1
+              Children:
+              - Name: Text
+                Type: BaseDataVariableType
+                DataType: LocalizedText
+                Children:
+                - Name: DynamicLink
+                  Type: DynamicLink
+                  DataType: NodePath
+                  Value: "{EditModel}/SamplingInterval@DisplayName"
+              - Name: GridLayoutProperties
+                Type: GridLayoutProperties
+            - Name: SamplingIntervalValue
+              Type: DurationPicker
+              Children:
+              - Name: Value
+                Type: BaseDataVariableType
+                DataType: Duration
+                Children:
+                - Name: DynamicLink
+                  Type: DynamicLink
+                  DataType: NodePath
+                  Value: "{EditModel}/SamplingInterval"
+                  Children:
+                  - Name: Mode
+                    Type: BaseVariableType
+                    DataType: DynamicLinkMode
+                    ModellingRule: Optional
+                    Value: 2
+              - Name: Height
+                Type: BaseVariableType
+                DataType: Size
+                ModellingRule: Optional
+                Value: 32.0
+            - Name: MaxArrayLenghtString
+              Type: GridContent1
+              Children:
+              - Name: Text
+                Type: BaseDataVariableType
+                DataType: LocalizedText
+                Children:
+                - Name: DynamicLink
+                  Type: DynamicLink
+                  DataType: NodePath
+                  Value: "{EditModel}/MaxArrayLength@DisplayName"
+              - Name: GridLayoutProperties
+                Type: GridLayoutProperties
+            - Name: MaxArrayLenghtValue
+              Type: SpinBox
+              Children:
+              - Name: Value
+                Type: BaseDataVariableType
+                DataType: Double
+                Children:
+                - Name: DynamicLink
+                  Type: DynamicLink
+                  DataType: NodePath
+                  Value: "{EditModel}/MaxArrayLength"
+                  Children:
+                  - Name: Mode
+                    Type: BaseVariableType
+                    DataType: DynamicLinkMode
+                    ModellingRule: Optional
+                    Value: 2
+              - Name: Height
+                Type: BaseVariableType
+                DataType: Size
+                ModellingRule: Optional
+                Value: 32.0
+              - Name: Format
+                Type: BaseDataVariableType
+                DataType: String
+                ModellingRule: Optional
+                Value: "d"
+            - Name: NodesToPublish
+              Type: Accordion
+              Children:
+              - Name: Header
+                Type: AccordionHeader
+                Children:
+                - Name: Content
+                  Type: RowLayout
+                  Children:
+                  - Name: Width
+                    Type: BaseVariableType
+                    DataType: Size
+                    ModellingRule: Optional
+                    Value: 50.0
+                  - Name: HorizontalAlignment
+                    Type: BaseVariableType
+                    DataType: HorizontalAlignment
+                    ModellingRule: Optional
+                    Value: 3
+                  - Name: H1
+                    Type: H5
+                    Children:
+                    - Name: GridLayoutProperties
+                      Type: GridLayoutProperties
+                    - Name: LeftMargin
+                      Type: BaseVariableType
+                      DataType: Size
+                      ModellingRule: Optional
+                      Value: 40.0
+                    - Name: Text
+                      Type: BaseDataVariableType
+                      DataType: LocalizedText
+                      Children:
+                      - Name: DynamicLink
+                        Type: DynamicLink
+                        DataType: NodePath
+                        Value: "{EditModel}/NodesToPublish@DisplayName"
+                  - Name: AddConfigurationButton
+                    Type: AddButton
+                    Children:
+                    - Name: Icon
+                      Type: Image
+                      Children:
+                      - Name: Path
+                        Type: BaseDataVariableType
+                        DataType: ResourceUri
+                        Value: "ns=7;%PROJECTDIR%/imgs/icons/Plus-md.svg"
+                      - Name: Enabled
+                        Type: BaseDataVariableType
+                        DataType: ns=0;Boolean
+                        Value: true
+                        Children:
+                        - Name: DynamicLink
+                          Type: DynamicLink
+                          DataType: NodePath
+                          Value: "../../Enabled"
+                    - Name: AddStation
+                      Type: Button
+                      Children:
+                      - Name: Enabled
+                        Type: BaseDataVariableType
+                        DataType: ns=0;Boolean
+                        Value: true
+                        Children:
+                        - Name: DynamicLink
+                          Type: DynamicLink
+                          DataType: NodePath
+                          Value: "../../Enabled"
+                    - Name: MouseClickEventHandler1
+                      Type: EventHandler
+                      Children:
+                      - Name: ListenEventType
+                        Type: PropertyType
+                        DataType: NodeId
+                        Value: "/Types/EventTypes/BaseEventType/MouseEvent/MouseClickEvent"
+                      - Name: ListenObject
+                        Type: NodePointer
+                        DataType: NodeId
+                        ReferenceType: HasProperty
+                        Children:
+                        - Name: Kind
+                          Type: PropertyType
+                          DataType: NodeId
+                          Value: "/Types/ObjectTypes/BaseObjectType"
+                        - Name: DynamicLink
+                          Type: DynamicLink
+                          DataType: NodePath
+                          Value: "../../AddStation@NodeId"
+                      - Name: MethodsToCall
+                        Type: BaseObjectType
+                        Children:
+                        - Name: MethodContainer1
+                          Type: BaseObjectType
+                          Children:
+                          - Name: ns=2;ObjectPointer
+                            Type: NodePointer
+                            DataType: NodeId
+                            Value: "/Objects/Optix_DefaultApplication_OptixEdge/NetLogic/OpcUaServerLogic"
+                            Children:
+                            - Name: Kind
+                              Type: PropertyType
+                              DataType: NodeId
+                              Value: "/Types/ObjectTypes/BaseObjectType"
+                          - Name: ns=2;Method
+                            Type: BaseDataVariableType
+                            DataType: String
+                            Value: "CreateConfiguration"
+                          - Name: InputArguments
+                            Type: BaseObjectType
+                            Children:
+                            - Name: opcUaServer
+                              Type: BaseDataVariableType
+                              DataType: NodeId
+                              Children:
+                              - Name: DynamicLink
+                                Type: DynamicLink
+                                DataType: NodePath
+                                Value: "{StationNode}@NodeId"
+                            - Name: widgetOwner
+                              Type: BaseDataVariableType
+                              DataType: NodeId
+                              Children:
+                              - Name: DynamicLink
+                                Type: DynamicLink
+                                DataType: NodePath
+                                Value: "../../../../../../../../Content/Content@NodeId"
+                      - Name: EventArguments
+                        Type: MouseClickEvent
+                        Children:
+                        - Name: EventId
+                          Type: PropertyType
+                          DataType: ByteString
+                        - Name: EventType
+                          Type: PropertyType
+                          DataType: NodeId
+                        - Name: SourceNode
+                          Type: PropertyType
+                          DataType: NodeId
+                        - Name: SourceName
+                          Type: PropertyType
+                          DataType: String
+                        - Name: Time
+                          Type: PropertyType
+                          DataType: UtcTime
+                        - Name: ReceiveTime
+                          Type: PropertyType
+                          DataType: UtcTime
+                        - Name: Message
+                          Type: PropertyType
+                          DataType: LocalizedText
+                        - Name: Severity
+                          Type: PropertyType
+                          DataType: UInt16
+                    - Name: Enabled
+                      Type: BaseDataVariableType
+                      DataType: ns=0;Boolean
+                      Value: true
+                      Children:
+                      - Name: DynamicLink
+                        Type: DynamicLink
+                        DataType: NodePath
+                        Value: "../../../../../../../../../../EnableAddConfiguration"
+              - Name: Content
+                Type: AccordionContent
+                Children:
+                - Name: Content
+                  Type: ColumnLayout
+                  Children:
+                  - Name: Width
+                    Type: BaseVariableType
+                    DataType: Size
+                    ModellingRule: Optional
+                    Value: 50.0
+                  - Name: HorizontalAlignment
+                    Type: BaseVariableType
+                    DataType: HorizontalAlignment
+                    ModellingRule: Optional
+                    Value: 3
+                  - Name: LeftMargin
+                    Type: BaseVariableType
+                    DataType: Size
+                    ModellingRule: Optional
+                    Value: 32.0
+                  - Name: TopMargin
+                    Type: BaseVariableType
+                    DataType: Size
+                    ModellingRule: Optional
+                    Value: 16.0
+              - Name: Expanded
+                Type: BaseDataVariableType
+                DataType: ns=0;Boolean
+              - Name: Width
+                Type: BaseVariableType
+                DataType: Size
+                ModellingRule: Optional
+                Value: 200.0
+              - Name: ns=3;GridLayoutProperties
+                Type: GridLayoutProperties
+                DisplayName: {"NamespaceIndex":3,"TextId":"GridLayoutPropertiesDisplayName"}
+                Children:
+                - Name: ColumnSpan
+                  Type: BaseDataVariableType
+                  DataType: Int32
+                  ModellingRule: Optional
+                  Value: 2
+              - Name: HorizontalAlignment
+                Type: BaseVariableType
+                DataType: HorizontalAlignment
+                ModellingRule: Optional
+                Value: 3
+            - Name: TopMargin
+              Type: BaseVariableType
+              DataType: Size
+              ModellingRule: Optional
+              Value: 16.0
+        - Name: Expanded
+          Type: BaseDataVariableType
+          DataType: ns=0;Boolean
+          Value: true
+        - Name: Width
+          Type: BaseVariableType
+          DataType: Size
+          ModellingRule: Optional
+          Value: 800.0
+        - Name: HorizontalAlignment
+          Type: BaseVariableType
+          DataType: HorizontalAlignment
+          Value: 3
+      - Name: Divider1
+        Type: Divider
+        Children:
+        - Name: Width
+          Type: BaseVariableType
+          DataType: Size
+          Value: 768.0
+          Children:
+          - Name: ExpressionEvaluator1
+            Type: ExpressionEvaluator
+            Children:
+            - Name: Source0
+              Type: BaseDataVariableType
+              DataType: BaseDataType
+              ReferenceType: HasSource
+              Children:
+              - Name: DynamicLink
+                Type: DynamicLink
+                DataType: NodePath
+                Value: "{Window}/Width"
+            - Name: Source1
+              Type: BaseDataVariableType
+              DataType: BaseDataType
+              ReferenceType: HasSource
+              Children:
+              - Name: DynamicLink
+                Type: DynamicLink
+                DataType: NodePath
+                Value: "{Window}/SideMenu/LeftMargin"
+      - Name: Security
+        Type: Accordion
+        Children:
+        - Name: Header
+          Type: AccordionHeader
+          Children:
+          - Name: Title
+            Type: H5
+            Children:
+            - Name: Text
+              Type: BaseDataVariableType
+              DataType: LocalizedText
+              ModellingRule: Optional
+              Value: {"LocaleId":"en-US","Text":"Security"}
+            - Name: LeftMargin
+              Type: BaseVariableType
+              DataType: Size
+              ModellingRule: Optional
+              Value: 40.0
+            - Name: GridLayoutProperties
+              Type: GridLayoutProperties
+        - Name: Content
+          Type: AccordionContent
+          Children:
+          - Name: SecurityPropertiesGrid
+            Type: GridLayout
+            Children:
+            - Name: Width
+              Type: BaseVariableType
+              DataType: Size
+              ModellingRule: Optional
+              Value: 300.0
+            - Name: Rows
+              Type: BaseDataVariableType
+              DataType: String
+              ValueRank: OneDimension
+              ArrayDimensions: [0]
+              Value: ["Auto","Auto","Auto","Auto"]
+            - Name: Columns
+              Type: BaseDataVariableType
+              DataType: String
+              ValueRank: OneDimension
+              ArrayDimensions: [0]
+              Value: ["1fr","1fr"]
+            - Name: HorizontalGap
+              Type: BaseDataVariableType
+              DataType: Size
+              ModellingRule: Optional
+              Value: 16.0
+            - Name: VerticalGap
+              Type: BaseDataVariableType
+              DataType: Size
+              ModellingRule: Optional
+              Value: 16.0
+            - Name: HorizontalAlignment
+              Type: BaseVariableType
+              DataType: HorizontalAlignment
+              ModellingRule: Optional
+              Value: 3
+            - Name: TopMargin
+              Type: BaseVariableType
+              DataType: Size
+              ModellingRule: Optional
+              Value: 16.0
+            - Name: MinimumMessageSecurityModeLabel
+              Type: GridContent1
+              Children:
+              - Name: GridLayoutProperties
+                Type: GridLayoutProperties
+              - Name: TopMargin
+                Type: BaseVariableType
+                DataType: Size
+                ModellingRule: Optional
+                Value: 1.0
+              - Name: BottomMargin
+                Type: BaseVariableType
+                DataType: Size
+                ModellingRule: Optional
+              - Name: Text
+                Type: BaseDataVariableType
+                DataType: LocalizedText
+                Children:
+                - Name: DynamicLink
+                  Type: DynamicLink
+                  DataType: NodePath
+                  Value: "{EditModel}/MinimumMessageSecurityMode@DisplayName"
+            - Name: MinimumMessageSecurityModeValue
+              Type: ComboBox
+              Children:
+              - Class: Reference
+                Target: ns=3;i=480
+                Direction: Forward
+              - Name: Text
+                Type: BaseDataVariableType
+                DataType: LocalizedText
+              - Name: Model
+                Type: NodePointer
+                DataType: NodeId
+                Value: "/Objects/Optix_DefaultApplication_OptixEdge/Model/Enumerators/Boolean"
+                Children:
+                - Name: ItemKind
+                  Type: PropertyType
+                  DataType: NodeId
+                  Value: "/Types/VariableTypes/BaseVariableType/BaseDataVariableType"
+                - Name: Kind
+                  Type: PropertyType
+                  DataType: NodeId
+              - Name: SelectedValue
+                Type: BaseDataVariableType
+                DataType: BaseDataType
+                Children:
+                - Name: DynamicLink
+                  Type: DynamicLink
+                  DataType: NodePath
+                  Value: "{EditModel}/MinimumMessageSecurityMode"
+                  Children:
+                  - Name: Mode
+                    Type: BaseVariableType
+                    DataType: DynamicLinkMode
+                    ModellingRule: Optional
+                    Value: 2
+              - Name: SelectedItem
+                Type: NodePointer
+                DataType: NodeId
+                Children:
+                - Name: Kind
+                  Type: PropertyType
+                  DataType: NodeId
+                  Value: "/Types/VariableTypes/BaseVariableType/BaseDataVariableType"
+              - Name: UISelectedItem
+                Type: BaseDataVariableType
+                DataType: NodeId
+                AccessLevel: Read
+              - Name: UISelectedValue
+                Type: BaseDataVariableType
+                DataType: BaseDataType
+                AccessLevel: Read
+              - Name: Item
+                Type: Alias
+                DataType: NodeId
+                Children:
+                - Name: Kind
+                  Type: PropertyType
+                  DataType: NodeId
+                  Value: "/Types/VariableTypes/BaseVariableType/BaseDataVariableType"
+              - Name: Height
+                Type: BaseVariableType
+                DataType: Size
+                ModellingRule: Optional
+                Value: 32.0
+              - Name: DisplayValuePath
+                Type: BaseDataVariableType
+                DataType: LocalizedText
+                Children:
+                - Name: DynamicLink
+                  Type: DynamicLink
+                  DataType: NodePath
+                  Value: "{Item}@DisplayName"
+              - Name: SelectedValuePath
+                Type: BaseDataVariableType
+                DataType: BaseDataType
+                Children:
+                - Name: DynamicLink
+                  Type: DynamicLink
+                  DataType: NodePath
+                  Value: "{Item}@Value"
+            - Name: MinimumSecurityPolicyLabel
+              Type: GridContent1
+              Children:
+              - Name: GridLayoutProperties
+                Type: GridLayoutProperties
+              - Name: Text
+                Type: BaseDataVariableType
+                DataType: LocalizedText
+                Children:
+                - Name: DynamicLink
+                  Type: DynamicLink
+                  DataType: NodePath
+                  Value: "{EditModel}/MinimumSecurityPolicy@DisplayName"
+            - Name: MinimumSecurityPolicyValue
+              Type: ComboBox
+              Children:
+              - Class: Reference
+                Target: ns=3;i=480
+                Direction: Forward
+              - Name: Text
+                Type: BaseDataVariableType
+                DataType: LocalizedText
+              - Name: Model
+                Type: NodePointer
+                DataType: NodeId
+                Value: "/Types/DataTypes/BaseDataType/Enumeration/EventsEnum"
+                Children:
+                - Name: ItemKind
+                  Type: PropertyType
+                  DataType: NodeId
+                  Value: "/Types/VariableTypes/BaseVariableType/BaseDataVariableType"
+                - Name: Kind
+                  Type: PropertyType
+                  DataType: NodeId
+              - Name: SelectedValue
+                Type: BaseDataVariableType
+                DataType: BaseDataType
+                Children:
+                - Name: DynamicLink
+                  Type: DynamicLink
+                  DataType: NodePath
+                  Value: "{EditModel}/MinimumSecurityPolicy"
+                  Children:
+                  - Name: Mode
+                    Type: BaseVariableType
+                    DataType: DynamicLinkMode
+                    ModellingRule: Optional
+                    Value: 2
+              - Name: SelectedItem
+                Type: NodePointer
+                DataType: NodeId
+                Children:
+                - Name: Kind
+                  Type: PropertyType
+                  DataType: NodeId
+                  Value: "/Types/VariableTypes/BaseVariableType/BaseDataVariableType"
+              - Name: UISelectedItem
+                Type: BaseDataVariableType
+                DataType: NodeId
+                AccessLevel: Read
+              - Name: UISelectedValue
+                Type: BaseDataVariableType
+                DataType: BaseDataType
+                AccessLevel: Read
+              - Name: Item
+                Type: Alias
+                DataType: NodeId
+                Children:
+                - Name: Kind
+                  Type: PropertyType
+                  DataType: NodeId
+                  Value: "/Types/VariableTypes/BaseVariableType/BaseDataVariableType"
+              - Name: Height
+                Type: BaseVariableType
+                DataType: Size
+                ModellingRule: Optional
+                Value: 32.0
+              - Name: LeftMargin
+                Type: BaseVariableType
+                DataType: Size
+                ModellingRule: Optional
+              - Name: TopMargin
+                Type: BaseVariableType
+                DataType: Size
+                ModellingRule: Optional
+              - Name: DisplayValuePath
+                Type: BaseDataVariableType
+                DataType: LocalizedText
+                Children:
+                - Name: DynamicLink
+                  Type: DynamicLink
+                  DataType: NodePath
+                  Value: "{Item}@DisplayName"
+              - Name: SelectedValuePath
+                Type: BaseDataVariableType
+                DataType: BaseDataType
+                Children:
+                - Name: DynamicLink
+                  Type: DynamicLink
+                  DataType: NodePath
+                  Value: "{Item}@Value"
+            - Name: ServerCertificateFileLabel
+              Type: GridContent1
+              Children:
+              - Name: Text
+                Type: BaseDataVariableType
+                DataType: LocalizedText
+                Children:
+                - Name: DynamicLink
+                  Type: DynamicLink
+                  DataType: NodePath
+                  Value: "{EditModel}/ServerCertificateFile@DisplayName"
+              - Name: GridLayoutProperties
+                Type: GridLayoutProperties
+            - Name: ServerCertificatFileValue
+              Type: TextBox
+              Children:
+              - Name: Text
+                Type: BaseDataVariableType
+                DataType: LocalizedText
+                Children:
+                - Name: DynamicLink
+                  Type: DynamicLink
+                  DataType: NodePath
+                  Value: "{EditModel}/ServerCertificateFile"
+                  Children:
+                  - Name: Mode
+                    Type: BaseVariableType
+                    DataType: DynamicLinkMode
+                    ModellingRule: Optional
+                    Value: 2
+              - Name: Height
+                Type: BaseVariableType
+                DataType: Size
+                ModellingRule: Optional
+                Value: 32.0
+              - Name: PlaceholderText
+                Type: BaseDataVariableType
+                DataType: LocalizedText
+                ModellingRule: Optional
+                Value: {"LocaleId":"en-US","Text":"Enter the path of the file (like /persistent/data/...)"}
+              - Name: ValueChangeBehaviour
+                Type: BaseDataVariableType
+                DataType: ValueChangeBehaviour
+                ModellingRule: Optional
+                Value: 1
+            - Name: ServerPrivateKeyFileLabel
+              Type: GridContent1
+              Children:
+              - Name: Text
+                Type: BaseDataVariableType
+                DataType: LocalizedText
+                Children:
+                - Name: DynamicLink
+                  Type: DynamicLink
+                  DataType: NodePath
+                  Value: "{EditModel}/ServerPrivateKeyFile@DisplayName"
+              - Name: GridLayoutProperties
+                Type: GridLayoutProperties
+            - Name: ServerPrivateKeyFileValue
+              Type: TextBox
+              Children:
+              - Name: Text
+                Type: BaseDataVariableType
+                DataType: LocalizedText
+                Children:
+                - Name: DynamicLink
+                  Type: DynamicLink
+                  DataType: NodePath
+                  Value: "{EditModel}/ServerPrivateKeyFile"
+                  Children:
+                  - Name: Mode
+                    Type: BaseVariableType
+                    DataType: DynamicLinkMode
+                    ModellingRule: Optional
+                    Value: 2
+              - Name: Height
+                Type: BaseVariableType
+                DataType: Size
+                ModellingRule: Optional
+                Value: 32.0
+              - Name: PlaceholderText
+                Type: BaseDataVariableType
+                DataType: LocalizedText
+                ModellingRule: Optional
+                Value: {"LocaleId":"en-US","Text":"Enter the path of the file (like /persistent/data/...)"}
+              - Name: ValueChangeBehaviour
+                Type: BaseDataVariableType
+                DataType: ValueChangeBehaviour
+                ModellingRule: Optional
+                Value: 1
+        - Name: Expanded
+          Type: BaseDataVariableType
+          DataType: ns=0;Boolean
+          Value: true
+        - Name: Width
+          Type: BaseVariableType
+          DataType: Size
+          ModellingRule: Optional
+          Value: 800.0
+        - Name: HorizontalAlignment
+          Type: BaseVariableType
+          DataType: HorizontalAlignment
+          Value: 3
+        - Name: Visible
+          Type: BaseDataVariableType
+          DataType: ns=0;Boolean
+          ModellingRule: Optional
+      - Name: Divider2
+        Type: Divider
+        Children:
+        - Name: Width
+          Type: BaseVariableType
+          DataType: Size
+          Value: 768.0
+          Children:
+          - Name: ExpressionEvaluator1
+            Type: ExpressionEvaluator
+            Children:
+            - Name: Source0
+              Type: BaseDataVariableType
+              DataType: BaseDataType
+              ReferenceType: HasSource
+              Children:
+              - Name: DynamicLink
+                Type: DynamicLink
+                DataType: NodePath
+                Value: "{Window}/Width"
+            - Name: Source1
+              Type: BaseDataVariableType
+              DataType: BaseDataType
+              ReferenceType: HasSource
+              Children:
+              - Name: DynamicLink
+                Type: DynamicLink
+                DataType: NodePath
+                Value: "{Window}/SideMenu/LeftMargin"
+        - Name: Visible
+          Type: BaseDataVariableType
+          DataType: ns=0;Boolean
+          ModellingRule: Optional
+      - Name: Information
+        Type: Accordion
+        Children:
+        - Name: Header
+          Type: AccordionHeader
+          Children:
+          - Name: Title
+            Type: H5
+            Children:
+            - Name: Text
+              Type: BaseDataVariableType
+              DataType: LocalizedText
+              ModellingRule: Optional
+              Value: {"LocaleId":"en-US","Text":"Information"}
+            - Name: LeftMargin
+              Type: BaseVariableType
+              DataType: Size
+              ModellingRule: Optional
+              Value: 40.0
+            - Name: GridLayoutProperties
+              Type: GridLayoutProperties
+        - Name: Content
+          Type: AccordionContent
+          Children:
+          - Name: InformationPropertiesGrid
+            Type: GridLayout
+            Children:
+            - Name: Width
+              Type: BaseVariableType
+              DataType: Size
+              ModellingRule: Optional
+              Value: 300.0
+            - Name: Rows
+              Type: BaseDataVariableType
+              DataType: String
+              ValueRank: OneDimension
+              ArrayDimensions: [0]
+              Value: ["Auto","Auto","Auto"]
+            - Name: Columns
+              Type: BaseDataVariableType
+              DataType: String
+              ValueRank: OneDimension
+              ArrayDimensions: [0]
+              Value: ["1fr","1fr"]
+            - Name: HorizontalGap
+              Type: BaseDataVariableType
+              DataType: Size
+              ModellingRule: Optional
+              Value: 16.0
+            - Name: VerticalGap
+              Type: BaseDataVariableType
+              DataType: Size
+              ModellingRule: Optional
+              Value: 16.0
+            - Name: HorizontalAlignment
+              Type: BaseVariableType
+              DataType: HorizontalAlignment
+              ModellingRule: Optional
+              Value: 3
+            - Name: TopMargin
+              Type: BaseVariableType
+              DataType: Size
+              ModellingRule: Optional
+              Value: 16.0
+            - Name: ProductURILabel
+              Type: GridContent1
+              Children:
+              - Name: GridLayoutProperties
+                Type: GridLayoutProperties
+              - Name: Text
+                Type: BaseDataVariableType
+                DataType: LocalizedText
+                Children:
+                - Name: DynamicLink
+                  Type: DynamicLink
+                  DataType: NodePath
+                  Value: "{EditModel}/ProductURI@DisplayName"
+            - Name: ProductURIValue
+              Type: TextBox
+              Children:
+              - Name: Text
+                Type: BaseDataVariableType
+                DataType: LocalizedText
+                Children:
+                - Name: DynamicLink
+                  Type: DynamicLink
+                  DataType: NodePath
+                  Value: "{EditModel}/ProductURI"
+                  Children:
+                  - Name: Mode
+                    Type: BaseVariableType
+                    DataType: DynamicLinkMode
+                    ModellingRule: Optional
+                    Value: 2
+              - Name: Height
+                Type: BaseVariableType
+                DataType: Size
+                ModellingRule: Optional
+                Value: 32.0
+              - Name: LeftMargin
+                Type: BaseVariableType
+                DataType: Size
+                ModellingRule: Optional
+              - Name: TopMargin
+                Type: BaseVariableType
+                DataType: Size
+                ModellingRule: Optional
+              - Name: ValueChangeBehaviour
+                Type: BaseDataVariableType
+                DataType: ValueChangeBehaviour
+                ModellingRule: Optional
+                Value: 1
+            - Name: ProductNameLabel
+              Type: GridContent1
+              Children:
+              - Name: GridLayoutProperties
+                Type: GridLayoutProperties
+              - Name: Text
+                Type: BaseDataVariableType
+                DataType: LocalizedText
+                Children:
+                - Name: DynamicLink
+                  Type: DynamicLink
+                  DataType: NodePath
+                  Value: "{EditModel}/ProductName@DisplayName"
+            - Name: ProductNameValue
+              Type: TextBox
+              Children:
+              - Name: Text
+                Type: BaseDataVariableType
+                DataType: LocalizedText
+                Children:
+                - Name: DynamicLink
+                  Type: DynamicLink
+                  DataType: NodePath
+                  Value: "{EditModel}/ProductName"
+                  Children:
+                  - Name: Mode
+                    Type: BaseVariableType
+                    DataType: DynamicLinkMode
+                    ModellingRule: Optional
+                    Value: 2
+              - Name: Height
+                Type: BaseVariableType
+                DataType: Size
+                ModellingRule: Optional
+                Value: 32.0
+              - Name: ValueChangeBehaviour
+                Type: BaseDataVariableType
+                DataType: ValueChangeBehaviour
+                ModellingRule: Optional
+                Value: 1
+            - Name: ManufacturerNameLabel
+              Type: GridContent1
+              Children:
+              - Name: GridLayoutProperties
+                Type: GridLayoutProperties
+              - Name: Text
+                Type: BaseDataVariableType
+                DataType: LocalizedText
+                Children:
+                - Name: DynamicLink
+                  Type: DynamicLink
+                  DataType: NodePath
+                  Value: "{EditModel}/ManufacturerName@DisplayName"
+            - Name: ManufacturerNameValue
+              Type: TextBox
+              Children:
+              - Name: Text
+                Type: BaseDataVariableType
+                DataType: LocalizedText
+                Children:
+                - Name: DynamicLink
+                  Type: DynamicLink
+                  DataType: NodePath
+                  Value: "{EditModel}/ManufacturerName"
+                  Children:
+                  - Name: Mode
+                    Type: BaseVariableType
+                    DataType: DynamicLinkMode
+                    ModellingRule: Optional
+                    Value: 2
+              - Name: Height
+                Type: BaseVariableType
+                DataType: Size
+                ModellingRule: Optional
+                Value: 32.0
+              - Name: ValueChangeBehaviour
+                Type: BaseDataVariableType
+                DataType: ValueChangeBehaviour
+                ModellingRule: Optional
+                Value: 1
+        - Name: Expanded
+          Type: BaseDataVariableType
+          DataType: ns=0;Boolean
+          Value: true
+        - Name: Width
+          Type: BaseVariableType
+          DataType: Size
+          ModellingRule: Optional
+          Value: 800.0
+        - Name: HorizontalAlignment
+          Type: BaseVariableType
+          DataType: HorizontalAlignment
+          Value: 3
+    - Name: UIFieldParameterObserverLogic
+      Type: NetLogic
+  - Name: Expanded
+    Type: BaseDataVariableType
+    DataType: ns=0;Boolean
+  - Name: EditModel
+    Type: Alias
+    DataType: NodeId
+    Children:
+    - Name: Kind
+      Type: PropertyType
+      DataType: NodeId
+      Value: "/Types/ObjectTypes/BaseObjectType/OPCUAServer"
+  - Name: StationNode
+    Type: Alias
+    DataType: NodeId
+    Children:
+    - Name: Kind
+      Type: PropertyType
+      DataType: NodeId
+      Value: "/Types/ObjectTypes/BaseObjectType/OPCUAServer"
+  - Name: MouseClickEventHandler1
+    Type: EventHandler
+    Children:
+    - Name: ListenEventType
+      Type: PropertyType
+      DataType: NodeId
+      Value: "/Types/EventTypes/BaseEventType/MouseEvent/MouseClickEvent"
+    - Name: ListenObject
+      Type: NodePointer
+      DataType: NodeId
+      ReferenceType: HasProperty
+      Children:
+      - Name: Kind
+        Type: PropertyType
+        DataType: NodeId
+        Value: "/Types/ObjectTypes/BaseObjectType"
+      - Name: DynamicLink
+        Type: DynamicLink
+        DataType: NodePath
+        Value: "../../Header/Content/StationActions/Content/ApplyButton/ApplyAction@NodeId"
+    - Name: MethodsToCall
+      Type: BaseObjectType
+      Children:
+      - Name: MethodContainer1
+        Type: BaseObjectType
+        Children:
+        - Name: ObjectPointer
+          Type: NodePointer
+          DataType: NodeId
+          Value: "/Objects/Optix_DefaultApplication_OptixEdge/NetLogic/CommonLogic"
+          Children:
+          - Name: Kind
+            Type: PropertyType
+            DataType: NodeId
+            Value: "/Types/ObjectTypes/BaseObjectType"
+        - Name: Method
+          Type: BaseDataVariableType
+          DataType: String
+          Value: "SaveCommunicationProperties"
+        - Name: InputArguments
+          Type: BaseObjectType
+          Children:
+          - Name: aliasNode
+            Type: BaseDataVariableType
+            DataType: NodeId
+            Children:
+            - Name: DynamicLink
+              Type: DynamicLink
+              DataType: NodePath
+              Value: "{EditModel}@NodeId"
+          - Name: widgetNode
+            Type: BaseDataVariableType
+            DataType: NodeId
+            Children:
+            - Name: DynamicLink
+              Type: DynamicLink
+              DataType: NodePath
+              Value: "../../../../..@NodeId"
+    - Name: EventArguments
+      Type: MouseClickEvent
+      Children:
+      - Name: EventId
+        Type: PropertyType
+        DataType: ByteString
+      - Name: EventType
+        Type: PropertyType
+        DataType: NodeId
+      - Name: SourceNode
+        Type: PropertyType
+        DataType: NodeId
+      - Name: SourceName
+        Type: PropertyType
+        DataType: String
+      - Name: Time
+        Type: PropertyType
+        DataType: UtcTime
+      - Name: ReceiveTime
+        Type: PropertyType
+        DataType: UtcTime
+      - Name: Message
+        Type: PropertyType
+        DataType: LocalizedText
+      - Name: Severity
+        Type: PropertyType
+        DataType: UInt16
+  - Name: MouseClickEventHandler2
+    Type: EventHandler
+    Children:
+    - Name: ListenEventType
+      Type: PropertyType
+      DataType: NodeId
+      Value: "/Types/EventTypes/BaseEventType/MouseEvent/MouseClickEvent"
+    - Name: ListenObject
+      Type: NodePointer
+      DataType: NodeId
+      ReferenceType: HasProperty
+      Children:
+      - Name: Kind
+        Type: PropertyType
+        DataType: NodeId
+        Value: "/Types/ObjectTypes/BaseObjectType"
+      - Name: DynamicLink
+        Type: DynamicLink
+        DataType: NodePath
+        Value: "../../Header/Content/StationActions/Content/TagsImport/TagsImportAction@NodeId"
+    - Name: MethodsToCall
+      Type: BaseObjectType
+      Children:
+      - Name: MethodContainer1
+        Type: BaseObjectType
+        Children:
+        - Name: ObjectPointer
+          Type: NodePointer
+          DataType: NodeId
+          Value: "/Objects/Commands/UICommands"
+          Children:
+          - Name: Kind
+            Type: PropertyType
+            DataType: NodeId
+            Value: "/Types/ObjectTypes/BaseObjectType"
+        - Name: Method
+          Type: BaseDataVariableType
+          DataType: String
+          Value: "OpenDialog"
+        - Name: InputArguments
+          Type: BaseObjectType
+          Children:
+          - Name: Dialog
+            Type: BaseDataVariableType
+            DataType: NodeId
+          - Name: AliasNode
+            Type: BaseDataVariableType
+            DataType: NodeId
+            ValueRank: ScalarOrOneDimension
+          - Name: ParentItem
+            Type: BaseDataVariableType
+            DataType: NodeId
+            Children:
+            - Name: DynamicLink
+              Type: DynamicLink
+              DataType: NodePath
+              Value: "../../../../..@NodeId"
+        - Name: OutputArguments
+          Type: BaseObjectType
+          Children:
+          - Name: DialogNodeId
+            Type: BaseDataVariableType
+            DataType: NodeId
+    - Name: EventArguments
+      Type: MouseClickEvent
+      Children:
+      - Name: EventId
+        Type: PropertyType
+        DataType: ByteString
+      - Name: EventType
+        Type: PropertyType
+        DataType: NodeId
+      - Name: SourceNode
+        Type: PropertyType
+        DataType: NodeId
+      - Name: SourceName
+        Type: PropertyType
+        DataType: String
+      - Name: Time
+        Type: PropertyType
+        DataType: UtcTime
+      - Name: ReceiveTime
+        Type: PropertyType
+        DataType: UtcTime
+      - Name: Message
+        Type: PropertyType
+        DataType: LocalizedText
+      - Name: Severity
+        Type: PropertyType
+        DataType: UInt16
+  - Name: MouseClickEventHandler3
+    Type: EventHandler
+    Children:
+    - Name: ListenEventType
+      Type: PropertyType
+      DataType: NodeId
+      Value: "/Types/EventTypes/BaseEventType/MouseEvent/MouseClickEvent"
+    - Name: ListenObject
+      Type: NodePointer
+      DataType: NodeId
+      ReferenceType: HasProperty
+      Children:
+      - Name: Kind
+        Type: PropertyType
+        DataType: NodeId
+        Value: "/Types/ObjectTypes/BaseObjectType"
+      - Name: DynamicLink
+        Type: DynamicLink
+        DataType: NodePath
+        Value: "../../Header/Content/StationActions/Content/DeleteButton/DeleteAction@NodeId"
+    - Name: MethodsToCall
+      Type: BaseObjectType
+      Children:
+      - Name: MethodContainer1
+        Type: BaseObjectType
+        Children:
+        - Name: ObjectPointer
+          Type: NodePointer
+          DataType: NodeId
+          Value: "/Objects/Commands/UICommands"
+          Children:
+          - Name: Kind
+            Type: PropertyType
+            DataType: NodeId
+            Value: "/Types/ObjectTypes/BaseObjectType"
+        - Name: Method
+          Type: BaseDataVariableType
+          DataType: String
+          Value: "OpenDialog"
+        - Name: InputArguments
+          Type: BaseObjectType
+          Children:
+          - Name: Dialog
+            Type: BaseDataVariableType
+            DataType: NodeId
+            Value: "/Objects/Optix_DefaultApplication_OptixEdge/UI/UITypes/Dialogs/ConfirmDelete"
+          - Name: AliasNode
+            Type: BaseDataVariableType
+            DataType: NodeId
+            ValueRank: ScalarOrOneDimension
+            Value: [{"IdType":0,"Id":0,"Namespace":-1},{"IdType":0,"Id":0,"Namespace":-1}]
+            Children:
+            - Name: DynamicLink_0
+              Type: DynamicLink
+              DataType: NodePath
+              Value: "{EditModel}@NodeId"
+              Children:
+              - Name: ParentElementAccess
+                Type: BaseVariableType
+                DataType: ElementAccess
+                Value: 
+                 {
+                  "TypeId": {
+                   "Id": 313,
+                   "Namespace": 1
+                  },
+                  "Body": {
+                   "ArrayIndex": [0],
+                   "FieldIndexes": []
+                  }
+                 }
+            - Name: DynamicLink_1
+              Type: DynamicLink
+              DataType: NodePath
+              Value: "../../../../..@NodeId"
+              Children:
+              - Name: ParentElementAccess
+                Type: BaseVariableType
+                DataType: ElementAccess
+                Value: 
+                 {
+                  "TypeId": {
+                   "Id": 313,
+                   "Namespace": 1
+                  },
+                  "Body": {
+                   "ArrayIndex": [1],
+                   "FieldIndexes": []
+                  }
+                 }
+          - Name: ParentItem
+            Type: BaseDataVariableType
+            DataType: NodeId
+            Children:
+            - Name: DynamicLink
+              Type: DynamicLink
+              DataType: NodePath
+              Value: "../../../../..@NodeId"
+        - Name: OutputArguments
+          Type: BaseObjectType
+          Children:
+          - Name: DialogNodeId
+            Type: BaseDataVariableType
+            DataType: NodeId
+    - Name: EventArguments
+      Type: MouseClickEvent
+      Children:
+      - Name: EventId
+        Type: PropertyType
+        DataType: ByteString
+      - Name: EventType
+        Type: PropertyType
+        DataType: NodeId
+      - Name: SourceNode
+        Type: PropertyType
+        DataType: NodeId
+      - Name: SourceName
+        Type: PropertyType
+        DataType: String
+      - Name: Time
+        Type: PropertyType
+        DataType: UtcTime
+      - Name: ReceiveTime
+        Type: PropertyType
+        DataType: UtcTime
+      - Name: Message
+        Type: PropertyType
+        DataType: LocalizedText
+      - Name: Severity
+        Type: PropertyType
+        DataType: UInt16
+  - Name: MouseClickEventHandler4
+    Type: EventHandler
+    Children:
+    - Name: ListenEventType
+      Type: PropertyType
+      DataType: NodeId
+      Value: "/Types/EventTypes/BaseEventType/MouseEvent/MouseClickEvent"
+    - Name: ListenObject
+      Type: NodePointer
+      DataType: NodeId
+      ReferenceType: HasProperty
+      Children:
+      - Name: Kind
+        Type: PropertyType
+        DataType: NodeId
+        Value: "/Types/ObjectTypes/BaseObjectType"
+      - Name: DynamicLink
+        Type: DynamicLink
+        DataType: NodePath
+        Value: "../../Header/Content/StationActions/Content/TagsView/TagsViewAction@NodeId"
+    - Name: MethodsToCall
+      Type: BaseObjectType
+      Children:
+      - Name: MethodContainer1
+        Type: BaseObjectType
+        Children:
+        - Name: ObjectPointer
+          Type: NodePointer
+          DataType: NodeId
+          Value: "/Objects/Commands/UICommands"
+          Children:
+          - Name: Kind
+            Type: PropertyType
+            DataType: NodeId
+            Value: "/Types/ObjectTypes/BaseObjectType"
+        - Name: Method
+          Type: BaseDataVariableType
+          DataType: String
+          Value: "OpenDialog"
+        - Name: InputArguments
+          Type: BaseObjectType
+          Children:
+          - Name: Dialog
+            Type: BaseDataVariableType
+            DataType: NodeId
+            Value: "/Objects/Optix_DefaultApplication_OptixEdge/UI/UITypes/Dialogs/TagViewerUIObject"
+          - Name: AliasNode
+            Type: BaseDataVariableType
+            DataType: NodeId
+            ValueRank: ScalarOrOneDimension
+            Children:
+            - Name: DynamicLink
+              Type: DynamicLink
+              DataType: NodePath
+              Value: "{StationNode}@NodeId"
+          - Name: ParentItem
+            Type: BaseDataVariableType
+            DataType: NodeId
+            Children:
+            - Name: DynamicLink
+              Type: DynamicLink
+              DataType: NodePath
+              Value: "../../../../..@NodeId"
+        - Name: OutputArguments
+          Type: BaseObjectType
+          Children:
+          - Name: DialogNodeId
+            Type: BaseDataVariableType
+            DataType: NodeId
+    - Name: EventArguments
+      Type: MouseClickEvent
+      Children:
+      - Name: EventId
+        Type: PropertyType
+        DataType: ByteString
+      - Name: EventType
+        Type: PropertyType
+        DataType: NodeId
+      - Name: SourceNode
+        Type: PropertyType
+        DataType: NodeId
+      - Name: SourceName
+        Type: PropertyType
+        DataType: String
+      - Name: Time
+        Type: PropertyType
+        DataType: UtcTime
+      - Name: ReceiveTime
+        Type: PropertyType
+        DataType: UtcTime
+      - Name: Message
+        Type: PropertyType
+        DataType: LocalizedText
+      - Name: Severity
+        Type: PropertyType
+        DataType: UInt16
+  - Name: EnableAddConfiguration
+    Type: BaseDataVariableType
+    DataType: ns=0;Boolean
+- Name: OPCUAServerNodesToPublishUIObj
+  Id: g=764d53ebd4ac00958dcbccbeaf687d85
+  Supertype: Accordion
+  ReferenceType: HasComponent
+  Children:
+  - Name: Header
+    Type: AccordionHeader
+    Children:
+    - Name: Rectangle1
+      Type: Rectangle
+      Children:
+      - Name: Width
+        Type: BaseVariableType
+        DataType: Size
+        ModellingRule: Optional
+        Value: 50.0
+      - Name: Height
+        Type: BaseVariableType
+        DataType: Size
+        ModellingRule: Optional
+        Value: 50.0
+      - Name: FillColor
+        Type: BaseDataVariableType
+        DataType: Color
+        ModellingRule: Optional
+        Value: "#ffffff00"
+      - Name: HitTestVisible
+        Type: BaseDataVariableType
+        DataType: ns=0;Boolean
+        ModellingRule: Optional
+        Value: true
+      - Name: HorizontalAlignment
+        Type: BaseVariableType
+        DataType: HorizontalAlignment
+        ModellingRule: Optional
+        Value: 3
+      - Name: VerticalAlignment
+        Type: BaseVariableType
+        DataType: VerticalAlignment
+        ModellingRule: Optional
+        Value: 3
+      - Name: LeftMargin
+        Type: BaseVariableType
+        DataType: Size
+        ModellingRule: Optional
+        Value: 40.0
+      - Name: BorderThickness
+        Type: BaseDataVariableType
+        DataType: Size
+        ModellingRule: Optional
+    - Name: Content
+      Type: RowLayout
+      Children:
+      - Name: Width
+        Type: BaseVariableType
+        DataType: Size
+        ModellingRule: Optional
+        Value: 50.0
+      - Name: Height
+        Type: BaseVariableType
+        DataType: Size
+        ModellingRule: Optional
+        Value: 32.0
+      - Name: StationName
+        Type: TextBox
+        Children:
+        - Name: Text
+          Type: BaseDataVariableType
+          DataType: LocalizedText
+          Children:
+          - Name: DynamicLink
+            Type: DynamicLink
+            DataType: NodePath
+            Value: "../../../..@BrowseName"
+            Children:
+            - Name: Mode
+              Type: BaseVariableType
+              DataType: DynamicLinkMode
+              ModellingRule: Optional
+              Value: 2
+        - Name: Width
+          Type: BaseVariableType
+          DataType: Size
+          ModellingRule: Optional
+          Value: 110.0
+        - Name: LeftMargin
+          Type: BaseVariableType
+          DataType: Size
+          ModellingRule: Optional
+          Value: 40.0
+        - Name: HorizontalAlignment
+          Type: BaseVariableType
+          DataType: HorizontalAlignment
+          ModellingRule: Optional
+          Value: 3
+        - Name: Height
+          Type: BaseVariableType
+          DataType: Size
+          ModellingRule: Optional
+          Value: 32.0
+      - Name: HorizontalAlignment
+        Type: BaseVariableType
+        DataType: HorizontalAlignment
+        ModellingRule: Optional
+        Value: 3
+      - Name: StationActions
+        Type: StationProps
+        Children:
+        - Name: Content
+          Type: RowLayout
+          Children:
+          - Name: ApplyButton
+            Type: Panel
+            Children:
+            - Name: Icon
+              Type: Image
+              Children:
+              - Name: Path
+                Type: BaseDataVariableType
+                DataType: ResourceUri
+                Value: "ns=7;%PROJECTDIR%/imgs/icons/save.svg"
+              - Name: Enabled
+                Type: BaseDataVariableType
+                DataType: ns=0;Boolean
+                Value: true
+                Children:
+                - Name: DynamicLink
+                  Type: DynamicLink
+                  DataType: NodePath
+                  Value: "../../../../EnableSave"
+            - Name: ApplyAction
+              Type: Button
+              Children:
+              - Name: Visible
+                Type: BaseDataVariableType
+                DataType: ns=0;Boolean
+                ModellingRule: Optional
+              - Name: Enabled
+                Type: BaseDataVariableType
+                DataType: ns=0;Boolean
+                Value: true
+                Children:
+                - Name: DynamicLink
+                  Type: DynamicLink
+                  DataType: NodePath
+                  Value: "../../../../EnableSave"
+            - Name: Visible
+              Type: BaseDataVariableType
+              DataType: ns=0;Boolean
+              Children:
+              - Name: DynamicLink
+                Type: DynamicLink
+                DataType: NodePath
+                Value: "../../../ShowSave"
+            - Name: Enabled
+              Type: BaseDataVariableType
+              DataType: ns=0;Boolean
+              Value: true
+          - Name: TagsImport
+            Type: Panel
+            Children:
+            - Name: Icon
+              Type: Image
+              Children:
+              - Name: Path
+                Type: BaseDataVariableType
+                DataType: ResourceUri
+                Value: "ns=7;%PROJECTDIR%/imgs/icons/tag.svg"
+              - Name: Enabled
+                Type: BaseDataVariableType
+                DataType: ns=0;Boolean
+                Value: true
+                Children:
+                - Name: DynamicLink
+                  Type: DynamicLink
+                  DataType: NodePath
+                  Value: "../../../../EnableImport"
+            - Name: TagsImportAction
+              Type: Button
+              Children:
+              - Name: Enabled
+                Type: BaseDataVariableType
+                DataType: ns=0;Boolean
+                Value: true
+                Children:
+                - Name: DynamicLink
+                  Type: DynamicLink
+                  DataType: NodePath
+                  Value: "../../../../EnableImport"
+            - Name: Visible
+              Type: BaseDataVariableType
+              DataType: ns=0;Boolean
+              Value: true
+              Children:
+              - Name: DynamicLink
+                Type: DynamicLink
+                DataType: NodePath
+                Value: "../../../ShowImport"
+            - Name: Enabled
+              Type: BaseDataVariableType
+              DataType: ns=0;Boolean
+              Value: true
+          - Name: TagsView
+            Type: Panel
+            Children:
+            - Name: Icon
+              Type: Image
+              Children:
+              - Name: Path
+                Type: BaseDataVariableType
+                DataType: ResourceUri
+                Value: "ns=7;%PROJECTDIR%/imgs/icons/artifacts-linked-md.svg"
+              - Name: Enabled
+                Type: BaseDataVariableType
+                DataType: ns=0;Boolean
+                Value: true
+                Children:
+                - Name: DynamicLink
+                  Type: DynamicLink
+                  DataType: NodePath
+                  Value: "../../../../EnableView"
+            - Name: TagsViewAction
+              Type: Button
+              Children:
+              - Name: Enabled
+                Type: BaseDataVariableType
+                DataType: ns=0;Boolean
+                Value: true
+                Children:
+                - Name: DynamicLink
+                  Type: DynamicLink
+                  DataType: NodePath
+                  Value: "../../../../EnableView"
+            - Name: Enabled
+              Type: BaseDataVariableType
+              DataType: ns=0;Boolean
+              Value: true
+            - Name: Visible
+              Type: BaseDataVariableType
+              DataType: ns=0;Boolean
+              Value: true
+              Children:
+              - Name: DynamicLink
+                Type: DynamicLink
+                DataType: NodePath
+                Value: "../../../ShowView"
+          - Name: DeleteButton
+            Type: Panel
+            Children:
+            - Name: Icon
+              Type: Image
+              Children:
+              - Name: Path
+                Type: BaseDataVariableType
+                DataType: ResourceUri
+                Value: "ns=7;%PROJECTDIR%/imgs/icons/Delete-md.svg"
+              - Name: Enabled
+                Type: BaseDataVariableType
+                DataType: ns=0;Boolean
+                Value: true
+                Children:
+                - Name: DynamicLink
+                  Type: DynamicLink
+                  DataType: NodePath
+                  Value: "../../../../EnableDelete"
+            - Name: DeleteAction
+              Type: Button
+              Children:
+              - Name: Enabled
+                Type: BaseDataVariableType
+                DataType: ns=0;Boolean
+                Value: true
+                Children:
+                - Name: DynamicLink
+                  Type: DynamicLink
+                  DataType: NodePath
+                  Value: "../../../../EnableDelete"
+            - Name: HitTestVisible
+              Type: BaseDataVariableType
+              DataType: ns=0;Boolean
+              ModellingRule: Optional
+            - Name: Enabled
+              Type: BaseDataVariableType
+              DataType: ns=0;Boolean
+              Value: true
+            - Name: Visible
+              Type: BaseDataVariableType
+              DataType: ns=0;Boolean
+              Value: true
+              Children:
+              - Name: DynamicLink
+                Type: DynamicLink
+                DataType: NodePath
+                Value: "../../../ShowDelete"
+        - Name: MouseClickEventHandler1
+          Type: EventHandler
+          Children:
+          - Name: ListenEventType
+            Type: PropertyType
+            DataType: NodeId
+            Value: "/Types/EventTypes/BaseEventType/MouseEvent/MouseClickEvent"
+          - Name: ListenObject
+            Type: NodePointer
+            DataType: NodeId
+            ReferenceType: HasProperty
+            Children:
+            - Name: Kind
+              Type: PropertyType
+              DataType: NodeId
+              Value: "/Types/ObjectTypes/BaseObjectType"
+            - Name: NodeClass
+              Type: PropertyType
+              DataType: NodePointerNodeClass
+              ModellingRule: Optional
+            - Name: DynamicLink
+              Type: DynamicLink
+              DataType: NodePath
+              Value: "../../Content/DeleteButton/DeleteAction@NodeId"
+          - Name: MethodsToCall
+            Type: BaseObjectType
+            Children:
+            - Name: MethodContainer2
+              Type: BaseObjectType
+              Children:
+              - Name: ObjectPointer
+                Type: NodePointer
+                DataType: NodeId
+                Value: "/Objects/Commands/UICommands"
+                Children:
+                - Name: Kind
+                  Type: PropertyType
+                  DataType: NodeId
+                  Value: "/Types/ObjectTypes/BaseObjectType"
+              - Name: Method
+                Type: BaseDataVariableType
+                DataType: String
+                Value: "OpenDialog"
+              - Name: InputArguments
+                Type: BaseObjectType
+                Children:
+                - Name: Dialog
+                  Type: BaseDataVariableType
+                  DataType: NodeId
+                  Value: "/Objects/Optix_DefaultApplication_OptixEdge/UI/UITypes/Dialogs/ConfirmDelete"
+                - Name: AliasNode
+                  Type: BaseDataVariableType
+                  DataType: NodeId
+                  ValueRank: ScalarOrOneDimension
+                  Value: [{"IdType":0,"Id":0,"Namespace":-1},{"IdType":0,"Id":0,"Namespace":-1}]
+                  Children:
+                  - Name: DynamicLink_0
+                    Type: DynamicLink
+                    DataType: NodePath
+                    Value: "../../../../../../../../OPCUAServerNodesToPublishAlias@NodeId"
+                    Children:
+                    - Name: ParentElementAccess
+                      Type: BaseVariableType
+                      DataType: ElementAccess
+                      Value: 
+                       {
+                        "TypeId": {
+                         "Id": 313,
+                         "Namespace": 1
+                        },
+                        "Body": {
+                         "ArrayIndex": [0],
+                         "FieldIndexes": []
+                        }
+                       }
+                  - Name: DynamicLink_1
+                    Type: DynamicLink
+                    DataType: NodePath
+                    Value: "../../../../../../../..@NodeId"
+                    Children:
+                    - Name: ParentElementAccess
+                      Type: BaseVariableType
+                      DataType: ElementAccess
+                      Value: 
+                       {
+                        "TypeId": {
+                         "Id": 313,
+                         "Namespace": 1
+                        },
+                        "Body": {
+                         "ArrayIndex": [1],
+                         "FieldIndexes": []
+                        }
+                       }
+                - Name: ParentItem
+                  Type: BaseDataVariableType
+                  DataType: NodeId
+                  Children:
+                  - Name: DynamicLink
+                    Type: DynamicLink
+                    DataType: NodePath
+                    Value: "../../../../..@NodeId"
+              - Name: OutputArguments
+                Type: BaseObjectType
+                Children:
+                - Name: DialogNodeId
+                  Type: BaseDataVariableType
+                  DataType: NodeId
+          - Name: EventArguments
+            Type: MouseClickEvent
+            Children:
+            - Name: EventId
+              Type: PropertyType
+              DataType: ByteString
+            - Name: EventType
+              Type: PropertyType
+              DataType: NodeId
+            - Name: SourceNode
+              Type: PropertyType
+              DataType: NodeId
+            - Name: SourceName
+              Type: PropertyType
+              DataType: String
+            - Name: Time
+              Type: PropertyType
+              DataType: UtcTime
+            - Name: ReceiveTime
+              Type: PropertyType
+              DataType: UtcTime
+            - Name: LocalTime
+              Type: PropertyType
+              DataType: TimeZoneDataType
+              ModellingRule: Optional
+            - Name: Message
+              Type: PropertyType
+              DataType: LocalizedText
+            - Name: Severity
+              Type: PropertyType
+              DataType: UInt16
+            - Name: ConditionClassId
+              Type: PropertyType
+              DataType: NodeId
+              ModellingRule: Optional
+            - Name: ConditionClassName
+              Type: PropertyType
+              DataType: LocalizedText
+              ModellingRule: Optional
+            - Name: ConditionSubClassId
+              Type: PropertyType
+              DataType: NodeId
+              ModellingRule: Optional
+              ValueRank: OneDimension
+              ArrayDimensions: [0]
+            - Name: ConditionSubClassName
+              Type: PropertyType
+              DataType: LocalizedText
+              ModellingRule: Optional
+              ValueRank: OneDimension
+              ArrayDimensions: [0]
+        - Name: EnableSave
+          Type: BaseDataVariableType
+          DataType: ns=0;Boolean
+        - Name: EnableImport
+          Type: BaseDataVariableType
+          DataType: ns=0;Boolean
+          Value: true
+        - Name: EnableDelete
+          Type: BaseDataVariableType
+          DataType: ns=0;Boolean
+          Value: true
+        - Name: MouseClickEventHandler2
+          Type: EventHandler
+          Children:
+          - Name: ListenEventType
+            Type: PropertyType
+            DataType: NodeId
+            Value: "/Types/EventTypes/BaseEventType/MouseEvent/MouseClickEvent"
+          - Name: ListenObject
+            Type: NodePointer
+            DataType: NodeId
+            ReferenceType: HasProperty
+            Children:
+            - Name: Kind
+              Type: PropertyType
+              DataType: NodeId
+              Value: "/Types/ObjectTypes/BaseObjectType"
+            - Name: NodeClass
+              Type: PropertyType
+              DataType: NodePointerNodeClass
+              ModellingRule: Optional
+            - Name: DynamicLink
+              Type: DynamicLink
+              DataType: NodePath
+              Value: "../../Content/ApplyButton/ApplyAction@NodeId"
+          - Name: MethodsToCall
+            Type: BaseObjectType
+            Children:
+            - Name: MethodContainer1
+              Type: BaseObjectType
+              Children:
+              - Name: ObjectPointer
+                Type: NodePointer
+                DataType: NodeId
+                Value: "/Objects/Optix_DefaultApplication_OptixEdge/NetLogic/CommonLogic"
+                Children:
+                - Name: Kind
+                  Type: PropertyType
+                  DataType: NodeId
+                  Value: "/Types/ObjectTypes/BaseObjectType"
+              - Name: Method
+                Type: BaseDataVariableType
+                DataType: String
+                Value: "SaveCommunicationProperties"
+              - Name: InputArguments
+                Type: BaseObjectType
+                Children:
+                - Name: aliasNode
+                  Type: BaseDataVariableType
+                  DataType: NodeId
+                - Name: widgetNode
+                  Type: BaseDataVariableType
+                  DataType: NodeId
+          - Name: EventArguments
+            Type: MouseClickEvent
+            Children:
+            - Name: EventId
+              Type: PropertyType
+              DataType: ByteString
+            - Name: EventType
+              Type: PropertyType
+              DataType: NodeId
+            - Name: SourceNode
+              Type: PropertyType
+              DataType: NodeId
+            - Name: SourceName
+              Type: PropertyType
+              DataType: String
+            - Name: Time
+              Type: PropertyType
+              DataType: UtcTime
+            - Name: ReceiveTime
+              Type: PropertyType
+              DataType: UtcTime
+            - Name: LocalTime
+              Type: PropertyType
+              DataType: TimeZoneDataType
+              ModellingRule: Optional
+            - Name: Message
+              Type: PropertyType
+              DataType: LocalizedText
+            - Name: Severity
+              Type: PropertyType
+              DataType: UInt16
+            - Name: ConditionClassId
+              Type: PropertyType
+              DataType: NodeId
+              ModellingRule: Optional
+            - Name: ConditionClassName
+              Type: PropertyType
+              DataType: LocalizedText
+              ModellingRule: Optional
+            - Name: ConditionSubClassId
+              Type: PropertyType
+              DataType: NodeId
+              ModellingRule: Optional
+              ValueRank: OneDimension
+              ArrayDimensions: [0]
+            - Name: ConditionSubClassName
+              Type: PropertyType
+              DataType: LocalizedText
+              ModellingRule: Optional
+              ValueRank: OneDimension
+              ArrayDimensions: [0]
+        - Name: MouseClickEventHandler3
+          Type: EventHandler
+          Children:
+          - Name: ListenEventType
+            Type: PropertyType
+            DataType: NodeId
+            Value: "/Types/EventTypes/BaseEventType/MouseEvent/MouseClickEvent"
+          - Name: ListenObject
+            Type: NodePointer
+            DataType: NodeId
+            ReferenceType: HasProperty
+            Children:
+            - Name: Kind
+              Type: PropertyType
+              DataType: NodeId
+              Value: "/Types/ObjectTypes/BaseObjectType"
+            - Name: NodeClass
+              Type: PropertyType
+              DataType: NodePointerNodeClass
+              ModellingRule: Optional
+            - Name: DynamicLink
+              Type: DynamicLink
+              DataType: NodePath
+              Value: "../../Content/TagsImport/TagsImportAction@NodeId"
+          - Name: MethodsToCall
+            Type: BaseObjectType
+            Children:
+            - Name: MethodContainer1
+              Type: BaseObjectType
+              Children:
+              - Name: ObjectPointer
+                Type: NodePointer
+                DataType: NodeId
+                Value: "/Objects/Commands/UICommands"
+                Children:
+                - Name: Kind
+                  Type: PropertyType
+                  DataType: NodeId
+                  Value: "/Types/ObjectTypes/BaseObjectType"
+              - Name: Method
+                Type: BaseDataVariableType
+                DataType: String
+                Value: "OpenDialog"
+              - Name: InputArguments
+                Type: BaseObjectType
+                Children:
+                - Name: Dialog
+                  Type: BaseDataVariableType
+                  DataType: NodeId
+                  Value: "/Objects/Optix_DefaultApplication_OptixEdge/UI/UITypes/Dialogs/TagSelectionUIObject"
+                - Name: AliasNode
+                  Type: BaseDataVariableType
+                  DataType: NodeId
+                  ValueRank: ScalarOrOneDimension
+                  Children:
+                  - Name: DynamicLink
+                    Type: DynamicLink
+                    DataType: NodePath
+                    Value: "{OPCUAServerNodesToPublishAlias}@NodeId"
+                - Name: ParentItem
+                  Type: BaseDataVariableType
+                  DataType: NodeId
+                  Children:
+                  - Name: DynamicLink
+                    Type: DynamicLink
+                    DataType: NodePath
+                    Value: "../../../../..@NodeId"
+              - Name: OutputArguments
+                Type: BaseObjectType
+                Children:
+                - Name: DialogNodeId
+                  Type: BaseDataVariableType
+                  DataType: NodeId
+          - Name: EventArguments
+            Type: MouseClickEvent
+            Children:
+            - Name: EventId
+              Type: PropertyType
+              DataType: ByteString
+            - Name: EventType
+              Type: PropertyType
+              DataType: NodeId
+            - Name: SourceNode
+              Type: PropertyType
+              DataType: NodeId
+            - Name: SourceName
+              Type: PropertyType
+              DataType: String
+            - Name: Time
+              Type: PropertyType
+              DataType: UtcTime
+            - Name: ReceiveTime
+              Type: PropertyType
+              DataType: UtcTime
+            - Name: LocalTime
+              Type: PropertyType
+              DataType: TimeZoneDataType
+              ModellingRule: Optional
+            - Name: Message
+              Type: PropertyType
+              DataType: LocalizedText
+            - Name: Severity
+              Type: PropertyType
+              DataType: UInt16
+            - Name: ConditionClassId
+              Type: PropertyType
+              DataType: NodeId
+              ModellingRule: Optional
+            - Name: ConditionClassName
+              Type: PropertyType
+              DataType: LocalizedText
+              ModellingRule: Optional
+            - Name: ConditionSubClassId
+              Type: PropertyType
+              DataType: NodeId
+              ModellingRule: Optional
+              ValueRank: OneDimension
+              ArrayDimensions: [0]
+            - Name: ConditionSubClassName
+              Type: PropertyType
+              DataType: LocalizedText
+              ModellingRule: Optional
+              ValueRank: OneDimension
+              ArrayDimensions: [0]
+        - Name: EnableView
+          Type: BaseDataVariableType
+          DataType: ns=0;Boolean
+          Children:
+          - Name: DynamicLink
+            Type: DynamicLink
+            DataType: NodePath
+            Value: "../EnableImport"
+        - Name: ShowSave
+          Type: BaseDataVariableType
+          DataType: ns=0;Boolean
+        - Name: ShowImport
+          Type: BaseDataVariableType
+          DataType: ns=0;Boolean
+          Value: true
+        - Name: ShowDelete
+          Type: BaseDataVariableType
+          DataType: ns=0;Boolean
+          Value: true
+        - Name: ShowView
+          Type: BaseDataVariableType
+          DataType: ns=0;Boolean
+          Value: true
+          Children:
+          - Name: DynamicLink
+            Type: DynamicLink
+            DataType: NodePath
+            Value: "../ShowImport"
+        - Name: MouseClickEventHandler4
+          Type: EventHandler
+          Children:
+          - Name: ListenEventType
+            Type: PropertyType
+            DataType: NodeId
+            Value: "/Types/EventTypes/BaseEventType/MouseEvent/MouseClickEvent"
+          - Name: ListenObject
+            Type: NodePointer
+            DataType: NodeId
+            ReferenceType: HasProperty
+            Children:
+            - Name: Kind
+              Type: PropertyType
+              DataType: NodeId
+              Value: "/Types/ObjectTypes/BaseObjectType"
+            - Name: NodeClass
+              Type: PropertyType
+              DataType: NodePointerNodeClass
+              ModellingRule: Optional
+            - Name: DynamicLink
+              Type: DynamicLink
+              DataType: NodePath
+              Value: "../../Content/TagsView/TagsViewAction@NodeId"
+          - Name: MethodsToCall
+            Type: BaseObjectType
+            Children:
+            - Name: MethodContainer1
+              Type: BaseObjectType
+              Children:
+              - Name: ObjectPointer
+                Type: NodePointer
+                DataType: NodeId
+                Value: "/Objects/Commands/UICommands"
+                Children:
+                - Name: Kind
+                  Type: PropertyType
+                  DataType: NodeId
+                  Value: "/Types/ObjectTypes/BaseObjectType"
+              - Name: Method
+                Type: BaseDataVariableType
+                DataType: String
+                Value: "OpenDialog"
+              - Name: InputArguments
+                Type: BaseObjectType
+                Children:
+                - Name: Dialog
+                  Type: BaseDataVariableType
+                  DataType: NodeId
+                  Value: "/Objects/Optix_DefaultApplication_OptixEdge/UI/UITypes/Dialogs/TagViewerUIObject"
+                - Name: AliasNode
+                  Type: BaseDataVariableType
+                  DataType: NodeId
+                  ValueRank: ScalarOrOneDimension
+                  Children:
+                  - Name: DynamicLink
+                    Type: DynamicLink
+                    DataType: NodePath
+                    Value: "{OPCUAServerNodesToPublishAlias}@NodeId"
+                - Name: ParentItem
+                  Type: BaseDataVariableType
+                  DataType: NodeId
+                  Children:
+                  - Name: DynamicLink
+                    Type: DynamicLink
+                    DataType: NodePath
+                    Value: "../../../../..@NodeId"
+              - Name: OutputArguments
+                Type: BaseObjectType
+                Children:
+                - Name: DialogNodeId
+                  Type: BaseDataVariableType
+                  DataType: NodeId
+          - Name: EventArguments
+            Type: MouseClickEvent
+            Children:
+            - Name: EventId
+              Type: PropertyType
+              DataType: ByteString
+            - Name: EventType
+              Type: PropertyType
+              DataType: NodeId
+            - Name: SourceNode
+              Type: PropertyType
+              DataType: NodeId
+            - Name: SourceName
+              Type: PropertyType
+              DataType: String
+            - Name: Time
+              Type: PropertyType
+              DataType: UtcTime
+            - Name: ReceiveTime
+              Type: PropertyType
+              DataType: UtcTime
+            - Name: LocalTime
+              Type: PropertyType
+              DataType: TimeZoneDataType
+              ModellingRule: Optional
+            - Name: Message
+              Type: PropertyType
+              DataType: LocalizedText
+            - Name: Severity
+              Type: PropertyType
+              DataType: UInt16
+            - Name: ConditionClassId
+              Type: PropertyType
+              DataType: NodeId
+              ModellingRule: Optional
+            - Name: ConditionClassName
+              Type: PropertyType
+              DataType: LocalizedText
+              ModellingRule: Optional
+            - Name: ConditionSubClassId
+              Type: PropertyType
+              DataType: NodeId
+              ModellingRule: Optional
+              ValueRank: OneDimension
+              ArrayDimensions: [0]
+            - Name: ConditionSubClassName
+              Type: PropertyType
+              DataType: LocalizedText
+              ModellingRule: Optional
+              ValueRank: OneDimension
+              ArrayDimensions: [0]
+  - Name: Content
+    Type: AccordionContent
+    Children:
+    - Name: Content
+      Type: ColumnLayout
+      Children:
+      - Name: HorizontalAlignment
+        Type: BaseVariableType
+        DataType: HorizontalAlignment
+        ModellingRule: Optional
+        Value: 3
+      - Name: LeftMargin
+        Type: BaseVariableType
+        DataType: Size
+        ModellingRule: Optional
+        Value: 32.0
+      - Name: TopMargin
+        Type: BaseVariableType
+        DataType: Size
+        ModellingRule: Optional
+        Value: 16.0
+      - Name: ConfigurationPropertiesGrid
+        Type: GridLayout
+        Children:
+        - Name: Width
+          Type: BaseVariableType
+          DataType: Size
+          ModellingRule: Optional
+          Value: 300.0
+        - Name: Rows
+          Type: BaseDataVariableType
+          DataType: String
+          ValueRank: OneDimension
+          ArrayDimensions: [0]
+          Value: ["Auto"]
+        - Name: Columns
+          Type: BaseDataVariableType
+          DataType: String
+          ValueRank: OneDimension
+          ArrayDimensions: [0]
+          Value: ["1fr","1fr"]
+        - Name: HorizontalGap
+          Type: BaseDataVariableType
+          DataType: Size
+          ModellingRule: Optional
+          Value: 16.0
+        - Name: VerticalGap
+          Type: BaseDataVariableType
+          DataType: Size
+          ModellingRule: Optional
+          Value: 16.0
+        - Name: HorizontalAlignment
+          Type: BaseVariableType
+          DataType: HorizontalAlignment
+          ModellingRule: Optional
+          Value: 3
+        - Name: PublishDynamicConfigurationString
+          Type: GridContent1
+          Children:
+          - Name: Text
+            Type: BaseDataVariableType
+            DataType: LocalizedText
+            Children:
+            - Name: DynamicLink
+              Type: DynamicLink
+              DataType: NodePath
+              Value: "{OPCUAServerNodesToPublishAlias}/PublishDynamicConfiguration@DisplayName"
+          - Name: GridLayoutProperties
+            Type: GridLayoutProperties
+        - Name: PublishDynamicConfigurationValue
+          Type: ComboBox
+          Children:
+          - Class: Reference
+            Target: ns=3;i=480
+            Direction: Forward
+          - Name: Text
+            Type: BaseDataVariableType
+            DataType: LocalizedText
+          - Name: Model
+            Type: NodePointer
+            DataType: NodeId
+            Value: "/Objects/Optix_DefaultApplication_OptixEdge/Model/Enumerators/Boolean"
+            Children:
+            - Name: ItemKind
+              Type: PropertyType
+              DataType: NodeId
+              Value: "/Types/VariableTypes/BaseVariableType/BaseDataVariableType"
+            - Name: Kind
+              Type: PropertyType
+              DataType: NodeId
+          - Name: SelectedValue
+            Type: BaseDataVariableType
+            DataType: BaseDataType
+            Children:
+            - Name: DynamicLink
+              Type: DynamicLink
+              DataType: NodePath
+              Value: "{OPCUAServerNodesToPublishAlias}/PublishDynamicConfiguration"
+              Children:
+              - Name: Mode
+                Type: BaseVariableType
+                DataType: DynamicLinkMode
+                ModellingRule: Optional
+                Value: 2
+          - Name: SelectedItem
+            Type: NodePointer
+            DataType: NodeId
+            Children:
+            - Name: Kind
+              Type: PropertyType
+              DataType: NodeId
+              Value: "/Types/VariableTypes/BaseVariableType/BaseDataVariableType"
+          - Name: UISelectedItem
+            Type: BaseDataVariableType
+            DataType: NodeId
+            AccessLevel: Read
+          - Name: UISelectedValue
+            Type: BaseDataVariableType
+            DataType: BaseDataType
+            AccessLevel: Read
+          - Name: Item
+            Type: Alias
+            DataType: NodeId
+            Children:
+            - Name: Kind
+              Type: PropertyType
+              DataType: NodeId
+              Value: "/Types/VariableTypes/BaseVariableType/BaseDataVariableType"
+          - Name: LeftMargin
+            Type: BaseVariableType
+            DataType: Size
+            ModellingRule: Optional
+          - Name: TopMargin
+            Type: BaseVariableType
+            DataType: Size
+            ModellingRule: Optional
+          - Name: Height
+            Type: BaseVariableType
+            DataType: Size
+            ModellingRule: Optional
+            Value: 32.0
+          - Name: DisplayValuePath
+            Type: BaseDataVariableType
+            DataType: LocalizedText
+            Children:
+            - Name: DynamicLink
+              Type: DynamicLink
+              DataType: NodePath
+              Value: "{Item}@DisplayName"
+          - Name: SelectedValuePath
+            Type: BaseDataVariableType
+            DataType: BaseDataType
+            Children:
+            - Name: DynamicLink
+              Type: DynamicLink
+              DataType: NodePath
+              Value: "{Item}@Value"
+        - Name: TopMargin
+          Type: BaseVariableType
+          DataType: Size
+          ModellingRule: Optional
+          Value: 16.0
+  - Name: Expanded
+    Type: BaseDataVariableType
+    DataType: ns=0;Boolean
+  - Name: Width
+    Type: BaseVariableType
+    DataType: Size
+    ModellingRule: Optional
+    Value: 800.0
+  - Name: HorizontalAlignment
+    Type: BaseVariableType
+    DataType: HorizontalAlignment
+    ModellingRule: Optional
+    Value: 3
+  - Name: OPCUAServerNodesToPublishAlias
+    Type: Alias
+    DataType: NodeId
+    Children:
+    - Name: Kind
+      Type: PropertyType
+      DataType: NodeId
+      Value: "/Types/ObjectTypes/BaseObjectType/NodesToPublishConfigurationEntry"
+  - Name: VerticalAlignment
+    Type: BaseVariableType
+    DataType: VerticalAlignment
+    ModellingRule: Optional
+    Value: 2
+  - Name: BottomMargin
+    Type: BaseVariableType
+    DataType: Size
+    ModellingRule: Optional
+    Value: 16.0
+  - Name: TopMargin
+    Type: BaseVariableType
+    DataType: Size
+    ModellingRule: Optional
+    Value: 16.0

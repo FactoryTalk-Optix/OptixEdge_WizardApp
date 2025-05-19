@@ -1,0 +1,4 @@
+Name: MQTT
+Type: MQTTCategoryFolder
+Children:
+- File: MQTT_Clients/MQTT_Clients.yaml

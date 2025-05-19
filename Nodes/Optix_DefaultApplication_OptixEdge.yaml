@@ -1,0 +1,146 @@
+Name: Optix_DefaultApplication_OptixEdge
+Type: ProjectFolder
+Children:
+- Name: Localization
+  Type: PropertyGroup
+  Children:
+  - Name: Locales
+    Type: BaseDataVariableType
+    DataType: LocaleId
+    ValueRank: OneDimension
+    ArrayDimensions: [0]
+    Value: ["en-US"]
+  - Name: LocaleFallbackList
+    Type: BaseDataVariableType
+    DataType: LocaleId
+    ValueRank: OneDimension
+    ArrayDimensions: [0]
+    Value: ["en-US"]
+- Name: Authentication
+  Type: PropertyGroup
+  Children:
+  - Name: DefaultUserFolder
+    Type: NodePointer
+    DataType: NodeId
+    Value: "/Objects/Optix_DefaultApplication_OptixEdge/Security/Users"
+    Children:
+    - Name: Kind
+      Type: PropertyType
+      DataType: NodeId
+      Value: "/Types/ObjectTypes/BaseObjectType/FolderType"
+- Name: PasswordPolicy
+  Type: PasswordPolicy
+  Children:
+  - Name: MaximumPasswordAge
+    Type: BaseDataVariableType
+    DataType: UInt16
+  - Name: EnforcePasswordHistory
+    Type: BaseDataVariableType
+    DataType: Byte
+    Value: 1
+  - Name: MinimumPasswordAge
+    Type: BaseDataVariableType
+    DataType: UInt16
+  - Name: MinimumPasswordLength
+    Type: BaseDataVariableType
+    DataType: Byte
+    Value: 8
+- Name: AlarmConfiguration
+  Type: PropertyGroup
+- File: UI/UI.yaml
+- File: Model/Model.yaml
+- File: OPC_UA_Data/OPC_UA_Data.yaml
+- File: MQTT_Data/MQTT_Data.yaml
+- File: Converters/Converters.yaml
+- File: Alarms/Alarms.yaml
+- File: Recipes/Recipes.yaml
+- File: Loggers/Loggers.yaml
+- File: DataStores/DataStores.yaml
+- File: Reports/Reports.yaml
+- File: 'OPC-UA/OPC-UA.yaml'
+- File: MQTT/MQTT.yaml
+- File: CommDrivers/CommDrivers.yaml
+- File: NetLogic/NetLogic.yaml
+- File: Security/Security.yaml
+- File: System/System.yaml
+- File: Translations/Translations.yaml
+- File: Retentivity/Retentivity.yaml
+- Name: RuntimeEntitlementExpiredHandler1
+  Type: EventHandler
+  Children:
+  - Name: ListenEventType
+    Type: PropertyType
+    DataType: NodeId
+    Value: "/Types/EventTypes/BaseEventType/RuntimeEntitlementExpiredEvent"
+  - Name: MethodsToCall
+    Type: BaseObjectType
+    Children:
+    - Name: MethodContainer1
+      Type: BaseObjectType
+      Children:
+      - Name: ns=2;ObjectPointer
+        Type: NodePointer
+        DataType: NodeId
+        Children:
+        - Name: Kind
+          Type: PropertyType
+          DataType: NodeId
+          Value: "/Types/ObjectTypes/BaseObjectType"
+        - Name: DynamicLink
+          Type: DynamicLink
+          DataType: NodePath
+          Value: "../../../../../Commands/VariableCommands@NodeId"
+          Children:
+          - Name: Mode
+            Type: BaseVariableType
+            DataType: DynamicLinkMode
+            Value: 2
+      - Name: ns=2;Method
+        Type: BaseDataVariableType
+        DataType: String
+        Value: "Set"
+      - Name: InputArguments
+        Type: BaseObjectType
+        Children:
+        - Name: VariableToModify
+          Type: BaseDataVariableType
+          DataType: VariablePointer
+          Description: {"NamespaceIndex":2,"TextId":"SetVariableToModifyDescription"}
+          Value: "/Objects/Optix_DefaultApplication_OptixEdge/Model/RuntimeExceedBannerVisibilty"
+        - Name: Value
+          Type: BaseDataVariableType
+          DataType: ns=0;Boolean
+          Description: {"NamespaceIndex":2,"TextId":"SetValueDescription"}
+          Value: true
+        - Name: ArrayIndex
+          Type: BaseDataVariableType
+          DataType: UInt32
+          Description: {"NamespaceIndex":2,"TextId":"SetArrayIndexDescription"}
+          ValueRank: ScalarOrOneDimension
+  - Name: EventArguments
+    Type: RuntimeEntitlementExpiredEvent
+    Children:
+    - Name: EventId
+      Type: PropertyType
+      DataType: ByteString
+    - Name: EventType
+      Type: PropertyType
+      DataType: NodeId
+    - Name: SourceNode
+      Type: PropertyType
+      DataType: NodeId
+    - Name: SourceName
+      Type: PropertyType
+      DataType: String
+    - Name: Time
+      Type: PropertyType
+      DataType: UtcTime
+    - Name: ReceiveTime
+      Type: PropertyType
+      DataType: UtcTime
+    - Name: Message
+      Type: PropertyType
+      DataType: LocalizedText
+    - Name: Severity
+      Type: PropertyType
+      DataType: UInt16

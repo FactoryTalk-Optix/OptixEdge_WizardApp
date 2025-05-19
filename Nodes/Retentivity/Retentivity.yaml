@@ -1,0 +1,256 @@
+Name: Retentivity
+Type: RetentivityCategoryFolder
+Children:
+- Name: SecurityRetentivityStorage
+  Type: RetentivityStorage
+  Children:
+  - Name: Nodes
+    Type: BaseObjectType
+    Children:
+    - Name: Node1
+      Type: NodePointer
+      DataType: NodeId
+      Value: "/Objects/Optix_DefaultApplication_OptixEdge/Security"
+      Children:
+      - Name: Kind
+        Type: PropertyType
+        DataType: NodeId
+      - Name: NodeClass
+        Type: PropertyType
+        DataType: NodePointerNodeClass
+        Value: 2
+  - Name: WriteDelay
+    Type: BaseDataVariableType
+    DataType: Duration
+    ReferenceType: HasProperty
+  - Name: DeltaObserverEnabled
+    Type: BaseDataVariableType
+    DataType: ns=0;Boolean
+    ReferenceType: HasProperty
+    Value: true
+- Name: AlarmsRetentivityStorage
+  Type: RetentivityStorage
+  Children:
+  - Name: Nodes
+    Type: BaseObjectType
+    Children:
+    - Name: Node1
+      Type: NodePointer
+      DataType: NodeId
+      Value: "/Objects/Optix_DefaultApplication_OptixEdge/Alarms"
+      Children:
+      - Name: Kind
+        Type: PropertyType
+        DataType: NodeId
+      - Name: NodeClass
+        Type: PropertyType
+        DataType: NodePointerNodeClass
+        Value: 2
+  - Name: WriteDelay
+    Type: BaseDataVariableType
+    DataType: Duration
+    ReferenceType: HasProperty
+  - Name: DeltaObserverEnabled
+    Type: BaseDataVariableType
+    DataType: ns=0;Boolean
+    ReferenceType: HasProperty
+    Value: true
+- Name: DataSourcesStorage
+  Type: RetentivityStorage
+  Children:
+  - Name: Nodes
+    Type: BaseObjectType
+    Children:
+    - Name: RAEIP
+      Type: NodePointer
+      DataType: NodeId
+      Value: "/Objects/Optix_DefaultApplication_OptixEdge/CommDrivers/RAEtherNet_IP"
+      Children:
+      - Name: Kind
+        Type: PropertyType
+        DataType: NodeId
+      - Name: NodeClass
+        Type: PropertyType
+        DataType: NodePointerNodeClass
+        Value: 2
+    - Name: S7TCP
+      Type: NodePointer
+      DataType: NodeId
+      Value: "/Objects/Optix_DefaultApplication_OptixEdge/CommDrivers/S7TCP"
+      Children:
+      - Name: Kind
+        Type: PropertyType
+        DataType: NodeId
+      - Name: NodeClass
+        Type: PropertyType
+        DataType: NodePointerNodeClass
+        Value: 2
+    - Name: ModbusTCP
+      Type: NodePointer
+      DataType: NodeId
+      Value: "/Objects/Optix_DefaultApplication_OptixEdge/CommDrivers/ModbusTCP"
+      Children:
+      - Name: Kind
+        Type: PropertyType
+        DataType: NodeId
+      - Name: NodeClass
+        Type: PropertyType
+        DataType: NodePointerNodeClass
+        Value: 2
+    - Name: 'OPC-UA'
+      Type: NodePointer
+      DataType: NodeId
+      Value: "/Objects/Optix_DefaultApplication_OptixEdge/OPC-UA/OPC-UA Clients"
+      Children:
+      - Name: Kind
+        Type: PropertyType
+        DataType: NodeId
+      - Name: NodeClass
+        Type: PropertyType
+        DataType: NodePointerNodeClass
+        Value: 2
+    - Name: S7Profinet
+      Type: NodePointer
+      DataType: NodeId
+      Value: "/Objects/Optix_DefaultApplication_OptixEdge/CommDrivers/S7TIAProfinet"
+      Children:
+      - Name: Kind
+        Type: PropertyType
+        DataType: NodeId
+      - Name: NodeClass
+        Type: PropertyType
+        DataType: NodePointerNodeClass
+        Value: 2
+  - Name: WriteDelay
+    Type: BaseDataVariableType
+    DataType: Duration
+    ReferenceType: HasProperty
+  - Name: DeltaObserverEnabled
+    Type: BaseDataVariableType
+    DataType: ns=0;Boolean
+    ReferenceType: HasProperty
+- Name: DataDestinationsStorage
+  Type: RetentivityStorage
+  Children:
+  - Name: Nodes
+    Type: BaseObjectType
+    Children:
+    - Name: Stores
+      Type: NodePointer
+      DataType: NodeId
+      Value: "/Objects/Optix_DefaultApplication_OptixEdge/DataStores"
+      Children:
+      - Name: Kind
+        Type: PropertyType
+        DataType: NodeId
+      - Name: NodeClass
+        Type: PropertyType
+        DataType: NodePointerNodeClass
+        Value: 2
+    - Name: MQTT Clients
+      Type: NodePointer
+      DataType: NodeId
+      Value: "/Objects/Optix_DefaultApplication_OptixEdge/MQTT/MQTT Clients"
+      Children:
+      - Name: Kind
+        Type: PropertyType
+        DataType: NodeId
+      - Name: NodeClass
+        Type: PropertyType
+        DataType: NodePointerNodeClass
+        Value: 2
+    - Name: MQTT Data
+      Type: NodePointer
+      DataType: NodeId
+      Value: "/Objects/Optix_DefaultApplication_OptixEdge/MQTT Data"
+      Children:
+      - Name: Kind
+        Type: PropertyType
+        DataType: NodeId
+      - Name: NodeClass
+        Type: PropertyType
+        DataType: NodePointerNodeClass
+        Value: 2
+    - Name: Loggers
+      Type: NodePointer
+      DataType: NodeId
+      Value: "/Objects/Optix_DefaultApplication_OptixEdge/Loggers"
+      Children:
+      - Name: Kind
+        Type: PropertyType
+        DataType: NodeId
+      - Name: NodeClass
+        Type: PropertyType
+        DataType: NodePointerNodeClass
+        Value: 2
+    - Name: OPC UA Server
+      Type: NodePointer
+      DataType: NodeId
+      Value: "/Objects/Optix_DefaultApplication_OptixEdge/OPC-UA/OPC-UA Server"
+      Children:
+      - Name: Kind
+        Type: PropertyType
+        DataType: NodeId
+      - Name: NodeClass
+        Type: PropertyType
+        DataType: NodePointerNodeClass
+        Value: 2
+    - Name: OPCUA Server Data
+      Type: NodePointer
+      DataType: NodeId
+      Value: "/Objects/Optix_DefaultApplication_OptixEdge/OPC UA Data"
+      Children:
+      - Name: Kind
+        Type: PropertyType
+        DataType: NodeId
+      - Name: NodeClass
+        Type: PropertyType
+        DataType: NodePointerNodeClass
+        Value: 2
+  - Name: WriteDelay
+    Type: BaseDataVariableType
+    DataType: Duration
+    ReferenceType: HasProperty
+  - Name: DeltaObserverEnabled
+    Type: BaseDataVariableType
+    DataType: ns=0;Boolean
+    ReferenceType: HasProperty
+- Name: UIStorage
+  Type: RetentivityStorage
+  Children:
+  - Name: Nodes
+    Type: BaseObjectType
+    Children:
+    - Name: Dashboard
+      Type: NodePointer
+      DataType: NodeId
+      Value: "/Objects/Optix_DefaultApplication_OptixEdge/Model/DashboardCollection"
+      Children:
+      - Name: Kind
+        Type: PropertyType
+        DataType: NodeId
+      - Name: NodeClass
+        Type: PropertyType
+        DataType: NodePointerNodeClass
+        Value: 2
+    - Name: ProjectSettings
+      Type: NodePointer
+      DataType: NodeId
+      Value: "/Objects/Optix_DefaultApplication_OptixEdge/Model/ProjectSettings"
+      Children:
+      - Name: Kind
+        Type: PropertyType
+        DataType: NodeId
+      - Name: NodeClass
+        Type: PropertyType
+        DataType: NodePointerNodeClass
+        Value: 2
+  - Name: WriteDelay
+    Type: BaseDataVariableType
+    DataType: Duration
+    ReferenceType: HasProperty
+  - Name: DeltaObserverEnabled
+    Type: BaseDataVariableType
+    DataType: ns=0;Boolean
+    ReferenceType: HasProperty
+    Value: true

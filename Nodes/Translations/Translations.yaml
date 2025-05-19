@@ -1,0 +1,35 @@
+Name: Translations
+Type: TranslationsCategoryFolder
+Children:
+- Name: LocalizationDictionary1
+  Type: LocalizationDictionary
+  DataType: String
+  ValueRank: OneOrMoreDimensions
+  ArrayDimensions: [0,0]
+  Value: 
+   {
+    "Type": 12,
+    "Dimensions": [20,2],
+    "Body": [
+     "","en-US",
+     "FileNameInput","File name:",
+     "ExtensionDescription","Configure a semicolumn separaded list of extension to filter the valid files (e.g: *.pdf;*.txt)",
+     "StartingPathDescription","Which folder to display when opening the Dialog",
+     "SelectFileDialogDisplayName","Select File DialogBox",
+     "FullPathDescription","Full path of the selected file (returned when clicking \"Confirm\")",
+     "AccessNetworkDrivesDescription","Toggle access to network drives (only for Windows and Ubuntu)",
+     "ApplicationFolder","Application folder",
+     "AccessFullFileSystemDescription","Toggle access to the whole FileSystem (only for Windows and Ubuntu)",
+     "ShowHiddenFilesDescription","Toggle visibility of hidden files",
+     "ProjectFolder","Project folder",
+     "ConfirmFromSelectFileDialog","Confirm",
+     "Cancel","Cancel",
+     "Filename","File name",
+     "Size","Size",
+     "Apply","Apply",
+     "Red","Red",
+     "Green","Green",
+     "Blue","Blue",
+     "Background","Background"
+    ]
+   }

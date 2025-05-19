@@ -1,0 +1,5 @@
+Name: 'OPC-UA'
+Type: OPCUACategoryFolder
+Children:
+- File: 'OPC-UA_Clients/OPC-UA_Clients.yaml'
+- File: 'OPC-UA_Server/OPC-UA_Server.yaml'

@@ -1,0 +1,9 @@
+Name: RAEtherNet_IP
+Id: g=ca90cb43c4fdb73ab448e6917896eb03
+Type: RAEtherNetIPDriver
+DisplayName: {"LocaleId":"en-US","Text":"RA Ethernet/IP"}
+Children:
+- Name: AllowRuntimeTagImport
+  Id: g=80a819d5496c699ac2da64d2d8d3ad8f
+  Type: BaseDataVariableType
+  DataType: ns=0;Boolean

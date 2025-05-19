@@ -1,0 +1,775 @@
+Name: Converters
+Type: ConvertersCategoryFolder
+Children:
+- Name: EnumDriverNodeId
+  Id: g=640c0e40ab46a9e4162a3de5ccc79a60
+  Supertype: ValueMapConverter
+  ReferenceType: HasComponent
+  Children:
+  - Name: ns=2;Pairs
+    Type: BaseObjectType
+    ModellingRule: None
+    Children:
+    - Name: Pair
+      Type: ValueMapPair
+      ModellingRule: None
+      Children:
+      - Name: Key
+        Type: BaseDataVariableType
+        DataType: SourceDriver
+        ModellingRule: None
+      - Name: Value
+        Type: BaseDataVariableType
+        DataType: NodeId
+        ModellingRule: None
+        Value: "/Objects/Optix_DefaultApplication_OptixEdge/Model/CommDriverComboBoxElements/RAEIP"
+    - Name: Pair1
+      Type: ValueMapPair
+      ModellingRule: None
+      Children:
+      - Name: Key
+        Type: BaseDataVariableType
+        DataType: SourceDriver
+        ModellingRule: None
+        Value: 1
+      - Name: Value
+        Type: BaseDataVariableType
+        DataType: NodeId
+        ModellingRule: None
+        Value: "/Objects/Optix_DefaultApplication_OptixEdge/Model/CommDriverComboBoxElements/S7TCP"
+    - Name: Pair2
+      Type: ValueMapPair
+      ModellingRule: None
+      Children:
+      - Name: Key
+        Type: BaseDataVariableType
+        DataType: SourceDriver
+        ModellingRule: None
+        Value: 2
+      - Name: Value
+        Type: BaseDataVariableType
+        DataType: NodeId
+        ModellingRule: None
+        Value: "/Objects/Optix_DefaultApplication_OptixEdge/Model/CommDriverComboBoxElements/ModbusTCP"
+    - Name: Pair3
+      Type: ValueMapPair
+      ModellingRule: None
+      Children:
+      - Name: Key
+        Type: BaseDataVariableType
+        DataType: SourceDriver
+        ModellingRule: None
+        Value: 3
+      - Name: Value
+        Type: BaseDataVariableType
+        DataType: NodeId
+        ModellingRule: None
+        Value: "/Objects/Optix_DefaultApplication_OptixEdge/Model/CommDriverComboBoxElements/S7Profinet"
+- Name: EnumWidgetNodeId
+  Id: g=dfc9472b6862161f3901411ee58c8333
+  Supertype: ValueMapConverter
+  ReferenceType: HasComponent
+  Children:
+  - Name: ns=2;Pairs
+    Type: BaseObjectType
+    ModellingRule: None
+    Children:
+    - Name: Pair
+      Type: ValueMapPair
+      ModellingRule: None
+      Children:
+      - Name: Key
+        Type: BaseDataVariableType
+        DataType: Widgets
+        ModellingRule: None
+      - Name: Value
+        Type: BaseDataVariableType
+        DataType: NodeId
+        ModellingRule: None
+        Value: "/Objects/Optix_DefaultApplication_OptixEdge/UI/UITypes/Widgets/Dashboard/UIObjects/DataGridUIObj"
+    - Name: Pair1
+      Type: ValueMapPair
+      ModellingRule: None
+      Children:
+      - Name: Key
+        Type: BaseDataVariableType
+        DataType: Widgets
+        ModellingRule: None
+        Value: 1
+      - Name: Value
+        Type: BaseDataVariableType
+        DataType: NodeId
+        ModellingRule: None
+        Value: "/Objects/Optix_DefaultApplication_OptixEdge/UI/UITypes/Widgets/Dashboard/UIObjects/TrendUIObj"
+    - Name: Pair2
+      Type: ValueMapPair
+      ModellingRule: None
+      Children:
+      - Name: Key
+        Type: BaseDataVariableType
+        DataType: Widgets
+        ModellingRule: None
+        Value: 2
+      - Name: Value
+        Type: BaseDataVariableType
+        DataType: NodeId
+        ModellingRule: None
+        Value: "/Objects/Optix_DefaultApplication_OptixEdge/UI/UITypes/Widgets/Dashboard/UIObjects/DisplayUIObj"
+    - Name: Pair3
+      Type: ValueMapPair
+      ModellingRule: None
+      Children:
+      - Name: Key
+        Type: BaseDataVariableType
+        DataType: Widgets
+        ModellingRule: None
+        Value: 3
+      - Name: Value
+        Type: BaseDataVariableType
+        DataType: NodeId
+        ModellingRule: None
+        Value: "/Objects/Optix_DefaultApplication_OptixEdge/UI/UITypes/Widgets/Dashboard/UIObjects/SparklineUIObj"
+  - Name: Mode
+    Type: PropertyType
+    DataType: DynamicLinkMode
+    ReferenceType: HasComponent
+    ModellingRule: Optional
+    Value: 2
+- Name: EnumWidgetConfigLoader
+  Id: g=7ee3750432092d3447459c18155c923e
+  Supertype: ValueMapConverter
+  ReferenceType: HasComponent
+  Children:
+  - Name: ns=2;Pairs
+    Type: BaseObjectType
+    ModellingRule: None
+    Children:
+    - Name: Pair
+      Type: ValueMapPair
+      ModellingRule: None
+      Children:
+      - Name: Key
+        Type: BaseDataVariableType
+        DataType: Widgets
+        ModellingRule: None
+      - Name: Value
+        Type: BaseDataVariableType
+        DataType: NodeId
+        ModellingRule: None
+        Value: "/Objects/Optix_DefaultApplication_OptixEdge/UI/UITypes/Widgets/Dashboard/UIObjectsConfig/DataGridUIObjConfig"
+    - Name: Pair1
+      Type: ValueMapPair
+      ModellingRule: None
+      Children:
+      - Name: Key
+        Type: BaseDataVariableType
+        DataType: Widgets
+        ModellingRule: None
+        Value: 1
+      - Name: Value
+        Type: BaseDataVariableType
+        DataType: NodeId
+        ModellingRule: None
+        Value: "/Objects/Optix_DefaultApplication_OptixEdge/UI/UITypes/Widgets/Dashboard/UIObjectsConfig/TrendUIObjConfig"
+    - Name: Pair2
+      Type: ValueMapPair
+      ModellingRule: None
+      Children:
+      - Name: Key
+        Type: BaseDataVariableType
+        DataType: Widgets
+        ModellingRule: None
+        Value: 2
+      - Name: Value
+        Type: BaseDataVariableType
+        DataType: NodeId
+        ModellingRule: None
+        Value: "/Objects/Optix_DefaultApplication_OptixEdge/UI/UITypes/Widgets/Dashboard/UIObjectsConfig/DisplayUIObjConfig"
+    - Name: Pair3
+      Type: ValueMapPair
+      ModellingRule: None
+      Children:
+      - Name: Key
+        Type: BaseDataVariableType
+        DataType: Widgets
+        ModellingRule: None
+        Value: 3
+      - Name: Value
+        Type: BaseDataVariableType
+        DataType: NodeId
+        ModellingRule: None
+        Value: "/Objects/Optix_DefaultApplication_OptixEdge/UI/UITypes/Widgets/Dashboard/UIObjectsConfig/SparklineUIObjConfig"
+  - Name: Mode
+    Type: PropertyType
+    DataType: DynamicLinkMode
+    ReferenceType: HasComponent
+    ModellingRule: Optional
+    Value: 2
+- Name: ToasBannerTypeTextColor
+  Id: g=d98ab951fd3774b1814e2360c15421b7
+  Supertype: ValueMapConverter
+  ReferenceType: HasComponent
+  Children:
+  - Name: ns=2;Pairs
+    Type: BaseObjectType
+    ModellingRule: None
+    Children:
+    - Name: Pair
+      Type: ValueMapPair
+      ModellingRule: None
+      Children:
+      - Name: Key
+        Type: BaseDataVariableType
+        DataType: ToasBannerNotificationLevel
+        ModellingRule: None
+      - Name: Value
+        Type: BaseDataVariableType
+        DataType: Color
+        ModellingRule: None
+        Value: "#ffffff"
+    - Name: Pair1
+      Type: ValueMapPair
+      ModellingRule: None
+      Children:
+      - Name: Key
+        Type: BaseDataVariableType
+        DataType: ToasBannerNotificationLevel
+        ModellingRule: None
+        Value: 1
+      - Name: Value
+        Type: BaseDataVariableType
+        DataType: Color
+        ModellingRule: None
+        Value: "#ffffff"
+    - Name: Pair2
+      Type: ValueMapPair
+      ModellingRule: None
+      Children:
+      - Name: Key
+        Type: BaseDataVariableType
+        DataType: ToasBannerNotificationLevel
+        ModellingRule: None
+        Value: 2
+      - Name: Value
+        Type: BaseDataVariableType
+        DataType: Color
+        ModellingRule: None
+        Value: "#ffffff"
+    - Name: Pair3
+      Type: ValueMapPair
+      ModellingRule: None
+      Children:
+      - Name: Key
+        Type: BaseDataVariableType
+        DataType: ToasBannerNotificationLevel
+        ModellingRule: None
+        Value: 3
+      - Name: Value
+        Type: BaseDataVariableType
+        DataType: Color
+        ModellingRule: None
+        Value: "#000000"
+- Name: ToasBannerTypeIcon
+  Id: g=0f744916a1f42426f7a1a0f454c03bb9
+  Supertype: ValueMapConverter
+  ReferenceType: HasComponent
+  Children:
+  - Name: ns=2;Pairs
+    Type: BaseObjectType
+    ModellingRule: None
+    Children:
+    - Name: Pair
+      Type: ValueMapPair
+      ModellingRule: None
+      Children:
+      - Name: Key
+        Type: BaseDataVariableType
+        DataType: ToasBannerNotificationLevel
+        ModellingRule: None
+      - Name: Value
+        Type: BaseDataVariableType
+        DataType: ResourceUri
+        ModellingRule: None
+        Value: "ns=7;%PROJECTDIR%/imgs/icons/error-color.svg"
+    - Name: Pair1
+      Type: ValueMapPair
+      ModellingRule: None
+      Children:
+      - Name: Key
+        Type: BaseDataVariableType
+        DataType: ToasBannerNotificationLevel
+        ModellingRule: None
+        Value: 1
+      - Name: Value
+        Type: BaseDataVariableType
+        DataType: ResourceUri
+        ModellingRule: None
+        Value: "ns=7;%PROJECTDIR%/imgs/icons/info-color.svg"
+    - Name: Pair2
+      Type: ValueMapPair
+      ModellingRule: None
+      Children:
+      - Name: Key
+        Type: BaseDataVariableType
+        DataType: ToasBannerNotificationLevel
+        ModellingRule: None
+        Value: 2
+      - Name: Value
+        Type: BaseDataVariableType
+        DataType: ResourceUri
+        ModellingRule: None
+        Value: "ns=7;%PROJECTDIR%/imgs/icons/check-color.svg"
+    - Name: Pair3
+      Type: ValueMapPair
+      ModellingRule: None
+      Children:
+      - Name: Key
+        Type: BaseDataVariableType
+        DataType: ToasBannerNotificationLevel
+        ModellingRule: None
+        Value: 3
+      - Name: Value
+        Type: BaseDataVariableType
+        DataType: ResourceUri
+        ModellingRule: None
+        Value: "ns=7;%PROJECTDIR%/imgs/icons/warning-color.svg"
+- Name: ToasBannerBackgroundColor
+  Id: g=acd189c9afc02b84d8b4a66f9a118cbd
+  Supertype: ValueMapConverter
+  ReferenceType: HasComponent
+  Children:
+  - Name: ns=2;Pairs
+    Type: BaseObjectType
+    ModellingRule: None
+    Children:
+    - Name: Pair
+      Type: ValueMapPair
+      ModellingRule: None
+      Children:
+      - Name: Key
+        Type: BaseDataVariableType
+        DataType: ToasBannerNotificationLevel
+        ModellingRule: None
+      - Name: Value
+        Type: BaseDataVariableType
+        DataType: Color
+        ModellingRule: None
+        Value: "#aa0000"
+    - Name: Pair1
+      Type: ValueMapPair
+      ModellingRule: None
+      Children:
+      - Name: Key
+        Type: BaseDataVariableType
+        DataType: ToasBannerNotificationLevel
+        ModellingRule: None
+        Value: 1
+      - Name: Value
+        Type: BaseDataVariableType
+        DataType: Color
+        ModellingRule: None
+        Value: "#235d9f"
+    - Name: Pair3
+      Type: ValueMapPair
+      ModellingRule: None
+      Children:
+      - Name: Key
+        Type: BaseDataVariableType
+        DataType: ToasBannerNotificationLevel
+        ModellingRule: None
+        Value: 3
+      - Name: Value
+        Type: BaseDataVariableType
+        DataType: Color
+        ModellingRule: None
+        Value: "#ffcc00"
+    - Name: Pair2
+      Type: ValueMapPair
+      ModellingRule: None
+      Children:
+      - Name: Key
+        Type: BaseDataVariableType
+        DataType: ToasBannerNotificationLevel
+        ModellingRule: None
+        Value: 2
+      - Name: Value
+        Type: BaseDataVariableType
+        DataType: Color
+        ModellingRule: None
+        Value: "#12850a"
+- Name: ToastBarColor
+  Id: g=7cf5e5d42efe1c6e03eacb6e87696062
+  Supertype: ValueMapConverter
+  ReferenceType: HasComponent
+  Children:
+  - Name: ns=2;Pairs
+    Type: BaseObjectType
+    ModellingRule: None
+    Children:
+    - Name: Pair
+      Type: ValueMapPair
+      ModellingRule: None
+      Children:
+      - Name: Key
+        Type: BaseDataVariableType
+        DataType: ToasBannerNotificationLevel
+        ModellingRule: None
+      - Name: Value
+        Type: BaseDataVariableType
+        DataType: Color
+        ModellingRule: None
+        Value: "#c80000"
+    - Name: Pair1
+      Type: ValueMapPair
+      ModellingRule: None
+      Children:
+      - Name: Key
+        Type: BaseDataVariableType
+        DataType: ToasBannerNotificationLevel
+        ModellingRule: None
+        Value: 1
+      - Name: Value
+        Type: BaseDataVariableType
+        DataType: Color
+        ModellingRule: None
+        Value: "#235fe5"
+    - Name: Pair2
+      Type: ValueMapPair
+      ModellingRule: None
+      Children:
+      - Name: Key
+        Type: BaseDataVariableType
+        DataType: ToasBannerNotificationLevel
+        ModellingRule: None
+        Value: 2
+      - Name: Value
+        Type: BaseDataVariableType
+        DataType: Color
+        ModellingRule: None
+        Value: "#12990a"
+    - Name: Pair3
+      Type: ValueMapPair
+      ModellingRule: None
+      Children:
+      - Name: Key
+        Type: BaseDataVariableType
+        DataType: ToasBannerNotificationLevel
+        ModellingRule: None
+        Value: 3
+      - Name: Value
+        Type: BaseDataVariableType
+        DataType: Color
+        ModellingRule: None
+        Value: "#ffe000"
+- Name: ToastHorizontalAlignment
+  Id: g=d93cbaf91a12a917681fc7bdb0df78b4
+  Supertype: ValueMapConverter
+  ReferenceType: HasComponent
+  Children:
+  - Name: ns=2;Pairs
+    Type: BaseObjectType
+    ModellingRule: None
+    Children:
+    - Name: Pair
+      Type: ValueMapPair
+      ModellingRule: None
+      Children:
+      - Name: Key
+        Type: BaseDataVariableType
+        DataType: ToastPosition
+        ModellingRule: None
+      - Name: Value
+        Type: BaseDataVariableType
+        DataType: HorizontalAlignment
+        ModellingRule: None
+    - Name: Pair1
+      Type: ValueMapPair
+      ModellingRule: None
+      Children:
+      - Name: Key
+        Type: BaseDataVariableType
+        DataType: ToastPosition
+        ModellingRule: None
+        Value: 1
+      - Name: Value
+        Type: BaseDataVariableType
+        DataType: HorizontalAlignment
+        ModellingRule: None
+        Value: 1
+    - Name: Pair2
+      Type: ValueMapPair
+      ModellingRule: None
+      Children:
+      - Name: Key
+        Type: BaseDataVariableType
+        DataType: ToastPosition
+        ModellingRule: None
+        Value: 2
+      - Name: Value
+        Type: BaseDataVariableType
+        DataType: HorizontalAlignment
+        ModellingRule: None
+        Value: 2
+    - Name: Pair3
+      Type: ValueMapPair
+      ModellingRule: None
+      Children:
+      - Name: Key
+        Type: BaseDataVariableType
+        DataType: ToastPosition
+        ModellingRule: None
+        Value: 3
+      - Name: Value
+        Type: BaseDataVariableType
+        DataType: HorizontalAlignment
+        ModellingRule: None
+    - Name: Pair4
+      Type: ValueMapPair
+      ModellingRule: None
+      Children:
+      - Name: Key
+        Type: BaseDataVariableType
+        DataType: ToastPosition
+        ModellingRule: None
+        Value: 4
+      - Name: Value
+        Type: BaseDataVariableType
+        DataType: HorizontalAlignment
+        ModellingRule: None
+        Value: 1
+    - Name: Pair5
+      Type: ValueMapPair
+      ModellingRule: None
+      Children:
+      - Name: Key
+        Type: BaseDataVariableType
+        DataType: ToastPosition
+        ModellingRule: None
+        Value: 5
+      - Name: Value
+        Type: BaseDataVariableType
+        DataType: HorizontalAlignment
+        ModellingRule: None
+        Value: 2
+    - Name: Pair6
+      Type: ValueMapPair
+      ModellingRule: None
+      Children:
+      - Name: Key
+        Type: BaseDataVariableType
+        DataType: ToastPosition
+        ModellingRule: None
+        Value: 6
+      - Name: Value
+        Type: BaseDataVariableType
+        DataType: HorizontalAlignment
+        ModellingRule: None
+    - Name: Pair7
+      Type: ValueMapPair
+      ModellingRule: None
+      Children:
+      - Name: Key
+        Type: BaseDataVariableType
+        DataType: ToastPosition
+        ModellingRule: None
+        Value: 7
+      - Name: Value
+        Type: BaseDataVariableType
+        DataType: HorizontalAlignment
+        ModellingRule: None
+        Value: 1
+    - Name: Pair8
+      Type: ValueMapPair
+      ModellingRule: None
+      Children:
+      - Name: Key
+        Type: BaseDataVariableType
+        DataType: ToastPosition
+        ModellingRule: None
+        Value: 8
+      - Name: Value
+        Type: BaseDataVariableType
+        DataType: HorizontalAlignment
+        ModellingRule: None
+        Value: 2
+- Name: ToastVerticalAlignment
+  Id: g=10edda963e3f3555b37e777750ff3286
+  Supertype: ValueMapConverter
+  ReferenceType: HasComponent
+  Children:
+  - Name: ns=2;Pairs
+    Type: BaseObjectType
+    ModellingRule: None
+    Children:
+    - Name: Pair
+      Type: ValueMapPair
+      ModellingRule: None
+      Children:
+      - Name: Key
+        Type: BaseDataVariableType
+        DataType: ToastPosition
+        ModellingRule: None
+      - Name: Value
+        Type: BaseDataVariableType
+        DataType: VerticalAlignment
+        ModellingRule: None
+    - Name: Pair1
+      Type: ValueMapPair
+      ModellingRule: None
+      Children:
+      - Name: Key
+        Type: BaseDataVariableType
+        DataType: ToastPosition
+        ModellingRule: None
+        Value: 1
+      - Name: Value
+        Type: BaseDataVariableType
+        DataType: VerticalAlignment
+        ModellingRule: None
+    - Name: Pair2
+      Type: ValueMapPair
+      ModellingRule: None
+      Children:
+      - Name: Key
+        Type: BaseDataVariableType
+        DataType: ToastPosition
+        ModellingRule: None
+        Value: 2
+      - Name: Value
+        Type: BaseDataVariableType
+        DataType: VerticalAlignment
+        ModellingRule: None
+    - Name: Pair3
+      Type: ValueMapPair
+      ModellingRule: None
+      Children:
+      - Name: Key
+        Type: BaseDataVariableType
+        DataType: ToastPosition
+        ModellingRule: None
+        Value: 3
+      - Name: Value
+        Type: BaseDataVariableType
+        DataType: VerticalAlignment
+        ModellingRule: None
+        Value: 2
+    - Name: Pair4
+      Type: ValueMapPair
+      ModellingRule: None
+      Children:
+      - Name: Key
+        Type: BaseDataVariableType
+        DataType: ToastPosition
+        ModellingRule: None
+        Value: 4
+      - Name: Value
+        Type: BaseDataVariableType
+        DataType: VerticalAlignment
+        ModellingRule: None
+        Value: 2
+    - Name: Pair5
+      Type: ValueMapPair
+      ModellingRule: None
+      Children:
+      - Name: Key
+        Type: BaseDataVariableType
+        DataType: ToastPosition
+        ModellingRule: None
+        Value: 5
+      - Name: Value
+        Type: BaseDataVariableType
+        DataType: VerticalAlignment
+        ModellingRule: None
+        Value: 2
+    - Name: Pair6
+      Type: ValueMapPair
+      ModellingRule: None
+      Children:
+      - Name: Key
+        Type: BaseDataVariableType
+        DataType: ToastPosition
+        ModellingRule: None
+        Value: 6
+      - Name: Value
+        Type: BaseDataVariableType
+        DataType: VerticalAlignment
+        ModellingRule: None
+        Value: 1
+    - Name: Pair7
+      Type: ValueMapPair
+      ModellingRule: None
+      Children:
+      - Name: Key
+        Type: BaseDataVariableType
+        DataType: ToastPosition
+        ModellingRule: None
+        Value: 7
+      - Name: Value
+        Type: BaseDataVariableType
+        DataType: VerticalAlignment
+        ModellingRule: None
+        Value: 1
+    - Name: Pair8
+      Type: ValueMapPair
+      ModellingRule: None
+      Children:
+      - Name: Key
+        Type: BaseDataVariableType
+        DataType: ToastPosition
+        ModellingRule: None
+        Value: 8
+      - Name: Value
+        Type: BaseDataVariableType
+        DataType: VerticalAlignment
+        ModellingRule: None
+        Value: 1
+- Name: LogDataGridRowColor
+  Id: g=55bc0104acf1e0fd73229bd09a6646cc
+  Supertype: ValueMapConverter
+  ReferenceType: HasComponent
+  Children:
+  - Name: ns=2;Pairs
+    Type: BaseObjectType
+    ModellingRule: None
+    Children:
+    - Name: Pair1
+      Type: ValueMapPair
+      ModellingRule: None
+      Children:
+      - Name: Key
+        Type: BaseDataVariableType
+        DataType: ToasBannerNotificationLevel
+        ModellingRule: None
+        Value: 1
+      - Name: Value
+        Type: BaseDataVariableType
+        DataType: Color
+        ModellingRule: None
+        Value: "#ffffff"
+    - Name: Pair3
+      Type: ValueMapPair
+      ModellingRule: None
+      Children:
+      - Name: Key
+        Type: BaseDataVariableType
+        DataType: ToasBannerNotificationLevel
+        ModellingRule: None
+        Value: 3
+      - Name: Value
+        Type: BaseDataVariableType
+        DataType: Color
+        ModellingRule: None
+        Value: "#ffcc003d"
+    - Name: Pair
+      Type: ValueMapPair
+      ModellingRule: None
+      Children:
+      - Name: Key
+        Type: BaseDataVariableType
+        DataType: ToasBannerNotificationLevel
+        ModellingRule: None
+      - Name: Value
+        Type: BaseDataVariableType
+        DataType: Color
+        ModellingRule: None
+        Value: "#aa00003d"

@@ -1,0 +1,151 @@
+Name: ObjectTypes
+Type: FolderType
+Children:
+- Name: TagCustomGridRowData
+  Id: g=24d37d8f2529d3065768fe678e25b445
+  Supertype: BaseObjectType
+  Children:
+  - Name: Checked
+    Type: BaseDataVariableType
+    DataType: ns=0;Boolean
+  - Name: VariableName
+    Type: BaseDataVariableType
+    DataType: String
+  - Name: VariableDataType
+    Type: BaseDataVariableType
+    DataType: String
+  - Name: VariableComment
+    Type: BaseDataVariableType
+    DataType: String
+  - Name: VariableAddress
+    Type: BaseDataVariableType
+    DataType: String
+  - Name: VariableIsArray
+    Type: BaseDataVariableType
+    DataType: ns=0;Boolean
+  - Name: VariableArrayDimension
+    Type: BaseDataVariableType
+    DataType: UInt32
+    ValueRank: OneDimension
+    ArrayDimensions: [0]
+  - Name: VariableDataTypeNodeId
+    Type: BaseDataVariableType
+    DataType: NodeId
+  - Name: VariableNodeId
+    Type: BaseDataVariableType
+    DataType: NodeId
+  - Name: VariableStringLenght
+    Type: BaseDataVariableType
+    DataType: UInt16
+- Name: WidgetData
+  Id: g=3ff48c7d03554147593a3629b25c8fb3
+  Supertype: BaseObjectType
+  Children:
+  - Name: WidgetType
+    Type: BaseDataVariableType
+    DataType: NodeId
+  - Name: WidgetBrowseName
+    Type: BaseDataVariableType
+    DataType: String
+  - Name: ObjName
+    Type: BaseDataVariableType
+    DataType: LocalizedText
+  - Name: ObjPointer
+    Type: BaseDataVariableType
+    DataType: NodeId
+  - Name: ObjEngUnit
+    Type: BaseDataVariableType
+    DataType: LocalizedText
+  - Name: ColumnStart
+    Type: BaseDataVariableType
+    DataType: Int32
+  - Name: ColumnSpan
+    Type: BaseDataVariableType
+    DataType: Int32
+  - Name: RowStart
+    Type: BaseDataVariableType
+    DataType: Int32
+  - Name: RowSpan
+    Type: BaseDataVariableType
+    DataType: Int32
+  - Name: ObjQuery
+    Type: BaseDataVariableType
+    DataType: String
+  - Name: ObjDurations
+    Type: BaseDataVariableType
+    DataType: Duration
+    ValueRank: OneDimension
+    ArrayDimensions: [0]
+  - Name: ObjParameters
+    Type: BaseDataVariableType
+    DataType: BaseDataType
+    ValueRank: OneDimension
+    ArrayDimensions: [0]
+    Value: {"Type":6,"Body":[]}
+  - Name: ObjColors
+    Type: BaseDataVariableType
+    DataType: Color
+    ValueRank: OneDimension
+    ArrayDimensions: [0]
+  - Name: ObjTextParameters
+    Type: BaseDataVariableType
+    DataType: String
+    ValueRank: OneDimension
+    ArrayDimensions: [0]
+- Name: ComboBoxStationData
+  Id: g=6408b1d8e8476a60d2718e46598252a6
+  Supertype: BaseObjectType
+  Children:
+  - Name: TagsFolder
+    Type: BaseDataVariableType
+    DataType: NodeId
+  - Name: StationName
+    Type: BaseDataVariableType
+    DataType: String
+    Value: "0"
+  - Name: StationNodeId
+    Type: BaseDataVariableType
+    DataType: NodeId
+- Name: ToastBannerConfiguration
+  Id: g=29a4e804cddeaad6f093e19e1a4799d0
+  Supertype: BaseObjectType
+  Children:
+  - Name: NotificationLevel
+    Type: BaseDataVariableType
+    DataType: ToasBannerNotificationLevel
+    Value: 1
+  - Name: MessageToDisplay
+    Type: BaseDataVariableType
+    DataType: LocalizedText
+  - Name: UseNotificationLevelColorBackground
+    Type: BaseDataVariableType
+    DataType: ns=0;Boolean
+    Value: true
+  - Name: StartingPosition
+    Type: BaseDataVariableType
+    DataType: ToastPosition
+    Value: 8
+  - Name: DurationOnScreen
+    Type: BaseDataVariableType
+    DataType: Int32
+    Value: 2000
+  - Name: CounterVariable
+    Type: BaseDataVariableType
+    DataType: Int32
+    Value: 2000
+- Name: ConnectionStatusData
+  Id: g=48f627b72a3f6f9d7fd538453a322511
+  Supertype: BaseObjectType
+  Children:
+  - Name: Driver
+    Type: BaseDataVariableType
+    DataType: String
+  - Name: Station
+    Type: BaseDataVariableType
+    DataType: String
+  - Name: Address
+    Type: BaseDataVariableType
+    DataType: String
+  - Name: Connected
+    Type: BaseDataVariableType
+    DataType: ns=0;Boolean

@@ -1,0 +1,28 @@
+Name: ModbusRTU
+Type: ModbusDriver
+Children:
+- Name: Protocol
+  Type: BaseDataVariableType
+  DataType: ModbusProtocol
+  Value: 1
+- Name: SerialPort
+  Type: BaseDataVariableType
+  DataType: String
+  Value: "COM1"
+- Name: Baudrate
+  Type: BaseDataVariableType
+  DataType: UInt32
+  Value: 9600
+- Name: DataSize
+  Type: BaseDataVariableType
+  DataType: Byte
+  Value: 8
+- Name: Parity
+  Type: BaseDataVariableType
+  DataType: Parity
+- Name: StopBits
+  Type: BaseDataVariableType
+  DataType: StopBits
+- Name: FlowControl
+  Type: BaseDataVariableType
+  DataType: FlowControl

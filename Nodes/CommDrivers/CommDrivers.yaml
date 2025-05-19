@@ -1,0 +1,16 @@
+Name: CommDrivers
+Type: CommDriversCategoryFolder
+Children:
+- File: ModbusTCP/ModbusTCP.yaml
+- File: ModbusRTU/ModbusRTU.yaml
+- File: MELSECFX3U/MELSECFX3U.yaml
+- File: S7TCP/S7TCP.yaml
+- File: OMRONEtherNet_IP/OMRONEtherNet_IP.yaml
+- File: MELSECQ/MELSECQ.yaml
+- File: OMRONFinsEthernet/OMRONFinsEthernet.yaml
+- File: OMRONFinsSerial/OMRONFinsSerial.yaml
+- File: CODESYS/CODESYS.yaml
+- File: TwinCAT/TwinCAT.yaml
+- File: RAEtherNet_IP/RAEtherNet_IP.yaml
+- File: MicroController/MicroController.yaml
+- File: S7TIAProfinet/S7TIAProfinet.yaml

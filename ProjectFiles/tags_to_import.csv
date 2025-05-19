@@ -1,0 +1,7 @@
+Driver,Name,DataType,Address,ArrayDimension,StringLength,Description
+S7TCP,MySiemensTCPVar,Int16,DB10.DBW0,,,My word
+MODBUS,Modbus_HoldingReg,Int16,HR0,,,My word on holding register 0
+MODBUS,Modbus_Coil,Boolean,CO0,,,My bit on coil 0
+MODBUS,Modbus_InputRegister,Int32,IR0,,,My DWord on input register 0
+MODBUS,Modbus_DiscreteInput,Boolean,DI0,,,My bit on discrete input 0
+RAEIP,MyLogixVar,Float,Application.GlobalVar.MyReal,,,My real

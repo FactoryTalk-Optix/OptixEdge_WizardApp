@@ -1,0 +1,30 @@
+Name: MicroController
+Type: MicroControllerDriver
+Children:
+- Name: ControllerType
+  Type: BaseDataVariableType
+  DataType: ControllerType
+- Name: Protocol
+  Type: BaseDataVariableType
+  DataType: MicroControllerProtocol
+- Name: SerialProtocol
+  Type: BaseDataVariableType
+  DataType: SerialProtocol
+- Name: SerialPort
+  Type: BaseDataVariableType
+  DataType: String
+  Value: "COM1"
+- Name: Baudrate
+  Type: BaseDataVariableType
+  DataType: UInt32
+  Value: 38400
+- Name: DataSize
+  Type: BaseDataVariableType
+  DataType: Byte
+  Value: 8
+- Name: Parity
+  Type: BaseDataVariableType
+  DataType: Parity
+- Name: StopBits
+  Type: BaseDataVariableType
+  DataType: StopBits

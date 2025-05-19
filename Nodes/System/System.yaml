@@ -1,0 +1,181 @@
+Name: System
+Type: SystemCategoryFolder
+Children:
+- Name: System
+  Id: g=64e41576caf1344503f0c832603d333f
+  Type: System
+  Children:
+  - Name: NetworkInterfaces
+    Type: BaseObjectType
+  - Name: DateAndTime
+    Type: PropertyGroup
+    Children:
+    - Name: SynchronizationMode
+      Type: BaseDataVariableType
+      DataType: TimeSynchronizationModeEnum
+    - Name: RemoteNTPServer
+      Type: BaseDataVariableType
+      DataType: String
+    - Name: DateTime
+      Type: BaseDataVariableType
+      DataType: DateTime
+    - Name: TimeZone
+      Type: BaseDataVariableType
+      DataType: String
+    - Name: LocalNTPServerInterfaces
+      Type: BaseDataVariableType
+      DataType: String
+      ValueRank: OneDimension
+      ArrayDimensions: [0]
+  - Name: Device
+    Type: PropertyGroup
+    Children:
+    - Name: CatalogNumber
+      Type: BaseDataVariableType
+      DataType: String
+      AccessLevel: Read
+    - Name: CPUFrequency
+      Type: BaseDataVariableType
+      DataType: UInt32
+      AccessLevel: Read
+    - Name: CPUTemperature
+      Type: BaseDataVariableType
+      DataType: Int32
+      AccessLevel: Read
+    - Name: CPUUtilization
+      Type: BaseDataVariableType
+      DataType: UInt32
+      AccessLevel: Read
+    - Name: EthernetNetworkCount
+      Type: BaseDataVariableType
+      DataType: UInt32
+      AccessLevel: Read
+    - Name: EthernetPortCount
+      Type: BaseDataVariableType
+      DataType: UInt32
+      AccessLevel: Read
+    - Name: FirmwareDate
+      Type: BaseDataVariableType
+      DataType: DateTime
+      AccessLevel: Read
+    - Name: FirmwareVersion
+      Type: BaseDataVariableType
+      DataType: String
+      AccessLevel: Read
+    - Name: HardwareProductCode
+      Type: BaseDataVariableType
+      DataType: UInt32
+      AccessLevel: Read
+    - Name: HardwareProductType
+      Type: BaseDataVariableType
+      DataType: UInt32
+      AccessLevel: Read
+    - Name: HardwareVersion
+      Type: BaseDataVariableType
+      DataType: String
+      AccessLevel: Read
+    - Name: HardwareSeries
+      Type: BaseDataVariableType
+      DataType: String
+      AccessLevel: Read
+    - Name: Hostname
+      Type: BaseDataVariableType
+      DataType: String
+    - Name: LastApplicationUpdateTime
+      Type: BaseDataVariableType
+      DataType: DateTime
+      AccessLevel: Read
+    - Name: LastBootupTime
+      Type: BaseDataVariableType
+      DataType: DateTime
+      AccessLevel: Read
+    - Name: OSVersion
+      Type: BaseDataVariableType
+      DataType: String
+      AccessLevel: Read
+    - Name: ProductName
+      Type: BaseDataVariableType
+      DataType: String
+      AccessLevel: Read
+    - Name: ProtectionModeEnabled
+      Type: BaseDataVariableType
+      DataType: ns=0;Boolean
+    - Name: SystemManagerVersion
+      Type: BaseDataVariableType
+      DataType: String
+      AccessLevel: Read
+    - Name: TotalOnTime
+      Type: BaseDataVariableType
+      DataType: UInt32
+      AccessLevel: Read
+    - Name: FreeMemory
+      Type: BaseDataVariableType
+      DataType: UInt32
+      AccessLevel: Read
+    - Name: TotalMemory
+      Type: BaseDataVariableType
+      DataType: UInt32
+      AccessLevel: Read
+    - Name: UsedMemory
+      Type: BaseDataVariableType
+      DataType: UInt32
+      AccessLevel: Read
+    - Name: FreeStorage
+      Type: BaseDataVariableType
+      DataType: UInt32
+      AccessLevel: Read
+    - Name: TotalStorage
+      Type: BaseDataVariableType
+      DataType: UInt32
+      AccessLevel: Read
+    - Name: UsedStorage
+      Type: BaseDataVariableType
+      DataType: UInt32
+      AccessLevel: Read
+  - Name: Display
+    Type: PropertyGroup
+    Children:
+    - Name: Brightness
+      Type: BaseDataVariableType
+      DataType: UInt32
+      Value: 10
+    - Name: HorizontalResolution
+      Type: BaseDataVariableType
+      DataType: UInt32
+      AccessLevel: Read
+    - Name: VerticalResolution
+      Type: BaseDataVariableType
+      DataType: UInt32
+      AccessLevel: Read
+    - Name: Scale
+      Type: BaseDataVariableType
+      DataType: UInt32
+      Value: 100
+    - Name: Orientation
+      Type: BaseDataVariableType
+      DataType: DisplayOrientationEnum
+  - Name: Application
+    Type: PropertyGroup
+    Children:
+    - Name: FastBlink
+      Type: BaseDataVariableType
+      DataType: ns=0;Boolean
+      AccessLevel: Read
+    - Name: MediumBlink
+      Type: BaseDataVariableType
+      DataType: ns=0;Boolean
+      AccessLevel: Read
+    - Name: SlowBlink
+      Type: BaseDataVariableType
+      DataType: ns=0;Boolean
+      AccessLevel: Read
+  - Class: Reference
+    Target: ns=55;i=17
+    Direction: Forward
+  - Name: RebootRequired
+    Type: BaseDataVariableType
+    DataType: ns=0;Boolean
+    AccessLevel: Read
+  - Class: Reference
+    Target: ns=55;i=100
+    Direction: Forward

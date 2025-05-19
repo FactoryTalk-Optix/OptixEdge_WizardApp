@@ -1,0 +1,2138 @@
+Name: UIObjectsConfig
+Type: FolderType
+Children:
+- Name: DataGridUIObjConfig
+  Id: g=91e41e0efe0943ec4159e14d3733efe6
+  Supertype: Panel
+  DisplayName: {"LocaleId":"en-US","Text":"Data grid properties"}
+  ReferenceType: HasComponent
+  Children:
+  - Name: Width
+    Type: BaseVariableType
+    DataType: Size
+    ModellingRule: Optional
+    Value: 800.0
+  - Name: Properties
+    Type: Accordion
+    Children:
+    - Name: Header
+      Type: AccordionHeader
+      Children:
+      - Name: Content
+        Type: RowLayout
+        Children:
+        - Name: Width
+          Type: BaseVariableType
+          DataType: Size
+          ModellingRule: Optional
+          Value: 50.0
+        - Name: Height
+          Type: BaseVariableType
+          DataType: Size
+          ModellingRule: Optional
+          Value: 32.0
+        - Name: HorizontalAlignment
+          Type: BaseVariableType
+          DataType: HorizontalAlignment
+          ModellingRule: Optional
+          Value: 3
+        - Name: StationName
+          Type: H5
+          Children:
+          - Name: Text
+            Type: BaseDataVariableType
+            DataType: LocalizedText
+            Children:
+            - Name: DynamicLink
+              Type: DynamicLink
+              DataType: NodePath
+              Value: "../../../../..@DisplayName"
+          - Name: VerticalAlignment
+            Type: BaseVariableType
+            DataType: VerticalAlignment
+            Value: 2
+          - Name: GridLayoutProperties
+            Type: GridLayoutProperties
+          - Name: LeftMargin
+            Type: BaseVariableType
+            DataType: Size
+            ModellingRule: Optional
+            Value: 40.0
+          - Name: Text
+            Type: BaseDataVariableType
+            DataType: LocalizedText
+            ModellingRule: Optional
+            Children:
+            - Name: DynamicLink
+              Type: DynamicLink
+              DataType: NodePath
+              Value: "../../../../..@DisplayName"
+    - Name: Content
+      Type: AccordionContent
+      Children:
+      - Name: GridLayout1
+        Type: GridLayout
+        Children:
+        - Name: Width
+          Type: BaseVariableType
+          DataType: Size
+          ModellingRule: Optional
+          Value: 300.0
+        - Name: Columns
+          Type: BaseDataVariableType
+          DataType: String
+          ValueRank: OneDimension
+          ArrayDimensions: [0]
+          Value: ["1fr","1fr"]
+        - Name: HorizontalAlignment
+          Type: BaseVariableType
+          DataType: HorizontalAlignment
+          ModellingRule: Optional
+          Value: 3
+        - Name: HorizontalGap
+          Type: BaseDataVariableType
+          DataType: Size
+          ModellingRule: Optional
+          Value: 16.0
+        - Name: VerticalGap
+          Type: BaseDataVariableType
+          DataType: Size
+          ModellingRule: Optional
+          Value: 16.0
+        - Name: SourceModelString
+          Type: GridContent1
+          Children:
+          - Name: GridLayoutProperties
+            Type: GridLayoutProperties
+          - Name: Text
+            Type: BaseDataVariableType
+            DataType: LocalizedText
+            Value: {"LocaleId":"en-US","Text":"Source model"}
+        - Name: SourceModelValue
+          Type: ComboBox
+          Children:
+          - Class: Reference
+            Target: ns=3;i=480
+            Direction: Forward
+          - Name: Text
+            Type: BaseDataVariableType
+            DataType: LocalizedText
+          - Name: Model
+            Type: NodePointer
+            DataType: NodeId
+            Value: "/Objects/Optix_DefaultApplication_OptixEdge/Loggers"
+            Children:
+            - Name: ItemKind
+              Type: PropertyType
+              DataType: NodeId
+              Value: "/Types/ObjectTypes/BaseObjectType/DataLogger"
+            - Name: Kind
+              Type: PropertyType
+              DataType: NodeId
+          - Name: SelectedValue
+            Type: BaseDataVariableType
+            DataType: BaseDataType
+            Children:
+            - Name: DynamicLink
+              Type: DynamicLink
+              DataType: NodePath
+              Value: "{DataGridUIObjAlias}/ObjPointer@Pointer@Value"
+              Children:
+              - Name: Mode
+                Type: BaseVariableType
+                DataType: DynamicLinkMode
+                ModellingRule: Optional
+                Value: 2
+          - Name: SelectedItem
+            Type: NodePointer
+            DataType: NodeId
+            Children:
+            - Name: Kind
+              Type: PropertyType
+              DataType: NodeId
+              Value: "/Types/ObjectTypes/BaseObjectType/DataLogger"
+          - Name: UISelectedItem
+            Type: BaseDataVariableType
+            DataType: NodeId
+            AccessLevel: Read
+          - Name: UISelectedValue
+            Type: BaseDataVariableType
+            DataType: BaseDataType
+            AccessLevel: Read
+          - Name: Item
+            Type: Alias
+            DataType: NodeId
+            Children:
+            - Name: Kind
+              Type: PropertyType
+              DataType: NodeId
+              Value: "/Types/ObjectTypes/BaseObjectType/DataLogger"
+          - Name: DisplayValuePath
+            Type: BaseDataVariableType
+            DataType: LocalizedText
+            Children:
+            - Name: DynamicLink
+              Type: DynamicLink
+              DataType: NodePath
+              Value: "{Item}@BrowseName"
+          - Name: SelectedValuePath
+            Type: BaseDataVariableType
+            DataType: BaseDataType
+            Children:
+            - Name: DynamicLink
+              Type: DynamicLink
+              DataType: NodePath
+              Value: "{Item}@NodeId"
+          - Name: UserSelectionChangedHandler1
+            Type: EventHandler
+            Children:
+            - Name: ListenEventType
+              Type: PropertyType
+              DataType: NodeId
+              Value: "/Types/EventTypes/BaseEventType/UserSelectionChanged"
+            - Name: MethodsToCall
+              Type: BaseObjectType
+              Children:
+              - Name: MethodContainer1
+                Type: BaseObjectType
+                Children:
+                - Name: ns=2;ObjectPointer
+                  Type: NodePointer
+                  DataType: NodeId
+                  Value: "/Objects/Commands/VariableCommands"
+                  Children:
+                  - Name: Kind
+                    Type: PropertyType
+                    DataType: NodeId
+                    Value: "/Types/ObjectTypes/BaseObjectType"
+                - Name: ns=2;Method
+                  Type: BaseDataVariableType
+                  DataType: String
+                  Value: "Set"
+                - Name: InputArguments
+                  Type: BaseObjectType
+                  Children:
+                  - Name: VariableToModify
+                    Type: BaseDataVariableType
+                    DataType: VariablePointer
+                    Description: {"NamespaceIndex":2,"TextId":"SetVariableToModifyDescription"}
+                    Children:
+                    - Name: DynamicLink
+                      Type: DynamicLink
+                      DataType: NodePath
+                      Value: "../../../../../../QueryValue/Text@NodeId"
+                  - Name: Value
+                    Type: BaseDataVariableType
+                    DataType: LocalizedText
+                    Description: {"NamespaceIndex":2,"TextId":"SetValueDescription"}
+                    Children:
+                    - Name: StringFormatter1
+                      Type: StringFormatter
+                      Children:
+                      - Name: Format
+                        Type: BaseDataVariableType
+                        DataType: LocalizedText
+                        ReferenceType: HasParameter
+                        ModellingRule: Optional
+                        Value: {"LocaleId":"en-US","Text":"SELECT * FROM {0} ORDER BY Timestamp DESC LIMIT 100"}
+                      - Name: ns=2;Source0
+                        Type: BaseDataVariableType
+                        DataType: BaseDataType
+                        ReferenceType: HasSource
+                        Children:
+                        - Name: DynamicLink
+                          Type: DynamicLink
+                          DataType: NodePath
+                          Value: "../../../../../../../SelectedItem@BrowseName"
+                  - Name: ArrayIndex
+                    Type: BaseDataVariableType
+                    DataType: UInt32
+                    Description: {"NamespaceIndex":2,"TextId":"SetArrayIndexDescription"}
+                    ValueRank: ScalarOrOneDimension
+            - Name: EventArguments
+              Type: UserSelectionChanged
+              Children:
+              - Name: SelectedItem
+                Type: BaseDataVariableType
+                DataType: NodeId
+              - Name: SelectedValue
+                Type: BaseDataVariableType
+                DataType: BaseDataType
+              - Name: EventId
+                Type: PropertyType
+                DataType: ByteString
+              - Name: EventType
+                Type: PropertyType
+                DataType: NodeId
+              - Name: SourceNode
+                Type: PropertyType
+                DataType: NodeId
+              - Name: SourceName
+                Type: PropertyType
+                DataType: String
+              - Name: Time
+                Type: PropertyType
+                DataType: UtcTime
+              - Name: ReceiveTime
+                Type: PropertyType
+                DataType: UtcTime
+              - Name: Message
+                Type: PropertyType
+                DataType: LocalizedText
+              - Name: Severity
+                Type: PropertyType
+                DataType: UInt16
+        - Name: QueryString
+          Type: GridContent1
+          Children:
+          - Name: GridLayoutProperties
+            Type: GridLayoutProperties
+          - Name: Text
+            Type: BaseDataVariableType
+            DataType: LocalizedText
+            Value: {"LocaleId":"en-US","Text":"Query"}
+        - Name: QueryValue
+          Type: TextBox
+          Children:
+          - Name: Text
+            Type: BaseDataVariableType
+            DataType: LocalizedText
+            Children:
+            - Name: DynamicLink
+              Type: DynamicLink
+              DataType: NodePath
+              Value: "{DataGridUIObjAlias}/ObjQuery"
+              Children:
+              - Name: Mode
+                Type: BaseVariableType
+                DataType: DynamicLinkMode
+                ModellingRule: Optional
+                Value: 2
+          - Name: LeftMargin
+            Type: BaseVariableType
+            DataType: Size
+            ModellingRule: Optional
+          - Name: TopMargin
+            Type: BaseVariableType
+            DataType: Size
+            ModellingRule: Optional
+            Value: 2.0
+          - Name: PlaceholderText
+            Type: BaseDataVariableType
+            DataType: LocalizedText
+            ModellingRule: Optional
+            Value: {"LocaleId":"en-US","Text":"SQL query from Datalogger"}
+          - Name: ValueChangeBehaviour
+            Type: BaseDataVariableType
+            DataType: ValueChangeBehaviour
+            ModellingRule: Optional
+            Value: 1
+        - Name: AutoRefreshTimeString
+          Type: GridContent1
+          Children:
+          - Name: GridLayoutProperties
+            Type: GridLayoutProperties
+          - Name: Text
+            Type: BaseDataVariableType
+            DataType: LocalizedText
+            Value: {"LocaleId":"en-US","Text":"Auto refresh time"}
+        - Name: AutoRefreshTimeValue
+          Type: DurationPicker
+          Children:
+          - Name: Value
+            Type: BaseDataVariableType
+            DataType: Duration
+            Children:
+            - Name: DynamicLink
+              Type: DynamicLink
+              DataType: NodePath
+              Value: "{DataGridUIObjAlias}/ObjDurations[0]"
+              Children:
+              - Name: Mode
+                Type: BaseVariableType
+                DataType: DynamicLinkMode
+                ModellingRule: Optional
+                Value: 2
+          - Name: LeftMargin
+            Type: BaseVariableType
+            DataType: Size
+            ModellingRule: Optional
+          - Name: TopMargin
+            Type: BaseVariableType
+            DataType: Size
+            ModellingRule: Optional
+            Value: 1.0
+        - Name: BottomMargin
+          Type: BaseVariableType
+          DataType: Size
+          ModellingRule: Optional
+          Value: 16.0
+        - Name: TopMargin
+          Type: BaseVariableType
+          DataType: Size
+          ModellingRule: Optional
+          Value: 16.0
+    - Name: Expanded
+      Type: BaseDataVariableType
+      DataType: ns=0;Boolean
+      Value: true
+    - Name: Width
+      Type: BaseVariableType
+      DataType: Size
+      ModellingRule: Optional
+      Value: 200.0
+    - Name: HorizontalAlignment
+      Type: BaseVariableType
+      DataType: HorizontalAlignment
+      ModellingRule: Optional
+      Value: 3
+  - Name: VerticalAlignment
+    Type: BaseVariableType
+    DataType: VerticalAlignment
+    ModellingRule: Optional
+  - Name: HorizontalAlignment
+    Type: BaseVariableType
+    DataType: HorizontalAlignment
+    ModellingRule: Optional
+    Value: 3
+  - Name: DataGridUIObjAlias
+    Type: Alias
+    DataType: NodeId
+    Children:
+    - Name: Kind
+      Type: PropertyType
+      DataType: NodeId
+      Value: "/Objects/Optix_DefaultApplication_OptixEdge/UI/UITypes/Widgets/Dashboard/UIObjects/DataGridUIObj"
+  - Name: Height
+    Type: BaseVariableType
+    DataType: Size
+    ModellingRule: Optional
+    Value: -1.0
+- Name: DisplayUIObjConfig
+  Id: g=882ac760cd188de98a47aba3270d3ea1
+  Supertype: Panel
+  ReferenceType: HasComponent
+  Children:
+  - Name: Width
+    Type: BaseVariableType
+    DataType: Size
+    ModellingRule: Optional
+    Value: 800.0
+  - Name: Properties
+    Type: Accordion
+    Children:
+    - Name: Header
+      Type: AccordionHeader
+      Children:
+      - Name: H1
+        Type: H5
+        Children:
+        - Name: GridLayoutProperties
+          Type: GridLayoutProperties
+        - Name: LeftMargin
+          Type: BaseVariableType
+          DataType: Size
+          ModellingRule: Optional
+          Value: 40.0
+        - Name: Text
+          Type: BaseDataVariableType
+          DataType: LocalizedText
+          ModellingRule: Optional
+          Value: {"LocaleId":"en-US","Text":"Display"}
+    - Name: Content
+      Type: AccordionContent
+      Children:
+      - Name: GridLayout1
+        Type: GridLayout
+        Children:
+        - Name: Width
+          Type: BaseVariableType
+          DataType: Size
+          ModellingRule: Optional
+          Value: 300.0
+        - Name: Columns
+          Type: BaseDataVariableType
+          DataType: String
+          ValueRank: OneDimension
+          ArrayDimensions: [0]
+          Value: ["1fr","1fr"]
+        - Name: HorizontalAlignment
+          Type: BaseVariableType
+          DataType: HorizontalAlignment
+          ModellingRule: Optional
+          Value: 3
+        - Name: HorizontalGap
+          Type: BaseDataVariableType
+          DataType: Size
+          ModellingRule: Optional
+          Value: 16.0
+        - Name: VerticalGap
+          Type: BaseDataVariableType
+          DataType: Size
+          ModellingRule: Optional
+          Value: 16.0
+        - Name: BottomMargin
+          Type: BaseVariableType
+          DataType: Size
+          ModellingRule: Optional
+          Value: 16.0
+        - Name: TopMargin
+          Type: BaseVariableType
+          DataType: Size
+          ModellingRule: Optional
+          Value: 16.0
+    - Name: Expanded
+      Type: BaseDataVariableType
+      DataType: ns=0;Boolean
+      Value: true
+    - Name: Width
+      Type: BaseVariableType
+      DataType: Size
+      ModellingRule: Optional
+      Value: 200.0
+    - Name: HorizontalAlignment
+      Type: BaseVariableType
+      DataType: HorizontalAlignment
+      ModellingRule: Optional
+      Value: 3
+    - Name: Visible
+      Type: BaseDataVariableType
+      DataType: ns=0;Boolean
+      ModellingRule: Optional
+  - Name: VerticalAlignment
+    Type: BaseVariableType
+    DataType: VerticalAlignment
+    ModellingRule: Optional
+  - Name: HorizontalAlignment
+    Type: BaseVariableType
+    DataType: HorizontalAlignment
+    ModellingRule: Optional
+    Value: 3
+  - Name: DisplayUIObjAlias
+    Type: Alias
+    DataType: NodeId
+    Children:
+    - Name: Kind
+      Type: PropertyType
+      DataType: NodeId
+      Value: "/Types/ObjectTypes/BaseObjectType/BaseUIObject/Item/Label"
+  - Name: Height
+    Type: BaseVariableType
+    DataType: Size
+    ModellingRule: Optional
+    Value: -1.0
+- Name: SparklineUIObjConfig
+  Id: g=966001bfe3418f9801c1414f26e5bb5d
+  Supertype: Panel
+  ReferenceType: HasComponent
+  Children:
+  - Name: Width
+    Type: BaseVariableType
+    DataType: Size
+    ModellingRule: Optional
+    Value: 800.0
+  - Name: Properties
+    Type: Accordion
+    Children:
+    - Name: Header
+      Type: AccordionHeader
+      Children:
+      - Name: H1
+        Type: H5
+        Children:
+        - Name: GridLayoutProperties
+          Type: GridLayoutProperties
+        - Name: LeftMargin
+          Type: BaseVariableType
+          DataType: Size
+          ModellingRule: Optional
+          Value: 40.0
+        - Name: Text
+          Type: BaseDataVariableType
+          DataType: LocalizedText
+          ModellingRule: Optional
+          Value: {"LocaleId":"en-US","Text":"Sparkline properties"}
+    - Name: Content
+      Type: AccordionContent
+      Children:
+      - Name: GridLayout1
+        Type: GridLayout
+        Children:
+        - Name: Width
+          Type: BaseVariableType
+          DataType: Size
+          ModellingRule: Optional
+          Value: 300.0
+        - Name: Columns
+          Type: BaseDataVariableType
+          DataType: String
+          ValueRank: OneDimension
+          ArrayDimensions: [0]
+          Value: ["1fr","1fr"]
+        - Name: HorizontalAlignment
+          Type: BaseVariableType
+          DataType: HorizontalAlignment
+          ModellingRule: Optional
+          Value: 3
+        - Name: HorizontalGap
+          Type: BaseDataVariableType
+          DataType: Size
+          ModellingRule: Optional
+          Value: 16.0
+        - Name: VerticalGap
+          Type: BaseDataVariableType
+          DataType: Size
+          ModellingRule: Optional
+          Value: 16.0
+        - Name: TimeWindowLabel
+          Type: GridContent1
+          Children:
+          - Name: GridLayoutProperties
+            Type: GridLayoutProperties
+          - Name: Text
+            Type: BaseDataVariableType
+            DataType: LocalizedText
+            Value: {"LocaleId":"en-US","Text":"Time window"}
+        - Name: TimeWindowValue
+          Type: DurationPicker
+          Children:
+          - Name: Value
+            Type: BaseDataVariableType
+            DataType: Duration
+            Children:
+            - Name: DynamicLink
+              Type: DynamicLink
+              DataType: NodePath
+              Value: "{SparklineUIObjAlias}/ObjDurations[1]"
+              Children:
+              - Name: Mode
+                Type: BaseVariableType
+                DataType: DynamicLinkMode
+                ModellingRule: Optional
+                Value: 2
+        - Name: RefreshTimeLabel
+          Type: GridContent1
+          Children:
+          - Name: GridLayoutProperties
+            Type: GridLayoutProperties
+          - Name: Text
+            Type: BaseDataVariableType
+            DataType: LocalizedText
+            Value: {"LocaleId":"en-US","Text":"Refresh time"}
+        - Name: RefreshTimeValue
+          Type: DurationPicker
+          Children:
+          - Name: Value
+            Type: BaseDataVariableType
+            DataType: Duration
+            Children:
+            - Name: DynamicLink
+              Type: DynamicLink
+              DataType: NodePath
+              Value: "{SparklineUIObjAlias}/ObjDurations[0]"
+              Children:
+              - Name: Mode
+                Type: BaseVariableType
+                DataType: DynamicLinkMode
+                ModellingRule: Optional
+                Value: 2
+        - Name: BottomMargin
+          Type: BaseVariableType
+          DataType: Size
+          ModellingRule: Optional
+          Value: 16.0
+        - Name: TopMargin
+          Type: BaseVariableType
+          DataType: Size
+          ModellingRule: Optional
+          Value: 16.0
+        - Name: YAxisMaximumLabel
+          Type: GridContent1
+          Children:
+          - Name: GridLayoutProperties
+            Type: GridLayoutProperties
+          - Name: Text
+            Type: BaseDataVariableType
+            DataType: LocalizedText
+            Value: {"LocaleId":"en-US","Text":"Y axis maximum"}
+        - Name: YAxisMaximumValue
+          Type: SpinBox
+          Children:
+          - Name: Value
+            Type: BaseDataVariableType
+            DataType: Double
+            Children:
+            - Name: DynamicLink
+              Type: DynamicLink
+              DataType: NodePath
+              Value: "{SparklineUIObjAlias}/ObjParameters[0]"
+              Children:
+              - Name: Mode
+                Type: BaseVariableType
+                DataType: DynamicLinkMode
+                ModellingRule: Optional
+                Value: 2
+          - Name: ShowButtons
+            Type: BaseDataVariableType
+            DataType: ns=0;Boolean
+            ModellingRule: Optional
+          - Name: Format
+            Type: BaseDataVariableType
+            DataType: String
+            ModellingRule: Optional
+            Value: "d"
+        - Name: YAxisMinimumLabel
+          Type: GridContent1
+          Children:
+          - Name: GridLayoutProperties
+            Type: GridLayoutProperties
+          - Name: Text
+            Type: BaseDataVariableType
+            DataType: LocalizedText
+            Value: {"LocaleId":"en-US","Text":"Y axis minimum"}
+        - Name: YAxisMinimumValue
+          Type: SpinBox
+          Children:
+          - Name: Value
+            Type: BaseDataVariableType
+            DataType: Double
+            Children:
+            - Name: DynamicLink
+              Type: DynamicLink
+              DataType: NodePath
+              Value: "{SparklineUIObjAlias}/ObjParameters[1]"
+              Children:
+              - Name: Mode
+                Type: BaseVariableType
+                DataType: DynamicLinkMode
+                ModellingRule: Optional
+                Value: 2
+          - Name: ShowButtons
+            Type: BaseDataVariableType
+            DataType: ns=0;Boolean
+            ModellingRule: Optional
+          - Name: Format
+            Type: BaseDataVariableType
+            DataType: String
+            ModellingRule: Optional
+            Value: "d"
+        - Name: RangeHighLabel
+          Type: GridContent1
+          Children:
+          - Name: GridLayoutProperties
+            Type: GridLayoutProperties
+          - Name: Text
+            Type: BaseDataVariableType
+            DataType: LocalizedText
+            Value: {"LocaleId":"en-US","Text":"Range high"}
+        - Name: RangeHighValue
+          Type: SpinBox
+          Children:
+          - Name: Value
+            Type: BaseDataVariableType
+            DataType: Double
+            Children:
+            - Name: DynamicLink
+              Type: DynamicLink
+              DataType: NodePath
+              Value: "{SparklineUIObjAlias}/ObjParameters[2]"
+              Children:
+              - Name: Mode
+                Type: BaseVariableType
+                DataType: DynamicLinkMode
+                ModellingRule: Optional
+                Value: 2
+          - Name: ShowButtons
+            Type: BaseDataVariableType
+            DataType: ns=0;Boolean
+            ModellingRule: Optional
+          - Name: Format
+            Type: BaseDataVariableType
+            DataType: String
+            ModellingRule: Optional
+            Value: "d"
+        - Name: RangeLowLabel
+          Type: GridContent1
+          Children:
+          - Name: GridLayoutProperties
+            Type: GridLayoutProperties
+          - Name: Text
+            Type: BaseDataVariableType
+            DataType: LocalizedText
+            Value: {"LocaleId":"en-US","Text":"Range low"}
+        - Name: RangeLowValue
+          Type: SpinBox
+          Children:
+          - Name: Value
+            Type: BaseDataVariableType
+            DataType: Double
+            Children:
+            - Name: DynamicLink
+              Type: DynamicLink
+              DataType: NodePath
+              Value: "{SparklineUIObjAlias}/ObjParameters[3]"
+              Children:
+              - Name: Mode
+                Type: BaseVariableType
+                DataType: DynamicLinkMode
+                ModellingRule: Optional
+                Value: 2
+          - Name: ShowButtons
+            Type: BaseDataVariableType
+            DataType: ns=0;Boolean
+            ModellingRule: Optional
+          - Name: Format
+            Type: BaseDataVariableType
+            DataType: String
+            ModellingRule: Optional
+            Value: "d"
+    - Name: Expanded
+      Type: BaseDataVariableType
+      DataType: ns=0;Boolean
+      Value: true
+    - Name: Width
+      Type: BaseVariableType
+      DataType: Size
+      ModellingRule: Optional
+      Value: 200.0
+    - Name: HorizontalAlignment
+      Type: BaseVariableType
+      DataType: HorizontalAlignment
+      ModellingRule: Optional
+      Value: 3
+  - Name: VerticalAlignment
+    Type: BaseVariableType
+    DataType: VerticalAlignment
+    ModellingRule: Optional
+  - Name: HorizontalAlignment
+    Type: BaseVariableType
+    DataType: HorizontalAlignment
+    ModellingRule: Optional
+    Value: 3
+  - Name: SparklineUIObjAlias
+    Type: Alias
+    DataType: NodeId
+    Children:
+    - Name: Kind
+      Type: PropertyType
+      DataType: NodeId
+      Value: "/Objects/Optix_DefaultApplication_OptixEdge/UI/UITypes/Widgets/Dashboard/UIObjects/SparklineUIObj"
+  - Name: Height
+    Type: BaseVariableType
+    DataType: Size
+    ModellingRule: Optional
+    Value: -1.0
+- Name: TrendUIObjConfig
+  Id: g=c7fd54d8edbf23c4375ea904fccc1aa3
+  Supertype: Panel
+  ReferenceType: HasComponent
+  Children:
+  - Name: Width
+    Type: BaseVariableType
+    DataType: Size
+    ModellingRule: Optional
+    Value: 800.0
+  - Name: VerticalAlignment
+    Type: BaseVariableType
+    DataType: VerticalAlignment
+    ModellingRule: Optional
+  - Name: HorizontalAlignment
+    Type: BaseVariableType
+    DataType: HorizontalAlignment
+    ModellingRule: Optional
+    Value: 3
+  - Name: TrendUIObjAlias
+    Type: Alias
+    DataType: NodeId
+    Children:
+    - Name: Kind
+      Type: PropertyType
+      DataType: NodeId
+      Value: "/Objects/Optix_DefaultApplication_OptixEdge/UI/UITypes/Widgets/Dashboard/UIObjects/TrendUIObj"
+  - Name: Height
+    Type: BaseVariableType
+    DataType: Size
+    ModellingRule: Optional
+    Value: -1.0
+  - Name: Content
+    Type: ColumnLayout
+    Children:
+    - Name: Width
+      Type: BaseVariableType
+      DataType: Size
+      ModellingRule: Optional
+      Value: 50.0
+    - Name: Properties
+      Type: Accordion
+      Children:
+      - Name: Header
+        Type: AccordionHeader
+        Children:
+        - Name: H1
+          Type: H5
+          Children:
+          - Name: GridLayoutProperties
+            Type: GridLayoutProperties
+          - Name: LeftMargin
+            Type: BaseVariableType
+            DataType: Size
+            ModellingRule: Optional
+            Value: 40.0
+          - Name: Text
+            Type: BaseDataVariableType
+            DataType: LocalizedText
+            ModellingRule: Optional
+            Value: {"LocaleId":"en-US","Text":"Trend properties"}
+      - Name: Content
+        Type: AccordionContent
+        Children:
+        - Name: GridLayout1
+          Type: GridLayout
+          Children:
+          - Name: Width
+            Type: BaseVariableType
+            DataType: Size
+            ModellingRule: Optional
+            Value: 300.0
+          - Name: Columns
+            Type: BaseDataVariableType
+            DataType: String
+            ValueRank: OneDimension
+            ArrayDimensions: [0]
+            Value: ["1fr","1fr"]
+          - Name: HorizontalAlignment
+            Type: BaseVariableType
+            DataType: HorizontalAlignment
+            ModellingRule: Optional
+            Value: 3
+          - Name: HorizontalGap
+            Type: BaseDataVariableType
+            DataType: Size
+            ModellingRule: Optional
+            Value: 16.0
+          - Name: VerticalGap
+            Type: BaseDataVariableType
+            DataType: Size
+            ModellingRule: Optional
+            Value: 16.0
+          - Name: SourceModelString
+            Type: GridContent1
+            Children:
+            - Name: GridLayoutProperties
+              Type: GridLayoutProperties
+            - Name: Text
+              Type: BaseDataVariableType
+              DataType: LocalizedText
+              Value: {"LocaleId":"en-US","Text":"Source model"}
+          - Name: SourceModelValue
+            Type: ComboBox
+            Children:
+            - Class: Reference
+              Target: ns=3;i=480
+              Direction: Forward
+            - Name: Text
+              Type: BaseDataVariableType
+              DataType: LocalizedText
+            - Name: Model
+              Type: NodePointer
+              DataType: NodeId
+              Value: "/Objects/Optix_DefaultApplication_OptixEdge/Loggers"
+              Children:
+              - Name: ItemKind
+                Type: PropertyType
+                DataType: NodeId
+                Value: "/Types/ObjectTypes/BaseObjectType/DataLogger"
+              - Name: Kind
+                Type: PropertyType
+                DataType: NodeId
+            - Name: SelectedValue
+              Type: BaseDataVariableType
+              DataType: BaseDataType
+              Children:
+              - Name: DynamicLink
+                Type: DynamicLink
+                DataType: NodePath
+                Value: "{TrendUIObjAlias}/ObjPointer@Pointer@Value"
+                Children:
+                - Name: Mode
+                  Type: BaseVariableType
+                  DataType: DynamicLinkMode
+                  ModellingRule: Optional
+                  Value: 2
+            - Name: SelectedItem
+              Type: NodePointer
+              DataType: NodeId
+              Children:
+              - Name: Kind
+                Type: PropertyType
+                DataType: NodeId
+                Value: "/Types/ObjectTypes/BaseObjectType/DataLogger"
+            - Name: UISelectedItem
+              Type: BaseDataVariableType
+              DataType: NodeId
+              AccessLevel: Read
+            - Name: UISelectedValue
+              Type: BaseDataVariableType
+              DataType: BaseDataType
+              AccessLevel: Read
+            - Name: Item
+              Type: Alias
+              DataType: NodeId
+              Children:
+              - Name: Kind
+                Type: PropertyType
+                DataType: NodeId
+                Value: "/Types/ObjectTypes/BaseObjectType/DataLogger"
+            - Name: DisplayValuePath
+              Type: BaseDataVariableType
+              DataType: LocalizedText
+              Children:
+              - Name: DynamicLink
+                Type: DynamicLink
+                DataType: NodePath
+                Value: "{Item}@BrowseName"
+            - Name: SelectedValuePath
+              Type: BaseDataVariableType
+              DataType: BaseDataType
+              Children:
+              - Name: DynamicLink
+                Type: DynamicLink
+                DataType: NodePath
+                Value: "{Item}@NodeId"
+            - Name: LeftMargin
+              Type: BaseVariableType
+              DataType: Size
+              ModellingRule: Optional
+            - Name: TopMargin
+              Type: BaseVariableType
+              DataType: Size
+              ModellingRule: Optional
+            - Name: UserSelectionChangedHandler1
+              Type: EventHandler
+              Children:
+              - Name: ListenEventType
+                Type: PropertyType
+                DataType: NodeId
+                Value: "/Types/EventTypes/BaseEventType/UserSelectionChanged"
+              - Name: MethodsToCall
+                Type: BaseObjectType
+                Children:
+                - Name: MethodContainer1
+                  Type: BaseObjectType
+                  Children:
+                  - Name: ns=2;ObjectPointer
+                    Type: NodePointer
+                    DataType: NodeId
+                    Value: "/Objects/Commands/VariableCommands"
+                    Children:
+                    - Name: Kind
+                      Type: PropertyType
+                      DataType: NodeId
+                      Value: "/Types/ObjectTypes/BaseObjectType"
+                  - Name: ns=2;Method
+                    Type: BaseDataVariableType
+                    DataType: String
+                    Value: "Set"
+                  - Name: InputArguments
+                    Type: BaseObjectType
+                    Children:
+                    - Name: VariableToModify
+                      Type: BaseDataVariableType
+                      DataType: VariablePointer
+                      Description: {"NamespaceIndex":2,"TextId":"SetVariableToModifyDescription"}
+                      Children:
+                      - Name: DynamicLink
+                        Type: DynamicLink
+                        DataType: NodePath
+                        Value: "../../../../../../QueryValue/Text@NodeId"
+                    - Name: Value
+                      Type: BaseDataVariableType
+                      DataType: LocalizedText
+                      Description: {"NamespaceIndex":2,"TextId":"SetValueDescription"}
+                      Children:
+                      - Name: StringFormatter1
+                        Type: StringFormatter
+                        Children:
+                        - Name: Format
+                          Type: BaseDataVariableType
+                          DataType: LocalizedText
+                          ReferenceType: HasParameter
+                          ModellingRule: Optional
+                          Value: {"LocaleId":"en-US","Text":"SELECT * FROM {0} ORDER BY Timestamp DESC LIMIT 100"}
+                        - Name: ns=2;Source0
+                          Type: BaseDataVariableType
+                          DataType: BaseDataType
+                          ReferenceType: HasSource
+                          Children:
+                          - Name: DynamicLink
+                            Type: DynamicLink
+                            DataType: NodePath
+                            Value: "../../../../../../../SelectedItem@BrowseName"
+                    - Name: ArrayIndex
+                      Type: BaseDataVariableType
+                      DataType: UInt32
+                      Description: {"NamespaceIndex":2,"TextId":"SetArrayIndexDescription"}
+                      ValueRank: ScalarOrOneDimension
+                - Name: MethodContainer2
+                  Type: BaseObjectType
+                  Children:
+                  - Name: ns=2;ObjectPointer
+                    Type: NodePointer
+                    DataType: NodeId
+                    Children:
+                    - Name: Kind
+                      Type: PropertyType
+                      DataType: NodeId
+                      Value: "/Types/ObjectTypes/BaseObjectType"
+                    - Name: DynamicLink
+                      Type: DynamicLink
+                      DataType: NodePath
+                      Value: "../../../../../../../../../TrendUIObjConfigLogic@NodeId"
+                      Children:
+                      - Name: Mode
+                        Type: BaseVariableType
+                        DataType: DynamicLinkMode
+                        ModellingRule: Optional
+                        Value: 2
+                  - Name: ns=2;Method
+                    Type: BaseDataVariableType
+                    DataType: String
+                    Value: "GeneratePens"
+                  - Name: InputArguments
+                    Type: BaseObjectType
+                    Children:
+                    - Name: source
+                      Type: BaseDataVariableType
+                      DataType: NodeId
+                      Children:
+                      - Name: DynamicLink
+                        Type: DynamicLink
+                        DataType: NodePath
+                        Value: "../../../../../SelectedItem@NodeId"
+              - Name: EventArguments
+                Type: UserSelectionChanged
+                Children:
+                - Name: SelectedItem
+                  Type: BaseDataVariableType
+                  DataType: NodeId
+                - Name: SelectedValue
+                  Type: BaseDataVariableType
+                  DataType: BaseDataType
+                - Name: EventId
+                  Type: PropertyType
+                  DataType: ByteString
+                - Name: EventType
+                  Type: PropertyType
+                  DataType: NodeId
+                - Name: SourceNode
+                  Type: PropertyType
+                  DataType: NodeId
+                - Name: SourceName
+                  Type: PropertyType
+                  DataType: String
+                - Name: Time
+                  Type: PropertyType
+                  DataType: UtcTime
+                - Name: ReceiveTime
+                  Type: PropertyType
+                  DataType: UtcTime
+                - Name: Message
+                  Type: PropertyType
+                  DataType: LocalizedText
+                - Name: Severity
+                  Type: PropertyType
+                  DataType: UInt16
+          - Name: QueryString
+            Type: GridContent1
+            Children:
+            - Name: GridLayoutProperties
+              Type: GridLayoutProperties
+            - Name: Text
+              Type: BaseDataVariableType
+              DataType: LocalizedText
+              Value: {"LocaleId":"en-US","Text":"Query"}
+            - Name: Visible
+              Type: BaseDataVariableType
+              DataType: ns=0;Boolean
+              ModellingRule: Optional
+              Value: true
+          - Name: QueryValue
+            Type: TextBox
+            Children:
+            - Name: Text
+              Type: BaseDataVariableType
+              DataType: LocalizedText
+              Children:
+              - Name: DynamicLink
+                Type: DynamicLink
+                DataType: NodePath
+                Value: "{TrendUIObjAlias}/ObjQuery"
+                Children:
+                - Name: Mode
+                  Type: BaseVariableType
+                  DataType: DynamicLinkMode
+                  ModellingRule: Optional
+                  Value: 2
+            - Name: LeftMargin
+              Type: BaseVariableType
+              DataType: Size
+              ModellingRule: Optional
+            - Name: TopMargin
+              Type: BaseVariableType
+              DataType: Size
+              ModellingRule: Optional
+            - Name: Visible
+              Type: BaseDataVariableType
+              DataType: ns=0;Boolean
+              ModellingRule: Optional
+              Value: true
+            - Name: ValueChangeBehaviour
+              Type: BaseDataVariableType
+              DataType: ValueChangeBehaviour
+              ModellingRule: Optional
+              Value: 1
+          - Name: Refresh Time
+            Type: GridContent1
+            Children:
+            - Name: GridLayoutProperties
+              Type: GridLayoutProperties
+            - Name: Text
+              Type: BaseDataVariableType
+              DataType: LocalizedText
+              Value: {"LocaleId":"en-US","Text":"Refresh time"}
+          - Name: RefreshTimeValue
+            Type: DurationPicker
+            Children:
+            - Name: Value
+              Type: BaseDataVariableType
+              DataType: Duration
+              Children:
+              - Name: DynamicLink
+                Type: DynamicLink
+                DataType: NodePath
+                Value: "{TrendUIObjAlias}/ObjDurations[0]"
+                Children:
+                - Name: Mode
+                  Type: BaseVariableType
+                  DataType: DynamicLinkMode
+                  ModellingRule: Optional
+                  Value: 2
+          - Name: BottomMargin
+            Type: BaseVariableType
+            DataType: Size
+            ModellingRule: Optional
+            Value: 16.0
+          - Name: TopMargin
+            Type: BaseVariableType
+            DataType: Size
+            ModellingRule: Optional
+            Value: 16.0
+          - Name: XAxisTimeWindowLabel
+            Type: GridContent1
+            Children:
+            - Name: GridLayoutProperties
+              Type: GridLayoutProperties
+            - Name: Text
+              Type: BaseDataVariableType
+              DataType: LocalizedText
+              Value: {"LocaleId":"en-US","Text":"Time window"}
+          - Name: XAxisTimeWindowValue
+            Type: DurationPicker
+            Children:
+            - Name: Value
+              Type: BaseDataVariableType
+              DataType: Duration
+              Children:
+              - Name: DynamicLink
+                Type: DynamicLink
+                DataType: NodePath
+                Value: "{TrendUIObjAlias}/ObjDurations[1]"
+                Children:
+                - Name: Mode
+                  Type: BaseVariableType
+                  DataType: DynamicLinkMode
+                  ModellingRule: Optional
+                  Value: 2
+          - Name: AutoScaleLabel
+            Type: GridContent1
+            Children:
+            - Name: Text
+              Type: BaseDataVariableType
+              DataType: LocalizedText
+              Value: {"LocaleId":"en-US","Text":"Y axis automatic scaling"}
+            - Name: GridLayoutProperties
+              Type: GridLayoutProperties
+          - Name: AutoScaleValue
+            Type: ComboBox
+            Children:
+            - Class: Reference
+              Target: ns=3;i=480
+              Direction: Forward
+            - Name: Text
+              Type: BaseDataVariableType
+              DataType: LocalizedText
+            - Name: Model
+              Type: NodePointer
+              DataType: NodeId
+              Value: "/Objects/Optix_DefaultApplication_OptixEdge/Model/Enumerators/Boolean"
+              Children:
+              - Name: ItemKind
+                Type: PropertyType
+                DataType: NodeId
+                Value: "/Types/VariableTypes/BaseVariableType/BaseDataVariableType"
+              - Name: Kind
+                Type: PropertyType
+                DataType: NodeId
+            - Name: SelectedValue
+              Type: BaseDataVariableType
+              DataType: BaseDataType
+              Children:
+              - Name: DynamicLink
+                Type: DynamicLink
+                DataType: NodePath
+                Value: "{TrendUIObjAlias}/ObjParameters[0]"
+                Children:
+                - Name: Mode
+                  Type: BaseVariableType
+                  DataType: DynamicLinkMode
+                  ModellingRule: Optional
+                  Value: 2
+            - Name: SelectedItem
+              Type: NodePointer
+              DataType: NodeId
+              Children:
+              - Name: Kind
+                Type: PropertyType
+                DataType: NodeId
+                Value: "/Types/VariableTypes/BaseVariableType/BaseDataVariableType"
+            - Name: UISelectedItem
+              Type: BaseDataVariableType
+              DataType: NodeId
+              AccessLevel: Read
+            - Name: UISelectedValue
+              Type: BaseDataVariableType
+              DataType: BaseDataType
+              AccessLevel: Read
+            - Name: Item
+              Type: Alias
+              DataType: NodeId
+              Children:
+              - Name: Kind
+                Type: PropertyType
+                DataType: NodeId
+                Value: "/Types/VariableTypes/BaseVariableType/BaseDataVariableType"
+            - Name: LeftMargin
+              Type: BaseVariableType
+              DataType: Size
+              ModellingRule: Optional
+            - Name: TopMargin
+              Type: BaseVariableType
+              DataType: Size
+              ModellingRule: Optional
+            - Name: Height
+              Type: BaseVariableType
+              DataType: Size
+              ModellingRule: Optional
+              Value: 32.0
+            - Name: DisplayValuePath
+              Type: BaseDataVariableType
+              DataType: LocalizedText
+              Children:
+              - Name: DynamicLink
+                Type: DynamicLink
+                DataType: NodePath
+                Value: "{Item}@DisplayName"
+            - Name: SelectedValuePath
+              Type: BaseDataVariableType
+              DataType: BaseDataType
+              Children:
+              - Name: DynamicLink
+                Type: DynamicLink
+                DataType: NodePath
+                Value: "{Item}@Value"
+          - Name: YAxisMaximumLabel
+            Type: GridContent1
+            Children:
+            - Name: GridLayoutProperties
+              Type: GridLayoutProperties
+            - Name: Text
+              Type: BaseDataVariableType
+              DataType: LocalizedText
+              Value: {"LocaleId":"en-US","Text":"Y axis maximum"}
+            - Name: Visible
+              Type: BaseDataVariableType
+              DataType: ns=0;Boolean
+              Value: true
+              Children:
+              - Name: ExpressionEvaluator1
+                Type: ExpressionEvaluator
+                Children:
+                - Name: Expression
+                  Type: BaseDataVariableType
+                  DataType: String
+                  ReferenceType: HasParameter
+                  ModellingRule: Optional
+                  Value: "!{0}"
+                - Name: ns=2;Source0
+                  Type: BaseDataVariableType
+                  DataType: BaseDataType
+                  ReferenceType: HasSource
+                  Children:
+                  - Name: DynamicLink
+                    Type: DynamicLink
+                    DataType: NodePath
+                    Value: "../../../../AutoScaleValue/SelectedValue"
+          - Name: YAxisMaximumValue
+            Type: SpinBox
+            Children:
+            - Name: Value
+              Type: BaseDataVariableType
+              DataType: Double
+              Children:
+              - Name: DynamicLink
+                Type: DynamicLink
+                DataType: NodePath
+                Value: "{TrendUIObjAlias}/ObjParameters[2]"
+                Children:
+                - Name: Mode
+                  Type: BaseVariableType
+                  DataType: DynamicLinkMode
+                  ModellingRule: Optional
+                  Value: 2
+            - Name: ShowButtons
+              Type: BaseDataVariableType
+              DataType: ns=0;Boolean
+              ModellingRule: Optional
+            - Name: Format
+              Type: BaseDataVariableType
+              DataType: String
+              ModellingRule: Optional
+              Value: "d"
+            - Name: Visible
+              Type: BaseDataVariableType
+              DataType: ns=0;Boolean
+              Value: true
+              Children:
+              - Name: ExpressionEvaluator1
+                Type: ExpressionEvaluator
+                Children:
+                - Name: Expression
+                  Type: BaseDataVariableType
+                  DataType: String
+                  ReferenceType: HasParameter
+                  ModellingRule: Optional
+                  Value: "!{0}"
+                - Name: ns=2;Source0
+                  Type: BaseDataVariableType
+                  DataType: BaseDataType
+                  ReferenceType: HasSource
+                  Children:
+                  - Name: DynamicLink
+                    Type: DynamicLink
+                    DataType: NodePath
+                    Value: "../../../../AutoScaleValue/SelectedValue"
+          - Name: YAxisMinimumLabel
+            Type: GridContent1
+            Children:
+            - Name: GridLayoutProperties
+              Type: GridLayoutProperties
+            - Name: Text
+              Type: BaseDataVariableType
+              DataType: LocalizedText
+              Value: {"LocaleId":"en-US","Text":"Y axis minimum"}
+            - Name: Visible
+              Type: BaseDataVariableType
+              DataType: ns=0;Boolean
+              Value: true
+              Children:
+              - Name: ExpressionEvaluator1
+                Type: ExpressionEvaluator
+                Children:
+                - Name: Expression
+                  Type: BaseDataVariableType
+                  DataType: String
+                  ReferenceType: HasParameter
+                  ModellingRule: Optional
+                  Value: "!{0}"
+                - Name: ns=2;Source0
+                  Type: BaseDataVariableType
+                  DataType: BaseDataType
+                  ReferenceType: HasSource
+                  Children:
+                  - Name: DynamicLink
+                    Type: DynamicLink
+                    DataType: NodePath
+                    Value: "../../../../AutoScaleValue/SelectedValue"
+          - Name: YAxisMinimumValue
+            Type: SpinBox
+            Children:
+            - Name: Value
+              Type: BaseDataVariableType
+              DataType: Double
+              Children:
+              - Name: DynamicLink
+                Type: DynamicLink
+                DataType: NodePath
+                Value: "{TrendUIObjAlias}/ObjParameters[1]"
+                Children:
+                - Name: Mode
+                  Type: BaseVariableType
+                  DataType: DynamicLinkMode
+                  ModellingRule: Optional
+                  Value: 2
+            - Name: ShowButtons
+              Type: BaseDataVariableType
+              DataType: ns=0;Boolean
+              ModellingRule: Optional
+            - Name: Format
+              Type: BaseDataVariableType
+              DataType: String
+              ModellingRule: Optional
+              Value: "d"
+            - Name: Visible
+              Type: BaseDataVariableType
+              DataType: ns=0;Boolean
+              Value: true
+              Children:
+              - Name: ExpressionEvaluator1
+                Type: ExpressionEvaluator
+                Children:
+                - Name: Expression
+                  Type: BaseDataVariableType
+                  DataType: String
+                  ReferenceType: HasParameter
+                  ModellingRule: Optional
+                  Value: "!{0}"
+                - Name: ns=2;Source0
+                  Type: BaseDataVariableType
+                  DataType: BaseDataType
+                  ReferenceType: HasSource
+                  Children:
+                  - Name: DynamicLink
+                    Type: DynamicLink
+                    DataType: NodePath
+                    Value: "../../../../AutoScaleValue/SelectedValue"
+      - Name: Expanded
+        Type: BaseDataVariableType
+        DataType: ns=0;Boolean
+        Value: true
+      - Name: Width
+        Type: BaseVariableType
+        DataType: Size
+        ModellingRule: Optional
+        Value: 200.0
+      - Name: HorizontalAlignment
+        Type: BaseVariableType
+        DataType: HorizontalAlignment
+        ModellingRule: Optional
+        Value: 3
+      - Name: BottomMargin
+        Type: BaseVariableType
+        DataType: Size
+        ModellingRule: Optional
+    - Name: HorizontalAlignment
+      Type: BaseVariableType
+      DataType: HorizontalAlignment
+      ModellingRule: Optional
+      Value: 3
+    - Name: VerticalAlignment
+      Type: BaseVariableType
+      DataType: VerticalAlignment
+      ModellingRule: Optional
+    - Name: Pens
+      Type: Accordion
+      Children:
+      - Name: Header
+        Type: AccordionHeader
+        Children:
+        - Name: H1
+          Type: H5
+          Children:
+          - Name: GridLayoutProperties
+            Type: GridLayoutProperties
+          - Name: LeftMargin
+            Type: BaseVariableType
+            DataType: Size
+            ModellingRule: Optional
+            Value: 40.0
+          - Name: Text
+            Type: BaseDataVariableType
+            DataType: LocalizedText
+            ModellingRule: Optional
+            Value: {"LocaleId":"en-US","Text":"Pens"}
+      - Name: Content
+        Type: AccordionContent
+        Children:
+        - Name: Content
+          Type: ColumnLayout
+          Children:
+          - Name: Width
+            Type: BaseVariableType
+            DataType: Size
+            ModellingRule: Optional
+            Value: 50.0
+          - Name: HorizontalAlignment
+            Type: BaseVariableType
+            DataType: HorizontalAlignment
+            ModellingRule: Optional
+            Value: 3
+          - Name: VerticalAlignment
+            Type: BaseVariableType
+            DataType: VerticalAlignment
+            ModellingRule: Optional
+          - Name: VerticalGap
+            Type: BaseDataVariableType
+            DataType: Size
+            ModellingRule: Optional
+            Value: 8.0
+          - Name: LeftMargin
+            Type: BaseVariableType
+            DataType: Size
+            ModellingRule: Optional
+            Value: 32.0
+          - Name: TopMargin
+            Type: BaseVariableType
+            DataType: Size
+            ModellingRule: Optional
+            Value: 16.0
+      - Name: Expanded
+        Type: BaseDataVariableType
+        DataType: ns=0;Boolean
+        Value: true
+      - Name: Width
+        Type: BaseVariableType
+        DataType: Size
+        ModellingRule: Optional
+        Value: 200.0
+      - Name: HorizontalAlignment
+        Type: BaseVariableType
+        DataType: HorizontalAlignment
+        ModellingRule: Optional
+        Value: 3
+      - Name: VerticalAlignment
+        Type: BaseVariableType
+        DataType: VerticalAlignment
+        ModellingRule: Optional
+      - Name: BottomMargin
+        Type: BaseVariableType
+        DataType: Size
+        ModellingRule: Optional
+        Value: 8.0
+    - Name: VerticalGap
+      Type: BaseDataVariableType
+      DataType: Size
+      ModellingRule: Optional
+      Value: 8.0
+  - Name: TrendUIObjConfigLogic
+    Type: NetLogic
+    Children:
+    - Class: Method
+      Name: GeneratePens
+      Children:
+      - Name: ns=0;InputArguments
+        Type: BaseVariableType
+        DataType: Argument
+        ReferenceType: HasProperty
+        ValueRank: OneDimension
+        ArrayDimensions: [0]
+        Value: [{"TypeId":{"Id":296},"Body":{"Name":"source","DataType":{"Id":17},"ValueRank":-1,"ArrayDimensions":[],"Description":{"NamespaceIndex":-1,"LocaleId":"","Text":""}}}]
+- Name: TrendPenUIObjConfig
+  Id: g=e52a3941a025d3b6ac44b5a879148a3d
+  Supertype: Panel
+  ReferenceType: HasComponent
+  Children:
+  - Name: Width
+    Type: BaseVariableType
+    DataType: Size
+    ModellingRule: Optional
+    Value: 800.0
+  - Name: VerticalAlignment
+    Type: BaseVariableType
+    DataType: VerticalAlignment
+    ModellingRule: Optional
+  - Name: HorizontalAlignment
+    Type: BaseVariableType
+    DataType: HorizontalAlignment
+    ModellingRule: Optional
+    Value: 3
+  - Name: Height
+    Type: BaseVariableType
+    DataType: Size
+    ModellingRule: Optional
+    Value: -1.0
+  - Name: Properties
+    Type: Accordion
+    Children:
+    - Name: Header
+      Type: AccordionHeader
+      Children:
+      - Name: H1
+        Type: H5
+        Children:
+        - Name: GridLayoutProperties
+          Type: GridLayoutProperties
+        - Name: LeftMargin
+          Type: BaseVariableType
+          DataType: Size
+          ModellingRule: Optional
+          Value: 40.0
+        - Name: Text
+          Type: BaseDataVariableType
+          DataType: LocalizedText
+          Children:
+          - Name: DynamicLink
+            Type: DynamicLink
+            DataType: NodePath
+            Value: "{TrendPenUIObjConfigAlias}@BrowseName"
+        - Name: TopMargin
+          Type: BaseVariableType
+          DataType: Size
+          ModellingRule: Optional
+        - Name: BottomMargin
+          Type: BaseVariableType
+          DataType: Size
+          ModellingRule: Optional
+    - Name: Content
+      Type: AccordionContent
+      Children:
+      - Name: GridLayout1
+        Type: GridLayout
+        Children:
+        - Name: Width
+          Type: BaseVariableType
+          DataType: Size
+          ModellingRule: Optional
+          Value: 300.0
+        - Name: Columns
+          Type: BaseDataVariableType
+          DataType: String
+          ValueRank: OneDimension
+          ArrayDimensions: [0]
+          Value: ["1fr","1fr"]
+        - Name: HorizontalAlignment
+          Type: BaseVariableType
+          DataType: HorizontalAlignment
+          ModellingRule: Optional
+          Value: 3
+        - Name: HorizontalGap
+          Type: BaseDataVariableType
+          DataType: Size
+          ModellingRule: Optional
+          Value: 16.0
+        - Name: VerticalGap
+          Type: BaseDataVariableType
+          DataType: Size
+          ModellingRule: Optional
+          Value: 16.0
+        - Name: BottomMargin
+          Type: BaseVariableType
+          DataType: Size
+          ModellingRule: Optional
+          Value: 16.0
+        - Name: TopMargin
+          Type: BaseVariableType
+          DataType: Size
+          ModellingRule: Optional
+          Value: 16.0
+        - Name: EnableLabel
+          Type: GridContent1
+          Children:
+          - Name: Text
+            Type: BaseDataVariableType
+            DataType: LocalizedText
+            Value: {"LocaleId":"en-US","Text":"Enabled"}
+          - Name: GridLayoutProperties
+            Type: GridLayoutProperties
+        - Name: EnableValue
+          Type: ComboBox
+          Children:
+          - Class: Reference
+            Target: ns=3;i=480
+            Direction: Forward
+          - Name: Text
+            Type: BaseDataVariableType
+            DataType: LocalizedText
+          - Name: Model
+            Type: NodePointer
+            DataType: NodeId
+            Value: "/Objects/Optix_DefaultApplication_OptixEdge/Model/Enumerators/Boolean"
+            Children:
+            - Name: ItemKind
+              Type: PropertyType
+              DataType: NodeId
+              Value: "/Types/VariableTypes/BaseVariableType/BaseDataVariableType"
+            - Name: Kind
+              Type: PropertyType
+              DataType: NodeId
+          - Name: SelectedValue
+            Type: BaseDataVariableType
+            DataType: BaseDataType
+            Children:
+            - Name: DynamicLink
+              Type: DynamicLink
+              DataType: NodePath
+              Value: "{TrendPenUIObjConfigAlias}/Enabled"
+              Children:
+              - Name: Mode
+                Type: BaseVariableType
+                DataType: DynamicLinkMode
+                ModellingRule: Optional
+                Value: 2
+          - Name: SelectedItem
+            Type: NodePointer
+            DataType: NodeId
+            Children:
+            - Name: Kind
+              Type: PropertyType
+              DataType: NodeId
+              Value: "/Types/VariableTypes/BaseVariableType/BaseDataVariableType"
+          - Name: UISelectedItem
+            Type: BaseDataVariableType
+            DataType: NodeId
+            AccessLevel: Read
+          - Name: UISelectedValue
+            Type: BaseDataVariableType
+            DataType: BaseDataType
+            AccessLevel: Read
+          - Name: Item
+            Type: Alias
+            DataType: NodeId
+            Children:
+            - Name: Kind
+              Type: PropertyType
+              DataType: NodeId
+              Value: "/Types/VariableTypes/BaseVariableType/BaseDataVariableType"
+          - Name: LeftMargin
+            Type: BaseVariableType
+            DataType: Size
+            ModellingRule: Optional
+          - Name: TopMargin
+            Type: BaseVariableType
+            DataType: Size
+            ModellingRule: Optional
+          - Name: Height
+            Type: BaseVariableType
+            DataType: Size
+            ModellingRule: Optional
+            Value: 32.0
+          - Name: DisplayValuePath
+            Type: BaseDataVariableType
+            DataType: LocalizedText
+            Children:
+            - Name: DynamicLink
+              Type: DynamicLink
+              DataType: NodePath
+              Value: "{Item}@DisplayName"
+          - Name: SelectedValuePath
+            Type: BaseDataVariableType
+            DataType: BaseDataType
+            Children:
+            - Name: DynamicLink
+              Type: DynamicLink
+              DataType: NodePath
+              Value: "{Item}@Value"
+        - Name: TitleString
+          Type: GridContent1
+          Children:
+          - Name: GridLayoutProperties
+            Type: GridLayoutProperties
+          - Name: Text
+            Type: BaseDataVariableType
+            DataType: LocalizedText
+            Value: {"LocaleId":"en-US","Text":"Title"}
+        - Name: TitleValue
+          Type: TextBox
+          Children:
+          - Name: Text
+            Type: BaseDataVariableType
+            DataType: LocalizedText
+            Children:
+            - Name: DynamicLink
+              Type: DynamicLink
+              DataType: NodePath
+              Value: "{TrendPenUIObjConfigAlias}/Title"
+              Children:
+              - Name: Mode
+                Type: BaseVariableType
+                DataType: DynamicLinkMode
+                ModellingRule: Optional
+                Value: 2
+          - Name: Width
+            Type: BaseVariableType
+            DataType: Size
+            ModellingRule: Optional
+            Value: 110.0
+          - Name: HorizontalAlignment
+            Type: BaseVariableType
+            DataType: HorizontalAlignment
+            ModellingRule: Optional
+            Value: 3
+          - Name: Height
+            Type: BaseVariableType
+            DataType: Size
+            Value: -1.0
+          - Name: ValueChangeBehaviour
+            Type: BaseDataVariableType
+            DataType: ValueChangeBehaviour
+            ModellingRule: Optional
+            Value: 1
+        - Name: ThicknessLabel
+          Type: GridContent1
+          Children:
+          - Name: GridLayoutProperties
+            Type: GridLayoutProperties
+          - Name: Text
+            Type: BaseDataVariableType
+            DataType: LocalizedText
+            Value: {"LocaleId":"en-US","Text":"Tihickness (-1 Auto)"}
+          - Name: Visible
+            Type: BaseDataVariableType
+            DataType: ns=0;Boolean
+            Value: true
+          - Name: TopMargin
+            Type: BaseVariableType
+            DataType: Size
+            ModellingRule: Optional
+            Value: -1.0
+          - Name: BottomMargin
+            Type: BaseVariableType
+            DataType: Size
+            ModellingRule: Optional
+        - Name: ThicknessValue
+          Type: SpinBox
+          Children:
+          - Name: Value
+            Type: BaseDataVariableType
+            DataType: Double
+            Children:
+            - Name: DynamicLink
+              Type: DynamicLink
+              DataType: NodePath
+              Value: "{TrendPenUIObjConfigAlias}/Thickness"
+              Children:
+              - Name: Mode
+                Type: BaseVariableType
+                DataType: DynamicLinkMode
+                ModellingRule: Optional
+                Value: 2
+          - Name: ShowButtons
+            Type: BaseDataVariableType
+            DataType: ns=0;Boolean
+            ModellingRule: Optional
+          - Name: Format
+            Type: BaseDataVariableType
+            DataType: String
+            ModellingRule: Optional
+            Value: "d"
+          - Name: Visible
+            Type: BaseDataVariableType
+            DataType: ns=0;Boolean
+            Value: true
+          - Name: LeftMargin
+            Type: BaseVariableType
+            DataType: Size
+            ModellingRule: Optional
+          - Name: TopMargin
+            Type: BaseVariableType
+            DataType: Size
+            ModellingRule: Optional
+            Value: 1.0
+        - Name: ColorString
+          Type: GridContent1
+          Children:
+          - Name: GridLayoutProperties
+            Type: GridLayoutProperties
+          - Name: Text
+            Type: BaseDataVariableType
+            DataType: LocalizedText
+            Value: {"LocaleId":"en-US","Text":"Color"}
+        - Name: ColorValue
+          Type: RowLayout
+          Children:
+          - Name: HorizontalAlignment
+            Type: BaseVariableType
+            DataType: HorizontalAlignment
+            ModellingRule: Optional
+            Value: 3
+          - Name: VerticalAlignment
+            Type: BaseVariableType
+            DataType: VerticalAlignment
+            ModellingRule: Optional
+            Value: 3
+          - Name: ColorPreview
+            Type: Rectangle
+            Children:
+            - Name: Width
+              Type: BaseVariableType
+              DataType: Size
+              ModellingRule: Optional
+              Value: 64.0
+            - Name: Height
+              Type: BaseVariableType
+              DataType: Size
+              Value: 32.0
+            - Name: HorizontalAlignment
+              Type: BaseVariableType
+              DataType: HorizontalAlignment
+              ModellingRule: Optional
+              Value: 3
+            - Name: VerticalAlignment
+              Type: BaseVariableType
+              DataType: VerticalAlignment
+              ModellingRule: Optional
+              Value: 3
+            - Name: FillColor
+              Type: BaseDataVariableType
+              DataType: Color
+              Value: "#ffffff"
+              Children:
+              - Name: DynamicLink
+                Type: DynamicLink
+                DataType: NodePath
+                Value: "{TrendPenUIObjConfigAlias}/Color"
+            - Name: RightMargin
+              Type: BaseVariableType
+              DataType: Size
+              ModellingRule: Optional
+            - Name: Style
+              Type: BaseDataVariableType
+              DataType: String
+              ModellingRule: Optional
+              Value: "GrayRounded"
+          - Name: HorizontalGap
+            Type: BaseDataVariableType
+            DataType: Size
+            ModellingRule: Optional
+            Value: 10.0
+          - Name: ChangeColorButton
+            Type: Button
+            Children:
+            - Name: Text
+              Type: BaseDataVariableType
+              DataType: LocalizedText
+              ModellingRule: Optional
+              Value: {"LocaleId":"en-US","Text":"Change Color"}
+            - Name: VerticalAlignment
+              Type: BaseVariableType
+              DataType: VerticalAlignment
+              ModellingRule: Optional
+              Value: 3
+            - Name: MouseClickEventHandler1
+              Type: EventHandler
+              Children:
+              - Name: ListenEventType
+                Type: PropertyType
+                DataType: NodeId
+                Value: "/Types/EventTypes/BaseEventType/MouseEvent/MouseClickEvent"
+              - Name: MethodsToCall
+                Type: BaseObjectType
+                Children:
+                - Name: MethodContainer1
+                  Type: BaseObjectType
+                  Children:
+                  - Name: ns=2;ObjectPointer
+                    Type: NodePointer
+                    DataType: NodeId
+                    Value: "/Objects/Commands/UICommands"
+                    Children:
+                    - Name: Kind
+                      Type: PropertyType
+                      DataType: NodeId
+                      Value: "/Types/ObjectTypes/BaseObjectType"
+                  - Name: ns=2;Method
+                    Type: BaseDataVariableType
+                    DataType: String
+                    Value: "OpenDialog"
+                  - Name: InputArguments
+                    Type: BaseObjectType
+                    Children:
+                    - Name: Dialog
+                      Type: BaseDataVariableType
+                      DataType: NodeId
+                      Description: {"NamespaceIndex":3,"TextId":"OpenDialogDialogDescription"}
+                      Value: "/Objects/Optix_DefaultApplication_OptixEdge/UI/UITypes/Dialogs/ColorPicker"
+                    - Name: AliasNode
+                      Type: BaseDataVariableType
+                      DataType: NodeId
+                      Description: {"NamespaceIndex":3,"TextId":"OpenDialogAliasNodeDescription"}
+                      ValueRank: ScalarOrOneDimension
+                      Children:
+                      - Name: DynamicLink
+                        Type: DynamicLink
+                        DataType: NodePath
+                        Value: "{TrendPenUIObjConfigAlias}/Color@NodeId"
+                    - Name: ParentItem
+                      Type: BaseDataVariableType
+                      DataType: NodeId
+                      Description: {"NamespaceIndex":3,"TextId":"OpenDialogParentItemDescription"}
+                      Children:
+                      - Name: DynamicLink
+                        Type: DynamicLink
+                        DataType: NodePath
+                        Value: "../../../../..@NodeId"
+                  - Name: OutputArguments
+                    Type: BaseObjectType
+                    Children:
+                    - Name: DialogNodeId
+                      Type: BaseDataVariableType
+                      DataType: NodeId
+                      Description: {"NamespaceIndex":3,"TextId":"OpenDialogDialogNodeIdDescription"}
+              - Name: EventArguments
+                Type: MouseClickEvent
+                Children:
+                - Name: EventId
+                  Type: PropertyType
+                  DataType: ByteString
+                - Name: EventType
+                  Type: PropertyType
+                  DataType: NodeId
+                - Name: SourceNode
+                  Type: PropertyType
+                  DataType: NodeId
+                - Name: SourceName
+                  Type: PropertyType
+                  DataType: String
+                - Name: Time
+                  Type: PropertyType
+                  DataType: UtcTime
+                - Name: ReceiveTime
+                  Type: PropertyType
+                  DataType: UtcTime
+                - Name: Message
+                  Type: PropertyType
+                  DataType: LocalizedText
+                - Name: Severity
+                  Type: PropertyType
+                  DataType: UInt16
+            - Name: Style
+              Type: BaseDataVariableType
+              DataType: String
+              ModellingRule: Optional
+              Value: "Accent"
+        - Name: Rows
+          Type: BaseDataVariableType
+          DataType: String
+          ValueRank: OneDimension
+          ArrayDimensions: [0]
+          Value: ["32","32","32","32"]
+    - Name: Expanded
+      Type: BaseDataVariableType
+      DataType: ns=0;Boolean
+    - Name: Width
+      Type: BaseVariableType
+      DataType: Size
+      ModellingRule: Optional
+      Value: 200.0
+    - Name: HorizontalAlignment
+      Type: BaseVariableType
+      DataType: HorizontalAlignment
+      ModellingRule: Optional
+      Value: 3
+  - Name: TrendPenUIObjConfigAlias
+    Type: Alias
+    DataType: NodeId
+    Children:
+    - Name: Kind
+      Type: PropertyType
+      DataType: NodeId
+      Value: "/Types/VariableTypes/BaseVariableType/BaseDataVariableType/TrendPen"

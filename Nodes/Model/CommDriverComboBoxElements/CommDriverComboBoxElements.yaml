@@ -1,0 +1,8 @@
+Name: CommDriverComboBoxElements
+Type: FolderType
+Children:
+- File: RAEIP/RAEIP.yaml
+- File: S7TCP/S7TCP.yaml
+- File: S7Profinet/S7Profinet.yaml
+- File: ModbusTCP/ModbusTCP.yaml
+- File: ModbusRTU/ModbusRTU.yaml

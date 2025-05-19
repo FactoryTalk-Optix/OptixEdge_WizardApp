@@ -1,0 +1,36 @@
+Name: ModbusTCP
+Id: g=f9581033d17de579de835120ec5e8117
+Type: ModbusDriver
+DisplayName: {"LocaleId":"en-US","Text":"Modbus TCP"}
+Children:
+- Name: Protocol
+  Id: g=9205bee2beb107573ecd4f5e767eb0e9
+  Type: BaseDataVariableType
+  DataType: ModbusProtocol
+- Name: SerialPort
+  Id: g=b7ad8c20825fbc3e63dbbbd4acab9bf7
+  Type: BaseDataVariableType
+  DataType: String
+  Value: "COM1"
+- Name: Baudrate
+  Id: g=89c6bfc2b6118667b63ddb5d32e2b917
+  Type: BaseDataVariableType
+  DataType: UInt32
+  Value: 9600
+- Name: DataSize
+  Id: g=149ede6f22f7095c71ae4ce3b3c4ce17
+  Type: BaseDataVariableType
+  DataType: Byte
+  Value: 8
+- Name: Parity
+  Id: g=6d45c7a86042652e2d223f60d6773a74
+  Type: BaseDataVariableType
+  DataType: Parity
+- Name: StopBits
+  Id: g=fa1708caf1d0ed3b87b0418e5f836722
+  Type: BaseDataVariableType
+  DataType: StopBits
+- Name: FlowControl
+  Id: g=3dbdf1ee600a4074df36b0199014cfd5
+  Type: BaseDataVariableType
+  DataType: FlowControl

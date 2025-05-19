@@ -1,0 +1,6 @@
+Name: TwinCAT
+Type: TwinCATDriver
+Children:
+- Name: AllowRuntimeTagImport
+  Type: BaseDataVariableType
+  DataType: ns=0;Boolean

@@ -1,0 +1,41 @@
+Name: OMRONFinsEthernet
+Type: OmronFinsDriver
+Children:
+- Name: StationID
+  Type: BaseDataVariableType
+  DataType: Byte
+- Name: DestinationNetworkAddress
+  Type: BaseDataVariableType
+  DataType: Byte
+- Name: DestinationNodeAddress
+  Type: BaseDataVariableType
+  DataType: Byte
+- Name: DestinationUnitAddress
+  Type: BaseDataVariableType
+  DataType: Byte
+- Name: Protocol
+  Type: BaseDataVariableType
+  DataType: OmronFinsProtocol
+- Name: SerialPort
+  Type: BaseDataVariableType
+  DataType: String
+  Value: "COM1"
+- Name: Baudrate
+  Type: BaseDataVariableType
+  DataType: UInt32
+  Value: 9600
+- Name: DataSize
+  Type: BaseDataVariableType
+  DataType: Byte
+  Value: 7
+- Name: Parity
+  Type: BaseDataVariableType
+  DataType: Parity
+  Value: 2
+- Name: StopBits
+  Type: BaseDataVariableType
+  DataType: StopBits
+  Value: 2
+- Name: FlowControl
+  Type: BaseDataVariableType
+  DataType: FlowControl

@@ -1,0 +1,124 @@
+Name: DataStores
+Id: g=9335d0b31992f219fb58a9b16c32a509
+Type: DataStoresCategoryFolder
+Children:
+- Name: EdgeEmbeddedDatabase
+  Id: g=c8e4d43872ab3114b57b43bcb2a1e633
+  Type: SQLiteStore
+  Children:
+  - Name: Tables
+    Id: g=9b94402ceb284adfcb351f2f1dffa8b3
+    Type: BaseObjectType
+    Children:
+    - Name: ApplicationLogs
+      Id: g=77d4125b3215c81a41ba2a8ce2970025
+      Type: SQLiteStoreTable
+      Children:
+      - Class: Reference
+        Target: ns=59;i=12
+        Direction: Forward
+      - Class: Reference
+        Target: ns=59;i=15
+        Direction: Forward
+      - Class: Reference
+        Target: ns=59;i=21
+        Direction: Forward
+      - Class: Reference
+        Target: ns=59;i=20
+        Direction: Forward
+      - Name: Columns
+        Id: g=2da587903761586eb58c62843b541e45
+        Type: BaseObjectType
+        Children:
+        - Name: Timestamp
+          Id: g=653d65e0fde42d7a65d445937a52bdbd
+          Type: StoreColumn
+          DataType: UtcTime
+        - Name: LocalTimeStamp
+          Id: g=cf6a4188d780f1ccb0e2eebd058d9691
+          Type: StoreColumn
+          DataType: DateTime
+        - Name: LogLevel
+          Id: g=7103a0ba2e71bde20845d540ebfc46ff
+          Type: StoreColumn
+          DataType: UInt32
+        - Name: ModuleName
+          Id: g=6b0df0b8d6b9d796b34823801d247bed
+          Type: StoreColumn
+          DataType: String
+        - Name: Message
+          Id: g=f16e8701eb45ff3ca84aa64335c83a25
+          Type: StoreColumn
+          DataType: String
+      - Name: RecordLimit
+        Id: g=a027bd4b5efc1b3be4726e2d781451a9
+        Type: BaseDataVariableType
+        DataType: UInt32
+        Value: 10000
+  - Class: Reference
+    Target: ns=65;i=30
+    Direction: Forward
+  - Class: Reference
+    Target: ns=65;i=33
+    Direction: Forward
+  - Name: MaxColumnNameLength
+    Id: g=e6a029fddba477e131f53ac7db679fd6
+    Type: BaseDataVariableType
+    DataType: UInt32
+    AccessLevel: Read
+  - Name: MaxColumnCount
+    Id: g=6430655b7b374835f8e61555cd0a315d
+    Type: BaseDataVariableType
+    DataType: UInt32
+    AccessLevel: Read
+  - Name: DataTypeCompatibilityMap
+    Id: g=9004df6daa0f0d22e02b70fa73b90010
+    Type: BaseDataVariableType
+    DataType: NodeId
+    AccessLevel: Read
+    ValueRank: OneOrMoreDimensions
+    ArrayDimensions: [0,0]
+  - Name: Status
+    Id: g=8ff04e5b0be1e202abfc049c6981e1a3
+    Type: PropertyType
+    DataType: StoreStatus
+    AccessLevel: Read
+    Value: 2
+  - Class: Reference
+    Target: ns=59;i=22
+    Direction: Forward
+  - Class: Reference
+    Target: ns=59;i=6
+    Direction: Forward
+  - Class: Reference
+    Target: ns=59;i=8
+    Direction: Forward
+  - Class: Reference
+    Target: ns=59;i=25
+    Direction: Forward
+  - Class: Reference
+    Target: ns=59;i=38
+    Direction: Forward
+  - Class: Reference
+    Target: ns=59;i=41
+    Direction: Forward
+  - Class: Reference
+    Target: ns=59;i=44
+    Direction: Forward
+  - Class: Reference
+    Target: ns=59;i=53
+    Direction: Forward
+  - Class: Reference
+    Target: ns=59;i=55
+    Direction: Forward
+  - Class: Reference
+    Target: ns=59;i=57
+    Direction: Forward
+  - Class: Reference
+    Target: ns=59;i=59
+    Direction: Forward
+  - Name: Filename
+    Id: g=46f1254e933cde03b773036ca04c8b46
+    Type: BaseDataVariableType
+    DataType: String
+    Value: "EdgeEmbeddedDatabase"

@@ -1,0 +1,18 @@
+Name: S7TCP
+Id: g=9e81d0432a7fc51ec9f9a73357737e3a
+Type: S7TCPDriver
+DisplayName: {"LocaleId":"en-US","Text":"Siemens S7 TCP"}
+Children:
+- Name: LocalDeviceId
+  Id: g=5adcf8d08e7d089961524fcc70b85cdb
+  Type: BaseDataVariableType
+  DataType: Byte
+  Value: 1
+- Name: LocalRack
+  Id: g=ec6e3104ba1e0bc098b04b8a2b9a865f
+  Type: BaseDataVariableType
+  DataType: Byte
+- Name: LocalSlot
+  Id: g=acdc5dd1138197459d7fde5100c592c3
+  Type: BaseDataVariableType
+  DataType: Byte

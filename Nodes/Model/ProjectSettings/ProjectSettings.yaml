@@ -1,0 +1,13 @@
+Name: ProjectSettings
+Id: g=0027c205a8c326f8b64994dfbcf8fd34
+Type: FolderType
+Children:
+- Name: StartFromDashboard
+  Id: g=c3e6f0ee59187421fc79beb0cd2a414e
+  Type: BaseDataVariableType
+  DataType: ns=0;Boolean
+- Name: DefaultProjectVersion
+  Id: g=1390c5dd86a9955a838eeea3ea86c151
+  Type: BaseDataVariableType
+  DataType: String
+  Value: "1.1.7"

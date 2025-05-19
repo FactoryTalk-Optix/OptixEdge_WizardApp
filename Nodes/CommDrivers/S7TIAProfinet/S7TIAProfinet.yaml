@@ -1,0 +1,9 @@
+Name: S7TIAProfinet
+Id: g=9c260a9b3f7e57e62b413d0ab833dbc1
+Type: S7TiaProfinetDriver
+DisplayName: {"LocaleId":"en-US","Text":"Siemens S7 Profinet"}
+Children:
+- Name: AllowRuntimeTagImport
+  Id: g=5f1d22b1248fcb8214f93c213d623981
+  Type: BaseDataVariableType
+  DataType: ns=0;Boolean
