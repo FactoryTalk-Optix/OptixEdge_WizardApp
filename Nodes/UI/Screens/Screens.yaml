@@ -143,7 +143,7 @@ Children:
                   - Name: DynamicLink
                     Type: DynamicLink
                     DataType: NodePath
-                    Value: "/Objects/Optix_DefaultApplication_OptixEdge/Model/ProjectSettings/StartFromDashboard"
+                    Value: "/Objects/OptixEdge_WizardApp/Model/ProjectSettings/StartFromDashboard"
                     Children:
                     - Name: Mode
                       Type: BaseVariableType
@@ -180,7 +180,7 @@ Children:
                   - Name: DynamicLink
                     Type: DynamicLink
                     DataType: NodePath
-                    Value: "/Objects/Optix_DefaultApplication_OptixEdge/Model/ProjectSettings/DefaultProjectVersion"
+                    Value: "/Objects/OptixEdge_WizardApp/Model/ProjectSettings/DefaultProjectVersion"
                 - Name: Height
                   Type: BaseVariableType
                   DataType: Size
@@ -328,7 +328,7 @@ Children:
                   - Name: DynamicLink
                     Type: DynamicLink
                     DataType: NodePath
-                    Value: "/Objects/Optix_DefaultApplication_OptixEdge/System/System/Device/ProductName"
+                    Value: "/Objects/OptixEdge_WizardApp/System/System/Device/ProductName"
                 - Name: Height
                   Type: BaseVariableType
                   DataType: Size
@@ -374,7 +374,7 @@ Children:
                   - Name: DynamicLink
                     Type: DynamicLink
                     DataType: NodePath
-                    Value: "/Objects/Optix_DefaultApplication_OptixEdge/System/System/Device/CatalogNumber"
+                    Value: "/Objects/OptixEdge_WizardApp/System/System/Device/CatalogNumber"
               - Name: GridContent3
                 Type: GridContent1
                 Children:
@@ -397,7 +397,7 @@ Children:
                   - Name: DynamicLink
                     Type: DynamicLink
                     DataType: NodePath
-                    Value: "/Objects/Optix_DefaultApplication_OptixEdge/System/System/Device/FirmwareVersion"
+                    Value: "/Objects/OptixEdge_WizardApp/System/System/Device/FirmwareVersion"
                 - Name: Height
                   Type: BaseVariableType
                   DataType: Size
@@ -439,7 +439,7 @@ Children:
                   - Name: DynamicLink
                     Type: DynamicLink
                     DataType: NodePath
-                    Value: "/Objects/Optix_DefaultApplication_OptixEdge/System/System/Device/OSVersion"
+                    Value: "/Objects/OptixEdge_WizardApp/System/System/Device/OSVersion"
                 - Name: Height
                   Type: BaseVariableType
                   DataType: Size
@@ -471,7 +471,7 @@ Children:
                   - Name: DynamicLink
                     Type: DynamicLink
                     DataType: NodePath
-                    Value: "/Objects/Optix_DefaultApplication_OptixEdge/System/System/Device/SystemManagerVersion"
+                    Value: "/Objects/OptixEdge_WizardApp/System/System/Device/SystemManagerVersion"
                 - Name: Height
                   Type: BaseVariableType
                   DataType: Size
@@ -503,7 +503,7 @@ Children:
                   - Name: DynamicLink
                     Type: DynamicLink
                     DataType: NodePath
-                    Value: "/Objects/Optix_DefaultApplication_OptixEdge/System/System/Device/LastApplicationUpdateTime"
+                    Value: "/Objects/OptixEdge_WizardApp/System/System/Device/LastApplicationUpdateTime"
                 - Name: Height
                   Type: BaseVariableType
                   DataType: Size
@@ -535,7 +535,7 @@ Children:
                   - Name: DynamicLink
                     Type: DynamicLink
                     DataType: NodePath
-                    Value: "/Objects/Optix_DefaultApplication_OptixEdge/System/System/Device/LastBootupTime"
+                    Value: "/Objects/OptixEdge_WizardApp/System/System/Device/LastBootupTime"
                 - Name: Height
                   Type: BaseVariableType
                   DataType: Size
@@ -581,7 +581,7 @@ Children:
                       - Name: DynamicLink
                         Type: DynamicLink
                         DataType: NodePath
-                        Value: "/Objects/Optix_DefaultApplication_OptixEdge/System/System/Device/TotalOnTime"
+                        Value: "/Objects/OptixEdge_WizardApp/System/System/Device/TotalOnTime"
                 - Name: Height
                   Type: BaseVariableType
                   DataType: Size
@@ -616,7 +616,7 @@ Children:
                   - Name: DynamicLink
                     Type: DynamicLink
                     DataType: NodePath
-                    Value: "/Objects/Optix_DefaultApplication_OptixEdge/System/System/Device/ProtectionModeEnabled"
+                    Value: "/Objects/OptixEdge_WizardApp/System/System/Device/ProtectionModeEnabled"
                     Children:
                     - Name: Mode
                       Type: BaseVariableType
@@ -741,7 +741,7 @@ Children:
                     - Name: DynamicLink
                       Type: DynamicLink
                       DataType: NodePath
-                      Value: "/Objects/Optix_DefaultApplication_OptixEdge/System/System/Device/CPUUtilization"
+                      Value: "/Objects/OptixEdge_WizardApp/System/System/Device/CPUUtilization"
                       Children:
                       - Name: Mode
                         Type: BaseVariableType
@@ -841,7 +841,7 @@ Children:
                         - Name: DynamicLink
                           Type: DynamicLink
                           DataType: NodePath
-                          Value: "/Objects/Optix_DefaultApplication_OptixEdge/System/System/Device/CPUUtilization"
+                          Value: "/Objects/OptixEdge_WizardApp/System/System/Device/CPUUtilization"
                       - Name: ns=2;Source1
                         Type: BaseDataVariableType
                         DataType: BaseDataType
@@ -864,7 +864,7 @@ Children:
                             - Name: DynamicLink
                               Type: DynamicLink
                               DataType: NodePath
-                              Value: "/Objects/Optix_DefaultApplication_OptixEdge/System/System/Device/CPUFrequency"
+                              Value: "/Objects/OptixEdge_WizardApp/System/System/Device/CPUFrequency"
                       - Name: ns=2;Source2
                         Type: BaseDataVariableType
                         DataType: BaseDataType
@@ -873,7 +873,7 @@ Children:
                         - Name: DynamicLink
                           Type: DynamicLink
                           DataType: NodePath
-                          Value: "/Objects/Optix_DefaultApplication_OptixEdge/System/System/Device/CPUTemperature"
+                          Value: "/Objects/OptixEdge_WizardApp/System/System/Device/CPUTemperature"
                   - Name: HorizontalAlignment
                     Type: BaseVariableType
                     DataType: HorizontalAlignment
@@ -919,7 +919,7 @@ Children:
                     - Name: DynamicLink
                       Type: DynamicLink
                       DataType: NodePath
-                      Value: "/Objects/Optix_DefaultApplication_OptixEdge/System/System/Device/UsedMemory"
+                      Value: "/Objects/OptixEdge_WizardApp/System/System/Device/UsedMemory"
                       Children:
                       - Name: Mode
                         Type: BaseVariableType
@@ -937,7 +937,7 @@ Children:
                     - Name: DynamicLink
                       Type: DynamicLink
                       DataType: NodePath
-                      Value: "/Objects/Optix_DefaultApplication_OptixEdge/System/System/Device/TotalMemory"
+                      Value: "/Objects/OptixEdge_WizardApp/System/System/Device/TotalMemory"
                   - Name: WarningZones
                     Type: BaseObjectType
                   - Name: Editable
@@ -1038,7 +1038,7 @@ Children:
                             - Name: DynamicLink
                               Type: DynamicLink
                               DataType: NodePath
-                              Value: "/Objects/Optix_DefaultApplication_OptixEdge/System/System/Device/UsedMemory"
+                              Value: "/Objects/OptixEdge_WizardApp/System/System/Device/UsedMemory"
                       - Name: ns=2;Source1
                         Type: BaseDataVariableType
                         DataType: BaseDataType
@@ -1061,7 +1061,7 @@ Children:
                             - Name: DynamicLink
                               Type: DynamicLink
                               DataType: NodePath
-                              Value: "/Objects/Optix_DefaultApplication_OptixEdge/System/System/Device/TotalMemory"
+                              Value: "/Objects/OptixEdge_WizardApp/System/System/Device/TotalMemory"
                   - Name: HorizontalAlignment
                     Type: BaseVariableType
                     DataType: HorizontalAlignment
@@ -1108,7 +1108,7 @@ Children:
                     - Name: DynamicLink
                       Type: DynamicLink
                       DataType: NodePath
-                      Value: "/Objects/Optix_DefaultApplication_OptixEdge/System/System/Device/UsedStorage"
+                      Value: "/Objects/OptixEdge_WizardApp/System/System/Device/UsedStorage"
                       Children:
                       - Name: Mode
                         Type: BaseVariableType
@@ -1126,7 +1126,7 @@ Children:
                     - Name: DynamicLink
                       Type: DynamicLink
                       DataType: NodePath
-                      Value: "/Objects/Optix_DefaultApplication_OptixEdge/System/System/Device/TotalStorage"
+                      Value: "/Objects/OptixEdge_WizardApp/System/System/Device/TotalStorage"
                   - Name: WarningZones
                     Type: BaseObjectType
                   - Name: Editable
@@ -1227,7 +1227,7 @@ Children:
                             - Name: DynamicLink
                               Type: DynamicLink
                               DataType: NodePath
-                              Value: "/Objects/Optix_DefaultApplication_OptixEdge/System/System/Device/UsedStorage"
+                              Value: "/Objects/OptixEdge_WizardApp/System/System/Device/UsedStorage"
                       - Name: ns=2;Source1
                         Type: BaseDataVariableType
                         DataType: BaseDataType
@@ -1250,7 +1250,7 @@ Children:
                             - Name: DynamicLink
                               Type: DynamicLink
                               DataType: NodePath
-                              Value: "/Objects/Optix_DefaultApplication_OptixEdge/System/System/Device/TotalStorage"
+                              Value: "/Objects/OptixEdge_WizardApp/System/System/Device/TotalStorage"
                   - Name: HorizontalAlignment
                     Type: BaseVariableType
                     DataType: HorizontalAlignment
@@ -1413,7 +1413,7 @@ Children:
                       - Name: DynamicLink
                         Type: DynamicLink
                         DataType: NodePath
-                        Value: "/Objects/Optix_DefaultApplication_OptixEdge/System/System/Device/HardwareProductCode"
+                        Value: "/Objects/OptixEdge_WizardApp/System/System/Device/HardwareProductCode"
                 - Name: Height
                   Type: BaseVariableType
                   DataType: Size
@@ -1450,7 +1450,7 @@ Children:
                   - Name: DynamicLink
                     Type: DynamicLink
                     DataType: NodePath
-                    Value: "/Objects/Optix_DefaultApplication_OptixEdge/System/System/Device/HardwareProductType"
+                    Value: "/Objects/OptixEdge_WizardApp/System/System/Device/HardwareProductType"
                 - Name: Height
                   Type: BaseVariableType
                   DataType: Size
@@ -1492,7 +1492,7 @@ Children:
                   - Name: DynamicLink
                     Type: DynamicLink
                     DataType: NodePath
-                    Value: "/Objects/Optix_DefaultApplication_OptixEdge/System/System/Device/HardwareVersion"
+                    Value: "/Objects/OptixEdge_WizardApp/System/System/Device/HardwareVersion"
                 - Name: Height
                   Type: BaseVariableType
                   DataType: Size
@@ -1524,7 +1524,7 @@ Children:
                   - Name: DynamicLink
                     Type: DynamicLink
                     DataType: NodePath
-                    Value: "/Objects/Optix_DefaultApplication_OptixEdge/System/System/Device/HardwareSeries"
+                    Value: "/Objects/OptixEdge_WizardApp/System/System/Device/HardwareSeries"
                 - Name: Height
                   Type: BaseVariableType
                   DataType: Size
@@ -1725,7 +1725,7 @@ Children:
                           Type: BaseDataVariableType
                           DataType: NodeId
                           Description: {"NamespaceIndex":3,"TextId":"OpenDialogDialogDescription"}
-                          Value: "/Objects/Optix_DefaultApplication_OptixEdge/UI/UITypes/Dialogs/ThirdPartyLegalNotes"
+                          Value: "/Objects/OptixEdge_WizardApp/UI/UITypes/Dialogs/ThirdPartyLegalNotes"
                         - Name: AliasNode
                           Type: BaseDataVariableType
                           DataType: NodeId
@@ -1982,7 +1982,7 @@ Children:
               - Name: StationWidgetFolder
                 Type: NodePointer
                 DataType: NodeId
-                Value: "/Objects/Optix_DefaultApplication_OptixEdge/UI/UITypes/Widgets/CommDriverStationsUIObj"
+                Value: "/Objects/OptixEdge_WizardApp/UI/UITypes/Widgets/CommDriverStationsUIObj"
                 Children:
                 - Name: Kind
                   Type: PropertyType
@@ -2154,7 +2154,7 @@ Children:
                 - Name: ns=2;ObjectPointer
                   Type: NodePointer
                   DataType: NodeId
-                  Value: "/Objects/Optix_DefaultApplication_OptixEdge/NetLogic/CommDriversConfigurationLogic"
+                  Value: "/Objects/OptixEdge_WizardApp/NetLogic/CommDriversConfigurationLogic"
                   Children:
                   - Name: Kind
                     Type: PropertyType
@@ -2174,7 +2174,7 @@ Children:
                     - Name: DynamicLink
                       Type: DynamicLink
                       DataType: NodePath
-                      Value: "/Objects/Optix_DefaultApplication_OptixEdge/CommDrivers/RAEtherNet_IP@NodeId"
+                      Value: "/Objects/OptixEdge_WizardApp/CommDrivers/RAEtherNet_IP@NodeId"
                   - Name: widgetOwner
                     Type: BaseDataVariableType
                     DataType: NodeId
@@ -2237,7 +2237,7 @@ Children:
           - Name: CommDriverNode
             Type: Alias
             DataType: NodeId
-            Value: "/Objects/Optix_DefaultApplication_OptixEdge/CommDrivers/RAEtherNet_IP"
+            Value: "/Objects/OptixEdge_WizardApp/CommDrivers/RAEtherNet_IP"
             Children:
             - Name: Kind
               Type: PropertyType
@@ -2270,7 +2270,7 @@ Children:
               - Name: StationWidgetFolder
                 Type: NodePointer
                 DataType: NodeId
-                Value: "/Objects/Optix_DefaultApplication_OptixEdge/UI/UITypes/Widgets/CommDriverStationsUIObj"
+                Value: "/Objects/OptixEdge_WizardApp/UI/UITypes/Widgets/CommDriverStationsUIObj"
                 Children:
                 - Name: Kind
                   Type: PropertyType
@@ -2442,7 +2442,7 @@ Children:
                 - Name: ns=2;ObjectPointer
                   Type: NodePointer
                   DataType: NodeId
-                  Value: "/Objects/Optix_DefaultApplication_OptixEdge/NetLogic/CommDriversConfigurationLogic"
+                  Value: "/Objects/OptixEdge_WizardApp/NetLogic/CommDriversConfigurationLogic"
                   Children:
                   - Name: Kind
                     Type: PropertyType
@@ -2462,7 +2462,7 @@ Children:
                     - Name: DynamicLink
                       Type: DynamicLink
                       DataType: NodePath
-                      Value: "/Objects/Optix_DefaultApplication_OptixEdge/CommDrivers/S7TIAProfinet@NodeId"
+                      Value: "/Objects/OptixEdge_WizardApp/CommDrivers/S7TIAProfinet@NodeId"
                   - Name: widgetOwner
                     Type: BaseDataVariableType
                     DataType: NodeId
@@ -2525,7 +2525,7 @@ Children:
           - Name: CommDriverNode
             Type: Alias
             DataType: NodeId
-            Value: "/Objects/Optix_DefaultApplication_OptixEdge/CommDrivers/S7TIAProfinet"
+            Value: "/Objects/OptixEdge_WizardApp/CommDrivers/S7TIAProfinet"
             Children:
             - Name: Kind
               Type: PropertyType
@@ -2558,7 +2558,7 @@ Children:
               - Name: StationWidgetFolder
                 Type: NodePointer
                 DataType: NodeId
-                Value: "/Objects/Optix_DefaultApplication_OptixEdge/UI/UITypes/Widgets/CommDriverStationsUIObj"
+                Value: "/Objects/OptixEdge_WizardApp/UI/UITypes/Widgets/CommDriverStationsUIObj"
                 Children:
                 - Name: Kind
                   Type: PropertyType
@@ -2700,7 +2700,7 @@ Children:
           - Name: CommDriverNode
             Type: Alias
             DataType: NodeId
-            Value: "/Objects/Optix_DefaultApplication_OptixEdge/CommDrivers/S7TCP"
+            Value: "/Objects/OptixEdge_WizardApp/CommDrivers/S7TCP"
             Children:
             - Name: Kind
               Type: PropertyType
@@ -2739,7 +2739,7 @@ Children:
                 - Name: ns=2;ObjectPointer
                   Type: NodePointer
                   DataType: NodeId
-                  Value: "/Objects/Optix_DefaultApplication_OptixEdge/NetLogic/CommDriversConfigurationLogic"
+                  Value: "/Objects/OptixEdge_WizardApp/NetLogic/CommDriversConfigurationLogic"
                   Children:
                   - Name: Kind
                     Type: PropertyType
@@ -2755,12 +2755,12 @@ Children:
                   - Name: destinationDriver
                     Type: BaseDataVariableType
                     DataType: NodeId
-                    Value: "/Objects/Optix_DefaultApplication_OptixEdge/CommDrivers/S7TCP"
+                    Value: "/Objects/OptixEdge_WizardApp/CommDrivers/S7TCP"
                     Children:
                     - Name: DynamicLink
                       Type: DynamicLink
                       DataType: NodePath
-                      Value: "/Objects/Optix_DefaultApplication_OptixEdge/CommDrivers/S7TCP@NodeId"
+                      Value: "/Objects/OptixEdge_WizardApp/CommDrivers/S7TCP@NodeId"
                   - Name: widgetOwner
                     Type: BaseDataVariableType
                     DataType: NodeId
@@ -2847,7 +2847,7 @@ Children:
               - Name: StationWidgetFolder
                 Type: NodePointer
                 DataType: NodeId
-                Value: "/Objects/Optix_DefaultApplication_OptixEdge/UI/UITypes/Widgets/CommDriverStationsUIObj"
+                Value: "/Objects/OptixEdge_WizardApp/UI/UITypes/Widgets/CommDriverStationsUIObj"
                 Children:
                 - Name: Kind
                   Type: PropertyType
@@ -3019,7 +3019,7 @@ Children:
                 - Name: ns=2;ObjectPointer
                   Type: NodePointer
                   DataType: NodeId
-                  Value: "/Objects/Optix_DefaultApplication_OptixEdge/NetLogic/CommDriversConfigurationLogic"
+                  Value: "/Objects/OptixEdge_WizardApp/NetLogic/CommDriversConfigurationLogic"
                   Children:
                   - Name: Kind
                     Type: PropertyType
@@ -3039,7 +3039,7 @@ Children:
                     - Name: DynamicLink
                       Type: DynamicLink
                       DataType: NodePath
-                      Value: "/Objects/Optix_DefaultApplication_OptixEdge/CommDrivers/ModbusTCP@NodeId"
+                      Value: "/Objects/OptixEdge_WizardApp/CommDrivers/ModbusTCP@NodeId"
                   - Name: widgetOwner
                     Type: BaseDataVariableType
                     DataType: NodeId
@@ -3102,7 +3102,7 @@ Children:
           - Name: CommDriverNode
             Type: Alias
             DataType: NodeId
-            Value: "/Objects/Optix_DefaultApplication_OptixEdge/CommDrivers/ModbusTCP"
+            Value: "/Objects/OptixEdge_WizardApp/CommDrivers/ModbusTCP"
             Children:
             - Name: Kind
               Type: PropertyType
@@ -3274,7 +3274,7 @@ Children:
               - Name: StationWidgetFolder
                 Type: NodePointer
                 DataType: NodeId
-                Value: "/Objects/Optix_DefaultApplication_OptixEdge/UI/UITypes/Widgets/OPC UA Server"
+                Value: "/Objects/OptixEdge_WizardApp/UI/UITypes/Widgets/OPC UA Server"
                 Children:
                 - Name: Kind
                   Type: PropertyType
@@ -3383,7 +3383,7 @@ Children:
                         - Name: ns=2;ObjectPointer
                           Type: NodePointer
                           DataType: NodeId
-                          Value: "/Objects/Optix_DefaultApplication_OptixEdge/NetLogic/OpcUaServerLogic"
+                          Value: "/Objects/OptixEdge_WizardApp/NetLogic/OpcUaServerLogic"
                           Children:
                           - Name: Kind
                             Type: PropertyType
@@ -3512,7 +3512,7 @@ Children:
               - Name: StationWidgetFolder
                 Type: NodePointer
                 DataType: NodeId
-                Value: "/Objects/Optix_DefaultApplication_OptixEdge/UI/UITypes/Widgets/MQTT/Client"
+                Value: "/Objects/OptixEdge_WizardApp/UI/UITypes/Widgets/MQTT/Client"
                 Children:
                 - Name: Kind
                   Type: PropertyType
@@ -3621,7 +3621,7 @@ Children:
                         - Name: ns=2;ObjectPointer
                           Type: NodePointer
                           DataType: NodeId
-                          Value: "/Objects/Optix_DefaultApplication_OptixEdge/NetLogic/MqttClientLogic"
+                          Value: "/Objects/OptixEdge_WizardApp/NetLogic/MqttClientLogic"
                           Children:
                           - Name: Kind
                             Type: PropertyType
@@ -3758,7 +3758,7 @@ Children:
               - Name: StationWidgetFolder
                 Type: NodePointer
                 DataType: NodeId
-                Value: "/Objects/Optix_DefaultApplication_OptixEdge/UI/UITypes/Widgets/Datalogger"
+                Value: "/Objects/OptixEdge_WizardApp/UI/UITypes/Widgets/Datalogger"
                 Children:
                 - Name: Kind
                   Type: PropertyType
@@ -3841,7 +3841,7 @@ Children:
                         - Name: ns=2;ObjectPointer
                           Type: NodePointer
                           DataType: NodeId
-                          Value: "/Objects/Optix_DefaultApplication_OptixEdge/NetLogic/LoggersLogic"
+                          Value: "/Objects/OptixEdge_WizardApp/NetLogic/LoggersLogic"
                           Children:
                           - Name: Kind
                             Type: PropertyType
@@ -4605,7 +4605,7 @@ Children:
     - Name: WidgetDataFolder
       Type: NodePointer
       DataType: NodeId
-      Value: "/Objects/Optix_DefaultApplication_OptixEdge/Model/DashboardCollection"
+      Value: "/Objects/OptixEdge_WizardApp/Model/DashboardCollection"
       Children:
       - Name: Kind
         Type: PropertyType
@@ -4826,7 +4826,7 @@ Children:
                   - Name: DynamicLink
                     Type: DynamicLink
                     DataType: NodePath
-                    Value: "/Objects/Optix_DefaultApplication_OptixEdge/Model/RuntimeExceedBannerVisibilty"
+                    Value: "/Objects/OptixEdge_WizardApp/Model/RuntimeExceedBannerVisibilty"
                 - Name: TrueValue
                   Type: BaseDataVariableType
                   DataType: ResourceUri
@@ -4890,7 +4890,7 @@ Children:
                   - Name: DynamicLink
                     Type: DynamicLink
                     DataType: NodePath
-                    Value: "/Objects/Optix_DefaultApplication_OptixEdge/Model/CurrentTokenUsage"
+                    Value: "/Objects/OptixEdge_WizardApp/Model/CurrentTokenUsage"
                 - Name: ns=2;Source1
                   Type: BaseDataVariableType
                   DataType: BaseDataType
@@ -4907,7 +4907,7 @@ Children:
                       - Name: DynamicLink
                         Type: DynamicLink
                         DataType: NodePath
-                        Value: "/Objects/Optix_DefaultApplication_OptixEdge/Model/RuntimeExceedBannerVisibilty"
+                        Value: "/Objects/OptixEdge_WizardApp/Model/RuntimeExceedBannerVisibilty"
                     - Name: TrueValue
                       Type: BaseDataVariableType
                       DataType: String
@@ -5052,7 +5052,7 @@ Children:
                   - Name: ns=2;ObjectPointer
                     Type: NodePointer
                     DataType: NodeId
-                    Value: "/Objects/Optix_DefaultApplication_OptixEdge/NetLogic/CommonLogic"
+                    Value: "/Objects/OptixEdge_WizardApp/NetLogic/CommonLogic"
                     Children:
                     - Name: Kind
                       Type: PropertyType
@@ -5170,7 +5170,7 @@ Children:
                     - Name: Dialog
                       Type: BaseDataVariableType
                       DataType: NodeId
-                      Value: "/Objects/Optix_DefaultApplication_OptixEdge/UI/UITypes/Dialogs/UserManualViewer"
+                      Value: "/Objects/OptixEdge_WizardApp/UI/UITypes/Dialogs/UserManualViewer"
                     - Name: AliasNode
                       Type: BaseDataVariableType
                       DataType: NodeId
@@ -5275,7 +5275,7 @@ Children:
                     - Name: Dialog
                       Type: BaseDataVariableType
                       DataType: NodeId
-                      Value: "/Objects/Optix_DefaultApplication_OptixEdge/UI/UITypes/Dialogs/CommunicationStatusView"
+                      Value: "/Objects/OptixEdge_WizardApp/UI/UITypes/Dialogs/CommunicationStatusView"
                     - Name: AliasNode
                       Type: BaseDataVariableType
                       DataType: NodeId
@@ -5380,7 +5380,7 @@ Children:
                     - Name: Dialog
                       Type: BaseDataVariableType
                       DataType: NodeId
-                      Value: "/Objects/Optix_DefaultApplication_OptixEdge/UI/UITypes/Dialogs/ConfirmRestart"
+                      Value: "/Objects/OptixEdge_WizardApp/UI/UITypes/Dialogs/ConfirmRestart"
                     - Name: AliasNode
                       Type: BaseDataVariableType
                       DataType: NodeId
@@ -5456,7 +5456,7 @@ Children:
           - Name: Model
             Type: NodePointer
             DataType: NodeId
-            Value: "/Objects/Optix_DefaultApplication_OptixEdge/DataStores/EdgeEmbeddedDatabase"
+            Value: "/Objects/OptixEdge_WizardApp/DataStores/EdgeEmbeddedDatabase"
             Children:
             - Name: ItemKind
               Type: PropertyType

@@ -38,7 +38,7 @@ public class AddWidgetDialogLogic : BaseNetLogic
         if (widgetUIObject == null)
         {
             var widgetNumber = CommonLogic.FindMissingNumber(DashboardLogic.Instance.GetListTotalWidgetsBrowseName());
-            NodeId widgetDefaultTypeNodeId = Optix_DefaultApplication_OptixEdge.ObjectTypes.DataGridUIObj;
+            NodeId widgetDefaultTypeNodeId = OptixEdge_WizardApp.ObjectTypes.DataGridUIObj;
             if (InformationModel.Get(widgetObjectType.Value) is IUAObjectType objectType)
             {
                 widgetDefaultTypeNodeId = objectType.NodeId;
@@ -261,8 +261,8 @@ public class AddWidgetDialogLogic : BaseNetLogic
         {
             ownerDialog.GetVariable("ShowSpanParameters").Value = widgetType.NodeId switch
             {
-                var _ when widgetType.NodeId == Optix_DefaultApplication_OptixEdge.ObjectTypes.DisplayUIObj => false,
-                var _ when widgetType.NodeId == Optix_DefaultApplication_OptixEdge.ObjectTypes.SparklineUIObj => false,
+                var _ when widgetType.NodeId == OptixEdge_WizardApp.ObjectTypes.DisplayUIObj => false,
+                var _ when widgetType.NodeId == OptixEdge_WizardApp.ObjectTypes.SparklineUIObj => false,
                 _ => true
             };
         }

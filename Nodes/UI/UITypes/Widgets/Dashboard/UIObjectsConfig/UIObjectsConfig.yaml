@@ -120,7 +120,7 @@ Children:
           - Name: Model
             Type: NodePointer
             DataType: NodeId
-            Value: "/Objects/Optix_DefaultApplication_OptixEdge/Loggers"
+            Value: "/Objects/OptixEdge_WizardApp/Loggers"
             Children:
             - Name: ItemKind
               Type: PropertyType
@@ -402,7 +402,7 @@ Children:
     - Name: Kind
       Type: PropertyType
       DataType: NodeId
-      Value: "/Objects/Optix_DefaultApplication_OptixEdge/UI/UITypes/Widgets/Dashboard/UIObjects/DataGridUIObj"
+      Value: "/Objects/OptixEdge_WizardApp/UI/UITypes/Widgets/Dashboard/UIObjects/DataGridUIObj"
   - Name: Height
     Type: BaseVariableType
     DataType: Size
@@ -816,7 +816,7 @@ Children:
     - Name: Kind
       Type: PropertyType
       DataType: NodeId
-      Value: "/Objects/Optix_DefaultApplication_OptixEdge/UI/UITypes/Widgets/Dashboard/UIObjects/SparklineUIObj"
+      Value: "/Objects/OptixEdge_WizardApp/UI/UITypes/Widgets/Dashboard/UIObjects/SparklineUIObj"
   - Name: Height
     Type: BaseVariableType
     DataType: Size
@@ -848,7 +848,7 @@ Children:
     - Name: Kind
       Type: PropertyType
       DataType: NodeId
-      Value: "/Objects/Optix_DefaultApplication_OptixEdge/UI/UITypes/Widgets/Dashboard/UIObjects/TrendUIObj"
+      Value: "/Objects/OptixEdge_WizardApp/UI/UITypes/Widgets/Dashboard/UIObjects/TrendUIObj"
   - Name: Height
     Type: BaseVariableType
     DataType: Size
@@ -936,7 +936,7 @@ Children:
             - Name: Model
               Type: NodePointer
               DataType: NodeId
-              Value: "/Objects/Optix_DefaultApplication_OptixEdge/Loggers"
+              Value: "/Objects/OptixEdge_WizardApp/Loggers"
               Children:
               - Name: ItemKind
                 Type: PropertyType
@@ -1274,7 +1274,7 @@ Children:
             - Name: Model
               Type: NodePointer
               DataType: NodeId
-              Value: "/Objects/Optix_DefaultApplication_OptixEdge/Model/Enumerators/Boolean"
+              Value: "/Objects/OptixEdge_WizardApp/Model/Enumerators/Boolean"
               Children:
               - Name: ItemKind
                 Type: PropertyType
@@ -1755,7 +1755,7 @@ Children:
           - Name: Model
             Type: NodePointer
             DataType: NodeId
-            Value: "/Objects/Optix_DefaultApplication_OptixEdge/Model/Enumerators/Boolean"
+            Value: "/Objects/OptixEdge_WizardApp/Model/Enumerators/Boolean"
             Children:
             - Name: ItemKind
               Type: PropertyType
@@ -2050,7 +2050,7 @@ Children:
                       Type: BaseDataVariableType
                       DataType: NodeId
                       Description: {"NamespaceIndex":3,"TextId":"OpenDialogDialogDescription"}
-                      Value: "/Objects/Optix_DefaultApplication_OptixEdge/UI/UITypes/Dialogs/ColorPicker"
+                      Value: "/Objects/OptixEdge_WizardApp/UI/UITypes/Dialogs/ColorPicker"
                     - Name: AliasNode
                       Type: BaseDataVariableType
                       DataType: NodeId

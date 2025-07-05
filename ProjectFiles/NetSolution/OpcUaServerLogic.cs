@@ -175,8 +175,8 @@ public class OpcUaServerLogic : BaseNetLogic
     {
         opcUAServer.GetOrCreateVariable("MaxNumberOfConnections").Value = 1;
         opcUAServer.SamplingInterval = 1000;
-        opcUAServer.ProductURI = "urn:Optix_DefaultApplication_OptixEdge:Application";
-        opcUAServer.ProductName = "Allen-Bradley 2800E Optix_DefaultApplication_OptixEdge";
+        opcUAServer.ProductURI = "urn:OptixEdge_WizardApp:Application";
+        opcUAServer.ProductName = "Allen-Bradley 2800E OptixEdge_WizardApp";
         opcUAServer.MinimumMessageSecurityMode = FTOptix.OPCUAServer.MessageSecurityMode.None;
         opcUAServer.MinimumSecurityPolicy = FTOptix.OPCUAServer.SecurityPolicy.None;
         _ = opcUAServer.UseNodePathInNodeIdsVariable;

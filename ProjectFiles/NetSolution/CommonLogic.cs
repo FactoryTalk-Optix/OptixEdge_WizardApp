@@ -424,8 +424,8 @@ public class CommonLogic : BaseNetLogic
             KeyValuePair.Create(FTOptix.OPCUAServer.ObjectTypes.OPCUAServer, "EditModel"),
             KeyValuePair.Create(FTOptix.MQTTClient.ObjectTypes.MQTTPublisher, "MQTTClientPublisherAlias"),
             KeyValuePair.Create(FTOptix.OPCUAServer.ObjectTypes.NodesToPublishConfigurationEntry, "OPCUAServerNodesToPublishAlias"),
-            KeyValuePair.Create(Optix_DefaultApplication_OptixEdge.ObjectTypes.DataGridUIObjConfig, "DataGridUIObjAlias"),
-            KeyValuePair.Create(Optix_DefaultApplication_OptixEdge.ObjectTypes.TrendUIObjConfig, "TrendUIObjAlias"),            
+            KeyValuePair.Create(OptixEdge_WizardApp.ObjectTypes.DataGridUIObjConfig, "DataGridUIObjAlias"),
+            KeyValuePair.Create(OptixEdge_WizardApp.ObjectTypes.TrendUIObjConfig, "TrendUIObjAlias"),            
         ]);
 
     public static readonly ImmutableDictionary<NodeId, string> sourceAliasNameMapping = ImmutableDictionary.CreateRange(
@@ -439,8 +439,8 @@ public class CommonLogic : BaseNetLogic
             KeyValuePair.Create(FTOptix.OPCUAServer.ObjectTypes.OPCUAServer, "StationNode"),
             KeyValuePair.Create(FTOptix.MQTTClient.ObjectTypes.MQTTPublisher, "MQTTClientPublisherAlias"),
             KeyValuePair.Create(FTOptix.OPCUAServer.ObjectTypes.NodesToPublishConfigurationEntry, "OPCUAServerNodesToPublishAlias"),
-            KeyValuePair.Create(Optix_DefaultApplication_OptixEdge.ObjectTypes.DataGridUIObjConfig, "DataGridUIObjAlias"),
-            KeyValuePair.Create(Optix_DefaultApplication_OptixEdge.ObjectTypes.TrendUIObjConfig, "TrendUIObjAlias"),            
+            KeyValuePair.Create(OptixEdge_WizardApp.ObjectTypes.DataGridUIObjConfig, "DataGridUIObjAlias"),
+            KeyValuePair.Create(OptixEdge_WizardApp.ObjectTypes.TrendUIObjConfig, "TrendUIObjAlias"),            
         ]);
 
     public static readonly ImmutableDictionary<NodeId, string> sourceWidgetMapping = ImmutableDictionary.CreateRange(

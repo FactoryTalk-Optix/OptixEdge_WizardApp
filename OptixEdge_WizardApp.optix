@@ -1,5 +1,5 @@
 Project:
- Name: Optix_DefaultApplication_OptixEdge
+ Name: OptixEdge_WizardApp
  GUID: d1840361a901be14b92ea567c6d20722
  ProjectNamespaceIndex: 7
  Description: ''
@@ -223,4 +223,4 @@ Project:
   ReferenceTypes: 0
   Files: 64
  Nodes:
- - File: Nodes/Optix_DefaultApplication_OptixEdge.yaml
+ - File: Nodes/OptixEdge_WizardApp.yaml

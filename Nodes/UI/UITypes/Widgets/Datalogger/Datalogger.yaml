@@ -342,7 +342,7 @@ Children:
               - Name: Model
                 Type: NodePointer
                 DataType: NodeId
-                Value: "/Objects/Optix_DefaultApplication_OptixEdge/Model/Enumerators/LocalStorageTypes"
+                Value: "/Objects/OptixEdge_WizardApp/Model/Enumerators/LocalStorageTypes"
                 Children:
                 - Name: ItemKind
                   Type: PropertyType
@@ -814,7 +814,7 @@ Children:
         - Name: ObjectPointer
           Type: NodePointer
           DataType: NodeId
-          Value: "/Objects/Optix_DefaultApplication_OptixEdge/NetLogic/CommonLogic"
+          Value: "/Objects/OptixEdge_WizardApp/NetLogic/CommonLogic"
           Children:
           - Name: Kind
             Type: PropertyType
@@ -915,7 +915,7 @@ Children:
           - Name: Dialog
             Type: BaseDataVariableType
             DataType: NodeId
-            Value: "/Objects/Optix_DefaultApplication_OptixEdge/UI/UITypes/Dialogs/TagSelectionUIObject"
+            Value: "/Objects/OptixEdge_WizardApp/UI/UITypes/Dialogs/TagSelectionUIObject"
           - Name: AliasNode
             Type: BaseDataVariableType
             DataType: NodeId
@@ -1011,7 +1011,7 @@ Children:
           - Name: Dialog
             Type: BaseDataVariableType
             DataType: NodeId
-            Value: "/Objects/Optix_DefaultApplication_OptixEdge/UI/UITypes/Dialogs/ConfirmDelete"
+            Value: "/Objects/OptixEdge_WizardApp/UI/UITypes/Dialogs/ConfirmDelete"
           - Name: AliasNode
             Type: BaseDataVariableType
             DataType: NodeId
@@ -1142,7 +1142,7 @@ Children:
           - Name: Dialog
             Type: BaseDataVariableType
             DataType: NodeId
-            Value: "/Objects/Optix_DefaultApplication_OptixEdge/UI/UITypes/Dialogs/TagViewerUIObject"
+            Value: "/Objects/OptixEdge_WizardApp/UI/UITypes/Dialogs/TagViewerUIObject"
           - Name: AliasNode
             Type: BaseDataVariableType
             DataType: NodeId

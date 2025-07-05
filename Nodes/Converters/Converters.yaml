@@ -22,7 +22,7 @@ Children:
         Type: BaseDataVariableType
         DataType: NodeId
         ModellingRule: None
-        Value: "/Objects/Optix_DefaultApplication_OptixEdge/Model/CommDriverComboBoxElements/RAEIP"
+        Value: "/Objects/OptixEdge_WizardApp/Model/CommDriverComboBoxElements/RAEIP"
     - Name: Pair1
       Type: ValueMapPair
       ModellingRule: None
@@ -36,7 +36,7 @@ Children:
         Type: BaseDataVariableType
         DataType: NodeId
         ModellingRule: None
-        Value: "/Objects/Optix_DefaultApplication_OptixEdge/Model/CommDriverComboBoxElements/S7TCP"
+        Value: "/Objects/OptixEdge_WizardApp/Model/CommDriverComboBoxElements/S7TCP"
     - Name: Pair2
       Type: ValueMapPair
       ModellingRule: None
@@ -50,7 +50,7 @@ Children:
         Type: BaseDataVariableType
         DataType: NodeId
         ModellingRule: None
-        Value: "/Objects/Optix_DefaultApplication_OptixEdge/Model/CommDriverComboBoxElements/ModbusTCP"
+        Value: "/Objects/OptixEdge_WizardApp/Model/CommDriverComboBoxElements/ModbusTCP"
     - Name: Pair3
       Type: ValueMapPair
       ModellingRule: None
@@ -64,7 +64,7 @@ Children:
         Type: BaseDataVariableType
         DataType: NodeId
         ModellingRule: None
-        Value: "/Objects/Optix_DefaultApplication_OptixEdge/Model/CommDriverComboBoxElements/S7Profinet"
+        Value: "/Objects/OptixEdge_WizardApp/Model/CommDriverComboBoxElements/S7Profinet"
 - Name: EnumWidgetNodeId
   Id: g=dfc9472b6862161f3901411ee58c8333
   Supertype: ValueMapConverter
@@ -86,7 +86,7 @@ Children:
         Type: BaseDataVariableType
         DataType: NodeId
         ModellingRule: None
-        Value: "/Objects/Optix_DefaultApplication_OptixEdge/UI/UITypes/Widgets/Dashboard/UIObjects/DataGridUIObj"
+        Value: "/Objects/OptixEdge_WizardApp/UI/UITypes/Widgets/Dashboard/UIObjects/DataGridUIObj"
     - Name: Pair1
       Type: ValueMapPair
       ModellingRule: None
@@ -100,7 +100,7 @@ Children:
         Type: BaseDataVariableType
         DataType: NodeId
         ModellingRule: None
-        Value: "/Objects/Optix_DefaultApplication_OptixEdge/UI/UITypes/Widgets/Dashboard/UIObjects/TrendUIObj"
+        Value: "/Objects/OptixEdge_WizardApp/UI/UITypes/Widgets/Dashboard/UIObjects/TrendUIObj"
     - Name: Pair2
       Type: ValueMapPair
       ModellingRule: None
@@ -114,7 +114,7 @@ Children:
         Type: BaseDataVariableType
         DataType: NodeId
         ModellingRule: None
-        Value: "/Objects/Optix_DefaultApplication_OptixEdge/UI/UITypes/Widgets/Dashboard/UIObjects/DisplayUIObj"
+        Value: "/Objects/OptixEdge_WizardApp/UI/UITypes/Widgets/Dashboard/UIObjects/DisplayUIObj"
     - Name: Pair3
       Type: ValueMapPair
       ModellingRule: None
@@ -128,7 +128,7 @@ Children:
         Type: BaseDataVariableType
         DataType: NodeId
         ModellingRule: None
-        Value: "/Objects/Optix_DefaultApplication_OptixEdge/UI/UITypes/Widgets/Dashboard/UIObjects/SparklineUIObj"
+        Value: "/Objects/OptixEdge_WizardApp/UI/UITypes/Widgets/Dashboard/UIObjects/SparklineUIObj"
   - Name: Mode
     Type: PropertyType
     DataType: DynamicLinkMode
@@ -156,7 +156,7 @@ Children:
         Type: BaseDataVariableType
         DataType: NodeId
         ModellingRule: None
-        Value: "/Objects/Optix_DefaultApplication_OptixEdge/UI/UITypes/Widgets/Dashboard/UIObjectsConfig/DataGridUIObjConfig"
+        Value: "/Objects/OptixEdge_WizardApp/UI/UITypes/Widgets/Dashboard/UIObjectsConfig/DataGridUIObjConfig"
     - Name: Pair1
       Type: ValueMapPair
       ModellingRule: None
@@ -170,7 +170,7 @@ Children:
         Type: BaseDataVariableType
         DataType: NodeId
         ModellingRule: None
-        Value: "/Objects/Optix_DefaultApplication_OptixEdge/UI/UITypes/Widgets/Dashboard/UIObjectsConfig/TrendUIObjConfig"
+        Value: "/Objects/OptixEdge_WizardApp/UI/UITypes/Widgets/Dashboard/UIObjectsConfig/TrendUIObjConfig"
     - Name: Pair2
       Type: ValueMapPair
       ModellingRule: None
@@ -184,7 +184,7 @@ Children:
         Type: BaseDataVariableType
         DataType: NodeId
         ModellingRule: None
-        Value: "/Objects/Optix_DefaultApplication_OptixEdge/UI/UITypes/Widgets/Dashboard/UIObjectsConfig/DisplayUIObjConfig"
+        Value: "/Objects/OptixEdge_WizardApp/UI/UITypes/Widgets/Dashboard/UIObjectsConfig/DisplayUIObjConfig"
     - Name: Pair3
       Type: ValueMapPair
       ModellingRule: None
@@ -198,7 +198,7 @@ Children:
         Type: BaseDataVariableType
         DataType: NodeId
         ModellingRule: None
-        Value: "/Objects/Optix_DefaultApplication_OptixEdge/UI/UITypes/Widgets/Dashboard/UIObjectsConfig/SparklineUIObjConfig"
+        Value: "/Objects/OptixEdge_WizardApp/UI/UITypes/Widgets/Dashboard/UIObjectsConfig/SparklineUIObjConfig"
   - Name: Mode
     Type: PropertyType
     DataType: DynamicLinkMode

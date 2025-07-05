@@ -83,7 +83,7 @@ public class TrendUIObjConfigLogic : BaseNetLogic
             var trendPenWidget = pensWidgetOwner.GetObject(variableToLog.BrowseName);
             if (trendPenWidget == null)
             {
-                trendPenWidget = InformationModel.MakeObject(variableToLog.BrowseName, Optix_DefaultApplication_OptixEdge.ObjectTypes.TrendPenUIObjConfig);
+                trendPenWidget = InformationModel.MakeObject(variableToLog.BrowseName, OptixEdge_WizardApp.ObjectTypes.TrendPenUIObjConfig);
                 trendPenWidget.SetAlias("TrendPenUIObjConfigAlias", trendPen);
                 pensWidgetOwner.Add(trendPenWidget);
             }

@@ -80,8 +80,8 @@ public class RetentivityHandlerLogic : BaseNetLogic
     private PanelLoader bodyPanelLoader;
     private static readonly ImmutableDictionary<NodeId, string> ScreenRetentivityMapping = ImmutableDictionary.CreateRange(
     [
-        KeyValuePair.Create(Optix_DefaultApplication_OptixEdge.ObjectTypes.DataSourcesConfig, "DataSourcesStorage"),
-        KeyValuePair.Create(Optix_DefaultApplication_OptixEdge.ObjectTypes.DataDestinationsConfig, "DataDestinationsStorage"),
+        KeyValuePair.Create(OptixEdge_WizardApp.ObjectTypes.DataSourcesConfig, "DataSourcesStorage"),
+        KeyValuePair.Create(OptixEdge_WizardApp.ObjectTypes.DataDestinationsConfig, "DataDestinationsStorage"),
     ]);
     private static readonly ImmutableList<string> retentivityAlwaysEnabled = ["UIStorage", "SecurityRetentivityStorage", "AlarmsRetentivityStorage",];
 }

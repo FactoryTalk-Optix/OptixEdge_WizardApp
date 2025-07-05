@@ -437,7 +437,7 @@ Children:
   - Name: StartWindow
     Type: NodePointer
     DataType: NodeId
-    Value: "/Objects/Optix_DefaultApplication_OptixEdge/UI/MainWindow"
+    Value: "/Objects/OptixEdge_WizardApp/UI/MainWindow"
     Children:
     - Name: Kind
       Type: PropertyType
@@ -446,7 +446,7 @@ Children:
   - Name: StyleSheet
     Type: NodePointer
     DataType: NodeId
-    Value: "/Objects/Optix_DefaultApplication_OptixEdge/UI/DefaultStyleSheet"
+    Value: "/Objects/OptixEdge_WizardApp/UI/DefaultStyleSheet"
     Children:
     - Name: Kind
       Type: PropertyType
@@ -1421,7 +1421,7 @@ Children:
             - Name: DynamicLink
               Type: DynamicLink
               DataType: NodePath
-              Value: "/Objects/Optix_DefaultApplication_OptixEdge/Model/MinutesRemainingToStop"
+              Value: "/Objects/OptixEdge_WizardApp/Model/MinutesRemainingToStop"
               Children:
               - Name: Mode
                 Type: BaseVariableType
@@ -1463,7 +1463,7 @@ Children:
         - Name: DynamicLink
           Type: DynamicLink
           DataType: NodePath
-          Value: "/Objects/Optix_DefaultApplication_OptixEdge/Model/RuntimeExceedBannerVisibilty"
+          Value: "/Objects/OptixEdge_WizardApp/Model/RuntimeExceedBannerVisibilty"
       - Name: ShowCloseButton
         Type: BaseDataVariableType
         DataType: ns=0;Boolean
@@ -1506,7 +1506,7 @@ Children:
         - Name: Panel
           Type: NodePointer
           DataType: NodeId
-          Value: "/Objects/Optix_DefaultApplication_OptixEdge/UI/Screens/General"
+          Value: "/Objects/OptixEdge_WizardApp/UI/Screens/General"
           Children:
           - Name: Kind
             Type: PropertyType
@@ -1523,19 +1523,19 @@ Children:
               - Name: DynamicLink
                 Type: DynamicLink
                 DataType: NodePath
-                Value: "/Objects/Optix_DefaultApplication_OptixEdge/Model/ProjectSettings/StartFromDashboard"
+                Value: "/Objects/OptixEdge_WizardApp/Model/ProjectSettings/StartFromDashboard"
             - Name: TrueValue
               Type: BaseDataVariableType
               DataType: NodeId
               ReferenceType: HasParameter
               ModellingRule: Optional
-              Value: "/Objects/Optix_DefaultApplication_OptixEdge/UI/Screens/Dashboard"
+              Value: "/Objects/OptixEdge_WizardApp/UI/Screens/Dashboard"
             - Name: FalseValue
               Type: BaseDataVariableType
               DataType: NodeId
               ReferenceType: HasParameter
               ModellingRule: Optional
-              Value: "/Objects/Optix_DefaultApplication_OptixEdge/UI/Screens/General"
+              Value: "/Objects/OptixEdge_WizardApp/UI/Screens/General"
         - Name: CurrentPanel
           Type: NodePointer
           DataType: NodeId
@@ -1969,7 +1969,7 @@ Children:
                 - Name: DynamicLink
                   Type: DynamicLink
                   DataType: NodePath
-                  Value: "/Objects/Optix_DefaultApplication_OptixEdge/Model/ProjectSettings/StartFromDashboard"
+                  Value: "/Objects/OptixEdge_WizardApp/Model/ProjectSettings/StartFromDashboard"
               - Name: TrueValue
                 Type: BaseDataVariableType
                 DataType: Byte
@@ -2130,7 +2130,7 @@ Children:
                       Type: BaseDataVariableType
                       DataType: NodeId
                       Description: {"NamespaceIndex":3,"TextId":"ChangePanelNewPanelDescription"}
-                      Value: "/Objects/Optix_DefaultApplication_OptixEdge/UI/Screens/General"
+                      Value: "/Objects/OptixEdge_WizardApp/UI/Screens/General"
                     - Name: AliasNode
                       Type: BaseDataVariableType
                       DataType: NodeId
@@ -2340,7 +2340,7 @@ Children:
                       Type: BaseDataVariableType
                       DataType: NodeId
                       Description: {"NamespaceIndex":3,"TextId":"ChangePanelNewPanelDescription"}
-                      Value: "/Objects/Optix_DefaultApplication_OptixEdge/UI/Screens/DataSourcesConfig"
+                      Value: "/Objects/OptixEdge_WizardApp/UI/Screens/DataSourcesConfig"
                     - Name: AliasNode
                       Type: BaseDataVariableType
                       DataType: NodeId
@@ -2551,7 +2551,7 @@ Children:
                       Type: BaseDataVariableType
                       DataType: NodeId
                       Description: {"NamespaceIndex":3,"TextId":"ChangePanelNewPanelDescription"}
-                      Value: "/Objects/Optix_DefaultApplication_OptixEdge/UI/Screens/DataDestinationsConfig"
+                      Value: "/Objects/OptixEdge_WizardApp/UI/Screens/DataDestinationsConfig"
                     - Name: AliasNode
                       Type: BaseDataVariableType
                       DataType: NodeId
@@ -2762,7 +2762,7 @@ Children:
                       Type: BaseDataVariableType
                       DataType: NodeId
                       Description: {"NamespaceIndex":3,"TextId":"ChangePanelNewPanelDescription"}
-                      Value: "/Objects/Optix_DefaultApplication_OptixEdge/UI/Screens/Dashboard"
+                      Value: "/Objects/OptixEdge_WizardApp/UI/Screens/Dashboard"
                     - Name: AliasNode
                       Type: BaseDataVariableType
                       DataType: NodeId
@@ -2973,7 +2973,7 @@ Children:
                       Type: BaseDataVariableType
                       DataType: NodeId
                       Description: {"NamespaceIndex":3,"TextId":"ChangePanelNewPanelDescription"}
-                      Value: "/Objects/Optix_DefaultApplication_OptixEdge/UI/Screens/Diagnostics"
+                      Value: "/Objects/OptixEdge_WizardApp/UI/Screens/Diagnostics"
                     - Name: AliasNode
                       Type: BaseDataVariableType
                       DataType: NodeId

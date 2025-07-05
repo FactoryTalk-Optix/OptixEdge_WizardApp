@@ -667,7 +667,7 @@ Children:
             - Name: ns=2;ObjectPointer
               Type: NodePointer
               DataType: NodeId
-              Value: "/Objects/Optix_DefaultApplication_OptixEdge/NetLogic/CommDriversConfigurationLogic"
+              Value: "/Objects/OptixEdge_WizardApp/NetLogic/CommDriversConfigurationLogic"
               Children:
               - Name: Kind
                 Type: PropertyType
@@ -788,7 +788,7 @@ Children:
     - Name: CommDriversLogic
       Type: NodePointer
       DataType: NodeId
-      Value: "/Objects/Optix_DefaultApplication_OptixEdge/NetLogic/CommDriversConfigurationLogic"
+      Value: "/Objects/OptixEdge_WizardApp/NetLogic/CommDriversConfigurationLogic"
       Children:
       - Name: Kind
         Type: PropertyType
@@ -796,7 +796,7 @@ Children:
     - Name: MqttClientLogic
       Type: NodePointer
       DataType: NodeId
-      Value: "/Objects/Optix_DefaultApplication_OptixEdge/NetLogic/MqttClientLogic"
+      Value: "/Objects/OptixEdge_WizardApp/NetLogic/MqttClientLogic"
       Children:
       - Name: Kind
         Type: PropertyType
@@ -814,7 +814,7 @@ Children:
     - Name: LoggersLogic
       Type: NodePointer
       DataType: NodeId
-      Value: "/Objects/Optix_DefaultApplication_OptixEdge/NetLogic/LoggersLogic"
+      Value: "/Objects/OptixEdge_WizardApp/NetLogic/LoggersLogic"
       Children:
       - Name: Kind
         Type: PropertyType
@@ -822,7 +822,7 @@ Children:
     - Name: OpcUaServerLogic
       Type: NodePointer
       DataType: NodeId
-      Value: "/Objects/Optix_DefaultApplication_OptixEdge/NetLogic/OpcUaServerLogic"
+      Value: "/Objects/OptixEdge_WizardApp/NetLogic/OpcUaServerLogic"
       Children:
       - Name: Kind
         Type: PropertyType
@@ -1441,7 +1441,7 @@ Children:
                 - Name: Model
                   Type: NodePointer
                   DataType: NodeId
-                  Value: "/Objects/Optix_DefaultApplication_OptixEdge/Model/Enumerators/Widgets"
+                  Value: "/Objects/OptixEdge_WizardApp/Model/Enumerators/Widgets"
                   Children:
                   - Name: ItemKind
                     Type: PropertyType
@@ -1582,7 +1582,7 @@ Children:
                 - Name: Model
                   Type: NodePointer
                   DataType: NodeId
-                  Value: "/Objects/Optix_DefaultApplication_OptixEdge/Model/Enumerators/SourceDriver"
+                  Value: "/Objects/OptixEdge_WizardApp/Model/Enumerators/SourceDriver"
                   Children:
                   - Name: ItemKind
                     Type: PropertyType
@@ -1662,7 +1662,7 @@ Children:
                   - Name: ItemKind
                     Type: PropertyType
                     DataType: NodeId
-                    Value: "/Objects/Optix_DefaultApplication_OptixEdge/Model/ObjectTypes/ComboBoxStationData"
+                    Value: "/Objects/OptixEdge_WizardApp/Model/ObjectTypes/ComboBoxStationData"
                   - Name: Kind
                     Type: PropertyType
                     DataType: NodeId
@@ -1688,7 +1688,7 @@ Children:
                   - Name: Kind
                     Type: PropertyType
                     DataType: NodeId
-                    Value: "/Objects/Optix_DefaultApplication_OptixEdge/Model/ObjectTypes/ComboBoxStationData"
+                    Value: "/Objects/OptixEdge_WizardApp/Model/ObjectTypes/ComboBoxStationData"
                 - Name: UISelectedItem
                   Type: BaseDataVariableType
                   DataType: NodeId
@@ -1704,7 +1704,7 @@ Children:
                   - Name: Kind
                     Type: PropertyType
                     DataType: NodeId
-                    Value: "/Objects/Optix_DefaultApplication_OptixEdge/Model/ObjectTypes/ComboBoxStationData"
+                    Value: "/Objects/OptixEdge_WizardApp/Model/ObjectTypes/ComboBoxStationData"
                 - Name: SelectedValuePath
                   Type: BaseDataVariableType
                   DataType: BaseDataType
@@ -2784,7 +2784,7 @@ Children:
     - Name: Kind
       Type: PropertyType
       DataType: NodeId
-      Value: "/Objects/Optix_DefaultApplication_OptixEdge/UI/UITypes/Widgets/Dashboard/UIObjects/BaseWidgetUIObject"
+      Value: "/Objects/OptixEdge_WizardApp/UI/UITypes/Widgets/Dashboard/UIObjects/BaseWidgetUIObject"
   - Name: HorizontalAlignment
     Type: BaseVariableType
     DataType: HorizontalAlignment
@@ -4485,7 +4485,7 @@ Children:
                   - Name: Kind
                     Type: PropertyType
                     DataType: NodeId
-                    Value: "/Objects/Optix_DefaultApplication_OptixEdge/Model/ObjectTypes/TagCustomGridRowData"
+                    Value: "/Objects/OptixEdge_WizardApp/Model/ObjectTypes/TagCustomGridRowData"
                 - Name: Visible
                   Type: BaseDataVariableType
                   DataType: ns=0;Boolean
@@ -4557,7 +4557,7 @@ Children:
                   - Name: Kind
                     Type: PropertyType
                     DataType: NodeId
-                    Value: "/Objects/Optix_DefaultApplication_OptixEdge/Model/ObjectTypes/TagCustomGridRowData"
+                    Value: "/Objects/OptixEdge_WizardApp/Model/ObjectTypes/TagCustomGridRowData"
                 - Name: Visible
                   Type: BaseDataVariableType
                   DataType: ns=0;Boolean
@@ -4629,7 +4629,7 @@ Children:
                   - Name: Kind
                     Type: PropertyType
                     DataType: NodeId
-                    Value: "/Objects/Optix_DefaultApplication_OptixEdge/Model/ObjectTypes/TagCustomGridRowData"
+                    Value: "/Objects/OptixEdge_WizardApp/Model/ObjectTypes/TagCustomGridRowData"
                 - Name: Visible
                   Type: BaseDataVariableType
                   DataType: ns=0;Boolean
@@ -4701,7 +4701,7 @@ Children:
                   - Name: Kind
                     Type: PropertyType
                     DataType: NodeId
-                    Value: "/Objects/Optix_DefaultApplication_OptixEdge/Model/ObjectTypes/TagCustomGridRowData"
+                    Value: "/Objects/OptixEdge_WizardApp/Model/ObjectTypes/TagCustomGridRowData"
                 - Name: Visible
                   Type: BaseDataVariableType
                   DataType: ns=0;Boolean
@@ -4773,7 +4773,7 @@ Children:
                   - Name: Kind
                     Type: PropertyType
                     DataType: NodeId
-                    Value: "/Objects/Optix_DefaultApplication_OptixEdge/Model/ObjectTypes/TagCustomGridRowData"
+                    Value: "/Objects/OptixEdge_WizardApp/Model/ObjectTypes/TagCustomGridRowData"
                 - Name: Visible
                   Type: BaseDataVariableType
                   DataType: ns=0;Boolean
@@ -4845,7 +4845,7 @@ Children:
                   - Name: Kind
                     Type: PropertyType
                     DataType: NodeId
-                    Value: "/Objects/Optix_DefaultApplication_OptixEdge/Model/ObjectTypes/TagCustomGridRowData"
+                    Value: "/Objects/OptixEdge_WizardApp/Model/ObjectTypes/TagCustomGridRowData"
                 - Name: Visible
                   Type: BaseDataVariableType
                   DataType: ns=0;Boolean
@@ -4917,7 +4917,7 @@ Children:
                   - Name: Kind
                     Type: PropertyType
                     DataType: NodeId
-                    Value: "/Objects/Optix_DefaultApplication_OptixEdge/Model/ObjectTypes/TagCustomGridRowData"
+                    Value: "/Objects/OptixEdge_WizardApp/Model/ObjectTypes/TagCustomGridRowData"
                 - Name: Visible
                   Type: BaseDataVariableType
                   DataType: ns=0;Boolean
@@ -4989,7 +4989,7 @@ Children:
                   - Name: Kind
                     Type: PropertyType
                     DataType: NodeId
-                    Value: "/Objects/Optix_DefaultApplication_OptixEdge/Model/ObjectTypes/TagCustomGridRowData"
+                    Value: "/Objects/OptixEdge_WizardApp/Model/ObjectTypes/TagCustomGridRowData"
                 - Name: Visible
                   Type: BaseDataVariableType
                   DataType: ns=0;Boolean
@@ -5061,7 +5061,7 @@ Children:
                   - Name: Kind
                     Type: PropertyType
                     DataType: NodeId
-                    Value: "/Objects/Optix_DefaultApplication_OptixEdge/Model/ObjectTypes/TagCustomGridRowData"
+                    Value: "/Objects/OptixEdge_WizardApp/Model/ObjectTypes/TagCustomGridRowData"
                 - Name: Visible
                   Type: BaseDataVariableType
                   DataType: ns=0;Boolean
@@ -5133,7 +5133,7 @@ Children:
                   - Name: Kind
                     Type: PropertyType
                     DataType: NodeId
-                    Value: "/Objects/Optix_DefaultApplication_OptixEdge/Model/ObjectTypes/TagCustomGridRowData"
+                    Value: "/Objects/OptixEdge_WizardApp/Model/ObjectTypes/TagCustomGridRowData"
                 - Name: Visible
                   Type: BaseDataVariableType
                   DataType: ns=0;Boolean
@@ -5205,7 +5205,7 @@ Children:
                   - Name: Kind
                     Type: PropertyType
                     DataType: NodeId
-                    Value: "/Objects/Optix_DefaultApplication_OptixEdge/Model/ObjectTypes/TagCustomGridRowData"
+                    Value: "/Objects/OptixEdge_WizardApp/Model/ObjectTypes/TagCustomGridRowData"
                 - Name: Visible
                   Type: BaseDataVariableType
                   DataType: ns=0;Boolean
@@ -5277,7 +5277,7 @@ Children:
                   - Name: Kind
                     Type: PropertyType
                     DataType: NodeId
-                    Value: "/Objects/Optix_DefaultApplication_OptixEdge/Model/ObjectTypes/TagCustomGridRowData"
+                    Value: "/Objects/OptixEdge_WizardApp/Model/ObjectTypes/TagCustomGridRowData"
                 - Name: Visible
                   Type: BaseDataVariableType
                   DataType: ns=0;Boolean
@@ -5349,7 +5349,7 @@ Children:
                   - Name: Kind
                     Type: PropertyType
                     DataType: NodeId
-                    Value: "/Objects/Optix_DefaultApplication_OptixEdge/Model/ObjectTypes/TagCustomGridRowData"
+                    Value: "/Objects/OptixEdge_WizardApp/Model/ObjectTypes/TagCustomGridRowData"
                 - Name: Visible
                   Type: BaseDataVariableType
                   DataType: ns=0;Boolean
@@ -5421,7 +5421,7 @@ Children:
                   - Name: Kind
                     Type: PropertyType
                     DataType: NodeId
-                    Value: "/Objects/Optix_DefaultApplication_OptixEdge/Model/ObjectTypes/TagCustomGridRowData"
+                    Value: "/Objects/OptixEdge_WizardApp/Model/ObjectTypes/TagCustomGridRowData"
                 - Name: Visible
                   Type: BaseDataVariableType
                   DataType: ns=0;Boolean
@@ -5493,7 +5493,7 @@ Children:
                   - Name: Kind
                     Type: PropertyType
                     DataType: NodeId
-                    Value: "/Objects/Optix_DefaultApplication_OptixEdge/Model/ObjectTypes/TagCustomGridRowData"
+                    Value: "/Objects/OptixEdge_WizardApp/Model/ObjectTypes/TagCustomGridRowData"
                 - Name: Visible
                   Type: BaseDataVariableType
                   DataType: ns=0;Boolean
@@ -5565,7 +5565,7 @@ Children:
                   - Name: Kind
                     Type: PropertyType
                     DataType: NodeId
-                    Value: "/Objects/Optix_DefaultApplication_OptixEdge/Model/ObjectTypes/TagCustomGridRowData"
+                    Value: "/Objects/OptixEdge_WizardApp/Model/ObjectTypes/TagCustomGridRowData"
                 - Name: Visible
                   Type: BaseDataVariableType
                   DataType: ns=0;Boolean
@@ -7367,7 +7367,7 @@ Children:
             - Name: Model
               Type: NodePointer
               DataType: NodeId
-              Value: "/Objects/Optix_DefaultApplication_OptixEdge/Model/Enumerators/SourceDriver"
+              Value: "/Objects/OptixEdge_WizardApp/Model/Enumerators/SourceDriver"
               Children:
               - Name: ItemKind
                 Type: PropertyType
@@ -7444,7 +7444,7 @@ Children:
               - Name: ItemKind
                 Type: PropertyType
                 DataType: NodeId
-                Value: "/Objects/Optix_DefaultApplication_OptixEdge/Model/ObjectTypes/ComboBoxStationData"
+                Value: "/Objects/OptixEdge_WizardApp/Model/ObjectTypes/ComboBoxStationData"
               - Name: Kind
                 Type: PropertyType
                 DataType: NodeId
@@ -7470,7 +7470,7 @@ Children:
               - Name: Kind
                 Type: PropertyType
                 DataType: NodeId
-                Value: "/Objects/Optix_DefaultApplication_OptixEdge/Model/ObjectTypes/ComboBoxStationData"
+                Value: "/Objects/OptixEdge_WizardApp/Model/ObjectTypes/ComboBoxStationData"
             - Name: UISelectedItem
               Type: BaseDataVariableType
               DataType: NodeId
@@ -7486,7 +7486,7 @@ Children:
               - Name: Kind
                 Type: PropertyType
                 DataType: NodeId
-                Value: "/Objects/Optix_DefaultApplication_OptixEdge/Model/ObjectTypes/ComboBoxStationData"
+                Value: "/Objects/OptixEdge_WizardApp/Model/ObjectTypes/ComboBoxStationData"
             - Name: SelectedValuePath
               Type: BaseDataVariableType
               DataType: BaseDataType
@@ -8031,7 +8031,7 @@ Children:
                   - Name: Kind
                     Type: PropertyType
                     DataType: NodeId
-                    Value: "/Objects/Optix_DefaultApplication_OptixEdge/Model/ObjectTypes/TagCustomGridRowData"
+                    Value: "/Objects/OptixEdge_WizardApp/Model/ObjectTypes/TagCustomGridRowData"
                 - Name: Visible
                   Type: BaseDataVariableType
                   DataType: ns=0;Boolean
@@ -8103,7 +8103,7 @@ Children:
                   - Name: Kind
                     Type: PropertyType
                     DataType: NodeId
-                    Value: "/Objects/Optix_DefaultApplication_OptixEdge/Model/ObjectTypes/TagCustomGridRowData"
+                    Value: "/Objects/OptixEdge_WizardApp/Model/ObjectTypes/TagCustomGridRowData"
                 - Name: Visible
                   Type: BaseDataVariableType
                   DataType: ns=0;Boolean
@@ -8175,7 +8175,7 @@ Children:
                   - Name: Kind
                     Type: PropertyType
                     DataType: NodeId
-                    Value: "/Objects/Optix_DefaultApplication_OptixEdge/Model/ObjectTypes/TagCustomGridRowData"
+                    Value: "/Objects/OptixEdge_WizardApp/Model/ObjectTypes/TagCustomGridRowData"
                 - Name: Visible
                   Type: BaseDataVariableType
                   DataType: ns=0;Boolean
@@ -8247,7 +8247,7 @@ Children:
                   - Name: Kind
                     Type: PropertyType
                     DataType: NodeId
-                    Value: "/Objects/Optix_DefaultApplication_OptixEdge/Model/ObjectTypes/TagCustomGridRowData"
+                    Value: "/Objects/OptixEdge_WizardApp/Model/ObjectTypes/TagCustomGridRowData"
                 - Name: Visible
                   Type: BaseDataVariableType
                   DataType: ns=0;Boolean
@@ -8319,7 +8319,7 @@ Children:
                   - Name: Kind
                     Type: PropertyType
                     DataType: NodeId
-                    Value: "/Objects/Optix_DefaultApplication_OptixEdge/Model/ObjectTypes/TagCustomGridRowData"
+                    Value: "/Objects/OptixEdge_WizardApp/Model/ObjectTypes/TagCustomGridRowData"
                 - Name: Visible
                   Type: BaseDataVariableType
                   DataType: ns=0;Boolean
@@ -8391,7 +8391,7 @@ Children:
                   - Name: Kind
                     Type: PropertyType
                     DataType: NodeId
-                    Value: "/Objects/Optix_DefaultApplication_OptixEdge/Model/ObjectTypes/TagCustomGridRowData"
+                    Value: "/Objects/OptixEdge_WizardApp/Model/ObjectTypes/TagCustomGridRowData"
                 - Name: Visible
                   Type: BaseDataVariableType
                   DataType: ns=0;Boolean
@@ -8463,7 +8463,7 @@ Children:
                   - Name: Kind
                     Type: PropertyType
                     DataType: NodeId
-                    Value: "/Objects/Optix_DefaultApplication_OptixEdge/Model/ObjectTypes/TagCustomGridRowData"
+                    Value: "/Objects/OptixEdge_WizardApp/Model/ObjectTypes/TagCustomGridRowData"
                 - Name: Visible
                   Type: BaseDataVariableType
                   DataType: ns=0;Boolean
@@ -8535,7 +8535,7 @@ Children:
                   - Name: Kind
                     Type: PropertyType
                     DataType: NodeId
-                    Value: "/Objects/Optix_DefaultApplication_OptixEdge/Model/ObjectTypes/TagCustomGridRowData"
+                    Value: "/Objects/OptixEdge_WizardApp/Model/ObjectTypes/TagCustomGridRowData"
                 - Name: Visible
                   Type: BaseDataVariableType
                   DataType: ns=0;Boolean
@@ -8607,7 +8607,7 @@ Children:
                   - Name: Kind
                     Type: PropertyType
                     DataType: NodeId
-                    Value: "/Objects/Optix_DefaultApplication_OptixEdge/Model/ObjectTypes/TagCustomGridRowData"
+                    Value: "/Objects/OptixEdge_WizardApp/Model/ObjectTypes/TagCustomGridRowData"
                 - Name: Visible
                   Type: BaseDataVariableType
                   DataType: ns=0;Boolean
@@ -8679,7 +8679,7 @@ Children:
                   - Name: Kind
                     Type: PropertyType
                     DataType: NodeId
-                    Value: "/Objects/Optix_DefaultApplication_OptixEdge/Model/ObjectTypes/TagCustomGridRowData"
+                    Value: "/Objects/OptixEdge_WizardApp/Model/ObjectTypes/TagCustomGridRowData"
                 - Name: Visible
                   Type: BaseDataVariableType
                   DataType: ns=0;Boolean
@@ -8751,7 +8751,7 @@ Children:
                   - Name: Kind
                     Type: PropertyType
                     DataType: NodeId
-                    Value: "/Objects/Optix_DefaultApplication_OptixEdge/Model/ObjectTypes/TagCustomGridRowData"
+                    Value: "/Objects/OptixEdge_WizardApp/Model/ObjectTypes/TagCustomGridRowData"
                 - Name: Visible
                   Type: BaseDataVariableType
                   DataType: ns=0;Boolean
@@ -8823,7 +8823,7 @@ Children:
                   - Name: Kind
                     Type: PropertyType
                     DataType: NodeId
-                    Value: "/Objects/Optix_DefaultApplication_OptixEdge/Model/ObjectTypes/TagCustomGridRowData"
+                    Value: "/Objects/OptixEdge_WizardApp/Model/ObjectTypes/TagCustomGridRowData"
                 - Name: Visible
                   Type: BaseDataVariableType
                   DataType: ns=0;Boolean
@@ -8895,7 +8895,7 @@ Children:
                   - Name: Kind
                     Type: PropertyType
                     DataType: NodeId
-                    Value: "/Objects/Optix_DefaultApplication_OptixEdge/Model/ObjectTypes/TagCustomGridRowData"
+                    Value: "/Objects/OptixEdge_WizardApp/Model/ObjectTypes/TagCustomGridRowData"
                 - Name: Visible
                   Type: BaseDataVariableType
                   DataType: ns=0;Boolean
@@ -8967,7 +8967,7 @@ Children:
                   - Name: Kind
                     Type: PropertyType
                     DataType: NodeId
-                    Value: "/Objects/Optix_DefaultApplication_OptixEdge/Model/ObjectTypes/TagCustomGridRowData"
+                    Value: "/Objects/OptixEdge_WizardApp/Model/ObjectTypes/TagCustomGridRowData"
                 - Name: Visible
                   Type: BaseDataVariableType
                   DataType: ns=0;Boolean
@@ -9039,7 +9039,7 @@ Children:
                   - Name: Kind
                     Type: PropertyType
                     DataType: NodeId
-                    Value: "/Objects/Optix_DefaultApplication_OptixEdge/Model/ObjectTypes/TagCustomGridRowData"
+                    Value: "/Objects/OptixEdge_WizardApp/Model/ObjectTypes/TagCustomGridRowData"
                 - Name: Visible
                   Type: BaseDataVariableType
                   DataType: ns=0;Boolean
@@ -9111,7 +9111,7 @@ Children:
                   - Name: Kind
                     Type: PropertyType
                     DataType: NodeId
-                    Value: "/Objects/Optix_DefaultApplication_OptixEdge/Model/ObjectTypes/TagCustomGridRowData"
+                    Value: "/Objects/OptixEdge_WizardApp/Model/ObjectTypes/TagCustomGridRowData"
                 - Name: Visible
                   Type: BaseDataVariableType
                   DataType: ns=0;Boolean
@@ -11032,7 +11032,7 @@ Children:
                   - Name: Kind
                     Type: PropertyType
                     DataType: NodeId
-                    Value: "/Objects/Optix_DefaultApplication_OptixEdge/Model/ObjectTypes/TagCustomGridRowData"
+                    Value: "/Objects/OptixEdge_WizardApp/Model/ObjectTypes/TagCustomGridRowData"
                 - Name: Visible
                   Type: BaseDataVariableType
                   DataType: ns=0;Boolean
@@ -11103,7 +11103,7 @@ Children:
                   - Name: Kind
                     Type: PropertyType
                     DataType: NodeId
-                    Value: "/Objects/Optix_DefaultApplication_OptixEdge/Model/ObjectTypes/TagCustomGridRowData"
+                    Value: "/Objects/OptixEdge_WizardApp/Model/ObjectTypes/TagCustomGridRowData"
                 - Name: Visible
                   Type: BaseDataVariableType
                   DataType: ns=0;Boolean
@@ -11174,7 +11174,7 @@ Children:
                   - Name: Kind
                     Type: PropertyType
                     DataType: NodeId
-                    Value: "/Objects/Optix_DefaultApplication_OptixEdge/Model/ObjectTypes/TagCustomGridRowData"
+                    Value: "/Objects/OptixEdge_WizardApp/Model/ObjectTypes/TagCustomGridRowData"
                 - Name: Visible
                   Type: BaseDataVariableType
                   DataType: ns=0;Boolean
@@ -11245,7 +11245,7 @@ Children:
                   - Name: Kind
                     Type: PropertyType
                     DataType: NodeId
-                    Value: "/Objects/Optix_DefaultApplication_OptixEdge/Model/ObjectTypes/TagCustomGridRowData"
+                    Value: "/Objects/OptixEdge_WizardApp/Model/ObjectTypes/TagCustomGridRowData"
                 - Name: Visible
                   Type: BaseDataVariableType
                   DataType: ns=0;Boolean
@@ -11316,7 +11316,7 @@ Children:
                   - Name: Kind
                     Type: PropertyType
                     DataType: NodeId
-                    Value: "/Objects/Optix_DefaultApplication_OptixEdge/Model/ObjectTypes/TagCustomGridRowData"
+                    Value: "/Objects/OptixEdge_WizardApp/Model/ObjectTypes/TagCustomGridRowData"
                 - Name: Visible
                   Type: BaseDataVariableType
                   DataType: ns=0;Boolean
@@ -11387,7 +11387,7 @@ Children:
                   - Name: Kind
                     Type: PropertyType
                     DataType: NodeId
-                    Value: "/Objects/Optix_DefaultApplication_OptixEdge/Model/ObjectTypes/TagCustomGridRowData"
+                    Value: "/Objects/OptixEdge_WizardApp/Model/ObjectTypes/TagCustomGridRowData"
                 - Name: Visible
                   Type: BaseDataVariableType
                   DataType: ns=0;Boolean
@@ -11458,7 +11458,7 @@ Children:
                   - Name: Kind
                     Type: PropertyType
                     DataType: NodeId
-                    Value: "/Objects/Optix_DefaultApplication_OptixEdge/Model/ObjectTypes/TagCustomGridRowData"
+                    Value: "/Objects/OptixEdge_WizardApp/Model/ObjectTypes/TagCustomGridRowData"
                 - Name: Visible
                   Type: BaseDataVariableType
                   DataType: ns=0;Boolean
@@ -11529,7 +11529,7 @@ Children:
                   - Name: Kind
                     Type: PropertyType
                     DataType: NodeId
-                    Value: "/Objects/Optix_DefaultApplication_OptixEdge/Model/ObjectTypes/TagCustomGridRowData"
+                    Value: "/Objects/OptixEdge_WizardApp/Model/ObjectTypes/TagCustomGridRowData"
                 - Name: Visible
                   Type: BaseDataVariableType
                   DataType: ns=0;Boolean
@@ -11600,7 +11600,7 @@ Children:
                   - Name: Kind
                     Type: PropertyType
                     DataType: NodeId
-                    Value: "/Objects/Optix_DefaultApplication_OptixEdge/Model/ObjectTypes/TagCustomGridRowData"
+                    Value: "/Objects/OptixEdge_WizardApp/Model/ObjectTypes/TagCustomGridRowData"
                 - Name: Visible
                   Type: BaseDataVariableType
                   DataType: ns=0;Boolean
@@ -11671,7 +11671,7 @@ Children:
                   - Name: Kind
                     Type: PropertyType
                     DataType: NodeId
-                    Value: "/Objects/Optix_DefaultApplication_OptixEdge/Model/ObjectTypes/TagCustomGridRowData"
+                    Value: "/Objects/OptixEdge_WizardApp/Model/ObjectTypes/TagCustomGridRowData"
                 - Name: Visible
                   Type: BaseDataVariableType
                   DataType: ns=0;Boolean
@@ -11742,7 +11742,7 @@ Children:
                   - Name: Kind
                     Type: PropertyType
                     DataType: NodeId
-                    Value: "/Objects/Optix_DefaultApplication_OptixEdge/Model/ObjectTypes/TagCustomGridRowData"
+                    Value: "/Objects/OptixEdge_WizardApp/Model/ObjectTypes/TagCustomGridRowData"
                 - Name: Visible
                   Type: BaseDataVariableType
                   DataType: ns=0;Boolean
@@ -11813,7 +11813,7 @@ Children:
                   - Name: Kind
                     Type: PropertyType
                     DataType: NodeId
-                    Value: "/Objects/Optix_DefaultApplication_OptixEdge/Model/ObjectTypes/TagCustomGridRowData"
+                    Value: "/Objects/OptixEdge_WizardApp/Model/ObjectTypes/TagCustomGridRowData"
                 - Name: Visible
                   Type: BaseDataVariableType
                   DataType: ns=0;Boolean
@@ -11884,7 +11884,7 @@ Children:
                   - Name: Kind
                     Type: PropertyType
                     DataType: NodeId
-                    Value: "/Objects/Optix_DefaultApplication_OptixEdge/Model/ObjectTypes/TagCustomGridRowData"
+                    Value: "/Objects/OptixEdge_WizardApp/Model/ObjectTypes/TagCustomGridRowData"
                 - Name: Visible
                   Type: BaseDataVariableType
                   DataType: ns=0;Boolean
@@ -11955,7 +11955,7 @@ Children:
                   - Name: Kind
                     Type: PropertyType
                     DataType: NodeId
-                    Value: "/Objects/Optix_DefaultApplication_OptixEdge/Model/ObjectTypes/TagCustomGridRowData"
+                    Value: "/Objects/OptixEdge_WizardApp/Model/ObjectTypes/TagCustomGridRowData"
                 - Name: Visible
                   Type: BaseDataVariableType
                   DataType: ns=0;Boolean
@@ -12026,7 +12026,7 @@ Children:
                   - Name: Kind
                     Type: PropertyType
                     DataType: NodeId
-                    Value: "/Objects/Optix_DefaultApplication_OptixEdge/Model/ObjectTypes/TagCustomGridRowData"
+                    Value: "/Objects/OptixEdge_WizardApp/Model/ObjectTypes/TagCustomGridRowData"
                 - Name: Visible
                   Type: BaseDataVariableType
                   DataType: ns=0;Boolean
@@ -12097,7 +12097,7 @@ Children:
                   - Name: Kind
                     Type: PropertyType
                     DataType: NodeId
-                    Value: "/Objects/Optix_DefaultApplication_OptixEdge/Model/ObjectTypes/TagCustomGridRowData"
+                    Value: "/Objects/OptixEdge_WizardApp/Model/ObjectTypes/TagCustomGridRowData"
                 - Name: Visible
                   Type: BaseDataVariableType
                   DataType: ns=0;Boolean
@@ -13919,7 +13919,7 @@ Children:
     - Name: Kind
       Type: PropertyType
       DataType: NodeId
-      Value: "/Objects/Optix_DefaultApplication_OptixEdge/Model/ObjectTypes/ToastBannerConfiguration"
+      Value: "/Objects/OptixEdge_WizardApp/Model/ObjectTypes/ToastBannerConfiguration"
   - Name: NotificationLevel
     Type: BaseDataVariableType
     DataType: ToasBannerNotificationLevel
@@ -15629,7 +15629,7 @@ Children:
             - Name: ns=2;ObjectPointer
               Type: NodePointer
               DataType: NodeId
-              Value: "/Objects/Optix_DefaultApplication_OptixEdge/System/System"
+              Value: "/Objects/OptixEdge_WizardApp/System/System"
               Children:
               - Name: Kind
                 Type: PropertyType
@@ -15705,7 +15705,7 @@ Children:
     - Name: CommDriversLogic
       Type: NodePointer
       DataType: NodeId
-      Value: "/Objects/Optix_DefaultApplication_OptixEdge/NetLogic/CommDriversConfigurationLogic"
+      Value: "/Objects/OptixEdge_WizardApp/NetLogic/CommDriversConfigurationLogic"
       Children:
       - Name: Kind
         Type: PropertyType
@@ -15713,7 +15713,7 @@ Children:
     - Name: MqttClientLogic
       Type: NodePointer
       DataType: NodeId
-      Value: "/Objects/Optix_DefaultApplication_OptixEdge/NetLogic/MqttClientLogic"
+      Value: "/Objects/OptixEdge_WizardApp/NetLogic/MqttClientLogic"
       Children:
       - Name: Kind
         Type: PropertyType
@@ -15731,7 +15731,7 @@ Children:
     - Name: LoggersLogic
       Type: NodePointer
       DataType: NodeId
-      Value: "/Objects/Optix_DefaultApplication_OptixEdge/NetLogic/LoggersLogic"
+      Value: "/Objects/OptixEdge_WizardApp/NetLogic/LoggersLogic"
       Children:
       - Name: Kind
         Type: PropertyType
@@ -15739,7 +15739,7 @@ Children:
     - Name: OpcUaServerLogic
       Type: NodePointer
       DataType: NodeId
-      Value: "/Objects/Optix_DefaultApplication_OptixEdge/NetLogic/OpcUaServerLogic"
+      Value: "/Objects/OptixEdge_WizardApp/NetLogic/OpcUaServerLogic"
       Children:
       - Name: Kind
         Type: PropertyType
@@ -16744,7 +16744,7 @@ Children:
           - Name: ItemKind
             Type: PropertyType
             DataType: NodeId
-            Value: "/Objects/Optix_DefaultApplication_OptixEdge/Model/ObjectTypes/ConnectionStatusData"
+            Value: "/Objects/OptixEdge_WizardApp/Model/ObjectTypes/ConnectionStatusData"
           - Name: Kind
             Type: PropertyType
             DataType: NodeId
@@ -16938,7 +16938,7 @@ Children:
           - Name: Kind
             Type: PropertyType
             DataType: NodeId
-            Value: "/Objects/Optix_DefaultApplication_OptixEdge/Model/ObjectTypes/ConnectionStatusData"
+            Value: "/Objects/OptixEdge_WizardApp/Model/ObjectTypes/ConnectionStatusData"
         - Name: UISelectedItem
           Type: BaseDataVariableType
           DataType: NodeId
@@ -16974,7 +16974,7 @@ Children:
           - Name: Kind
             Type: PropertyType
             DataType: NodeId
-            Value: "/Objects/Optix_DefaultApplication_OptixEdge/Model/ObjectTypes/ConnectionStatusData"
+            Value: "/Objects/OptixEdge_WizardApp/Model/ObjectTypes/ConnectionStatusData"
         - Name: HorizontalAlignment
           Type: BaseVariableType
           DataType: HorizontalAlignment

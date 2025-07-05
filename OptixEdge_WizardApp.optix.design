@@ -1,5 +1,5 @@
 Project:
- Name: Optix_DefaultApplication_OptixEdge_Design
+ Name: OptixEdge_WizardApp_Design
  ProjectNamespaceIndex: 4
  Description: ''
  Company: ''
@@ -9,8 +9,8 @@ Project:
  CoreVersion: 4.2
  Dependencies:
   2:
-   Uri: Optix_DefaultApplication_OptixEdge
-   RelativePath: Optix_DefaultApplication_OptixEdge.optix
+   Uri: OptixEdge_WizardApp
+   RelativePath: OptixEdge_WizardApp.optix
   3:
    Uri: 'urn:FTOptix:CoreBase'
    Module: FTOptix.CoreBase

@@ -82,7 +82,7 @@ public class MqttClientLogic : BaseNetLogic
             if (mqttClientNode.Get(browseName) == null)
             {
                 var mqttPublisher = InformationModel.MakeObject<MQTTPublisher>(browseName);
-                mqttPublisher.Topic = $"Optix_DefaultApplication_OptixEdge/{browseName}";
+                mqttPublisher.Topic = $"OptixEdge_WizardApp/{browseName}";
                 var topicFolder = mqttPublishersVariableFolders.Get(browseName);
                 if (topicFolder == null)
                 {
@@ -201,7 +201,7 @@ public class MqttClientLogic : BaseNetLogic
     {
         mqttClient.BrokerAddress = "localhost";
         mqttClient.BrokerPort = 1883;
-        mqttClient.ClientId = "FTOptix_DefaultApplication_OptixEdge-1";        
+        mqttClient.ClientId = "FTOptixEdge_WizardApp-1";        
         mqttClient.SSLTLSEnabled = false;
         mqttClient.ValidateBrokerCertificate = false;        
         mqttClient.UserIdentityType = UserIdentityType.Anonymous;

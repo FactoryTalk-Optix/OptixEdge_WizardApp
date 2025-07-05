@@ -19,5 +19,5 @@
     <PackageReference Include="L5Sharp" Version="4.2.0"/>
     <PackageReference Include="CsvHelper" Version="33.0.1"/>
   </ItemGroup>
-  <Import Project="Optix_DefaultApplication_OptixEdge.references"/>
+  <Import Project="OptixEdge_WizardApp.references"/>
 </Project>

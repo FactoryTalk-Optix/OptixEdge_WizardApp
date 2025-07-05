@@ -80,7 +80,7 @@ public class NotificationsMessageHandlerLogic : BaseNetLogic
             toastConfigurationData.DurationOnScreen = toastToGenerate.DurationOnScreen;
             toastConfigurationData.CounterVariable = toastToGenerate.DurationOnScreen;
             toastBannerTemporaryConfigurationFodler.Add(toastConfigurationData);
-            var dialogType = InformationModel.Get<DialogType>( Optix_DefaultApplication_OptixEdge.ObjectTypes.ToastNotification);
+            var dialogType = InformationModel.Get<DialogType>( OptixEdge_WizardApp.ObjectTypes.ToastNotification);
             UICommands.OpenDialog(Owner, dialogType, toastConfigurationData.NodeId);
         }
         if (globalBanner != null && !globalBanner.Visible && bannerRequestQueue.TryDequeue(out NotificationMessageConfiguration bannerMessageToDisplay))

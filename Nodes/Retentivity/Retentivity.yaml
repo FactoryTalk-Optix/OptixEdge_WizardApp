@@ -10,7 +10,7 @@ Children:
     - Name: Node1
       Type: NodePointer
       DataType: NodeId
-      Value: "/Objects/Optix_DefaultApplication_OptixEdge/Security"
+      Value: "/Objects/OptixEdge_WizardApp/Security"
       Children:
       - Name: Kind
         Type: PropertyType
@@ -37,7 +37,7 @@ Children:
     - Name: Node1
       Type: NodePointer
       DataType: NodeId
-      Value: "/Objects/Optix_DefaultApplication_OptixEdge/Alarms"
+      Value: "/Objects/OptixEdge_WizardApp/Alarms"
       Children:
       - Name: Kind
         Type: PropertyType
@@ -64,7 +64,7 @@ Children:
     - Name: RAEIP
       Type: NodePointer
       DataType: NodeId
-      Value: "/Objects/Optix_DefaultApplication_OptixEdge/CommDrivers/RAEtherNet_IP"
+      Value: "/Objects/OptixEdge_WizardApp/CommDrivers/RAEtherNet_IP"
       Children:
       - Name: Kind
         Type: PropertyType
@@ -76,7 +76,7 @@ Children:
     - Name: S7TCP
       Type: NodePointer
       DataType: NodeId
-      Value: "/Objects/Optix_DefaultApplication_OptixEdge/CommDrivers/S7TCP"
+      Value: "/Objects/OptixEdge_WizardApp/CommDrivers/S7TCP"
       Children:
       - Name: Kind
         Type: PropertyType
@@ -88,7 +88,7 @@ Children:
     - Name: ModbusTCP
       Type: NodePointer
       DataType: NodeId
-      Value: "/Objects/Optix_DefaultApplication_OptixEdge/CommDrivers/ModbusTCP"
+      Value: "/Objects/OptixEdge_WizardApp/CommDrivers/ModbusTCP"
       Children:
       - Name: Kind
         Type: PropertyType
@@ -100,7 +100,7 @@ Children:
     - Name: 'OPC-UA'
       Type: NodePointer
       DataType: NodeId
-      Value: "/Objects/Optix_DefaultApplication_OptixEdge/OPC-UA/OPC-UA Clients"
+      Value: "/Objects/OptixEdge_WizardApp/OPC-UA/OPC-UA Clients"
       Children:
       - Name: Kind
         Type: PropertyType
@@ -112,7 +112,7 @@ Children:
     - Name: S7Profinet
       Type: NodePointer
       DataType: NodeId
-      Value: "/Objects/Optix_DefaultApplication_OptixEdge/CommDrivers/S7TIAProfinet"
+      Value: "/Objects/OptixEdge_WizardApp/CommDrivers/S7TIAProfinet"
       Children:
       - Name: Kind
         Type: PropertyType
@@ -138,7 +138,7 @@ Children:
     - Name: Stores
       Type: NodePointer
       DataType: NodeId
-      Value: "/Objects/Optix_DefaultApplication_OptixEdge/DataStores"
+      Value: "/Objects/OptixEdge_WizardApp/DataStores"
       Children:
       - Name: Kind
         Type: PropertyType
@@ -150,7 +150,7 @@ Children:
     - Name: MQTT Clients
       Type: NodePointer
       DataType: NodeId
-      Value: "/Objects/Optix_DefaultApplication_OptixEdge/MQTT/MQTT Clients"
+      Value: "/Objects/OptixEdge_WizardApp/MQTT/MQTT Clients"
       Children:
       - Name: Kind
         Type: PropertyType
@@ -162,7 +162,7 @@ Children:
     - Name: MQTT Data
       Type: NodePointer
       DataType: NodeId
-      Value: "/Objects/Optix_DefaultApplication_OptixEdge/MQTT Data"
+      Value: "/Objects/OptixEdge_WizardApp/MQTT Data"
       Children:
       - Name: Kind
         Type: PropertyType
@@ -174,7 +174,7 @@ Children:
     - Name: Loggers
       Type: NodePointer
       DataType: NodeId
-      Value: "/Objects/Optix_DefaultApplication_OptixEdge/Loggers"
+      Value: "/Objects/OptixEdge_WizardApp/Loggers"
       Children:
       - Name: Kind
         Type: PropertyType
@@ -186,7 +186,7 @@ Children:
     - Name: OPC UA Server
       Type: NodePointer
       DataType: NodeId
-      Value: "/Objects/Optix_DefaultApplication_OptixEdge/OPC-UA/OPC-UA Server"
+      Value: "/Objects/OptixEdge_WizardApp/OPC-UA/OPC-UA Server"
       Children:
       - Name: Kind
         Type: PropertyType
@@ -198,7 +198,7 @@ Children:
     - Name: OPCUA Server Data
       Type: NodePointer
       DataType: NodeId
-      Value: "/Objects/Optix_DefaultApplication_OptixEdge/OPC UA Data"
+      Value: "/Objects/OptixEdge_WizardApp/OPC UA Data"
       Children:
       - Name: Kind
         Type: PropertyType
@@ -224,7 +224,7 @@ Children:
     - Name: Dashboard
       Type: NodePointer
       DataType: NodeId
-      Value: "/Objects/Optix_DefaultApplication_OptixEdge/Model/DashboardCollection"
+      Value: "/Objects/OptixEdge_WizardApp/Model/DashboardCollection"
       Children:
       - Name: Kind
         Type: PropertyType
@@ -236,7 +236,7 @@ Children:
     - Name: ProjectSettings
       Type: NodePointer
       DataType: NodeId
-      Value: "/Objects/Optix_DefaultApplication_OptixEdge/Model/ProjectSettings"
+      Value: "/Objects/OptixEdge_WizardApp/Model/ProjectSettings"
       Children:
       - Name: Kind
         Type: PropertyType

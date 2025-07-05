@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34728.123
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Optix_DefaultApplication_OptixEdge", "Optix_DefaultApplication_OptixEdge.csproj", "{5F41A5CF-36D8-689B-F502-A567909FACA6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OptixEdge_WizardApp", "OptixEdge_WizardApp.csproj", "{5F41A5CF-36D8-689B-F502-A567909FACA6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

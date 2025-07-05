@@ -153,7 +153,7 @@ Children:
           - Name: Dialog
             Type: BaseDataVariableType
             DataType: NodeId
-            Value: "/Objects/Optix_DefaultApplication_OptixEdge/UI/UITypes/Dialogs/AddWidgetDialog"
+            Value: "/Objects/OptixEdge_WizardApp/UI/UITypes/Dialogs/AddWidgetDialog"
           - Name: AliasNode
             Type: BaseDataVariableType
             DataType: NodeId

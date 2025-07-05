@@ -1,4 +1,4 @@
-Name: Optix_DefaultApplication_OptixEdge
+Name: OptixEdge_WizardApp
 Type: ProjectFolder
 Children:
 - Name: Localization
@@ -22,7 +22,7 @@ Children:
   - Name: DefaultUserFolder
     Type: NodePointer
     DataType: NodeId
-    Value: "/Objects/Optix_DefaultApplication_OptixEdge/Security/Users"
+    Value: "/Objects/OptixEdge_WizardApp/Security/Users"
     Children:
     - Name: Kind
       Type: PropertyType
@@ -106,7 +106,7 @@ Children:
           Type: BaseDataVariableType
           DataType: VariablePointer
           Description: {"NamespaceIndex":2,"TextId":"SetVariableToModifyDescription"}
-          Value: "/Objects/Optix_DefaultApplication_OptixEdge/Model/RuntimeExceedBannerVisibilty"
+          Value: "/Objects/OptixEdge_WizardApp/Model/RuntimeExceedBannerVisibilty"
         - Name: Value
           Type: BaseDataVariableType
           DataType: ns=0;Boolean
