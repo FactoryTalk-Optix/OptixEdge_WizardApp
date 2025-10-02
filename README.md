@@ -1,10 +1,9 @@
 # 🧠 OptixEdge Wizard Application
 
-**WizardApp** is a pre-installed, open-source FactoryTalk Optix project designed to turn any **OptixEdge** device into a fully functional industrial gateway—right out of the box.
+**WizardApp** is a pre-installed, open-source FactoryTalk Optix project designed to turn any **OptixEdge** device into a fully functional industrial gateway - right out of the box.
 
 It provides a ready-to-use foundation for edge connectivity, data visualization, and cloud integration, while remaining fully customizable for advanced use cases.
 
----
 
 ## 🚀 Key Features
 
@@ -26,16 +25,12 @@ It provides a ready-to-use foundation for edge connectivity, data visualization,
 - **Open and modifiable**  
   The full source code is available, allowing users to explore, adapt, and build upon the application.
 
----
-
 ## 🛠️ Typical Use Cases
 
 - Rapid prototyping of edge-to-cloud solutions  
 - Demonstrations and training environments  
 - Gateway deployment in industrial automation systems  
 - Starting point for custom FactoryTalk Optix applications
-
----
 
 ## 💬 Feedback and Contributions
 
