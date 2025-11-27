@@ -2,12 +2,71 @@ Name: Model
 Type: ModelCategoryFolder
 Children:
 - File: Enumerators/Enumerators.yaml
-- File: CommDriverComboBoxElements/CommDriverComboBoxElements.yaml
+- File: ComboBoxElements/ComboBoxElements.yaml
 - File: ObjectTypes/ObjectTypes.yaml
-- File: ProjectSettings/ProjectSettings.yaml
 - File: ToastBannerTemporaryConfiguration/ToastBannerTemporaryConfiguration.yaml
 - File: DashboardCollection/DashboardCollection.yaml
 - File: OPCUAClient_Data/OPCUAClient_Data.yaml
+- Name: ApplicationSettings
+  Id: g=2f0b4a8753f0d2d12101fcf3df50612a
+  Type: ApplicationSettings
+  Children:
+  - Name: WPEConfiguration
+    Id: g=c967f3ff5dc4221aedf60d2d7a3a1db0
+    Type: WPEConfiguration
+    Children:
+    - Name: Port
+      Id: g=d739d4ebd53be9cf6812510a1fefd45b
+      Type: BaseDataVariableType
+      DataType: UInt32
+      Value: 8443
+    - Name: IPAddress
+      Id: g=b843601a07450aee9e23da5d7134231e
+      Type: BaseDataVariableType
+      DataType: String
+      Value: "0.0.0.0"
+    - Name: Hostname
+      Id: g=6bfb2378ce44d72139f0cdbf5b1f17ec
+      Type: BaseDataVariableType
+      DataType: String
+    - Name: CertificateFile
+      Id: g=8a9bb0889d19293e704b0c4c31f7b7a8
+      Type: BaseDataVariableType
+      DataType: ResourceUri
+    - Name: PrivateKey
+      Id: g=58c65db3e8dcefb51f878b819517b3a7
+      Type: BaseDataVariableType
+      DataType: ResourceUri
+  - Name: StartFromDashboard
+    Id: g=c4006d05d94a288b1dee984ba33130af
+    Type: BaseDataVariableType
+    DataType: ns=0;Boolean
+  - Name: DefaultProjectVersion
+    Id: g=51124310c16ed3fc378fdbb98a546c0e
+    Type: BaseDataVariableType
+    DataType: String
+    Value: "1.2.31"
+- Name: WPEConfigurationOnStartup
+  Id: g=76644632a729f3464e8b131203cdcc7d
+  Type: WPEConfiguration
+  Children:
+  - Name: Port
+    Type: BaseDataVariableType
+    DataType: UInt32
+    Value: 8443
+  - Name: IPAddress
+    Type: BaseDataVariableType
+    DataType: String
+    Value: "0.0.0.0"
+  - Name: Hostname
+    Type: BaseDataVariableType
+    DataType: String
+  - Name: CertificateFile
+    Type: BaseDataVariableType
+    DataType: ResourceUri
+  - Name: PrivateKey
+    Type: BaseDataVariableType
+    DataType: ResourceUri
 - Name: RuntimeExceedBannerVisibilty
   Id: g=d81795dc3d7b6af6b0fa895957c6e621
   Type: BaseDataVariableType
@@ -102,3 +161,19 @@ Children:
       - Name: Severity
         Type: PropertyType
         DataType: UInt16
+- Name: FileSelectorDialog
+  Type: NodePointer
+  DataType: NodeId
+  Value: "/Objects/OptixEdge_WizardApp/UI/UITypes/Dialogs/Function Dialogs/FileSelector"
+  Children:
+  - Name: Kind
+    Type: PropertyType
+    DataType: NodeId
+    Value: "/Types/ObjectTypes/BaseObjectType/BaseUIObject/Item/Container/Dialog"
+  - Name: NodeClass
+    Type: PropertyType
+    DataType: NodePointerNodeClass
+    Value: 1
+- Name: RestartApplicationRequestBannerVisibility
+  Type: BaseDataVariableType
+  DataType: ns=0;Boolean

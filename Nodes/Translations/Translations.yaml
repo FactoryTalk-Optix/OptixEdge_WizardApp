@@ -9,7 +9,7 @@ Children:
   Value: 
    {
     "Type": 12,
-    "Dimensions": [20,2],
+    "Dimensions": [21,2],
     "Body": [
      "","en-US",
      "FileNameInput","File name:",
@@ -30,6 +30,7 @@ Children:
      "Red","Red",
      "Green","Green",
      "Blue","Blue",
-     "Background","Background"
+     "Background","Background",
+     "Vector array","Vector array"
     ]
    }

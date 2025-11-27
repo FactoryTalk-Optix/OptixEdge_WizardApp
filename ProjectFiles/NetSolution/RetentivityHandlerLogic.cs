@@ -70,7 +70,7 @@ public class RetentivityHandlerLogic : BaseNetLogic
         if (InformationModel.Get(activeScreenTypeNodeId) is ScreenType activeScreenType)
         {
             var retentivityBrowseName = ScreenRetentivityMapping.GetValueOrDefault(activeScreenTypeNodeId, "");
-            foreach (var retenitvityNode in Project.Current.Get("Retentivity").GetNodesByType<RetentivityStorage>().Where(x=> !retentivityAlwaysEnabled.Contains(x.BrowseName)))
+            foreach (var retenitvityNode in Project.Current.Get("Retentivity").GetNodesByType<RetentivityStorage>().Where(x => ScreenRetentivityMapping.ContainsValue(x.BrowseName)))
             {
                 retenitvityNode.DeltaObserverEnabled = retenitvityNode.BrowseName == retentivityBrowseName;
             }
@@ -83,6 +83,5 @@ public class RetentivityHandlerLogic : BaseNetLogic
         KeyValuePair.Create(OptixEdge_WizardApp.ObjectTypes.DataSourcesConfig, "DataSourcesStorage"),
         KeyValuePair.Create(OptixEdge_WizardApp.ObjectTypes.DataDestinationsConfig, "DataDestinationsStorage"),
     ]);
-    private static readonly ImmutableList<string> retentivityAlwaysEnabled = ["UIStorage", "SecurityRetentivityStorage", "AlarmsRetentivityStorage",];
 }
 

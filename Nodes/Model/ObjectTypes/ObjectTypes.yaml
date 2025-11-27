@@ -34,9 +34,12 @@ Children:
   - Name: VariableNodeId
     Type: BaseDataVariableType
     DataType: NodeId
-  - Name: VariableStringLenght
+  - Name: VariableStringLength
     Type: BaseDataVariableType
     DataType: UInt16
+  - Name: VariableLinkDirection
+    Type: BaseDataVariableType
+    DataType: LinkDirection
 - Name: WidgetData
   Id: g=3ff48c7d03554147593a3629b25c8fb3
   Supertype: BaseObjectType
@@ -44,54 +47,60 @@ Children:
   - Name: WidgetType
     Type: BaseDataVariableType
     DataType: NodeId
-  - Name: WidgetBrowseName
-    Type: BaseDataVariableType
-    DataType: String
-  - Name: ObjName
+  - Name: WidgetDisplayName
     Type: BaseDataVariableType
     DataType: LocalizedText
-  - Name: ObjPointer
+  - Name: SourceNode
     Type: BaseDataVariableType
     DataType: NodeId
-  - Name: ObjEngUnit
+  - Name: EngineeringUnit
     Type: BaseDataVariableType
     DataType: LocalizedText
   - Name: ColumnStart
     Type: BaseDataVariableType
     DataType: Int32
+    Value: -1
   - Name: ColumnSpan
     Type: BaseDataVariableType
     DataType: Int32
+    Value: 1
   - Name: RowStart
     Type: BaseDataVariableType
     DataType: Int32
+    Value: -1
   - Name: RowSpan
     Type: BaseDataVariableType
     DataType: Int32
-  - Name: ObjQuery
+    Value: 1
+  - Name: Query
     Type: BaseDataVariableType
     DataType: String
-  - Name: ObjDurations
+  - Name: ConfigurationDurations
     Type: BaseDataVariableType
     DataType: Duration
     ValueRank: OneDimension
-    ArrayDimensions: [0]
-  - Name: ObjParameters
+    ArrayDimensions: [20]
+    Value: ["0:00:00:01.0000000","0:00:00:01.0000000","0:00:00:01.0000000","0:00:00:01.0000000","0:00:00:01.0000000","0:00:00:01.0000000","0:00:00:01.0000000","0:00:00:01.0000000","0:00:00:01.0000000","0:00:00:01.0000000","0:00:00:01.0000000","0:00:00:01.0000000","0:00:00:01.0000000","0:00:00:01.0000000","0:00:00:01.0000000","0:00:00:01.0000000","0:00:00:01.0000000","0:00:00:01.0000000","0:00:00:01.0000000","0:00:00:01.0000000"]
+  - Name: ConfigurationParameters
     Type: BaseDataVariableType
     DataType: BaseDataType
     ValueRank: OneDimension
-    ArrayDimensions: [0]
-    Value: {"Type":6,"Body":[]}
-  - Name: ObjColors
+    ArrayDimensions: [100]
+    Value: {"Type":6,"Body":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}
+  - Name: ConfigurationColors
     Type: BaseDataVariableType
     DataType: Color
     ValueRank: OneDimension
-    ArrayDimensions: [0]
-  - Name: ObjTextParameters
+    ArrayDimensions: [50]
+  - Name: ConfigurationTextParameters
     Type: BaseDataVariableType
     DataType: String
     ValueRank: OneDimension
-    ArrayDimensions: [0]
+    ArrayDimensions: [100]
+  - Name: IndexOfPensArray
+    Type: BaseDataVariableType
+    DataType: UInt16
+    Value: 19
 - Name: ComboBoxStationData
   Id: g=6408b1d8e8476a60d2718e46598252a6
   Supertype: BaseObjectType
@@ -149,3 +158,190 @@ Children:
   - Name: Connected
     Type: BaseDataVariableType
     DataType: ns=0;Boolean
+- Name: FileListEntry
+  Id: g=83ffecbc6468530a04da77b2fc983f63
+  Supertype: BaseObjectType
+  Children:
+  - Name: EntryName
+    Type: BaseDataVariableType
+    DataType: String
+  - Name: FileSize
+    Type: BaseDataVariableType
+    DataType: String
+  - Name: EntryType
+    Type: BaseDataVariableType
+    DataType: FileSelectorEntryType
+  - Name: EntryUri
+    Type: BaseDataVariableType
+    DataType: ResourceUri
+  - Name: FileFullPath
+    Type: BaseDataVariableType
+    DataType: String
+  - Name: EntryRelativePath
+    Type: BaseDataVariableType
+    DataType: String
+- Name: WPEConfiguration
+  Id: g=1c08ab96228b654abf7c3e2f814053fb
+  Supertype: BaseObjectType
+  Children:
+  - Name: Port
+    Type: BaseDataVariableType
+    DataType: UInt32
+    Value: 8443
+  - Name: IPAddress
+    Type: BaseDataVariableType
+    DataType: String
+    Value: "0.0.0.0"
+  - Name: Hostname
+    Type: BaseDataVariableType
+    DataType: String
+  - Name: CertificateFile
+    Type: BaseDataVariableType
+    DataType: ResourceUri
+  - Name: PrivateKey
+    Type: BaseDataVariableType
+    DataType: ResourceUri
+- Name: ApplicationSettings
+  Id: g=9ae88e4fc8f57210570d517eacaa8958
+  Supertype: BaseObjectType
+  Children:
+  - Name: WPEConfiguration
+    Type: WPEConfiguration
+    Children:
+    - Name: Port
+      Type: BaseDataVariableType
+      DataType: UInt32
+      Value: 8443
+    - Name: IPAddress
+      Type: BaseDataVariableType
+      DataType: String
+      Value: "0.0.0.0"
+    - Name: Hostname
+      Type: BaseDataVariableType
+      DataType: String
+    - Name: CertificateFile
+      Type: BaseDataVariableType
+      DataType: ResourceUri
+    - Name: PrivateKey
+      Type: BaseDataVariableType
+      DataType: ResourceUri
+  - Name: StartFromDashboard
+    Type: BaseDataVariableType
+    DataType: ns=0;Boolean
+  - Name: DefaultProjectVersion
+    Type: BaseDataVariableType
+    DataType: String
+- Name: MQTTPublisherDataConfiguration
+  Id: g=6fe78d272adf0d98bfd90e84bae34084
+  Supertype: BaseObjectType
+  Children:
+  - Name: PayloadKind
+    Type: BaseDataVariableType
+    DataType: MQTTPublisherPayloadKind
+    DisplayName: {"LocaleId":"en-US","Text":"Payload Type"}
+  - Name: MQTTPublisherNode
+    Type: NodePointer
+    DataType: NodeId
+    Children:
+    - Name: Kind
+      Type: PropertyType
+      DataType: NodeId
+  - Name: SamplingMode
+    Type: BaseDataVariableType
+    DataType: ns=52;SamplingModeEnum
+    DisplayName: {"LocaleId":"en-US","Text":"Sampling Mode"}
+    Value: 2
+  - Name: Data
+    Type: ModelCategoryFolder
+  - Name: PayloadStructure
+    Type: ModelCategoryFolder
+    Children:
+    - Name: root
+      Type: MQTTPayloadFieldInfo
+      Children:
+      - Name: FieldKind
+        Type: BaseDataVariableType
+        DataType: MQTTPayloadFieldKind
+        Value: 5
+      - Name: Key
+        Type: BaseDataVariableType
+        DataType: String
+        Value: "root"
+      - Name: Value
+        Type: BaseDataVariableType
+        DataType: BaseDataType
+        Value: {"Type":6,"Body":0}
+      - Name: ValueDataVariablePath
+        Type: BaseDataVariableType
+        DataType: String
+  - Name: PayloadStructurePreview
+    Type: ModelCategoryFolder
+    Children:
+    - Name: root
+      Type: MQTTPayloadFieldInfo
+      Children:
+      - Name: FieldKind
+        Type: BaseDataVariableType
+        DataType: MQTTPayloadFieldKind
+        Value: 5
+      - Name: Key
+        Type: BaseDataVariableType
+        DataType: String
+        Value: "root"
+      - Name: Value
+        Type: BaseDataVariableType
+        DataType: BaseDataType
+        Value: {"Type":6,"Body":0}
+      - Name: ValueDataVariablePath
+        Type: BaseDataVariableType
+        DataType: String
+  - Name: CustomPayload
+    Type: ModelCategoryFolder
+    Children:
+    - Name: Payload
+      Type: BaseDataVariableType
+      DataType: String
+  - Name: MQTTPublisherDataLogic
+    Type: NetLogic
+    Children:
+    - Class: Method
+      Name: InitLogic
+      Children:
+      - Name: ns=0;InputArguments
+        Type: BaseVariableType
+        DataType: Argument
+        ReferenceType: HasProperty
+        ValueRank: OneDimension
+        ArrayDimensions: [0]
+        Value: [{"TypeId":{"Id":296},"Body":{"Name":"mqttPublisher","DataType":{"Id":17},"ValueRank":-1,"ArrayDimensions":[],"Description":{"NamespaceIndex":-1,"LocaleId":"","Text":""}}}]
+- Name: MQTTPayloadFieldInfo
+  Id: g=3d3603409db62f628ed9f4c13f8ad6e3
+  Supertype: BaseObjectType
+  Children:
+  - Name: FieldKind
+    Type: BaseDataVariableType
+    DataType: MQTTPayloadFieldKind
+    DisplayName: {"LocaleId":"en-US","Text":"Kind of field"}
+  - Name: Key
+    Type: BaseDataVariableType
+    DataType: String
+    DisplayName: {"LocaleId":"en-US","Text":"Key"}
+  - Name: Value
+    Type: BaseDataVariableType
+    DataType: BaseDataType
+    DisplayName: {"LocaleId":"en-US","Text":"Value"}
+    Value: {"Type":6,"Body":0}
+  - Name: ValueDataVariablePath
+    Type: BaseDataVariableType
+    DataType: String
+- Name: ArrayEditorElement
+  Id: g=4475df6c9e8f4f14a47eb27ece80bb73
+  Supertype: BaseObjectType
+  Children:
+  - Name: Position
+    Type: BaseDataVariableType
+    DataType: UInt32
+  - Name: Value
+    Type: BaseDataVariableType
+    DataType: BaseDataType
+    Value: {"Type":6,"Body":0}

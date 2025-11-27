@@ -50,7 +50,7 @@ Children:
 - File: UI/UI.yaml
 - File: Model/Model.yaml
 - File: OPC_UA_Data/OPC_UA_Data.yaml
-- File: MQTT_Data/MQTT_Data.yaml
+- File: MQTT_Data_Configurations/MQTT_Data_Configurations.yaml
 - File: Converters/Converters.yaml
 - File: Alarms/Alarms.yaml
 - File: Recipes/Recipes.yaml
@@ -144,3 +144,9 @@ Children:
     - Name: Severity
       Type: PropertyType
       DataType: UInt16
+- Name: RuntimeOptimization
+  Type: PropertyGroup
+  Children:
+  - Name: Tags
+    Type: BaseDataVariableType
+    DataType: ns=0;Boolean

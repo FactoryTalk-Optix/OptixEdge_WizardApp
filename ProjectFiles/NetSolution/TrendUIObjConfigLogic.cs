@@ -1,50 +1,23 @@
 #region Using directives
 using System;
-using UAManagedCore;
-using OpcUa = UAManagedCore.OpcUa;
-using FTOptix.UI;
-using FTOptix.HMIProject;
-using FTOptix.CoreBase;
-using FTOptix.NetLogic;
-using FTOptix.SQLiteStore;
-using FTOptix.WebUI;
-using FTOptix.Store;
-using FTOptix.Modbus;
-using FTOptix.MelsecFX3U;
-using FTOptix.S7TCP;
-using FTOptix.OmronEthernetIP;
-using FTOptix.MelsecQ;
-using FTOptix.OmronFins;
-using FTOptix.CODESYS;
-using FTOptix.TwinCAT;
-using FTOptix.RAEtherNetIP;
-using FTOptix.MicroController;
-using FTOptix.S7TiaProfinet;
-using FTOptix.System;
-using FTOptix.Retentivity;
-using FTOptix.CommunicationDriver;
-using FTOptix.OPCUAClient;
-using FTOptix.OPCUAServer;
-using FTOptix.DataLogger;
-using FTOptix.MQTTClient;
-using FTOptix.Core;
-using System.Linq;
-using System.IO.Compression;
 using System.Collections.Generic;
-using System.Threading;
-using FTOptix.NativeUI;
+using UAManagedCore;
+using FTOptix.HMIProject;
+using FTOptix.NetLogic;
+using FTOptix.DataLogger;
+using FTOptix.Core;
 #endregion
 
 public class TrendUIObjConfigLogic : BaseNetLogic
 {
     public override void Start()
     {
-        if (Owner.GetAlias("TrendUIObjAlias") is TrendUIObj trendUIObject)
+        if (Owner.GetAlias("TrendUIWidgetData") is WidgetData trendWidgetData)
         {
-            trendUIObjectAliasNode = trendUIObject;
-            if (InformationModel.Get(trendUIObjectAliasNode.GetVariable("ObjPointer")?.Value) is DataLogger loggerSource)
+            this.trendWidgetData = trendWidgetData;
+            if (InformationModel.Get(trendWidgetData.SourceNode) is DataLogger loggerSource)
             {
-                GeneratePensFromSource(loggerSource);
+                GeneratePensWidgetFromData(loggerSource);
             }
         }
     }
@@ -59,54 +32,85 @@ public class TrendUIObjConfigLogic : BaseNetLogic
     {
         if (InformationModel.Get(source) is DataLogger loggerSource)
         {
-            GeneratePensFromSource(loggerSource);
+            GeneratePensWidgetFromData(loggerSource);
         }
     }
 
-    private void GeneratePensFromSource(DataLogger sourceNode)
+    private void GeneratePensWidgetFromData(DataLogger sourceNode)
     {
-        if (Owner.GetAlias("TrendUIObjAlias") is TrendUIObj trendUIObject)
-        {
-            trendUIObjectAliasNode = trendUIObject;
-        }
-        var trendObject = trendUIObjectAliasNode.Find<Trend>("TrendObj");
+        int index = 0;
         var pensWidgetOwner = Owner.GetObject("Content/Pens/Content/Content");
-        if (trendObject == null)
-        {
-            Log.Error(LogicObject.BrowseName, "Cannote find trendObj! Fatal error");
-            return;
-        }
-        List<string> pensList = trendObject.Pens.Select(x => x.BrowseName).ToList();       
         foreach (var variableToLog in sourceNode.VariablesToLog)
         {
-            var trendPen = DashboardLogic.Instance.CreateOrUpdateTrendPen(trendObject, variableToLog);
+            CheckPenData(variableToLog, index);
+
             var trendPenWidget = pensWidgetOwner.GetObject(variableToLog.BrowseName);
             if (trendPenWidget == null)
             {
                 trendPenWidget = InformationModel.MakeObject(variableToLog.BrowseName, OptixEdge_WizardApp.ObjectTypes.TrendPenUIObjConfig);
-                trendPenWidget.SetAlias("TrendPenUIObjConfigAlias", trendPen);
+                trendPenWidget.SetAlias("TrendWidgetData", trendWidgetData);
+                trendPenWidget.GetVariable("PenIndex").Value = index;
                 pensWidgetOwner.Add(trendPenWidget);
             }
             else
             {
-                trendPenWidget.SetAlias("TrendPenUIObjConfigAlias", trendPen);
+                trendPenWidget.SetAlias("TrendWidgetData", trendWidgetData);
+                trendPenWidget.GetVariable("PenIndex").Value = index;
             }
-            pensList.Remove(variableToLog.BrowseName);
-        }
-        foreach (var penToDelete in pensList)
-        {
-            DeletePenAndWidget(trendObject, pensWidgetOwner, penToDelete);
+            index++;
         }
     }
 
-    private static void DeletePenAndWidget(Trend trendObj, IUAObject pensWidgetOwner, string penToDelete)
+    private Dictionary<string, int> GenerateActualPenList()
     {
-        trendObj.Pens.Remove(penToDelete);
-        if (pensWidgetOwner.Get(penToDelete) is TrendPen penNode)
+        var penNames = new Dictionary<string, int>();
+        int parametersArrayBaseOffset = trendWidgetData.IndexOfPensArray;
+        uint counterEmpty = 0;
+        for (int i = 0; i < trendWidgetData.ConfigurationTextParameters.Length; i++)
         {
-            pensWidgetOwner.Remove(penNode);
+            var penName = trendWidgetData.ConfigurationTextParameters[i].ToString(); // Variable BrowseName;
+            if (!string.IsNullOrEmpty(penName))
+            {
+                penNames.Add(penName, i);
+                counterEmpty = 0;
+            }
+            else
+            {
+                counterEmpty++;
+            }
+            if (counterEmpty >= 10)
+            {
+                break;
+            }
         }
+        return penNames;
     }
 
-    private IUAObject trendUIObjectAliasNode;
+    private void CheckPenData(IUAVariable sourceVariableToLog, int index)
+    {
+        int penOffset = index * 2;
+        int parametersArrayBaseOffset = trendWidgetData.IndexOfPensArray;
+        // Get existing arrays
+        int[] configurationParameters = trendWidgetData.GetVariable("ConfigurationParameters").Value;
+        uint[] configurationColors = trendWidgetData.GetVariable("ConfigurationColors").Value;
+        string[] configurationTextParameters = trendWidgetData.ConfigurationTextParameters;
+        // check if some parameter is missing and set default values
+        if (string.IsNullOrEmpty(configurationTextParameters[penOffset]))
+        {
+            configurationTextParameters[penOffset] = sourceVariableToLog.BrowseName; // Variable BrowseName
+            configurationParameters[penOffset + parametersArrayBaseOffset] = -1; // Thickness
+            configurationParameters[penOffset + parametersArrayBaseOffset + 1] = 1; // Enabled
+        }
+        if (string.IsNullOrEmpty(configurationTextParameters[penOffset + 1]))
+        {
+            configurationTextParameters[penOffset + 1] = sourceVariableToLog.BrowseName; // Title
+        }
+        configurationColors[index] = configurationColors[index] != 0 ? configurationColors[index] : new Color(255, (byte)new Random().Next(255), (byte)new Random().Next(255), (byte)new Random().Next(255)).ARGB; // Color
+        // Write back the modified arrays
+        trendWidgetData.GetVariable("ConfigurationParameters").Value = configurationParameters;
+        trendWidgetData.GetVariable("ConfigurationColors").Value = configurationColors;
+        trendWidgetData.ConfigurationTextParameters = configurationTextParameters;
+    }
+
+    private WidgetData trendWidgetData;
 }

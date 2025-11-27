@@ -195,11 +195,16 @@ public class LogsWatcherLogic : BaseNetLogic
                 {
                     moduleName = _moduleName;
                 }
+                if (moduleName.Contains("S7TiaProfinet", StringComparison.InvariantCultureIgnoreCase) && message.Text.Contains("find the file specified", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    // Ignore this message
+                    return;
+                }
                 if (_storeTable != null && message != null && !string.IsNullOrEmpty(moduleName) && utcTime != DateTime.MinValue && level > LogLevel.Fatal && level < LogLevel.Benchmark)
                 {
                     if (moduleName.Contains("LicenseManager"))
                     {
-                       CheckLicenseManagerMessage(message.Text);
+                        CheckLicenseManagerMessage(message.Text);
                     }
                     var newRecord = new object[1, storeTableColums.Length];
                     newRecord[0, 0] = utcTime;

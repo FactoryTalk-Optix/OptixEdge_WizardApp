@@ -102,6 +102,7 @@ public class ConfirmDeleteDialogLogic : BaseNetLogic
                     break;
                 case FTOptix.MQTTClient.MQTTClient:
                 case FTOptix.MQTTClient.MQTTPublisher:
+                case MQTTPayloadFieldInfo:
                     mqttClientNetlogic.ExecuteMethod(methodName, inputArguments);
                     break;
                 case FTOptix.OPCUAServer.OPCUAServer:

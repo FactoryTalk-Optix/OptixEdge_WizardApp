@@ -47,13 +47,14 @@ using System.Text.RegularExpressions;
 using System.Collections.Immutable;
 using System.ComponentModel.Design;
 using System.Runtime.CompilerServices;
+using FTOptix.MQTTClient;
 #endregion
 
 public class TagImporterUIObjectLogic : BaseNetLogic
 {
     public override void Start()
     {
-        closeDialogWithError = true;        
+        closeDialogWithError = true;
         if (Owner is not Dialog)
         {
             Log.Error(LogicObject.BrowseName, "Owner is not a Dialog!");
@@ -134,10 +135,13 @@ public class TagImporterUIObjectLogic : BaseNetLogic
         }
         CommonLogic.DisposeTask(jobImportFromFile);
         CommonLogic.DisposeTask(jobReadTagsImported);
+        tagsCheckedToImport?.Clear();
+        tagsReadFromSource?.Clear();
+        tagsReadFromSourceToDisplay?.Clear();
     }
 
     [ExportMethod]
-    public void SetCheckedStatus (bool checkedValue)
+    public void SetCheckedStatus(bool checkedValue)
     {
         foreach (var tagRow in tagsTable.GetNodesByType<TagCustomGridRow>())
         {
@@ -165,19 +169,19 @@ public class TagImporterUIObjectLogic : BaseNetLogic
         }
         else
         {
-            if (filePath.StartsWith('%'))
+            if (!string.IsNullOrEmpty(filePath))
             {
                 filePath = new ResourceUri(filePath).Uri;
-            }
-            if (!string.IsNullOrEmpty(filePath) && File.Exists(filePath))
-            {
-                jobImportFromFile = new LongRunningTask(ReadFromFile, filePath, LogicObject);
-                jobImportFromFile.Start();
-            }
-            else
-            {
-                Log.Warning(LogicObject.BrowseName, "Missing filePath or file not exist!");
-                NotificationsMessageHandlerLogic.Instance.RequestToastNotification(ToastBannerNotificationLevel.Warning, "Missing the file path or file not exist!");
+                if (File.Exists(filePath))
+                {
+                    jobImportFromFile = new LongRunningTask(ReadFromFile, filePath, LogicObject);
+                    jobImportFromFile.Start();
+                }
+                else
+                {
+                    Log.Warning(LogicObject.BrowseName, "Missing filePath or file not exist!");
+                    NotificationsMessageHandlerLogic.Instance.RequestToastNotification(ToastBannerNotificationLevel.Warning, "Missing the file path or file not exist!");
+                }
             }
         }
     }
@@ -185,6 +189,8 @@ public class TagImporterUIObjectLogic : BaseNetLogic
     [ExportMethod]
     public void SaveAndClose(bool onlineImport)
     {
+        // Temporarily impersonate root to perform the import in the right context
+        var sessionHandler = LogicObject.Context.Sessions.ImpersonateRootTemporary();
         if (onlineImport)
         {
             tagsCheckedToImport = [];
@@ -198,6 +204,9 @@ public class TagImporterUIObjectLogic : BaseNetLogic
         {
             CreateOrUpdateTags();
         }
+        // Return to UI session context
+        sessionHandler.Dispose();
+        // Close the dialog
         ownerDialog.Close();
     }
 
@@ -211,24 +220,58 @@ public class TagImporterUIObjectLogic : BaseNetLogic
 
     private void ChangeCurrentPage(int newPage)
     {
-        bool allChecked = true;
         int variableDataOffset = (newPage - 1) * 16;
         for (int rowIndex = 0; rowIndex < 16; rowIndex++)
         {
             int variableDataIndex = rowIndex + variableDataOffset;
             TagCustomGridRow tableRow = tagsTable.Get<TagCustomGridRow>($"TagCustomGridRow{rowIndex + 1}");
+
             if (variableDataIndex < tagsReadFromSourceToDisplay.Count)
             {
-                tableRow.SetAlias("RowData", tagsReadFromSourceToDisplay[variableDataIndex]);
+                UpdateTagRowData(rowIndex, variableDataIndex);
                 tableRow.Visible = true;
-                allChecked &= tagsReadFromSourceToDisplay[variableDataIndex].Checked;
             }
             else
             {
                 tableRow.Visible = false;
             }
         }
-        selectAllVariableValue.Checked = allChecked;
+        UpdateCheckBoxSelectedAll();
+    }
+
+    private void UpdateTagRowData(int rowIndex, int variableDataIndex)
+    {
+        var rowData = LogicObject.Get<TagCustomGridRowData>($"GridData/{rowIndex + 1}");
+        rowData.CheckedVariable.VariableChange -= OnRowCheckedChange;
+        rowData.Checked = tagsReadFromSourceToDisplay[variableDataIndex].Checked;
+        rowData.VariableName = tagsReadFromSourceToDisplay[variableDataIndex].VariableName;
+        rowData.VariableDataType = tagsReadFromSourceToDisplay[variableDataIndex].VariableDataType;
+        rowData.VariableComment = tagsReadFromSourceToDisplay[variableDataIndex].VariableComment;
+        rowData.VariableAddress = tagsReadFromSourceToDisplay[variableDataIndex].VariableAddress;
+        rowData.VariableIsArray = tagsReadFromSourceToDisplay[variableDataIndex].VariableIsArray;
+        rowData.VariableArrayDimension = tagsReadFromSourceToDisplay[variableDataIndex].VariableArrayDimension;
+        rowData.VariableDataTypeNodeId = tagsReadFromSourceToDisplay[variableDataIndex].VariableDataTypeNodeId;
+        rowData.VariableStringLength = tagsReadFromSourceToDisplay[variableDataIndex].VariableStringLength;
+        rowData.CheckedVariable.VariableChange += OnRowCheckedChange;
+    }
+
+    private void OnRowCheckedChange(object sender, VariableChangeEventArgs e)
+    {
+        int currentPage = currentPageVariable.Value;
+        int variableDataOffset = (currentPage - 1) * 16;
+        var rowData = e.Variable.Owner as TagCustomGridRowData;
+        int rowIndex = int.Parse(rowData.BrowseName) - 1;
+        int variableDataIndex = rowIndex + variableDataOffset;
+        tagsReadFromSourceToDisplay[variableDataIndex].Checked = (bool)e.NewValue;
+        // Check if all visible rows are checked - read directly from UI
+        UpdateCheckBoxSelectedAll();
+    }
+
+    private void UpdateCheckBoxSelectedAll()
+    {
+        selectAllVariableValue.Checked = LogicObject.GetObject("GridData").GetNodesByType<TagCustomGridRowData>()
+                .Where(rowData => tagsTable.Get<TagCustomGridRow>($"TagCustomGridRow{rowData.BrowseName}").Visible)
+                .All(rowData => rowData.Checked);
     }
 
     private void FilterStringVariable_VariableChange(object sender, VariableChangeEventArgs e)
@@ -244,7 +287,7 @@ public class TagImporterUIObjectLogic : BaseNetLogic
             {
                 tagsReadFromSourceToDisplay.AddRange(tagsReadFromSource.Where(x => x.VariableName.StartsWith(e.NewValue, StringComparison.InvariantCultureIgnoreCase) || x.VariableName.Contains(e.NewValue, StringComparison.InvariantCultureIgnoreCase)));
             }
-            UpdateDataGrid();                       
+            UpdateDataGrid();
         }
     }
 
@@ -299,12 +342,12 @@ public class TagImporterUIObjectLogic : BaseNetLogic
             switch (GetJobToRun(sourceFilePath, plcStation))
             {
                 case JobToRun.Invalid:
-                    throw new InvalidDataException("Unable to match source file extension with plc station");                
+                    throw new InvalidDataException("Unable to match source file extension with plc station");
                 case JobToRun.RAEipL5X:
                     tagsReadFromSource = GetDataFromL5X(sourceFilePath);
                     break;
                 case JobToRun.RAEipCSV:
-                case JobToRun.S7TCPCSV:                   
+                case JobToRun.S7TCPCSV:
                 case JobToRun.ModbusCSV:
                     tagsReadFromSource = GetDataFromCSV(sourceFilePath, plcStation);
                     break;
@@ -323,7 +366,7 @@ public class TagImporterUIObjectLogic : BaseNetLogic
         catch (Exception ex)
         {
             Log.Error(LogicObject.BrowseName, $"{ex.Message} \n {ex.StackTrace}");
-            NotificationsMessageHandlerLogic.Instance.RequestToastNotification(ToastBannerNotificationLevel.Error, ex.Message); 
+            NotificationsMessageHandlerLogic.Instance.RequestToastNotification(ToastBannerNotificationLevel.Error, ex.Message);
         }
         importJobRunningVariable.Value = false;
     }
@@ -352,7 +395,7 @@ public class TagImporterUIObjectLogic : BaseNetLogic
         else
         {
             currentPageVariable.Value = 1;
-        }        
+        }
     }
 
     private static JobToRun GetJobToRun(string filePath, IUANode plcStation)
@@ -379,26 +422,35 @@ public class TagImporterUIObjectLogic : BaseNetLogic
 
     private List<TagDataFromCSV> ReadRawDataFromCSV(string filePath)
     {
-
+        // Check if the file exists
         if (string.IsNullOrEmpty(filePath) || !File.Exists(filePath))
         {
             filePath ??= "";
             throw new FileNotFoundException($"File {filePath} does not exist.");
         }
+        // Create the configuration in order to detect the delimiter automatically
+        var config = new CsvHelper.Configuration.CsvConfiguration(CultureInfo.InvariantCulture)
+        {
+            DetectDelimiter = true,
+            Mode = CsvMode.RFC4180
+        };
+        // Read the CSV file
         using var streamReader = new StreamReader(filePath);
-        using var csvReader = new CsvReader(streamReader, CultureInfo.InvariantCulture);
-        return csvReader.GetRecords<TagDataFromCSV>().ToList();
+        using var csvReader = new CsvReader(streamReader, config);
+        // Get all records from the CSV file
+        var records = csvReader.GetRecords<TagDataFromCSV>().ToList();
+        return records;
     }
 
-    private List<TagCustomGridRowData> GetDataFromCSV(string filePath, IUANode plcStation)
+    private List<InternalTagCustomGridRowData> GetDataFromCSV(string filePath, IUANode plcStation)
     {
-        List<TagCustomGridRowData> returnValue = [];
+        List<InternalTagCustomGridRowData> returnValue = [];
         try
         {
             int i = 0;
             var ownerCommunicationDriver = (CommunicationDriver)plcStation.Owner;
             foreach (var record in ReadRawDataFromCSV(filePath).Where(x => x.Driver == CommonLogic.CSVDriverMapping.First(y => y.Value == ownerCommunicationDriver.ObjectType.NodeId).Key))
-            {             
+            {
                 var newTagData = ReadCSVTag(record, i.ToString());
                 if (newTagData != null)
                 {
@@ -414,9 +466,9 @@ public class TagImporterUIObjectLogic : BaseNetLogic
         return returnValue;
     }
 
-    private List<TagCustomGridRowData> GetDataFromL5X(string filePath)
+    private List<InternalTagCustomGridRowData> GetDataFromL5X(string filePath)
     {
-        List<TagCustomGridRowData> returnValue = [];
+        List<InternalTagCustomGridRowData> returnValue = [];
         try
         {
             var l5xSourceFile = L5X.Load(filePath);
@@ -450,18 +502,21 @@ public class TagImporterUIObjectLogic : BaseNetLogic
         return returnValue;
     }
 
-    private TagCustomGridRowData ReadCSVTag(TagDataFromCSV tagData, string browseName)
+    private InternalTagCustomGridRowData ReadCSVTag(TagDataFromCSV tagData, string browseName)
     {
         try
         {
-            TagCustomGridRowData newTagData = InformationModel.MakeObject<TagCustomGridRowData>(browseName);
-            newTagData.Checked = tagsImported.Exists(x => x.BrowseName == tagData.Name);
-            newTagData.VariableName = tagData.Name;
-            newTagData.VariableDataType = tagData.DataType;
-            newTagData.VariableDataTypeNodeId = CommonLogic.CSVDataTypeMapping.GetValueOrDefault(tagData.DataType, NodeId.Empty);
-            newTagData.VariableComment = tagData.Description ?? string.Empty;
-            newTagData.VariableAddress = tagData.Address;
-            newTagData.VariableIsArray = !string.IsNullOrEmpty(tagData.ArrayDimension);
+            InternalTagCustomGridRowData newTagData = new()
+            {
+                BrowseName = browseName,
+                Checked = tagsImported.Exists(x => x.BrowseName == tagData.Name),
+                VariableName = tagData.Name,
+                VariableDataType = tagData.DataType,
+                VariableDataTypeNodeId = CommonLogic.CSVDataTypeMapping.GetValueOrDefault(tagData.DataType, NodeId.Empty),
+                VariableComment = tagData.Description ?? string.Empty,
+                VariableAddress = tagData.Address,
+                VariableIsArray = !string.IsNullOrEmpty(tagData.ArrayDimension)
+            };
             if (newTagData.VariableIsArray)
             {
                 List<uint> dimensions = [];
@@ -480,7 +535,7 @@ public class TagImporterUIObjectLogic : BaseNetLogic
             }
             if (ushort.TryParse(tagData.StringLength, out ushort stringLength))
             {
-                newTagData.VariableStringLenght = stringLength;
+                newTagData.VariableStringLength = stringLength;
             }
             return newTagData;
         }
@@ -491,14 +546,17 @@ public class TagImporterUIObjectLogic : BaseNetLogic
         }
     }
 
-    private TagCustomGridRowData ReadL5XTag(L5Sharp.Core.Tag tagData, string scopeName, string browseName)
+    private InternalTagCustomGridRowData ReadL5XTag(L5Sharp.Core.Tag tagData, string scopeName, string browseName)
     {
         try
         {
-            TagCustomGridRowData newTagData = InformationModel.MakeObject<TagCustomGridRowData>(browseName);
-            newTagData.Checked = tagsImported.Exists(x => x.BrowseName == tagData.Name);
-            newTagData.VariableDataType = tagData.DataType;
-            newTagData.VariableDataTypeNodeId = CommonLogic.LogixDataTypeMapping.GetValueOrDefault(tagData.DataType, NodeId.Empty);
+            InternalTagCustomGridRowData newTagData = new()
+            {
+                BrowseName = browseName,
+                Checked = tagsImported.Exists(x => x.BrowseName == tagData.Name),
+                VariableDataType = tagData.DataType,
+                VariableDataTypeNodeId = CommonLogic.LogixDataTypeMapping.GetValueOrDefault(tagData.DataType, NodeId.Empty)
+            };
             if (newTagData.VariableDataTypeNodeId is null || newTagData.VariableDataTypeNodeId == NodeId.Empty)
             {
                 return null;
@@ -538,25 +596,28 @@ public class TagImporterUIObjectLogic : BaseNetLogic
         }
     }
 
-    private TagCustomGridRowData ReadS7ProfinetTag(FTOptix.CommunicationDriver.TagInfo tagInfo, string browseName)
+    private InternalTagCustomGridRowData ReadS7ProfinetTag(FTOptix.CommunicationDriver.TagInfo tagInfo, string browseName)
     {
         try
         {
             var symbolName = tagInfo.TagAttributes.First(x => x.Name.Equals("SymbolName", StringComparison.InvariantCultureIgnoreCase));
             string tagAddress = symbolName.Value.ToString();
             string tagName = tagAddress.Replace("PLC.TAGS.", string.Empty, StringComparison.InvariantCultureIgnoreCase).Replace("PLC.BLOCKS.", string.Empty, StringComparison.InvariantCultureIgnoreCase);
-            TagCustomGridRowData newTagData = InformationModel.MakeObject<TagCustomGridRowData>(browseName);
-            newTagData.Checked = tagsImported.Exists(x => x.BrowseName == tagName);
-            newTagData.VariableName = tagName;
-            newTagData.VariableDataType = InformationModel.Get(tagInfo.DataType).BrowseName;
-            newTagData.VariableDataTypeNodeId = tagInfo.DataType;
-            newTagData.VariableComment = string.Empty;
-            newTagData.VariableAddress = tagAddress;
-            newTagData.VariableIsArray = tagInfo.ArrayDimensions.Length > 0;
-            newTagData.VariableArrayDimension = tagInfo.ArrayDimensions;
+            InternalTagCustomGridRowData newTagData = new()
+            {
+                BrowseName = browseName,
+                Checked = tagsImported.Exists(x => x.BrowseName == tagName),
+                VariableName = tagName,
+                VariableDataType = InformationModel.Get(tagInfo.DataType).BrowseName,
+                VariableDataTypeNodeId = tagInfo.DataType,
+                VariableComment = string.Empty,
+                VariableAddress = tagAddress,
+                VariableIsArray = tagInfo.ArrayDimensions.Length > 0,
+                VariableArrayDimension = tagInfo.ArrayDimensions
+            };
             if (tagInfo.DataType == OpcUa.DataTypes.String && tagInfo.TagAttributes.FirstOrDefault(x => x.Name.Equals("MaximumLength", StringComparison.InvariantCultureIgnoreCase), null) is TagAttribute maximumLenght)
             {
-                newTagData.VariableStringLenght = Convert.ToUInt16(maximumLenght.Value);
+                newTagData.VariableStringLength = Convert.ToUInt16(maximumLenght.Value);
             }
             return newTagData;
         }
@@ -567,24 +628,27 @@ public class TagImporterUIObjectLogic : BaseNetLogic
         }
     }
 
-    private TagCustomGridRowData ReadRAEIPTag(FTOptix.CommunicationDriver.TagInfo tagInfo, string browseName)
+    private InternalTagCustomGridRowData ReadRAEIPTag(FTOptix.CommunicationDriver.TagInfo tagInfo, string browseName)
     {
         try
         {
             var symbolName = tagInfo.TagAttributes.First(x => x.Name.Equals("SymbolName", StringComparison.InvariantCultureIgnoreCase));
             string tagAddress = symbolName.Value.ToString();
-            TagCustomGridRowData newTagData = InformationModel.MakeObject<TagCustomGridRowData>(browseName);
-            newTagData.Checked = tagsImported.Exists(x => x.BrowseName == tagAddress);
-            newTagData.VariableName = tagAddress;
-            newTagData.VariableDataType = InformationModel.Get(tagInfo.DataType).BrowseName;
-            newTagData.VariableDataTypeNodeId = tagInfo.DataType;
-            newTagData.VariableComment = string.Empty;
-            newTagData.VariableAddress = tagAddress;
-            newTagData.VariableIsArray = tagInfo.ArrayDimensions.Length > 0;
-            newTagData.VariableArrayDimension = tagInfo.ArrayDimensions;
+            InternalTagCustomGridRowData newTagData = new()
+            {
+                BrowseName = browseName,
+                Checked = tagsImported.Exists(x => x.BrowseName == tagAddress),
+                VariableName = tagAddress,
+                VariableDataType = InformationModel.Get(tagInfo.DataType).BrowseName,
+                VariableDataTypeNodeId = tagInfo.DataType,
+                VariableComment = string.Empty,
+                VariableAddress = tagAddress,
+                VariableIsArray = tagInfo.ArrayDimensions.Length > 0,
+                VariableArrayDimension = tagInfo.ArrayDimensions
+            };
             if (tagInfo.DataType == OpcUa.DataTypes.String && tagInfo.TagAttributes.FirstOrDefault(x => x.Name.Equals("MaximumLength", StringComparison.InvariantCultureIgnoreCase), null) is TagAttribute maximumLenght)
             {
-                newTagData.VariableStringLenght = Convert.ToUInt16(maximumLenght.Value);
+                newTagData.VariableStringLength = Convert.ToUInt16(maximumLenght.Value);
             }
             return newTagData;
         }
@@ -595,11 +659,11 @@ public class TagImporterUIObjectLogic : BaseNetLogic
         }
     }
 
-    private List<TagCustomGridRowData> GetDataFromBrowsedPlcItem()
+    private List<InternalTagCustomGridRowData> GetDataFromBrowsedPlcItem()
     {
-        List<TagCustomGridRowData> returnValue = [];
+        List<InternalTagCustomGridRowData> returnValue = [];
         try
-        {            
+        {
             foreach (var plcItem in plcItems.OfType<BasePlcItem>().ToList())
             {
                 ReadFromBrowsedPlc(plcItem, ref returnValue);
@@ -612,7 +676,7 @@ public class TagImporterUIObjectLogic : BaseNetLogic
         return returnValue;
     }
 
-    private void ReadFromBrowsedPlc(BasePlcItem itemToAnalyze, ref List<TagCustomGridRowData> myList)
+    private void ReadFromBrowsedPlc(BasePlcItem itemToAnalyze, ref List<InternalTagCustomGridRowData> myList)
     {
         switch (itemToAnalyze)
         {
@@ -625,7 +689,7 @@ public class TagImporterUIObjectLogic : BaseNetLogic
                 break;
             case FTOptix.CommunicationDriver.TagInfo tagInfo:
                 string rowBrowseName = myList.Count > 0 ? $"{myList.Count - 1}" : "0";
-                TagCustomGridRowData dataToAdd = plcStation switch
+                InternalTagCustomGridRowData dataToAdd = plcStation switch
                 {
                     FTOptix.S7TiaProfinet.Station => ReadS7ProfinetTag(tagInfo, rowBrowseName),
                     FTOptix.RAEtherNetIP.Station => ReadRAEIPTag(tagInfo, rowBrowseName),
@@ -695,7 +759,7 @@ public class TagImporterUIObjectLogic : BaseNetLogic
         NotificationsMessageHandlerLogic.Instance.RequestToastNotification(ToastBannerNotificationLevel.Success, $"Imported {tagsToImport.Count()}, removed {deletedTags} tags");
     }
 
-    private int DeleteMissingTag(List<TagCustomGridRowData> tagDatasUnchecked)
+    private int DeleteMissingTag(List<InternalTagCustomGridRowData> tagDatasUnchecked)
     {
         int deletedTagsCounter = 0;
         foreach (var tagData in tagsImported.Where(x => tagDatasUnchecked.Exists(y => y.VariableName == x.BrowseName)))
@@ -706,10 +770,10 @@ public class TagImporterUIObjectLogic : BaseNetLogic
         return deletedTagsCounter;
     }
 
-    private void CreateOrUpdateRAEthernetIPTag(TagCustomGridRowData tagData)
+    private void CreateOrUpdateRAEthernetIPTag(InternalTagCustomGridRowData tagData)
     {
         Folder destinationFolder = plcStation.Get<Folder>("Tags");
-        FTOptix.RAEtherNetIP.Tag targetTag = destinationFolder.Get<FTOptix.RAEtherNetIP.Tag>(tagData.VariableName);        
+        FTOptix.RAEtherNetIP.Tag targetTag = destinationFolder.Get<FTOptix.RAEtherNetIP.Tag>(tagData.VariableName);
         if (targetTag == null)
         {
             targetTag = MakeTag<FTOptix.RAEtherNetIP.Tag>(tagData.VariableName, tagData.VariableDataTypeNodeId, FTOptix.RAEtherNetIP.VariableTypes.Tag, tagData.VariableIsArray, tagData.VariableArrayDimension, tagData.VariableComment);
@@ -722,7 +786,7 @@ public class TagImporterUIObjectLogic : BaseNetLogic
         targetTag.SymbolName = tagData.VariableAddress;
     }
 
-    private void CreateOrUpdateS7TCPTag(TagCustomGridRowData tagData)
+    private void CreateOrUpdateS7TCPTag(InternalTagCustomGridRowData tagData)
     {
         var destinationFolder = plcStation.GetObject("Tags");
         var (dataBlockIndex, byteIndex, bitIndex, memoryArea) = S7ParseAddress(tagData.VariableAddress);
@@ -749,7 +813,7 @@ public class TagImporterUIObjectLogic : BaseNetLogic
         {
             case var _ when targetTag.DataType == OpcUa.DataTypes.String:
                 targetTag.Encoding = FTOptix.S7TCP.Encoding.ExtendedString;
-                targetTag.MaximumLength = tagData.VariableStringLenght;
+                targetTag.MaximumLength = tagData.VariableStringLength;
                 break;
             case var _ when targetTag.DataType == OpcUa.DataTypes.DateTime:
                 targetTag.Encoding = FTOptix.S7TCP.Encoding.DateOnly;
@@ -763,7 +827,7 @@ public class TagImporterUIObjectLogic : BaseNetLogic
         }
     }
 
-    private void CreateOrUpdateModbusTag(TagCustomGridRowData tagData)
+    private void CreateOrUpdateModbusTag(InternalTagCustomGridRowData tagData)
     {
         Folder destinationFolder = plcStation.Get<Folder>("Tags");
         FTOptix.Modbus.Tag targetTag = destinationFolder.Get<FTOptix.Modbus.Tag>(tagData.VariableName);
@@ -781,13 +845,13 @@ public class TagImporterUIObjectLogic : BaseNetLogic
         targetTag.MemoryArea = ModbusMemoryAreaMapping.FirstOrDefault(x => tagData.VariableAddress.StartsWith(x.Key), new KeyValuePair<string, ModbusMemoryArea>("", ModbusMemoryArea.HoldingRegister)).Value;
         targetTag.NumRegister = (ushort)byteIndex;
         targetTag.BitOffset = bitIndex;
-        if (dataType == OpcUa.DataTypes.String && tagData.VariableStringLenght > 0)
+        if (dataType == OpcUa.DataTypes.String && tagData.VariableStringLength > 0)
         {
-            targetTag.MaximumLength = tagData.VariableStringLenght;
+            targetTag.MaximumLength = tagData.VariableStringLength;
         }
     }
 
-    private void CreateOrUpdateMelsecFX3UTag(TagCustomGridRowData tagData)
+    private void CreateOrUpdateMelsecFX3UTag(InternalTagCustomGridRowData tagData)
     {
         throw new NotImplementedException("Missing MelsecFX3 support");
     }
@@ -808,7 +872,7 @@ public class TagImporterUIObjectLogic : BaseNetLogic
                     TargetDynamicLink = targetNode.NodeId,
                     TargetDynamicLinkMode = (targetNode as DynamicLink).Mode,
                     SourceTagBrowseName = tag.BrowseName,
-                    ReferenceType = FTOptix.Core.ReferenceTypes.Resolves,                   
+                    ReferenceType = FTOptix.Core.ReferenceTypes.Resolves,
                 });
             }
         }
@@ -825,12 +889,22 @@ public class TagImporterUIObjectLogic : BaseNetLogic
         // reconnect all new tags to existing broken dynamiclink
         foreach (var tagInformation in tagsToReconnects)
         {
-            if (InformationModel.Get(tagInformation.TargetDynamicLink) is DynamicLink targetDynamicLink && tagsFolder.GetVariable(tagInformation.SourceTagBrowseName) is IUAVariable sourceTag)
+            if (InformationModel.Get(tagInformation.TargetDynamicLink) is DynamicLink targetDynamicLink
+            && tagsFolder.GetVariable(tagInformation.SourceTagBrowseName) is IUAVariable sourceTag
+            && targetDynamicLink.Owner is IUAVariable targetVariable
+            && (targetVariable.Status == NodeStatus.Attached || targetVariable.Status == NodeStatus.Started))
             {
-                (targetDynamicLink.Owner as IUAVariable).Stop(); // Stop the target variable for avoid default value in logger
-                targetDynamicLink.Refs.AddReference(tagInformation.ReferenceType, sourceTag);
-                targetDynamicLink.Mode = tagInformation.TargetDynamicLinkMode;
-                (targetDynamicLink.Owner as IUAVariable).Start();
+                try
+                {
+                    targetVariable.Stop(); // Stop the target variable for avoid default value in logger
+                    targetDynamicLink.Refs.AddReference(tagInformation.ReferenceType, sourceTag);
+                    targetDynamicLink.Mode = tagInformation.TargetDynamicLinkMode;
+                    targetVariable.Start();
+                }
+                catch
+                {
+                    // Node detached in the meantime
+                }
             }
         }
         // calculate the tags not deleted from the import
@@ -842,7 +916,7 @@ public class TagImporterUIObjectLogic : BaseNetLogic
         tagImportedHashSet = new HashSet<string>(tagsImported.Select(x => x.BrowseName));
         tagsCheckedToImportHashSet = new HashSet<string>(tagsCheckedToImport.Select(x => x.VariableName));
         tagImportedHashSet.ExceptWith(tagsCheckedToImportHashSet);
-        tagsCheckedToImportHashSet.ExceptWith(new HashSet<string>(tagsImported.Select(x => x.BrowseName)));      
+        tagsCheckedToImportHashSet.ExceptWith(new HashSet<string>(tagsImported.Select(x => x.BrowseName)));
         NotificationsMessageHandlerLogic.Instance.RequestToastNotification(ToastBannerNotificationLevel.Success, $"Imported {tagsCheckedToImportHashSet.Count}, removed {tagsImported.Count - tagsNotDeleted} tags");
     }
 
@@ -1032,9 +1106,9 @@ public class TagImporterUIObjectLogic : BaseNetLogic
         { "DI", ModbusMemoryArea.DiscreteInput },
     }.ToImmutableDictionary();
 
-    private List<TagCustomGridRowData> tagsReadFromSource;
-    private List<TagCustomGridRowData> tagsCheckedToImport;
-    private List<TagCustomGridRowData> tagsReadFromSourceToDisplay;
+    private List<InternalTagCustomGridRowData> tagsReadFromSource;
+    private List<InternalTagCustomGridRowData> tagsCheckedToImport;
+    private List<InternalTagCustomGridRowData> tagsReadFromSourceToDisplay;
     private List<TagDataImported> tagsImported;
     private ColumnLayout tagsTable;
     private IUAVariable currentPageVariable;
@@ -1048,13 +1122,13 @@ public class TagImporterUIObjectLogic : BaseNetLogic
     private Dialog ownerDialog;
     private CheckBox selectAllVariableValue;
     private bool closeDialogWithError;
-    
+
     private class TagsToReconnect
     {
         public NodeId TargetDynamicLink { get; set; }
         public string SourceTagBrowseName { get; set; }
         public NodeId ReferenceType { get; set; }
-        public DynamicLinkMode TargetDynamicLinkMode {get; set; }
+        public DynamicLinkMode TargetDynamicLinkMode { get; set; }
     }
 }
 

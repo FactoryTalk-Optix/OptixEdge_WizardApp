@@ -14,8 +14,12 @@ using System.Threading;
 using FTOptix.MQTTClient;
 using FTOptix.InfluxDBStoreRemote;
 using FTOptix.OPCUAServer;
-using FTOptix.AuditSigning;
 using FTOptix.NativeUI;
+using System.Reflection.Metadata;
+using FTOptix.System;
+using System.Diagnostics.CodeAnalysis;
+using FTOptix.CommunicationDriver;
+using System.IO;
 #endregion
 
 public class MqttClientLogic : BaseNetLogic
@@ -38,7 +42,6 @@ public class MqttClientLogic : BaseNetLogic
     public void CreateNewMqttClient(NodeId widgetOwner)
     {
         var mqttClientFolder = Project.Current.Get<Folder>(CommonLogic.MQTTClientFolderPath);
-        var mqttPublishersVariableFolders = Project.Current.Get(CommonLogic.MQTTDataFolderPath);
         int countCurrentClient = mqttClientFolder.GetNodesByType<MQTTClient>().Count();
         string browseName = $"MQTTClient{countCurrentClient + 1}";
         if (mqttClientFolder.Get(browseName) == null)
@@ -50,11 +53,7 @@ public class MqttClientLogic : BaseNetLogic
                 var newWidget = InformationModel.MakeObject<MQTTClientUIObj>(browseName);
                 newWidget.SetAlias(CommonLogic.editAliasNameMapping.GetValueOrDefault(FTOptix.MQTTClient.ObjectTypes.MQTTClient), mqttClient);
                 verticalLayout.Add(newWidget);
-                newWidget.Find("StationActions").GetVariable("EnableSave").Value = true;                
-            }
-            if (mqttPublishersVariableFolders.Get(browseName) == null)
-            {
-                mqttPublishersVariableFolders.Add(InformationModel.Make<Folder>(browseName));
+                newWidget.Find("StationActions").GetVariable("EnableSave").Value = true;
             }
         }
         else
@@ -66,7 +65,7 @@ public class MqttClientLogic : BaseNetLogic
     [ExportMethod]
     public void DeleteStation(NodeId station, NodeId widget)
     {
-        IUANode[] nodesToDelete = {InformationModel.Get(station), InformationModel.Get(widget)};
+        IUANode[] nodesToDelete = { InformationModel.Get(station), InformationModel.Get(widget) };
         removeStationTask = new DelayedTask(DeleteStationTask, nodesToDelete, 100, LogicObject);
         removeStationTask.Start();
     }
@@ -76,29 +75,23 @@ public class MqttClientLogic : BaseNetLogic
     {
         if (InformationModel.GetObject(mqttClient) is MQTTClient mqttClientNode)
         {
-            var mqttPublishersVariableFolders = Project.Current.Get($"{CommonLogic.MQTTDataFolderPath}/{mqttClientNode.BrowseName}");
             int countCurrentPublisher = mqttClientNode.GetNodesByType<MQTTPublisher>().Count();
             string browseName = $"Publisher{countCurrentPublisher + 1}";
             if (mqttClientNode.Get(browseName) == null)
             {
                 var mqttPublisher = InformationModel.MakeObject<MQTTPublisher>(browseName);
-                mqttPublisher.Topic = $"OptixEdge_WizardApp/{browseName}";
-                var topicFolder = mqttPublishersVariableFolders.Get(browseName);
-                if (topicFolder == null)
-                {
-                    topicFolder = InformationModel.Make<Folder>(browseName);
-                    mqttPublishersVariableFolders.Add(topicFolder);
-                }
-                InitMqttPublisherNode(mqttPublisher, topicFolder.NodeId);
+                InitMqttPublisherNode(mqttPublisher);
+                var newWidget = InformationModel.MakeObject<MQTTPublisherUIObj>(browseName);
                 if (InformationModel.Get(widgetOwner) is ColumnLayout verticalLayout)
                 {
-                    var newWidget = InformationModel.MakeObject<MQTTClientPublisherUIObj>(browseName);
                     newWidget.SetAlias(CommonLogic.editAliasNameMapping.GetValueOrDefault(FTOptix.MQTTClient.ObjectTypes.MQTTPublisher), mqttPublisher);
-                    verticalLayout.Add(newWidget);
-                    newWidget.FindByType<StationProps>().GetVariable("EnableSave").Value = false;
+                    newWidget.SetAlias("MQTTClientNode", mqttClientNode);
+                    verticalLayout.Add(newWidget);                    
+                    newWidget.FindByType<StationProps>().GetVariable("EnableSave").Value = true;
                 }
-                mqttClientNode.Add(mqttPublisher);
-                NotificationsMessageHandlerLogic.Instance.RequestToastNotification(ToastBannerNotificationLevel.Success, $"New publisher successfully created on {mqttClientNode.BrowseName}.");
+                var payloadData = InformationModel.Make<MQTTPublisherDataConfiguration>($"{mqttClientNode.BrowseName}_{mqttPublisher.BrowseName}");
+                InitMqttPublisherPayloadConfiguration(payloadData);
+                newWidget.SetAlias(CommonLogic.editAliasNameMapping.GetValueOrDefault(OptixEdge_WizardApp.ObjectTypes.MQTTPublisherUIObj), payloadData);
             }
             else
             {
@@ -108,84 +101,50 @@ public class MqttClientLogic : BaseNetLogic
     }
 
     [ExportMethod]
-    public void SaveProperties(NodeId mqttClient, NodeId widget)
+    public void SaveProperties(NodeId station, NodeId widget)
     {
-        try
+        switch (InformationModel.Get(station))
         {
-            if (InformationModel.GetObject(mqttClient) is MQTTClient editStation && InformationModel.GetObject(widget) is IUAObject widgetNode)
-            {
-                string stationNodeAlias = CommonLogic.sourceAliasNameMapping.GetValueOrDefault(editStation.ObjectType.NodeId);
-                var sourceStation = (MQTTClient)widgetNode.GetAlias(stationNodeAlias);
-                var mqttClientFolder = Project.Current.Get<Folder>(CommonLogic.MQTTClientFolderPath);
-                if (sourceStation == null)
-                {
-                    sourceStation = InformationModel.Make<MQTTClient>(editStation.BrowseName);
-                    ApplyProperties(sourceStation, editStation);
-                    mqttClientFolder.Add(sourceStation);
-                    widgetNode.SetAlias(stationNodeAlias, sourceStation);
-                    NotificationsMessageHandlerLogic.Instance.RequestToastNotification(ToastBannerNotificationLevel.Success, $"New MQTT client successfully created.");
-                }
-                else
-                {
-                    sourceStation.Stop();
-                    ApplyProperties(sourceStation, editStation);
-                    sourceStation.Start();
-                    NotificationsMessageHandlerLogic.Instance.RequestToastNotification(ToastBannerNotificationLevel.Success, $"Parameters for MQTT client {editStation.BrowseName} successfully saved.");
-                }
-                widgetNode.GetVariable("EnableAddPublisher").Value = true;
-                widgetNode.Find("StationActions").GetVariable("EnableSave").Value = false;
-            }
-            else
-            {
-                throw new NullReferenceException("Missing MQTT client node!");
-            }
-        }
-        catch (Exception ex)
-        {
-            NotificationsMessageHandlerLogic.Instance.RequestBannerNotification(ToastBannerNotificationLevel.Error, "Critical error - Check application logs");
-            Log.Error(LogicObject.BrowseName, $"{ex.Message} - Stack: {ex.StackTrace}");
+            case MQTTClient editClient when InformationModel.Get(widget) is IUAObject widgetNode:
+                SaveClientProperties(editClient, widgetNode);
+                break;
+            case MQTTPublisher editPublisher when InformationModel.Get(widget) is IUAObject widgetNode:
+                SavePublisherProperties(editPublisher, widgetNode);
+                break;
         }
     }
 
-    public void CreateOrUpdateTagsToPublish(NodeId mqttPublisher)
+    private void SaveClientProperties(MQTTClient editStation, IUAObject widgetNode)
     {
         try
         {
-            if (InformationModel.GetObject(mqttPublisher) is MQTTPublisher mqttPublisherNode)
+            string stationNodeAlias = CommonLogic.sourceAliasNameMapping.GetValueOrDefault(editStation.ObjectType.NodeId);
+            var sourceStation = (MQTTClient)widgetNode.GetAlias(stationNodeAlias);
+            var mqttClientFolder = Project.Current.Get<Folder>(CommonLogic.MQTTClientFolderPath);
+            if (sourceStation == null)
             {
-                var mqttClient = (IUAObject)mqttPublisherNode.Owner;
-                mqttClient.Stop();
-                CreateOrUpdateTags(mqttPublisherNode);
-                mqttClient.Start();
+                // Temporarily impersonate root to perform the creation in the right context
+                var sessionHandler = LogicObject.Context.Sessions.ImpersonateRootTemporary();
+                sourceStation = InformationModel.Make<MQTTClient>(editStation.BrowseName);
+                ApplyProperties(sourceStation, editStation);
+                mqttClientFolder.Add(sourceStation);
+                // Return to UI session context
+                sessionHandler.Dispose();
+                widgetNode.SetAlias(stationNodeAlias, sourceStation);
+                NotificationsMessageHandlerLogic.Instance.RequestToastNotification(ToastBannerNotificationLevel.Success, $"Successfully added new MQTT client.");
             }
             else
             {
-                throw new NullReferenceException("Missing MQTT publisher publisher node!");
+                // Temporarily impersonate root to perform the update in the right context
+                var sessionHandler = LogicObject.Context.Sessions.ImpersonateRootTemporary();
+                sourceStation.Stop();
+                ApplyProperties(sourceStation, editStation);
+                sourceStation.Start();
+                // Return to UI session context
+                sessionHandler.Dispose();
+                NotificationsMessageHandlerLogic.Instance.RequestToastNotification(ToastBannerNotificationLevel.Success, $"Settings successfully updated for MQTT client {editStation.BrowseName}.");
             }
-        }
-        catch (Exception ex)
-        {
-            NotificationsMessageHandlerLogic.Instance.RequestBannerNotification(ToastBannerNotificationLevel.Error, "Critical error - Check application logs");
-            Log.Error(LogicObject.BrowseName, $"{ex.Message} - Stack: {ex.StackTrace}");
-        }
-    }
-
-    [ExportMethod]
-    public void SavePublisherParameters(NodeId mqttPublisher, NodeId widget)
-    {
-        try
-        {
-            if (InformationModel.GetObject(mqttPublisher) is MQTTPublisher mqttPublisherNode && InformationModel.GetObject(widget) is IUAObject widgetNode)
-            {
-                var mqttClient = (IUAObject)mqttPublisherNode.Owner;
-                mqttClient.Stop();
-                mqttClient.Start();
-                NotificationsMessageHandlerLogic.Instance.RequestToastNotification(ToastBannerNotificationLevel.Success, $"Parameters for publisher {mqttPublisherNode.BrowseName} of MQTT client {mqttClient.BrowseName} successfully saved.");
-            }
-            else
-            {
-                throw new NullReferenceException("Missing MQTT publisher publisher node!");
-            }
+            widgetNode.GetVariable("EnableAddPublisher").Value = true;
             widgetNode.Find("StationActions").GetVariable("EnableSave").Value = false;
         }
         catch (Exception ex)
@@ -195,15 +154,105 @@ public class MqttClientLogic : BaseNetLogic
         }
     }
 
+    private void SavePublisherProperties(MQTTPublisher editStation, IUAObject widgetNode)
+    {
+        try
+        {
+            string stationNodeAlias = CommonLogic.sourceAliasNameMapping.GetValueOrDefault(editStation.ObjectType.NodeId);
+            var sourceStation = (MQTTPublisher)widgetNode.GetAlias(stationNodeAlias);
+            MQTTClient mqttClientOwner = null;
+            if (sourceStation == null)
+            {
+                mqttClientOwner = (MQTTClient)widgetNode.GetAlias("MQTTClientNode");
+                if (mqttClientOwner == null)
+                {
+                    throw new NullReferenceException("Missing MQTT client node!");
+                }
+                // Temporarily impersonate root to perform the creation in the right context
+                var sessionHandler = LogicObject.Context.Sessions.ImpersonateRootTemporary();
+                sourceStation = InformationModel.Make<MQTTPublisher>(editStation.BrowseName);
+                ApplyProperties(sourceStation, editStation);
+                mqttClientOwner.Stop();
+                mqttClientOwner.Add(sourceStation);
+                RegenerateMQTTPublisherDataConfiguration(widgetNode.GetAlias(CommonLogic.editAliasNameMapping.GetValueOrDefault(OptixEdge_WizardApp.ObjectTypes.MQTTPublisherUIObj)) as MQTTPublisherDataConfiguration, sourceStation);
+                CommonLogic.GenerateAndAttachTagViewer(widgetNode, CommonLogic.TagViewerMQTTPublisherAliasSourceLink);
+                mqttClientOwner.Start();
+                // Return to UI session context
+                sessionHandler.Dispose();
+                widgetNode.SetAlias(stationNodeAlias, sourceStation);
+                NotificationsMessageHandlerLogic.Instance.RequestToastNotification(ToastBannerNotificationLevel.Success, $"Publisher created successfully on {mqttClientOwner.BrowseName}.");
+            }
+            else
+            {
+                // Temporarily impersonate root to perform the update in the right context
+                var sessionHandler = LogicObject.Context.Sessions.ImpersonateRootTemporary();
+                mqttClientOwner = (MQTTClient)sourceStation.Owner;
+                if (mqttClientOwner == null)
+                {
+                    throw new NullReferenceException("Missing MQTT client node!");
+                }
+
+                mqttClientOwner.Stop();
+                ApplyProperties(sourceStation, editStation);
+                RegenerateMQTTPublisherDataConfiguration(widgetNode.GetAlias(CommonLogic.editAliasNameMapping.GetValueOrDefault(OptixEdge_WizardApp.ObjectTypes.MQTTPublisherUIObj)) as MQTTPublisherDataConfiguration, sourceStation);
+                mqttClientOwner.Start();
+                // Return to UI session context
+                sessionHandler.Dispose();
+                NotificationsMessageHandlerLogic.Instance.RequestToastNotification(ToastBannerNotificationLevel.Success, $"Settings successfully updated for MQTT Publisher {editStation.BrowseName} on {mqttClientOwner.BrowseName}.");
+            }
+            widgetNode.Find("StationActions").GetVariable("EnableSave").Value = false;
+            widgetNode.Find("StationActions").GetVariable("EnableImport").Value = true;
+
+        }
+        catch (Exception ex)
+        {
+            NotificationsMessageHandlerLogic.Instance.RequestBannerNotification(ToastBannerNotificationLevel.Error, "Critical error - Check application logs");
+            Log.Error(LogicObject.BrowseName, $"{ex.Message} - Stack: {ex.StackTrace}");
+        }
+    }
+
+    public void CreateOrUpdateTagsToPublish(NodeId mqttDataConfiguration)
+    {
+        // Temporarily impersonate root to perform the creation in the right context
+        var sessionHandler = LogicObject.Context.Sessions.ImpersonateRootTemporary();
+        try
+        {
+            if (InformationModel.GetObject(mqttDataConfiguration) is MQTTPublisherDataConfiguration mqttDataConfigurationNode)
+            {
+
+                CreateOrUpdateTags(mqttDataConfigurationNode);
+                if (InformationModel.Get(mqttDataConfigurationNode.MQTTPublisherNode) is MQTTPublisher mqttPublisher)
+                {
+                    MQTTClient mqttClient = (MQTTClient)mqttPublisher.Owner;
+                    mqttClient.Stop();
+                    RegenerateMQTTPublisherDataConfiguration(mqttDataConfigurationNode, mqttPublisher);
+                    mqttClient.Start();
+                }
+            }
+            else
+            {
+                throw new NullReferenceException("Missing MQTT publisher publisher node!");
+            }
+            // Return to UI session context
+            sessionHandler.Dispose();
+        }
+        catch (Exception ex)
+        {
+            // Return to UI session context
+            sessionHandler.Dispose();
+            NotificationsMessageHandlerLogic.Instance.RequestBannerNotification(ToastBannerNotificationLevel.Error, "Critical error - Check application logs");
+            Log.Error(LogicObject.BrowseName, $"{ex.Message} - Stack: {ex.StackTrace}");
+        }
+    }
     #endregion
 
     private static void InitMqttClientNode(MQTTClient mqttClient)
     {
         mqttClient.BrokerAddress = "localhost";
         mqttClient.BrokerPort = 1883;
-        mqttClient.ClientId = "FTOptixEdge_WizardApp-1";        
+        mqttClient.ClientId = "FTOptixEdge_WizardApp-1";
         mqttClient.SSLTLSEnabled = false;
-        mqttClient.ValidateBrokerCertificate = false;        
+        mqttClient.ValidateBrokerCertificate = false;
         mqttClient.UserIdentityType = UserIdentityType.Anonymous;
         _ = mqttClient.UsernameVariable;
         _ = mqttClient.PasswordVariable;
@@ -212,41 +261,131 @@ public class MqttClientLogic : BaseNetLogic
         _ = mqttClient.ClientPrivateKeyFileVariable;
     }
 
-    private static void InitMqttPublisherNode(MQTTPublisher mqttPublisher, NodeId topicFolder)
+    private static void InitMqttPublisherNode(MQTTPublisher mqttPublisher)
     {
-        mqttPublisher.SamplingMode = SamplingMode.Periodic;
+        mqttPublisher.Topic = $"OptixEdge_WizardApp/{mqttPublisher.BrowseName}";
+        mqttPublisher.SamplingMode = FTOptix.MQTTClient.SamplingMode.Periodic;
         mqttPublisher.SamplingPeriod = 1500;
-        mqttPublisher.PollingPeriod = 2500;
-        mqttPublisher.Folder = topicFolder;
+        mqttPublisher.PollingPeriod = 500;
         mqttPublisher.QoS = QoSLevel.AtMostOnce;
         mqttPublisher.Retain = false;
     }
 
-    private static void ApplyProperties(MQTTClient stationNode, MQTTClient editNode)
+    public static void InitMqttPublisherPayloadConfiguration(MQTTPublisherDataConfiguration payloadData)
     {
-        stationNode.BrokerAddress = editNode.BrokerAddress;
-        stationNode.BrokerPort = editNode.BrokerPort;
-        stationNode.ClientId = editNode.ClientId;
-        stationNode.SSLTLSEnabled = editNode.SSLTLSEnabled;
-        stationNode.ValidateBrokerCertificate = editNode.ValidateBrokerCertificate;
-        stationNode.CACertificateFile = editNode.CACertificateFile;
-        stationNode.ClientCertificateFile = editNode.ClientCertificateFile;
-        stationNode.ClientPrivateKeyFile = editNode.ClientPrivateKeyFile;
-        stationNode.UserIdentityType = editNode.UserIdentityType;
-        stationNode.Username = editNode.Username;
-        stationNode.Password = editNode.Password;
+        payloadData.PayloadKind = (int)MQTTPublisherPayloadKind.Optix;
+        payloadData.SamplingMode = (int)FTOptix.MQTTClient.SamplingMode.Periodic;
     }
 
-    private void CreateOrUpdateTags(IUAObject mqttPublisher)
+    private static void ApplyProperties(IUAObject stationNode, IUAObject editNode)
     {
-        if (Project.Current.Get($"Model/{mqttPublisher.Owner.BrowseName}/{mqttPublisher.BrowseName}") is not IUAObject temporaryFolder)
+        switch (stationNode)
         {
-            NotificationsMessageHandlerLogic.Instance.RequestBannerNotification(ToastBannerNotificationLevel.Warning, $"Cannot add variables to publisher {mqttPublisher.BrowseName} of MQTT Client {mqttPublisher.Owner.BrowseName} - Check application logs");
-            Log.Warning(LogicObject.BrowseName, $"Missing temporary folder for publisher {mqttPublisher.BrowseName} of client {mqttPublisher.Owner.BrowseName}");
+            case MQTTClient client:
+                ApplyMQTTClientProperties(editNode as MQTTClient, client);
+                break;
+            case MQTTPublisher publisher:
+                ApplyMQTTPublisherProperties(editNode as MQTTPublisher, publisher);
+                break;
+        }
+    }
+
+    private static void ApplyMQTTClientProperties(MQTTClient editNode, MQTTClient client)
+    {
+        client.BrokerAddress = editNode.BrokerAddress;
+        client.BrokerPort = editNode.BrokerPort;
+        client.ClientId = editNode.ClientId;
+        client.SSLTLSEnabled = editNode.SSLTLSEnabled;
+        client.ValidateBrokerCertificate = editNode.ValidateBrokerCertificate;
+        client.CACertificateFile = editNode.CACertificateFile;
+        client.ClientCertificateFile = editNode.ClientCertificateFile;
+        client.ClientPrivateKeyFile = editNode.ClientPrivateKeyFile;
+        client.UserIdentityType = editNode.UserIdentityType;
+        client.Username = editNode.Username;
+        client.Password = editNode.Password;
+    }
+
+    private static void ApplyMQTTPublisherProperties(MQTTPublisher editNode, MQTTPublisher publisher)
+    {
+        publisher.SamplingMode = editNode.SamplingMode;
+        publisher.SamplingPeriod = editNode.SamplingPeriod;
+        publisher.PollingPeriod = editNode.PollingPeriod;
+        publisher.QoS = editNode.QoS;
+        publisher.Retain = editNode.Retain;
+        publisher.Topic = editNode.Topic;
+    }
+
+    private void RegenerateMQTTPublisherDataConfiguration(MQTTPublisherDataConfiguration dataConfiguration, MQTTPublisher publisherNode)
+    {
+        var oldConfiguration = Project.Current.Get<MQTTPublisherDataConfiguration>($"{CommonLogic.MQTTPublishersDataConfigurationPath}/{dataConfiguration.BrowseName}");
+        if ((MQTTPublisherPayloadKind)dataConfiguration.PayloadKind == MQTTPublisherPayloadKind.Optix)
+        {
+            try
+            {
+                dataConfiguration.PayloadStructure.Get<MQTTPayloadFieldInfo>("root").GetNodesByType<MQTTPayloadFieldInfo>().ToList().ForEach(x => x.Delete());
+                dataConfiguration.PayloadStructurePreview.Get<MQTTPayloadFieldInfo>("root").GetNodesByType<MQTTPayloadFieldInfo>().ToList().ForEach(x => x.Delete());
+            }
+            catch
+            {
+                // Root node not exist and nothing to delete
+            }
+        }
+        if (oldConfiguration != null)
+        {
+            if ((MQTTPublisherPayloadKind)oldConfiguration.PayloadKind != (MQTTPublisherPayloadKind)dataConfiguration.PayloadKind)
+            {
+                try
+                {
+                    dataConfiguration.Data.Children.Clear();
+                }
+                catch
+                {
+                    // Error during clear, nothing important
+                }
+            }
+        }
+        MQTTPublisherDataConfiguration newConfiguration = LogicObject.Context.NodeFactory.CloneNode(dataConfiguration, dataConfiguration.NodeId.NamespaceIndex, NamingRuleType.Mandatory);
+        newConfiguration.MQTTPublisherNode = publisherNode.NodeId;
+        oldConfiguration?.Delete();
+        Project.Current.Get(CommonLogic.MQTTPublishersDataConfigurationPath).Add(newConfiguration);
+        foreach (var dataChild in newConfiguration.Data.Children)
+        {
+            RecreateDynamicLinks(dataChild);
+        }
+    }
+
+    private void RecreateDynamicLinks(IUANode nodeToAnalyze)
+    {
+        switch (nodeToAnalyze)
+        {
+            case IUAVariable variable:
+                if (variable.Refs.GetNode(FTOptix.CoreBase.ReferenceTypes.HasDynamicLink) is IUAVariable linkedVariable)
+                {
+                    if (LogicObject.Context.ResolvePath(variable, linkedVariable.Value) is PathResolverResult result && result.ResolvedNode is IUAVariable targetVariable)
+                    {
+                        variable.SetDynamicLink(targetVariable, DynamicLinkMode.Read);
+                    }
+                }
+                break;
+            case IUAObject objectNode:
+                foreach (var child in objectNode.Children)
+                {
+                    RecreateDynamicLinks(child);
+                }
+                break;
+        }
+    }
+
+    private void CreateOrUpdateTags(MQTTPublisherDataConfiguration mqttDataConfiguration)
+    {
+        if (Project.Current.Get($"Model/{mqttDataConfiguration.BrowseName}") is not IUAObject temporaryFolder)
+        {
+            NotificationsMessageHandlerLogic.Instance.RequestBannerNotification(ToastBannerNotificationLevel.Warning, $"Cannot add variables to publisher {mqttDataConfiguration.BrowseName} - Check application logs");
+            Log.Warning(LogicObject.BrowseName, $"Missing temporary folder for publisher {mqttDataConfiguration.BrowseName}");
             return;
         }
         int createdTags = 0;
-        var publisherTagFolder = Project.Current.Get<Folder>($"{CommonLogic.MQTTDataFolderPath}/{mqttPublisher.Owner.BrowseName}/{mqttPublisher.BrowseName}");
+        var publisherTagFolder = mqttDataConfiguration.Data;
         foreach (var sourceFieldFolder in temporaryFolder.GetNodesByType<Folder>())
         {
             var dataFromTagImporter = sourceFieldFolder.GetNodesByType<TagCustomGridRowData>();
@@ -277,15 +416,15 @@ public class MqttClientLogic : BaseNetLogic
                     createdTags++;
                 }
             }
-            var deletedTags = DeleteMissingTag(mqttPublisher, dataFromTagImporter.Where(x => !x.Checked).ToList());
-            NotificationsMessageHandlerLogic.Instance.RequestToastNotification(ToastBannerNotificationLevel.Info, $"Added {createdTags}, removed {deletedTags} variables on the publisher {mqttPublisher.BrowseName} of client {mqttPublisher.Owner.BrowseName}");
+            var deletedTags = DeleteMissingTag(mqttDataConfiguration, dataFromTagImporter.Where(x => !x.Checked).ToList());
+            NotificationsMessageHandlerLogic.Instance.RequestToastNotification(ToastBannerNotificationLevel.Info, $"Added {createdTags}, removed {deletedTags} variables on the publisher {mqttDataConfiguration.BrowseName}.");
         }
     }
 
-    private int DeleteMissingTag(IUAObject mqttPublisher, List<TagCustomGridRowData> tagDatasUnchecked)
+    private int DeleteMissingTag(MQTTPublisherDataConfiguration mqttDataConfiguration, List<TagCustomGridRowData> tagDatasUnchecked)
     {
         int deletedTagsCounter = 0;
-        List<TagDataImported> tagsImported = CommonLogic.ReadTagsFromSourceDataCollector(Project.Current.Get($"{CommonLogic.MQTTDataFolderPath}/{mqttPublisher.Owner.BrowseName}/{mqttPublisher.BrowseName}"), mqttPublisher);
+        List<TagDataImported> tagsImported = CommonLogic.ReadTagsFromSourceDataCollector(mqttDataConfiguration.Data, mqttDataConfiguration);
         foreach (var tagData in tagsImported.Where(x => tagDatasUnchecked.Exists(y => y.VariableName == x.BrowseName)))
         {
             InformationModel.Get(tagData.NodeId)?.Delete();
@@ -297,67 +436,252 @@ public class MqttClientLogic : BaseNetLogic
     private void DeleteStationTask(DelayedTask task, object arguments)
     {
         var nodesToDelete = (IUANode[])arguments;
-        if ((nodesToDelete[0] is MQTTClient || nodesToDelete[0] is MQTTPublisher) && nodesToDelete[1] is Item mqttWidget)
+        if ((nodesToDelete[0] is MQTTClient || nodesToDelete[0] is MQTTPublisher || nodesToDelete[0] is MQTTPayloadFieldInfo) && nodesToDelete[1] is Item mqttWidget)
         {
-            MQTTClient sourceStation = null;
-            if (nodesToDelete[0] is MQTTClient editStation)
-            {
-                string stationNodeAlias = CommonLogic.sourceAliasNameMapping.GetValueOrDefault(editStation.ObjectType.NodeId);
-                sourceStation = (MQTTClient)mqttWidget.GetAlias(stationNodeAlias);
-            } 
+            // Delete editStation
             try
             {
-                nodesToDelete[1].Delete();
+                nodesToDelete[0].Delete();
             }
             catch
             {
                 // nothing important
-            }          
+            }
             switch (nodesToDelete[0])
             {
-                case MQTTClient:              
-                    Project.Current.Get($"{CommonLogic.MQTTDataFolderPath}/{nodesToDelete[0].BrowseName}")?.Delete();
-                    try
-                    {
-                        nodesToDelete[0].Delete();
-                    }
-                    catch
-                    {
-                        // nothing important
-                    }
-                    try
-                    {
-                        if (sourceStation != null)
-                        {
-                            string sourceStationName = sourceStation.BrowseName;     
-                            sourceStation.Delete();               
-                            NotificationsMessageHandlerLogic.Instance.RequestToastNotification(ToastBannerNotificationLevel.Success, $"MQTT Client {sourceStationName} successfully deleted.");
-                        } 
-                    }
-                    catch
-                    {
-                        // nothing important
-                    }
+                case MQTTClient editClient:
+                    DeleteMQTTClient(editClient, mqttWidget);
                     break;
-                case MQTTPublisher mqttPublisher:
-                    try
-                    {
-                        var mqttClientOwner = (MQTTClient)mqttPublisher.Owner;
-                        Project.Current.Get($"{CommonLogic.MQTTDataFolderPath}/{mqttPublisher.Owner.BrowseName}/{mqttPublisher.BrowseName}")?.Delete();        
-                        mqttClientOwner.Stop();
-                        string publisherName = mqttPublisher.BrowseName;
-                        mqttPublisher.Delete();
-                        NotificationsMessageHandlerLogic.Instance.RequestToastNotification(ToastBannerNotificationLevel.Success, $"Publisher configuration {publisherName} of MQTT Client {mqttClientOwner.BrowseName} successfully deleted.");
-                        mqttClientOwner.Start();
-                    }
-                    catch
-                    {
-                        // nothing important
-                    }
+                case MQTTPublisher editPublisher:
+                    DeleteMQTTPublisher(editPublisher, mqttWidget);
                     break;
+            }
+            // Delete widget
+            try
+            {
+                mqttWidget.Delete();
+            }
+            catch
+            {
+                // nothing important
             }
         }
         task.Dispose();
+    }
+
+    private static void DeleteMQTTClient(MQTTClient editStation, IUAObject widgetToDelete)
+    {
+        string stationNodeAlias = CommonLogic.sourceAliasNameMapping.GetValueOrDefault(editStation.ObjectType.NodeId);
+        var sourceStation = (MQTTClient)widgetToDelete.GetAlias(stationNodeAlias);
+        // Delete source station
+        try
+        {
+            if (sourceStation != null)
+            {
+                string sourceStationName = sourceStation.BrowseName;
+                foreach (var configuration in Project.Current.Get(CommonLogic.MQTTPublishersDataConfigurationPath).Children.Where(x => x.BrowseName.StartsWith(sourceStationName)))
+                {
+                    configuration.Delete();
+                }
+                sourceStation.Delete();
+                NotificationsMessageHandlerLogic.Instance.RequestToastNotification(ToastBannerNotificationLevel.Success, $"MQTT Client {sourceStationName} successfully deleted.");
+            }
+        }
+        catch
+        {
+            // nothing important
+        }
+    }
+
+    private static void DeleteMQTTPublisher(MQTTPublisher editStation, IUAObject widgetToDelete)
+    {
+        string stationNodeAlias = CommonLogic.sourceAliasNameMapping.GetValueOrDefault(editStation.ObjectType.NodeId);
+        var sourceStation = (MQTTPublisher)widgetToDelete.GetAlias(stationNodeAlias);
+        // Delete source station
+        try
+        {
+            if (sourceStation != null)
+            {
+                var mqttClientOwner = (MQTTClient)sourceStation.Owner;
+                Project.Current.Get($"{CommonLogic.MQTTPublishersDataConfigurationPath}/{mqttClientOwner.BrowseName}_{sourceStation.BrowseName}")?.Delete();
+                mqttClientOwner.Stop();
+                string publisherName = sourceStation.BrowseName;
+                sourceStation.Delete();
+                NotificationsMessageHandlerLogic.Instance.RequestToastNotification(ToastBannerNotificationLevel.Success, $"Publisher configuration {publisherName} of MQTT Client {mqttClientOwner.BrowseName} successfully deleted.");
+                mqttClientOwner.Start();
+            }
+        }
+        catch
+        {
+            // nothing important
+        }
+    }
+
+    private static void DeleteMQTTPayloadInfo(MQTTPayloadFieldInfo editField)
+    {
+        string fieldName = editField.Key;
+        string notifiactionMessageKind = (MQTTPayloadFieldKind)editField.FieldKind switch
+        {
+            MQTTPayloadFieldKind.Field => "field",
+            MQTTPayloadFieldKind.ArrayField => "array field",
+            MQTTPayloadFieldKind.LocalTimestampField => "date/time field",
+            MQTTPayloadFieldKind.UTCTimestampField => "date/time (UTC) field",
+            MQTTPayloadFieldKind.VariablesCollection => "variables collection",
+            MQTTPayloadFieldKind.NestedObject => "nested object",
+            MQTTPayloadFieldKind.NestedObjectArray => "nested object array",
+            MQTTPayloadFieldKind.NestedObjectArrayElement => "nested object array element",
+            _ => "unknown"
+        };
+        try
+        {
+            editField.Delete();
+            NotificationsMessageHandlerLogic.Instance.RequestToastNotification(ToastBannerNotificationLevel.Success, $"Payload {notifiactionMessageKind} {fieldName} successfully deleted.");
+        }
+        catch
+        {
+            // nothing important
+        }
+    }
+
+    public static void GeneratePayloadWidget(IUANode aliasNode, ColumnLayout widgetOwner, IUAVariable currentSelectedIndex, IUAVariable lastIndexReleased)
+    {
+        if (aliasNode is MQTTPublisherDataConfiguration dataConfiguration && (MQTTPublisherPayloadKind)dataConfiguration.PayloadKind == MQTTPublisherPayloadKind.Custom)
+        {
+            if (dataConfiguration.PayloadStructure.Get("root") is MQTTPayloadFieldInfo rootNode)
+            {
+                uint fieldIndex = 1;
+                foreach (var fieldInfo in rootNode.GetNodesByType<MQTTPayloadFieldInfo>())
+                {
+                    GeneratePayloadWidgetFromConfiguration(fieldInfo, widgetOwner, ref fieldIndex, currentSelectedIndex);
+                }
+                lastIndexReleased.Value = fieldIndex;
+            }
+        }
+    }
+
+    public static void GeneratePayloadWidgetFromConfiguration(MQTTPayloadFieldInfo dataConfiguration, IUANode widgetOwner, ref uint fieldIndex, IUAVariable currentSelectedIndex)
+    {
+        switch ((MQTTPayloadFieldKind)dataConfiguration.FieldKind)
+        {
+            case MQTTPayloadFieldKind.Field:
+            case MQTTPayloadFieldKind.ArrayField:
+            case MQTTPayloadFieldKind.LocalTimestampField:
+            case MQTTPayloadFieldKind.UTCTimestampField:
+                var newFieldWidget = InformationModel.MakeObject<MQTTPayloadFieldBase>(dataConfiguration.BrowseName);
+                newFieldWidget.DisplayName = new LocalizedText(dataConfiguration.Key, "en-US");
+                newFieldWidget.SetAlias(CommonLogic.editAliasNameMapping.GetValueOrDefault(newFieldWidget.ObjectType.NodeId), dataConfiguration);
+                newFieldWidget.Find<Panel>("ValueContainer").Add(GenerateUIItemFromValue(dataConfiguration));
+                newFieldWidget.GetVariable("CurrentSelectedField").SetDynamicLink(currentSelectedIndex, DynamicLinkMode.ReadWrite);
+                newFieldWidget.GetVariable("FieldIndex").SetValue(fieldIndex);
+                widgetOwner.Add(newFieldWidget);
+                fieldIndex++;
+                break;
+            case MQTTPayloadFieldKind.NestedObject:
+            case MQTTPayloadFieldKind.NestedObjectArray:
+            case MQTTPayloadFieldKind.NestedObjectArrayElement:
+            case MQTTPayloadFieldKind.VariablesCollection:
+                var newObjectWidget = InformationModel.MakeObject<MQTTPayloadObject>(dataConfiguration.BrowseName);
+                newObjectWidget.DisplayName = new LocalizedText(dataConfiguration.Key, "en-US");
+                newObjectWidget.SetAlias(CommonLogic.editAliasNameMapping.GetValueOrDefault(newObjectWidget.ObjectType.NodeId), dataConfiguration);
+                widgetOwner.Add(newObjectWidget);
+                if ((MQTTPayloadFieldKind)dataConfiguration.FieldKind == MQTTPayloadFieldKind.VariablesCollection)
+                {
+                    var tagViewer = InformationModel.MakeObject<TagViewer>("TagViewer");
+                    tagViewer.SetAlias(CommonLogic.editAliasNameMapping.GetValueOrDefault(OptixEdge_WizardApp.ObjectTypes.TagViewer), newObjectWidget);
+                    newObjectWidget.Content.Add(tagViewer);
+                }
+                else
+                {
+                    foreach (var child in dataConfiguration.GetNodesByType<MQTTPayloadFieldInfo>())
+                    {
+                        GeneratePayloadWidgetFromConfiguration(child, newObjectWidget.Get<ColumnLayout>("Content/Content"), ref fieldIndex, currentSelectedIndex);
+                    }
+                }
+                break;
+        }
+    }
+
+    public static Item GenerateUIItemFromValue(MQTTPayloadFieldInfo payloadFieldInfo)
+    {
+        Item newValueSelector;
+        if (string.IsNullOrEmpty(payloadFieldInfo.ValueDataVariablePath))
+        {
+            if (payloadFieldInfo.ValueVariable.ArrayDimensions.Length <= 0)
+            {
+                switch (payloadFieldInfo.ValueVariable.DataType)
+                {
+                    case NodeId dataType when dataType == OpcUa.DataTypes.Boolean:
+                        var newSwitch = InformationModel.MakeObject<BooleanComboBox>("ValueSwitch");
+                        newSwitch.SelectedValueVariable.SetDynamicLink(payloadFieldInfo.ValueVariable, DynamicLinkMode.ReadWrite);
+                        newValueSelector = newSwitch;
+                        break;
+                    case NodeId dataType when dataType == OpcUa.DataTypes.SByte || dataType == OpcUa.DataTypes.Byte ||
+                         dataType == OpcUa.DataTypes.Int16 || dataType == OpcUa.DataTypes.UInt16 ||
+                         dataType == OpcUa.DataTypes.Int32 || dataType == OpcUa.DataTypes.UInt32 ||
+                         dataType == OpcUa.DataTypes.Int64 || dataType == OpcUa.DataTypes.UInt64 ||
+                         dataType == OpcUa.DataTypes.Float || dataType == OpcUa.DataTypes.Double:
+                        var spinBox = InformationModel.MakeObject<SpinBox>("Value");
+                        spinBox.ValueVariable.SetDynamicLink(payloadFieldInfo.ValueVariable, DynamicLinkMode.ReadWrite);
+                        newValueSelector = spinBox;
+                        break;
+                    case NodeId dataType when dataType == OpcUa.DataTypes.DateTime || dataType == OpcUa.DataTypes.UtcTime:
+                        switch ((MQTTPayloadFieldKind)payloadFieldInfo.FieldKind)
+                        {
+                            case MQTTPayloadFieldKind.LocalTimestampField:
+                            case MQTTPayloadFieldKind.UTCTimestampField:
+                                var timestampLabel = InformationModel.MakeObject<Label>("Value");
+                                timestampLabel.Text = (MQTTPayloadFieldKind)payloadFieldInfo.FieldKind == MQTTPayloadFieldKind.LocalTimestampField ? "System time (local)" : "System time (UTC)";
+                                timestampLabel.Style = "AdditionalInfo";
+                                timestampLabel.TextVerticalAlignment = TextVerticalAlignment.Center;
+                                newValueSelector = timestampLabel;
+                                break;
+                            default:
+                                var dateTimePicker = InformationModel.MakeObject<DateTimePicker>("Value");
+                                dateTimePicker.ValueVariable.SetDynamicLink(payloadFieldInfo.ValueVariable, DynamicLinkMode.ReadWrite);
+                                newValueSelector = dateTimePicker;
+                                break;
+                        }
+                        break;
+                    case NodeId dataType when dataType == OpcUa.DataTypes.Duration:
+                        var durationPicker = InformationModel.MakeObject<DurationPicker>("Value");
+                        durationPicker.ValueVariable.SetDynamicLink(payloadFieldInfo.ValueVariable, DynamicLinkMode.ReadWrite);
+                        newValueSelector = durationPicker;
+                        break;
+                    default:
+                        var textBoxDefault = InformationModel.MakeObject<TextBox>("Value");
+                        textBoxDefault.TextVariable.SetDynamicLink(payloadFieldInfo.ValueVariable, DynamicLinkMode.ReadWrite);
+                        textBoxDefault.ValueChangeBehaviour = ValueChangeBehaviour.ValueChangeWhileEditing;
+                        newValueSelector = textBoxDefault;
+                        break;
+                }
+            }
+            else
+            {
+                var newArrayEditor = InformationModel.MakeObject<ArrayFieldWithEditor>("ValueArrayEditor");
+                newArrayEditor.SetAlias(CommonLogic.editAliasNameMapping.GetValueOrDefault(OptixEdge_WizardApp.ObjectTypes.ArrayFieldWithEditor), payloadFieldInfo.ValueVariable);
+                newValueSelector = newArrayEditor;
+            }
+        }
+        else
+        {
+            var newLinkedField = InformationModel.MakeObject<LinkedVariableToField>("ValueLinked");
+            newLinkedField.GetByType<Label>().Text = payloadFieldInfo.ValueDataVariablePath;
+            newValueSelector = newLinkedField;
+        }
+        newValueSelector.HorizontalAlignment = HorizontalAlignment.Stretch;
+        newValueSelector.VerticalAlignment = VerticalAlignment.Stretch;
+        return newValueSelector;
+
+    }
+
+    public static IUAObject GetSourceDataFromPayloadObject(MQTTPayloadObject payloadObject)
+    {
+        if (payloadObject.GetAlias(CommonLogic.sourceAliasNameMapping.GetValueOrDefault(OptixEdge_WizardApp.ObjectTypes.MQTTPayloadObject)) is MQTTPayloadFieldInfo fieldInfoData)
+        {
+            var dataConfiguration = (MQTTPublisherDataConfiguration)CommonLogic.GetOwner(fieldInfoData, OptixEdge_WizardApp.ObjectTypes.MQTTPublisherDataConfiguration);
+            return dataConfiguration.Data.GetObject(fieldInfoData.ValueDataVariablePath);
+        }
+        return null;
     }
 
     private DelayedTask removeStationTask;

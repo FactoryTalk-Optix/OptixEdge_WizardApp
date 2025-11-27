@@ -159,10 +159,10 @@ Children:
         Type: PropertyType
         DataType: NodePointerNodeClass
         Value: 2
-    - Name: MQTT Data
+    - Name: MQTT Publisher Configurations
       Type: NodePointer
       DataType: NodeId
-      Value: "/Objects/OptixEdge_WizardApp/MQTT Data"
+      Value: "/Objects/OptixEdge_WizardApp/MQTT Data Configurations"
       Children:
       - Name: Kind
         Type: PropertyType
@@ -215,6 +215,33 @@ Children:
     Type: BaseDataVariableType
     DataType: ns=0;Boolean
     ReferenceType: HasProperty
+- Name: ApplicationConfigurationsStorage
+  Type: RetentivityStorage
+  Children:
+  - Name: Nodes
+    Type: BaseObjectType
+    Children:
+    - Name: Settings
+      Type: NodePointer
+      DataType: NodeId
+      Value: "/Objects/OptixEdge_WizardApp/Model/ApplicationSettings"
+      Children:
+      - Name: Kind
+        Type: PropertyType
+        DataType: NodeId
+      - Name: NodeClass
+        Type: PropertyType
+        DataType: NodePointerNodeClass
+        Value: 2
+  - Name: WriteDelay
+    Type: BaseDataVariableType
+    DataType: Duration
+    ReferenceType: HasProperty
+  - Name: DeltaObserverEnabled
+    Type: BaseDataVariableType
+    DataType: ns=0;Boolean
+    ReferenceType: HasProperty
+    Value: true
 - Name: UIStorage
   Type: RetentivityStorage
   Children:
@@ -225,18 +252,6 @@ Children:
       Type: NodePointer
       DataType: NodeId
       Value: "/Objects/OptixEdge_WizardApp/Model/DashboardCollection"
-      Children:
-      - Name: Kind
-        Type: PropertyType
-        DataType: NodeId
-      - Name: NodeClass
-        Type: PropertyType
-        DataType: NodePointerNodeClass
-        Value: 2
-    - Name: ProjectSettings
-      Type: NodePointer
-      DataType: NodeId
-      Value: "/Objects/OptixEdge_WizardApp/Model/ProjectSettings"
       Children:
       - Name: Kind
         Type: PropertyType

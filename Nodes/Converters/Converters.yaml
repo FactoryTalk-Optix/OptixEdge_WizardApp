@@ -22,7 +22,7 @@ Children:
         Type: BaseDataVariableType
         DataType: NodeId
         ModellingRule: None
-        Value: "/Objects/OptixEdge_WizardApp/Model/CommDriverComboBoxElements/RAEIP"
+        Value: "/Objects/OptixEdge_WizardApp/Model/ComboBoxElements/CommDriverComboBoxElements/RAEIP"
     - Name: Pair1
       Type: ValueMapPair
       ModellingRule: None
@@ -36,7 +36,7 @@ Children:
         Type: BaseDataVariableType
         DataType: NodeId
         ModellingRule: None
-        Value: "/Objects/OptixEdge_WizardApp/Model/CommDriverComboBoxElements/S7TCP"
+        Value: "/Objects/OptixEdge_WizardApp/Model/ComboBoxElements/CommDriverComboBoxElements/S7TCP"
     - Name: Pair2
       Type: ValueMapPair
       ModellingRule: None
@@ -50,7 +50,7 @@ Children:
         Type: BaseDataVariableType
         DataType: NodeId
         ModellingRule: None
-        Value: "/Objects/OptixEdge_WizardApp/Model/CommDriverComboBoxElements/ModbusTCP"
+        Value: "/Objects/OptixEdge_WizardApp/Model/ComboBoxElements/CommDriverComboBoxElements/ModbusTCP"
     - Name: Pair3
       Type: ValueMapPair
       ModellingRule: None
@@ -64,7 +64,7 @@ Children:
         Type: BaseDataVariableType
         DataType: NodeId
         ModellingRule: None
-        Value: "/Objects/OptixEdge_WizardApp/Model/CommDriverComboBoxElements/S7Profinet"
+        Value: "/Objects/OptixEdge_WizardApp/Model/ComboBoxElements/CommDriverComboBoxElements/S7Profinet"
 - Name: EnumWidgetNodeId
   Id: g=dfc9472b6862161f3901411ee58c8333
   Supertype: ValueMapConverter
@@ -773,3 +773,95 @@ Children:
         DataType: Color
         ModellingRule: None
         Value: "#aa00003d"
+- Name: FileSelectorListIcon
+  Id: g=ab4e8d26cedb70adc6ddcee7bf898c03
+  Supertype: ValueMapConverter
+  ReferenceType: HasComponent
+  Children:
+  - Name: Source
+    Type: BaseDataVariableType
+    DataType: BaseDataType
+    ReferenceType: HasSource
+  - Name: ns=2;Pairs
+    Type: BaseObjectType
+    ModellingRule: None
+    Children:
+    - Name: Pair
+      Type: ValueMapPair
+      ModellingRule: None
+      Children:
+      - Name: Key
+        Type: BaseDataVariableType
+        DataType: FileSelectorEntryType
+        ModellingRule: None
+      - Name: Value
+        Type: BaseDataVariableType
+        DataType: ResourceUri
+        ModellingRule: None
+        Value: "ns=7;%PROJECTDIR%/imgs/icons/file-icon-sm.svg"
+    - Name: Pair1
+      Type: ValueMapPair
+      ModellingRule: None
+      Children:
+      - Name: Key
+        Type: BaseDataVariableType
+        DataType: FileSelectorEntryType
+        ModellingRule: None
+        Value: 1
+      - Name: Value
+        Type: BaseDataVariableType
+        DataType: ResourceUri
+        ModellingRule: None
+        Value: "ns=7;%PROJECTDIR%/imgs/icons/folder.svg"
+    - Name: Pair2
+      Type: ValueMapPair
+      ModellingRule: None
+      Children:
+      - Name: Key
+        Type: BaseDataVariableType
+        DataType: FileSelectorEntryType
+        ModellingRule: None
+        Value: 2
+      - Name: Value
+        Type: BaseDataVariableType
+        DataType: ResourceUri
+        ModellingRule: None
+        Value: "ns=7;%PROJECTDIR%/imgs/icons/folder-open.svg"
+- Name: ConditionalResponsiveHorizontal
+  Id: g=bcaf64d0636ab9a0f5aee1f52e699332
+  Supertype: ConditionalConverter
+  ReferenceType: HasComponent
+  Children:
+  - Name: Condition
+    Type: BaseDataVariableType
+    DataType: ns=0;Boolean
+    ReferenceType: HasSource
+    Children:
+    - Name: ExpressionEvaluator1
+      Type: ExpressionEvaluator
+      Children:
+      - Name: Expression
+        Type: BaseDataVariableType
+        DataType: String
+        ReferenceType: HasParameter
+        ModellingRule: Optional
+        Value: "{0} <= 1168"
+      - Name: ns=2;Source0
+        Type: BaseDataVariableType
+        DataType: BaseDataType
+        ReferenceType: HasSource
+        Children:
+        - Name: DynamicLink
+          Type: DynamicLink
+          DataType: NodePath
+  - Name: TrueValue
+    Type: BaseDataVariableType
+    DataType: HorizontalAlignment
+    ReferenceType: HasParameter
+    ModellingRule: Optional
+    Value: 3
+  - Name: FalseValue
+    Type: BaseDataVariableType
+    DataType: HorizontalAlignment
+    ReferenceType: HasParameter
+    ModellingRule: Optional

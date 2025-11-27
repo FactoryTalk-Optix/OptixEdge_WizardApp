@@ -11,39 +11,6 @@ Children:
     DataType: Size
     ModellingRule: Optional
     Value: 256.0
-  - Name: ObjName
-    Type: BaseDataVariableType
-    DataType: LocalizedText
-  - Name: ObjEngUnit
-    Type: BaseDataVariableType
-    DataType: LocalizedText
-  - Name: ObjPointer
-    Type: NodePointer
-    DataType: NodeId
-    Children:
-    - Name: Kind
-      Type: PropertyType
-      DataType: NodeId
-  - Name: ns=3;GridLayoutProperties
-    Type: GridLayoutProperties
-    DisplayName: {"NamespaceIndex":3,"TextId":"GridLayoutPropertiesDisplayName"}
-    Children:
-    - Name: ColumnStart
-      Type: BaseDataVariableType
-      DataType: Int32
-      Value: -1
-    - Name: ColumnSpan
-      Type: BaseDataVariableType
-      DataType: Int32
-      Value: 1
-    - Name: RowStart
-      Type: BaseDataVariableType
-      DataType: Int32
-      Value: -1
-    - Name: RowSpan
-      Type: BaseDataVariableType
-      DataType: Int32
-      Value: 1
   - Name: Background
     Type: Rectangle
     Children:
@@ -142,7 +109,7 @@ Children:
               Type: BaseDataVariableType
               DataType: NodeId
               Description: {"NamespaceIndex":3,"TextId":"OpenDialogDialogDescription"}
-              Value: "/Objects/OptixEdge_WizardApp/UI/UITypes/Dialogs/AddWidgetDialog"
+              Value: "/Objects/OptixEdge_WizardApp/UI/UITypes/Dialogs/Function Dialogs/AddWidgetDialog"
             - Name: AliasNode
               Type: BaseDataVariableType
               DataType: NodeId
@@ -152,7 +119,7 @@ Children:
               - Name: DynamicLink
                 Type: DynamicLink
                 DataType: NodePath
-                Value: "../../../../../..@NodeId"
+                Value: "{WidgetData}@NodeId"
             - Name: ParentItem
               Type: BaseDataVariableType
               DataType: NodeId
@@ -315,6 +282,54 @@ Children:
         - Name: Severity
           Type: PropertyType
           DataType: UInt16
+  - Name: WidgetData
+    Type: Alias
+    DataType: NodeId
+    Children:
+    - Name: Kind
+      Type: PropertyType
+      DataType: NodeId
+      Value: "/Objects/OptixEdge_WizardApp/Model/ObjectTypes/WidgetData"
+  - Name: ns=3;GridLayoutProperties
+    Type: GridLayoutProperties
+    DisplayName: {"NamespaceIndex":3,"TextId":"GridLayoutPropertiesDisplayName"}
+    Children:
+    - Name: ColumnStart
+      Type: BaseDataVariableType
+      DataType: Int32
+      Value: -1
+      Children:
+      - Name: DynamicLink
+        Type: DynamicLink
+        DataType: NodePath
+        Value: "{WidgetData}/ColumnStart"
+    - Name: ColumnSpan
+      Type: BaseDataVariableType
+      DataType: Int32
+      Value: 1
+      Children:
+      - Name: DynamicLink
+        Type: DynamicLink
+        DataType: NodePath
+        Value: "{WidgetData}/ColumnSpan"
+    - Name: RowStart
+      Type: BaseDataVariableType
+      DataType: Int32
+      Value: -1
+      Children:
+      - Name: DynamicLink
+        Type: DynamicLink
+        DataType: NodePath
+        Value: "{WidgetData}/RowStart"
+    - Name: RowSpan
+      Type: BaseDataVariableType
+      DataType: Int32
+      Value: 1
+      Children:
+      - Name: DynamicLink
+        Type: DynamicLink
+        DataType: NodePath
+        Value: "{WidgetData}/RowSpan"
 - Name: DisplayUIObj
   Id: g=daddd9484a47b266f8bf9a02164c5f42
   Supertype: BaseWidgetUIObject
@@ -324,38 +339,6 @@ Children:
     Type: BaseVariableType
     DataType: Size
     Value: 256.0
-  - Name: ObjName
-    Type: BaseDataVariableType
-    DataType: LocalizedText
-  - Name: ObjEngUnit
-    Type: BaseDataVariableType
-    DataType: LocalizedText
-  - Name: ObjPointer
-    Type: NodePointer
-    DataType: NodeId
-    Children:
-    - Name: Kind
-      Type: PropertyType
-      DataType: NodeId
-  - Name: GridLayoutProperties
-    Type: GridLayoutProperties
-    Children:
-    - Name: ColumnStart
-      Type: BaseDataVariableType
-      DataType: Int32
-      Value: -1
-    - Name: ColumnSpan
-      Type: BaseDataVariableType
-      DataType: Int32
-      Value: 1
-    - Name: RowStart
-      Type: BaseDataVariableType
-      DataType: Int32
-      Value: -1
-    - Name: RowSpan
-      Type: BaseDataVariableType
-      DataType: Int32
-      Value: 1
   - Name: Background
     Type: Rectangle
     Children:
@@ -395,7 +378,7 @@ Children:
         - Name: DynamicLink
           Type: DynamicLink
           DataType: NodePath
-          Value: "../../../ObjName"
+          Value: "{WidgetData}/WidgetDisplayName"
       - Name: WordWrap
         Type: BaseDataVariableType
         DataType: ns=0;Boolean
@@ -439,7 +422,7 @@ Children:
           - Name: DynamicLink
             Type: DynamicLink
             DataType: NodePath
-            Value: "../../../../ObjPointer@Value"
+            Value: "{WidgetData}/SourceNode@Value"
         - Name: TextVerticalAlignment
           Type: BaseVariableType
           DataType: TextVerticalAlignment
@@ -480,7 +463,7 @@ Children:
           - Name: DynamicLink
             Type: DynamicLink
             DataType: NodePath
-            Value: "../../../../ObjEngUnit"
+            Value: "{WidgetData}/EngineeringUnit"
         - Name: WordWrap
           Type: BaseDataVariableType
           DataType: ns=0;Boolean
@@ -586,7 +569,7 @@ Children:
             - Name: Dialog
               Type: BaseDataVariableType
               DataType: NodeId
-              Value: "/Objects/OptixEdge_WizardApp/UI/UITypes/Dialogs/AddWidgetDialog"
+              Value: "/Objects/OptixEdge_WizardApp/UI/UITypes/Dialogs/Function Dialogs/AddWidgetDialog"
             - Name: AliasNode
               Type: BaseDataVariableType
               DataType: NodeId
@@ -595,7 +578,7 @@ Children:
               - Name: DynamicLink
                 Type: DynamicLink
                 DataType: NodePath
-                Value: "../../../../../..@NodeId"
+                Value: "{WidgetData}@NodeId"
             - Name: ParentItem
               Type: BaseDataVariableType
               DataType: NodeId
@@ -722,25 +705,14 @@ Children:
         - Name: Severity
           Type: PropertyType
           DataType: UInt16
-- Name: DataGridUIObj
-  Id: g=06df756f03bd901212f6a4bc80938656
-  Supertype: BaseWidgetUIObject
-  ReferenceType: HasComponent
-  Children:
-  - Name: ObjName
-    Type: BaseDataVariableType
-    DataType: LocalizedText
-  - Name: ObjEngUnit
-    Type: BaseDataVariableType
-    DataType: LocalizedText
-  - Name: ObjPointer
-    Type: NodePointer
+  - Name: WidgetData
+    Type: Alias
     DataType: NodeId
     Children:
     - Name: Kind
       Type: PropertyType
       DataType: NodeId
-      Value: "/Types/ObjectTypes/BaseObjectType/DataLogger"
+      Value: "/Objects/OptixEdge_WizardApp/Model/ObjectTypes/WidgetData"
   - Name: GridLayoutProperties
     Type: GridLayoutProperties
     Children:
@@ -748,18 +720,43 @@ Children:
       Type: BaseDataVariableType
       DataType: Int32
       Value: -1
+      Children:
+      - Name: DynamicLink
+        Type: DynamicLink
+        DataType: NodePath
+        Value: "{WidgetData}/ColumnStart"
     - Name: ColumnSpan
       Type: BaseDataVariableType
       DataType: Int32
       Value: 1
+      Children:
+      - Name: DynamicLink
+        Type: DynamicLink
+        DataType: NodePath
+        Value: "{WidgetData}/ColumnSpan"
     - Name: RowStart
       Type: BaseDataVariableType
       DataType: Int32
       Value: -1
+      Children:
+      - Name: DynamicLink
+        Type: DynamicLink
+        DataType: NodePath
+        Value: "{WidgetData}/RowStart"
     - Name: RowSpan
       Type: BaseDataVariableType
       DataType: Int32
       Value: 1
+      Children:
+      - Name: DynamicLink
+        Type: DynamicLink
+        DataType: NodePath
+        Value: "{WidgetData}/RowSpan"
+- Name: DataGridUIObj
+  Id: g=06df756f03bd901212f6a4bc80938656
+  Supertype: BaseWidgetUIObject
+  ReferenceType: HasComponent
+  Children:
   - Name: Background
     Type: Rectangle
   - Name: Data
@@ -785,7 +782,7 @@ Children:
         - Name: DynamicLink
           Type: DynamicLink
           DataType: NodePath
-          Value: "../../../ObjName"
+          Value: "{WidgetData}/WidgetDisplayName"
       - Name: WordWrap
         Type: BaseDataVariableType
         DataType: ns=0;Boolean
@@ -844,10 +841,11 @@ Children:
         - Name: Kind
           Type: PropertyType
           DataType: NodeId
+          Value: "/Types/ObjectTypes/BaseObjectType/Store"
         - Name: DynamicLink
           Type: DynamicLink
           DataType: NodePath
-          Value: "../../../ObjPointer/Store@NodeId"
+          Value: "{WidgetData}/SourceNode/Store@NodeId"
       - Name: Query
         Type: BaseDataVariableType
         DataType: String
@@ -855,7 +853,7 @@ Children:
         - Name: DynamicLink
           Type: DynamicLink
           DataType: NodePath
-          Value: "../../../ObjQuery"
+          Value: "{WidgetData}/Query"
       - Name: Columns
         Type: BaseObjectType
       - Name: SelectedItem
@@ -927,7 +925,7 @@ Children:
         - Name: DynamicLink
           Type: DynamicLink
           DataType: NodePath
-          Value: "../../../ObjDurations[0]"
+          Value: "{WidgetData}/ConfigurationDurations[0]"
       - Name: SortOrder
         Type: BaseDataVariableType
         DataType: SortOrderEnum
@@ -969,7 +967,7 @@ Children:
             - Name: Dialog
               Type: BaseDataVariableType
               DataType: NodeId
-              Value: "/Objects/OptixEdge_WizardApp/UI/UITypes/Dialogs/AddWidgetDialog"
+              Value: "/Objects/OptixEdge_WizardApp/UI/UITypes/Dialogs/Function Dialogs/AddWidgetDialog"
             - Name: AliasNode
               Type: BaseDataVariableType
               DataType: NodeId
@@ -978,7 +976,7 @@ Children:
               - Name: DynamicLink
                 Type: DynamicLink
                 DataType: NodePath
-                Value: "../../../../../..@NodeId"
+                Value: "{WidgetData}@NodeId"
             - Name: ParentItem
               Type: BaseDataVariableType
               DataType: NodeId
@@ -1113,58 +1111,62 @@ Children:
       Type: PropertyType
       DataType: NodeId
       Value: "/Types/ObjectTypes/BaseObjectType/BaseUIObject/Item/Container"
-  - Name: ObjQuery
-    Type: BaseDataVariableType
-    DataType: String
-  - Name: ObjDurations
-    Type: BaseDataVariableType
-    DataType: Duration
-    ValueRank: OneDimension
-    ArrayDimensions: [2]
-    Value: ["0:00:00:01.0000000","0:00:00:00.0000000"]
   - Name: Rotation
     Type: BaseVariableType
     DataType: Size
     ModellingRule: Optional
-- Name: TrendUIObj
-  Id: g=3a548c5e11b66f8a8bcd0ac86e352923
-  Supertype: BaseWidgetUIObject
-  ReferenceType: HasComponent
-  Children:
-  - Name: ObjName
-    Type: BaseDataVariableType
-    DataType: LocalizedText
-  - Name: ObjEngUnit
-    Type: BaseDataVariableType
-    DataType: LocalizedText
-  - Name: ObjPointer
-    Type: NodePointer
+  - Name: WidgetData
+    Type: Alias
     DataType: NodeId
     Children:
     - Name: Kind
       Type: PropertyType
       DataType: NodeId
-      Value: "/Types/ObjectTypes/BaseObjectType/DataLogger"
+      Value: "/Objects/OptixEdge_WizardApp/Model/ObjectTypes/WidgetData"
   - Name: GridLayoutProperties
     Type: GridLayoutProperties
-    DisplayName: {"NamespaceIndex":3,"TextId":"GridLayoutPropertiesDisplayName"}
     Children:
     - Name: ColumnStart
       Type: BaseDataVariableType
       DataType: Int32
       Value: -1
+      Children:
+      - Name: DynamicLink
+        Type: DynamicLink
+        DataType: NodePath
+        Value: "{WidgetData}/ColumnStart"
     - Name: ColumnSpan
       Type: BaseDataVariableType
       DataType: Int32
       Value: 1
+      Children:
+      - Name: DynamicLink
+        Type: DynamicLink
+        DataType: NodePath
+        Value: "{WidgetData}/ColumnSpan"
     - Name: RowStart
       Type: BaseDataVariableType
       DataType: Int32
       Value: -1
+      Children:
+      - Name: DynamicLink
+        Type: DynamicLink
+        DataType: NodePath
+        Value: "{WidgetData}/RowStart"
     - Name: RowSpan
       Type: BaseDataVariableType
       DataType: Int32
       Value: 1
+      Children:
+      - Name: DynamicLink
+        Type: DynamicLink
+        DataType: NodePath
+        Value: "{WidgetData}/RowSpan"
+- Name: TrendUIObj
+  Id: g=3a548c5e11b66f8a8bcd0ac86e352923
+  Supertype: BaseWidgetUIObject
+  ReferenceType: HasComponent
+  Children:
   - Name: Background
     Type: Rectangle
   - Name: TrendObj
@@ -1190,7 +1192,7 @@ Children:
         - Name: DynamicLink
           Type: DynamicLink
           DataType: NodePath
-          Value: "../../../ObjDurations[1]"
+          Value: "{WidgetData}/ConfigurationDurations[1]"
       - Name: Interactive
         Type: BaseDataVariableType
         DataType: ns=0;Boolean
@@ -1216,7 +1218,7 @@ Children:
         - Name: DynamicLink
           Type: DynamicLink
           DataType: NodePath
-          Value: "../../../ObjParameters[1]"
+          Value: "{WidgetData}/ConfigurationParameters[1]"
       - Name: MaxValue
         Type: BaseDataVariableType
         DataType: Size
@@ -1225,7 +1227,7 @@ Children:
         - Name: DynamicLink
           Type: DynamicLink
           DataType: NodePath
-          Value: "../../../ObjParameters[2]"
+          Value: "{WidgetData}/ConfigurationParameters[2]"
       - Name: AutoScale
         Type: BaseDataVariableType
         DataType: ns=0;Boolean
@@ -1233,7 +1235,7 @@ Children:
         - Name: DynamicLink
           Type: DynamicLink
           DataType: NodePath
-          Value: "../../../ObjParameters[0]"
+          Value: "{WidgetData}/ConfigurationParameters[0]"
       - Name: Interactive
         Type: BaseDataVariableType
         DataType: ns=0;Boolean
@@ -1300,7 +1302,7 @@ Children:
       - Name: DynamicLink
         Type: DynamicLink
         DataType: NodePath
-        Value: "../../ObjDurations[0]"
+        Value: "{WidgetData}/ConfigurationDurations[0]"
     - Name: ReferenceTimeZone
       Type: BaseDataVariableType
       DataType: ReferenceTimeZone
@@ -1340,7 +1342,7 @@ Children:
             - Name: Dialog
               Type: BaseDataVariableType
               DataType: NodeId
-              Value: "/Objects/OptixEdge_WizardApp/UI/UITypes/Dialogs/AddWidgetDialog"
+              Value: "/Objects/OptixEdge_WizardApp/UI/UITypes/Dialogs/Function Dialogs/AddWidgetDialog"
             - Name: AliasNode
               Type: BaseDataVariableType
               DataType: NodeId
@@ -1349,7 +1351,7 @@ Children:
               - Name: DynamicLink
                 Type: DynamicLink
                 DataType: NodePath
-                Value: "../../../../../..@NodeId"
+                Value: "{WidgetData}@NodeId"
             - Name: ParentItem
               Type: BaseDataVariableType
               DataType: NodeId
@@ -1484,73 +1486,58 @@ Children:
         - Name: Severity
           Type: PropertyType
           DataType: UInt16
-  - Name: ObjQuery
-    Type: BaseDataVariableType
-    DataType: String
-  - Name: ObjDurations
-    Type: BaseDataVariableType
-    DataType: Duration
-    ValueRank: OneDimension
-    ArrayDimensions: [2]
-    Value: ["0:00:00:01.0000000","0:00:05:00.0000000"]
-  - Name: ObjParameters
-    Type: BaseDataVariableType
-    DataType: BaseDataType
-    ValueRank: OneDimension
-    ArrayDimensions: [200]
-    Value: {"Type":6,"Body":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}
-  - Name: ObjColors
-    Type: BaseDataVariableType
-    DataType: Color
-    ValueRank: OneDimension
-    ArrayDimensions: [100]
-  - Name: IndexOfPensArray
-    Type: BaseDataVariableType
-    DataType: UInt16
-    Value: 19
-  - Name: ObjTextParameters
-    Type: BaseDataVariableType
-    DataType: String
-    ValueRank: OneDimension
-    ArrayDimensions: [50]
-    Value: ["0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0"]
-- Name: SparklineUIObj
-  Id: g=cd2bd25e3b685fda080c98bc8459f9f7
-  Supertype: BaseWidgetUIObject
-  ReferenceType: HasComponent
-  Children:
-  - Name: ObjName
-    Type: BaseDataVariableType
-    DataType: LocalizedText
-  - Name: ObjEngUnit
-    Type: BaseDataVariableType
-    DataType: LocalizedText
-  - Name: ObjPointer
-    Type: NodePointer
+  - Name: WidgetData
+    Type: Alias
     DataType: NodeId
     Children:
     - Name: Kind
       Type: PropertyType
       DataType: NodeId
+      Value: "/Objects/OptixEdge_WizardApp/Model/ObjectTypes/WidgetData"
   - Name: GridLayoutProperties
     Type: GridLayoutProperties
     Children:
-    - Name: ColumnSpan
-      Type: BaseDataVariableType
-      DataType: Int32
-      Value: 1
-    - Name: RowStart
-      Type: BaseDataVariableType
-      DataType: Int32
-      Value: -1
-    - Name: RowSpan
-      Type: BaseDataVariableType
-      DataType: Int32
-      Value: 1
     - Name: ColumnStart
       Type: BaseDataVariableType
       DataType: Int32
       Value: -1
+      Children:
+      - Name: DynamicLink
+        Type: DynamicLink
+        DataType: NodePath
+        Value: "{WidgetData}/ColumnStart"
+    - Name: ColumnSpan
+      Type: BaseDataVariableType
+      DataType: Int32
+      Value: 1
+      Children:
+      - Name: DynamicLink
+        Type: DynamicLink
+        DataType: NodePath
+        Value: "{WidgetData}/ColumnSpan"
+    - Name: RowStart
+      Type: BaseDataVariableType
+      DataType: Int32
+      Value: -1
+      Children:
+      - Name: DynamicLink
+        Type: DynamicLink
+        DataType: NodePath
+        Value: "{WidgetData}/RowStart"
+    - Name: RowSpan
+      Type: BaseDataVariableType
+      DataType: Int32
+      Value: 1
+      Children:
+      - Name: DynamicLink
+        Type: DynamicLink
+        DataType: NodePath
+        Value: "{WidgetData}/RowSpan"
+- Name: SparklineUIObj
+  Id: g=cd2bd25e3b685fda080c98bc8459f9f7
+  Supertype: BaseWidgetUIObject
+  ReferenceType: HasComponent
+  Children:
   - Name: Background
     Type: Rectangle
   - Name: Content
@@ -1579,7 +1566,7 @@ Children:
           - Name: DynamicLink
             Type: DynamicLink
             DataType: NodePath
-            Value: "../../../../ObjName"
+            Value: "{WidgetData}/WidgetDisplayName"
         - Name: TextVerticalAlignment
           Type: BaseVariableType
           DataType: TextVerticalAlignment
@@ -1613,7 +1600,7 @@ Children:
           - Name: DynamicLink
             Type: DynamicLink
             DataType: NodePath
-            Value: "../../../../ObjPointer"
+            Value: "{WidgetData}/SourceNode"
         - Name: TextVerticalAlignment
           Type: BaseVariableType
           DataType: TextVerticalAlignment
@@ -1634,7 +1621,7 @@ Children:
           - Name: DynamicLink
             Type: DynamicLink
             DataType: NodePath
-            Value: "../../../../ObjEngUnit"
+            Value: "{WidgetData}/EngineeringUnit"
         - Name: Height
           Type: BaseVariableType
           DataType: Size
@@ -1665,7 +1652,7 @@ Children:
         - Name: DynamicLink
           Type: DynamicLink
           DataType: NodePath
-          Value: "../../../ObjPointer"
+          Value: "{WidgetData}/SourceNode"
       - Name: TimeWindow
         Type: BaseDataVariableType
         DataType: Duration
@@ -1674,7 +1661,7 @@ Children:
         - Name: DynamicLink
           Type: DynamicLink
           DataType: NodePath
-          Value: "../../../ObjDurations[1]"
+          Value: "{WidgetData}/ConfigurationDurations[1]"
       - Name: Width
         Type: BaseVariableType
         DataType: Size
@@ -1707,7 +1694,7 @@ Children:
         - Name: DynamicLink
           Type: DynamicLink
           DataType: NodePath
-          Value: "../../../ObjParameters[1]"
+          Value: "{WidgetData}/ConfigurationParameters[1]"
       - Name: RangeHigh
         Type: BaseDataVariableType
         DataType: Double
@@ -1715,7 +1702,7 @@ Children:
         - Name: DynamicLink
           Type: DynamicLink
           DataType: NodePath
-          Value: "../../../ObjParameters[2]"
+          Value: "{WidgetData}/ConfigurationParameters[2]"
       - Name: RangeLow
         Type: BaseDataVariableType
         DataType: Double
@@ -1723,7 +1710,7 @@ Children:
         - Name: DynamicLink
           Type: DynamicLink
           DataType: NodePath
-          Value: "../../../ObjParameters[3]"
+          Value: "{WidgetData}/ConfigurationParameters[3]"
       - Name: YAxisMaximum
         Type: BaseDataVariableType
         DataType: Double
@@ -1732,7 +1719,7 @@ Children:
         - Name: DynamicLink
           Type: DynamicLink
           DataType: NodePath
-          Value: "../../../ObjParameters[0]"
+          Value: "{WidgetData}/ConfigurationParameters[0]"
       - Name: RefreshTime
         Type: BaseDataVariableType
         DataType: Duration
@@ -1741,7 +1728,7 @@ Children:
         - Name: DynamicLink
           Type: DynamicLink
           DataType: NodePath
-          Value: "../../../ObjDurations[0]"
+          Value: "{WidgetData}/ConfigurationDurations[0]"
       - Name: PenThickness
         Type: BaseDataVariableType
         DataType: Size
@@ -1750,17 +1737,25 @@ Children:
         - Name: DynamicLink
           Type: DynamicLink
           DataType: NodePath
-          Value: "../../../ObjParameters[4]"
+          Value: "{WidgetData}/ConfigurationParameters[4]"
       - Name: PenColor
         Type: BaseDataVariableType
         DataType: Color
-        ModellingRule: Optional
         Value: "#000000"
+        Children:
+        - Name: DynamicLink
+          Type: DynamicLink
+          DataType: NodePath
+          Value: "{WidgetData}/ConfigurationColors[0]"
       - Name: RangeColor
         Type: BaseDataVariableType
         DataType: Color
-        ModellingRule: Optional
         Value: "#000000"
+        Children:
+        - Name: DynamicLink
+          Type: DynamicLink
+          DataType: NodePath
+          Value: "{WidgetData}/ConfigurationColors[1]"
     - Name: VerticalGap
       Type: BaseDataVariableType
       DataType: Size
@@ -1826,7 +1821,7 @@ Children:
             - Name: Dialog
               Type: BaseDataVariableType
               DataType: NodeId
-              Value: "/Objects/OptixEdge_WizardApp/UI/UITypes/Dialogs/AddWidgetDialog"
+              Value: "/Objects/OptixEdge_WizardApp/UI/UITypes/Dialogs/Function Dialogs/AddWidgetDialog"
             - Name: AliasNode
               Type: BaseDataVariableType
               DataType: NodeId
@@ -1835,7 +1830,7 @@ Children:
               - Name: DynamicLink
                 Type: DynamicLink
                 DataType: NodePath
-                Value: "../../../../../..@NodeId"
+                Value: "{WidgetData}@NodeId"
             - Name: ParentItem
               Type: BaseDataVariableType
               DataType: NodeId
@@ -1962,19 +1957,50 @@ Children:
         - Name: Severity
           Type: PropertyType
           DataType: UInt16
-  - Name: ObjDurations
-    Type: BaseDataVariableType
-    DataType: Duration
-    ValueRank: OneDimension
-    ArrayDimensions: [2]
-  - Name: ObjParameters
-    Type: BaseDataVariableType
-    DataType: BaseDataType
-    ValueRank: OneDimension
-    ArrayDimensions: [5]
-    Value: {"Type":6,"Body":[0,0,0,0,0]}
-  - Name: ObjColors
-    Type: BaseDataVariableType
-    DataType: Color
-    ValueRank: OneDimension
-    ArrayDimensions: [0]
+  - Name: WidgetData
+    Type: Alias
+    DataType: NodeId
+    Children:
+    - Name: Kind
+      Type: PropertyType
+      DataType: NodeId
+      Value: "/Objects/OptixEdge_WizardApp/Model/ObjectTypes/WidgetData"
+  - Name: GridLayoutProperties
+    Type: GridLayoutProperties
+    Children:
+    - Name: ColumnStart
+      Type: BaseDataVariableType
+      DataType: Int32
+      Value: -1
+      Children:
+      - Name: DynamicLink
+        Type: DynamicLink
+        DataType: NodePath
+        Value: "{WidgetData}/ColumnStart"
+    - Name: ColumnSpan
+      Type: BaseDataVariableType
+      DataType: Int32
+      Value: 1
+      Children:
+      - Name: DynamicLink
+        Type: DynamicLink
+        DataType: NodePath
+        Value: "{WidgetData}/ColumnSpan"
+    - Name: RowStart
+      Type: BaseDataVariableType
+      DataType: Int32
+      Value: -1
+      Children:
+      - Name: DynamicLink
+        Type: DynamicLink
+        DataType: NodePath
+        Value: "{WidgetData}/RowStart"
+    - Name: RowSpan
+      Type: BaseDataVariableType
+      DataType: Int32
+      Value: 1
+      Children:
+      - Name: DynamicLink
+        Type: DynamicLink
+        DataType: NodePath
+        Value: "{WidgetData}/RowSpan"

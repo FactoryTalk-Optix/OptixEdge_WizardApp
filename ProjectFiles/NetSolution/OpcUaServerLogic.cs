@@ -117,6 +117,7 @@ public class OpcUaServerLogic : BaseNetLogic
                     var newWidget = InformationModel.MakeObject<OPCUAServerNodesToPublishUIObj>(browseName);
                     newWidget.SetAlias(CommonLogic.editAliasNameMapping.GetValueOrDefault(FTOptix.OPCUAServer.ObjectTypes.NodesToPublishConfigurationEntry), configuration);
                     verticalLayout.Add(newWidget);
+                    CommonLogic.GenerateAndAttachTagViewer(newWidget, CommonLogic.TagViewerOPCUAPublisherAliasSourceLink);
                     NotificationsMessageHandlerLogic.Instance.RequestToastNotification(ToastBannerNotificationLevel.Success, $"Configuration for OPC-UA Server successfully created.");
                 }
             }
@@ -135,17 +136,25 @@ public class OpcUaServerLogic : BaseNetLogic
                 var opcUaServerFolder = Project.Current.Get<Folder>(CommonLogic.OPCUAServerFolderPath);
                 if (sourceStation == null)
                 {
+                    // Temporarily impersonate root to perform the creation in the right context
+                    var sessionHandler = LogicObject.Context.Sessions.ImpersonateRootTemporary();
                     sourceStation = InformationModel.Make<OPCUAServer>(editStation.BrowseName);
                     ApplyProperties(sourceStation, editStation);
                     opcUaServerFolder.Add(sourceStation);
+                    // Return to UI session context
+                    sessionHandler.Dispose();
                     widgetNode.SetAlias(stationNodeAlias, sourceStation);
                     NotificationsMessageHandlerLogic.Instance.RequestToastNotification(ToastBannerNotificationLevel.Success, $"OPC-UA Server successfully created.");
                 }
                 else
                 {
+                    // Temporarily impersonate root to perform the creation in the right context
+                    var sessionHandler = LogicObject.Context.Sessions.ImpersonateRootTemporary();
                     sourceStation.Stop();
                     ApplyProperties(sourceStation, editStation);
                     sourceStation.Start();
+                    // Return to UI session context
+                    sessionHandler.Dispose();
                     NotificationsMessageHandlerLogic.Instance.RequestToastNotification(ToastBannerNotificationLevel.Success, $"Parameters for OPC-UA Server successfully saved.");
                 }
                 widgetNode.GetVariable("EnableAddConfiguration").Value = true;
@@ -204,8 +213,11 @@ public class OpcUaServerLogic : BaseNetLogic
 
     private void CreateOrUpdateTask(LongRunningTask task, object argument)
     {
+        // Temporarily impersonate root to perform the creation in the right context
+        var sessionHandler = LogicObject.Context.Sessions.ImpersonateRootTemporary();
         try
         {
+
             var nodesToPublish = (NodeId)argument;
             if (InformationModel.GetObject(nodesToPublish) is NodesToPublishConfigurationEntry nodesToPublishNode)
             {
@@ -218,10 +230,14 @@ public class OpcUaServerLogic : BaseNetLogic
             {
                 throw new NullReferenceException("Missing OPC-UA server node to publish node!");
             }
+            // Return to UI session context
+            sessionHandler.Dispose();
             NotificationsMessageHandlerLogic.Instance.RequestToastNotification(ToastBannerNotificationLevel.Success, $"Parameters for node to publish of OPC-UA Server successfully saved.");
         }
         catch (Exception ex)
         {
+            // Return to UI session context
+            sessionHandler.Dispose();
             NotificationsMessageHandlerLogic.Instance.RequestBannerNotification(ToastBannerNotificationLevel.Error, "Critical error - Check application logs");
             Log.Error(LogicObject.BrowseName, $"{ex.Message} - Stack: {ex.StackTrace}");
         }
@@ -259,13 +275,20 @@ public class OpcUaServerLogic : BaseNetLogic
                     configurationTagFolder.Add(targetTag);
                     if (InformationModel.GetVariable(tagData.VariableNodeId) is IUAVariable sourceTag)
                     {
-                        targetTag.SetDynamicLink(sourceTag);
+                        targetTag.SetDynamicLink(sourceTag, (DynamicLinkMode)tagData.VariableLinkDirection);
                     }
                     else
                     {
                         Log.Warning(LogicObject.BrowseName, $"sourceTag {tagData.VariableName} not found!");
                     }
                     createdTags++;
+                }
+                else
+                {
+                    if (targetTag.GetByType<DynamicLink>() is DynamicLink linkDirectionVariable && linkDirectionVariable.Mode != (DynamicLinkMode)tagData.VariableLinkDirection)
+                    {
+                        linkDirectionVariable.Mode = (DynamicLinkMode)tagData.VariableLinkDirection;
+                    }
                 }
             }
             var deletedTags = DeleteMissingTag(configuration, dataFromTagImporter.Where(x => !x.Checked).ToList());

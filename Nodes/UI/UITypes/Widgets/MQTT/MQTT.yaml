@@ -2,3 +2,4 @@ Name: MQTT
 Type: FolderType
 Children:
 - File: Client/Client.yaml
+- File: Publisher/Publisher.yaml

@@ -144,19 +144,28 @@ public class CommDriversConfigurationLogic : BaseNetLogic
                 {
                     if (sourceStation == null)
                     {      
-                        string editNodeAlias = CommonLogic.editAliasNameMapping.GetValueOrDefault(editStation.ObjectType.NodeId);            
+                        string editNodeAlias = CommonLogic.editAliasNameMapping.GetValueOrDefault(editStation.ObjectType.NodeId);
+                        // Temporarily impersonate root to create the station in the right context
+                        var sessionHandler = LogicObject.Context.Sessions.ImpersonateRootTemporary();            
                         sourceStation = (CommunicationStation)InformationModel.MakeObject(editStation.BrowseName, editStation.ObjectType.NodeId);
                         ApplyStationParametersValues(sourceStation, editStation, communicationDriverNode);
                         SetRuntimeTagImport(communicationDriverNode, true);
                         communicationDriverNode.Add(sourceStation);
+                        // Return to UI session context
+                        sessionHandler.Dispose();
                         widgetNode.SetAlias(stationNodeAlias, sourceStation);
+                        CommonLogic.GenerateAndAttachTagViewer(widgetNode, CommonLogic.TagViewerCommunicationDriverAliasSourceLink);
                         NotificationsMessageHandlerLogic.Instance.RequestToastNotification(ToastBannerNotificationLevel.Success, GetNewStationMessageForToast(communicationDriverNode));
                     }
                     else
                     {
+                        // Temporarily impersonate root to edit the station in the right context
+                        var sessionHandler = LogicObject.Context.Sessions.ImpersonateRootTemporary();
                         sourceStation.Stop();
                         ApplyStationParametersValues(sourceStation, editStation, communicationDriverNode);
                         sourceStation.Start();
+                        // Return to UI session context
+                        sessionHandler.Dispose();
                         NotificationsMessageHandlerLogic.Instance.RequestToastNotification(ToastBannerNotificationLevel.Success, $"Parameters for station {sourceStation.BrowseName} successfully saved.");
                     } 
                     widgetNode.Find("StationActions").GetVariable("EnableImport").Value = true;
@@ -186,20 +195,12 @@ public class CommDriversConfigurationLogic : BaseNetLogic
         IUANode[] listOfNodes = (IUANode[]) arguments;
         if (listOfNodes[0] is FTOptix.CommunicationDriver.CommunicationStation editStation && listOfNodes[1] is Item plcWidget)
         {
-            string stationNodeAlias = CommonLogic.sourceAliasNameMapping.GetValueOrDefault(editStation.ObjectType.NodeId);         
-            var sourceStation = (CommunicationStation)plcWidget.GetAlias(stationNodeAlias);            
-            var sourceCommunicationDriver = sourceStation?.Owner;   
+            string stationNodeAlias = CommonLogic.sourceAliasNameMapping.GetValueOrDefault(editStation.ObjectType.NodeId);
+            var sourceStation = (CommunicationStation)plcWidget.GetAlias(stationNodeAlias);
+            var sourceCommunicationDriver = sourceStation?.Owner;
             try
             {
-                    plcWidget.Delete();
-            }
-            catch
-            {
-                // nothing important
-            }
-            try
-            {
-                    editStation.Delete();
+                editStation.Delete();
             }
             catch
             {
@@ -209,19 +210,27 @@ public class CommDriversConfigurationLogic : BaseNetLogic
             {
                 if (sourceStation != null)
                 {
-                    string sourceStationName = sourceStation.BrowseName;     
-                    sourceStation.Delete();               
+                    string sourceStationName = sourceStation.BrowseName;
+                    sourceStation.Delete();
                     NotificationsMessageHandlerLogic.Instance.RequestToastNotification(ToastBannerNotificationLevel.Success, $"Station {sourceStationName} successfully deleted.");
-                }                    
+                }
             }
             catch
             {
                 // nothing important
-            }
+            }                        
             if (sourceCommunicationDriver is IUAObject communicationDriver && !communicationDriver.GetNodesByType<CommunicationStation>().Any())
             {
                 SetRuntimeTagImport(communicationDriver, false);
-            }            
+            }             
+            try
+            {
+                plcWidget.Delete();
+            }
+            catch
+            {
+                // nothing important
+            }          
         }      
         removeClientTask.Dispose();
         removeClientTask = null;
@@ -296,7 +305,7 @@ public class CommDriversConfigurationLogic : BaseNetLogic
 
     private static void InitRAEIPStationProperties(FTOptix.RAEtherNetIP.Station newStation)
     {
-        newStation.Route = "127.0.0.1/Backplane/0";
+        newStation.Route = "127.0.0.1\\Backplane\\0";
         newStation.Timeout = 30000;
         newStation.UseAlarms = false;
         newStation.EnableExtendedProperties = false;
@@ -316,6 +325,7 @@ public class CommDriversConfigurationLogic : BaseNetLogic
         _ = newStation.CertificateFileVariable;
         newStation.IPAddress = "127.0.0.1";
         newStation.Port = 102;
+        _ = newStation.PasswordVariable;
     }
 
     private static void ApplyS7ProfinetStationProperties(FTOptix.S7TiaProfinet.Station stationNode, FTOptix.S7TiaProfinet.Station editNode)
@@ -324,6 +334,7 @@ public class CommDriversConfigurationLogic : BaseNetLogic
         stationNode.CertificateFile = editNode.CertificateFile;
         stationNode.IPAddress = editNode.IPAddress;
         stationNode.Port = editNode.Port;
+        stationNode.Password = editNode.Password;
     }
 
     private static void InitModbusStationProperties(FTOptix.Modbus.Station newStation, FTOptix.Modbus.Driver modbusDriver)

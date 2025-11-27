@@ -1,43 +1,17 @@
 #region Using directives
 using System;
+using System.Linq;
+using System.Collections.Generic;
+using System.Text.RegularExpressions;
+using System.Data;
 using UAManagedCore;
 using OpcUa = UAManagedCore.OpcUa;
 using FTOptix.UI;
 using FTOptix.HMIProject;
 using FTOptix.NetLogic;
-using FTOptix.WebUI;
-using FTOptix.OPCUAServer;
-using FTOptix.Modbus;
-using FTOptix.MelsecFX3U;
-using FTOptix.S7TCP;
-using FTOptix.OmronEthernetIP;
-using FTOptix.MelsecQ;
-using FTOptix.OmronFins;
-using FTOptix.CODESYS;
-using FTOptix.TwinCAT;
-using FTOptix.RAEtherNetIP;
-using FTOptix.MicroController;
-using FTOptix.S7TiaProfinet;
-using FTOptix.Retentivity;
 using FTOptix.CoreBase;
-using FTOptix.CommunicationDriver;
-using FTOptix.OPCUAClient;
 using FTOptix.Core;
-using System.Linq;
-using System.Threading;
-using System.Collections.Generic;
-using FTOptix.MQTTBroker;
-using FTOptix.Store;
-using FTOptix.SQLiteStore;
-using FTOptix.InfluxDBStore;
-using FTOptix.InfluxDBStoreLocal;
-using FTOptix.ODBCStore;
 using FTOptix.DataLogger;
-using FTOptix.InfluxDBStoreRemote;
-using FTOptix.AuditSigning;
-using System.Text.RegularExpressions;
-using System.Data;
-using FTOptix.NativeUI;
 #endregion
 
 public class DashboardLogic : BaseNetLogic
@@ -93,52 +67,72 @@ public class DashboardLogic : BaseNetLogic
     }
 
     #region Public method
-    public void AddNewWidget(IUAObject widgetToAdd)
+    public void AddNewWidget(WidgetData widgetDataToAdd)
     {
-        var addWidget = widgetGrid.Get(AddWidgetBrowseName);
-        if (ConfigurationMode && addWidget != null)
+        dashboardDataFolder.Add(widgetDataToAdd);
+        var newUIWidget = GenerateUIWidgetFromData(widgetDataToAdd);
+        RegenerateGridLayout();
+        AddWidgetToGrid(newUIWidget); 
+    }
+
+    public void UpdateWidgetData(WidgetData editModelWidgetData)
+    {
+        if (dashboardDataFolder.Get<WidgetData>(editModelWidgetData.BrowseName) is WidgetData widgetData)
         {
-            widgetGrid.Remove(addWidget);
+            // Check if dimensions changed
+            bool newDimensions = widgetData.RowSpan != editModelWidgetData.RowSpan || widgetData.ColumnSpan != editModelWidgetData.ColumnSpan ||
+                widgetData.RowStart != editModelWidgetData.RowStart || widgetData.ColumnStart != editModelWidgetData.ColumnStart;
+            if (newDimensions)
+            {
+                RegenerateGridLayout(editModelWidgetData);
+            }
+            // Update all properties except WidgetType
+            SaveNewParameters(widgetData, editModelWidgetData);
+            if (widgetGrid.Get(widgetData.BrowseName) is TrendUIObj trendToUpdate)
+            {
+                // Update only Trend specific properties
+                if (InformationModel.Get(widgetData.SourceNode) is DataLogger sourceDatalogger)
+                {
+                    var trendNode = trendToUpdate.Find<Trend>("TrendObj");
+                    // Get the list of BrowseNames from VariablesToLog
+                    var variablesToLogNames = sourceDatalogger.VariablesToLog.Select(v => v.BrowseName).ToHashSet();
+                    // Get pens that don't exist in VariablesToLog and remove them
+                    foreach (var penToRemove in trendNode.Pens.Where(p => !variablesToLogNames.Contains(p.BrowseName)))
+                    {
+                        trendNode.Pens.Remove(penToRemove);
+                    }
+                    trendNode.Model = sourceDatalogger.NodeId;
+                    int[] parametersArray = widgetData.GetVariable("ConfigurationParameters").Value;
+                    uint[] configurationColors = widgetData.GetVariable("ConfigurationColors").Value;
+                    int parametersArrayBaseOffset = widgetData.IndexOfPensArray;
+                    int index = 0;
+                    foreach (var variableToLog in sourceDatalogger.VariablesToLog)
+                    {
+                        var trendPen = CreateOrUpdateTrendPen(trendNode, variableToLog);
+                        UpdateTrendPenParameters(widgetData, parametersArray, configurationColors, parametersArrayBaseOffset, index, trendPen);
+                        index++;
+                    }
+                }
+            }
         }
-        AddWidgetToGrid(widgetToAdd);
-        if (ConfigurationMode)
-        {
-            AddWidgetToGrid(InformationModel.Make<AddWidget>(AddWidgetBrowseName));
-        }
-        UpdateModelCollection();
-        ResizeGridLayout(true);
-    }
-
-    public void UpdateWidgetData()
-    {
-        UpdateModelCollection();
-        ResizeGridLayout(true);
-    }
-
-    public void ChangeWidgetType(IUANode actualWidget, Item newWidgetNode)
-    {
-        widgetGrid.Remove(actualWidget);
-        AddNewWidget(newWidgetNode);
-    }
-
-    public int GetTotalCountOfWidgets()
-    {
-        return GetTotalWidgets().Count;
     }
 
     public List<int> GetListTotalWidgetsBrowseName()
     {
-        return GetTotalWidgets().Select(x => int.Parse(x.BrowseName.Replace("widget", string.Empty, StringComparison.InvariantCultureIgnoreCase))).ToList();
+        return WidgetDatas.Select(x => int.Parse(x.BrowseName.Replace("widget", string.Empty, StringComparison.InvariantCultureIgnoreCase))).ToList();
     }
 
     [ExportMethod]
     public void ClearDashboard()
     {
-        var dummyWidget = InformationModel.Make<BaseWidgetUIObject>("Dummy");
-        foreach (var widget in widgetGrid.Children.Where(x => x.NodeClass == NodeClass.Object && (x as IUAObject).IsInstanceOf(dummyWidget.ObjectType.NodeId)))
+        foreach (var widget in widgetGrid.GetNodesByType<IUAObject>().Where(x => x.IsInstanceOf(OptixEdge_WizardApp.ObjectTypes.BaseWidgetUIObject)))
         {
             try
             {
+                if (widget.GetAlias("WidgetData") is WidgetData widgetData)
+                {
+                    widgetData.Delete();
+                }
                 widgetGrid.Remove(widget);
             }
             catch
@@ -146,163 +140,90 @@ public class DashboardLogic : BaseNetLogic
                 // Nothing important
             }
         }
-        UpdateModelCollection();
+        RegenerateGridLayout();
     }
 
     [ExportMethod]
     public void SwitchToConfigureMode()
     {
-        if (ConfigurationMode)
-        {
-            var addWidget = widgetGrid.GetNodesByType<AddWidget>().FirstOrDefault(InformationModel.Make<AddWidget>("Default"));
-            if (addWidget != null && addWidget.BrowseName != "Default" && addWidget.Owner != null)
-            {
-                widgetGrid.Remove(addWidget);
-            }
-        }
-        else
-        {
-            var addWidget = InformationModel.Make<AddWidget>(AddWidgetBrowseName);
-            AddWidgetToGrid(addWidget);
-        }
-        configurationModeVariable.Value = !ConfigurationMode;        
-        ResizeGridLayout(true);
+        configurationModeVariable.Value = !ConfigurationMode;
     }
 
     [ExportMethod]
-    public void ResizeGridLayout(bool requestForceResize = false)
+    public void ResizeGridLayout()
+    {
+        RegenerateGridLayout();
+    }
+    #endregion
+
+     private void RegenerateGridLayout(WidgetData editWidgetData = null)
     {
         if (widgetGrid != null && (DateTime.Now - lastRun).TotalMilliseconds > 250)
         {
-            List<string> targetColumnsLayout = [];
-            List<string> targetRowsLayout = [];
-            bool forceResize = false;
-            var maxColumnsForResolution = CalculateMaxColumnsFromWindow();
-            var maxColumns = maxColumnsForResolution;
-            var rowSpan = 0f;
-            var columnSpan = 0f;
-            var widgetsCollection = GetTotalWidgets();
-            var countOfWidgets = (float)widgetsCollection.Count;
-            if (countOfWidgets > 0)
-            {   
-                rowSpan = (float)widgetsCollection.Sum(x => x.GetByType<GridLayoutProperties>().RowSpan - 1.0f);
-                columnSpan = (float)widgetsCollection.Sum(x => x.GetByType<GridLayoutProperties>().ColumnSpan - 1.0f);
-            }
-            if (ConfigurationMode)
+            GenerateGridColumnsAndRows(editWidgetData, out var targetColumnsLayout, out var targetRowsLayout);
+            if (targetColumnsLayout.Count != widgetGrid.Columns.Length || targetRowsLayout.Count != widgetGrid.Rows.Length)
             {
-                forceResize = countOfWidgets != memoryCountWidgets || requestForceResize;
-                memoryCountWidgets = countOfWidgets;
-            }
-            if ((countOfWidgets + columnSpan) < maxColumnsForResolution)
-            {
-                maxColumns = countOfWidgets + columnSpan;
-            }
-            var rowsNumbers = ((countOfWidgets + columnSpan) / maxColumns) + rowSpan;
-            for (int i = 0; i < maxColumns; i++)
-            {
-                string columnLayout = "1fr";
-                targetColumnsLayout.Add(columnLayout);
-            }
-            rowsNumbers = rowsNumbers < 1.0f ? 1.0f : rowsNumbers;
-            if (ConfigurationMode)
-            {
-                rowsNumbers += 1.0f;
-            }
-            for (int i = 0; i < rowsNumbers; i++)
-            {
-                targetRowsLayout.Add("192");
-            }
-            if (targetColumnsLayout.Count != widgetGrid.Columns.Length || targetRowsLayout.Count != widgetGrid.Rows.Length || forceResize)
-            {
+                ApplyNewGridLayout(targetColumnsLayout, targetRowsLayout);
                 lastRun = DateTime.Now;
-                GenerateNewGridLayout(targetColumnsLayout, targetRowsLayout);
-                foreach (var widget in widgetsCollection)
-                {
-                    if (widget.GetByType<GridLayoutProperties>() is GridLayoutProperties gridProperties)
-                    {
-                        if (gridProperties.ColumnSpan > maxColumnsForResolution)
-                        {
-                            gridProperties.ColumnSpan = (int)maxColumnsForResolution;
-                        }
-                        else if (dashboardDataFolder.GetNodesByType<WidgetData>().FirstOrDefault(x => x.WidgetBrowseName == widget.BrowseName, null) is WidgetData widgetData && widgetData.ColumnSpan != gridProperties.ColumnSpan)
-                        {
-                            gridProperties.ColumnSpan = widgetData.ColumnSpan > (int)maxColumnsForResolution ? (int)maxColumnsForResolution : widgetData.ColumnSpan;
-                        }
-                    }
-                }
-                if (ConfigurationMode && widgetGrid.GetByType<AddWidget>() is AddWidget addWidget)
-                {
-                    addWidget.GridLayoutProperties.RowStart = targetRowsLayout.Count - 1;
-                }
             }
         }
     }
 
+    private void GenerateGridColumnsAndRows(WidgetData editWidgetData, out List<string> targetColumnsLayout, out List<string> targetRowsLayout)
+    {
+        var totalWidgetDatas = GetUpdatedWidgedDataCollection(editWidgetData);
+        targetColumnsLayout = [];
+        targetRowsLayout = [];
+        var maxColumns = CalculateMaxColumnsFromWindow();
+        var rowSpan = 0f;
+        var columnSpan = 0f;
+        var maxRowSelected = -1.0f;
+        var countOfWidgets = (float)totalWidgetDatas.Count;
+        if (countOfWidgets > 0)
+        {
+            rowSpan = (float)totalWidgetDatas.Sum(x => x.RowSpan - 1.0f);
+            columnSpan = (float)totalWidgetDatas.Sum(x => x.ColumnSpan - 1.0f);
+            maxRowSelected = totalWidgetDatas.Max(x => x.RowStart + 1.0f);
+        }
+        var rowsNumbers = ((countOfWidgets + columnSpan) / maxColumns) + rowSpan + maxRowSelected;
+        for (int i = 0; i < maxColumns; i++)
+        {
+            string columnLayout = "1fr";
+            targetColumnsLayout.Add(columnLayout);
+        }
+        rowsNumbers = rowsNumbers < 1.0f ? 1.0f : rowsNumbers;
+        for (int i = 0; i < rowsNumbers; i++)
+        {
+            targetRowsLayout.Add("192");
+        }
+    }
 
-    private void GenerateNewGridLayout(List<string> targetColumnsLayout, List<string> targetRowsLayout)
+    private List<WidgetData> GetUpdatedWidgedDataCollection(WidgetData editWidgetData)
+    {
+        List<WidgetData> updatedWidgetDatas = WidgetDatas;
+        if (editWidgetData != null)
+        {
+            updatedWidgetDatas.Where(x => x.BrowseName == editWidgetData.BrowseName).ToList().ForEach(x =>
+            {
+                updatedWidgetDatas.Remove(x);
+                updatedWidgetDatas.Add(editWidgetData);
+            });
+        }
+        return updatedWidgetDatas;
+    }
+
+    private void ApplyNewGridLayout(List<string> targetColumnsLayout, List<string> targetRowsLayout)
     {
         widgetGrid.Columns = [.. targetColumnsLayout];
         widgetGrid.Rows = [.. targetRowsLayout];
     }
-    #endregion
-
-    private List<IUAObject> GetTotalWidgets()
-    {
-        var dummyWidget = InformationModel.Make<BaseWidgetUIObject>("Dummy");
-        return widgetGrid.Children.Where(x => x.NodeClass == NodeClass.Object).Cast<IUAObject>().Where(x => x.IsInstanceOf(dummyWidget.ObjectType.NodeId)).ToList();
-    }
 
     private void checkConfigurationMode()
     {
-        if (Session.FindByType<Window>().GetVariable("ConfigMode").Value)
         {
             Instance = this;
             configurationModeVariable.Value = false;
             SwitchToConfigureMode();
-        }
-    }
-
-    private void UpdateModelCollection()
-    {
-        dashboardDataFolder.Children.Clear();
-        int i = 0;
-        foreach (var widget in GetTotalWidgets())
-        {
-            WidgetData widgetData = InformationModel.MakeObject<WidgetData>(i.ToString());
-            widgetData.WidgetType = widget.ObjectType.NodeId;
-            widgetData.WidgetBrowseName = widget.BrowseName;
-            widgetData.ObjName = widget.GetVariable("ObjName").Value;
-            widgetData.ObjEngUnit = widget.GetVariable("ObjEngUnit").Value;
-            widgetData.ObjPointer = widget.GetVariable("ObjPointer").Value;
-            switch (widget)
-            {
-                case DataGridUIObj:
-                    widgetData.ObjDurations = widget.GetVariable("ObjDurations").Value;
-                    widgetData.ObjQuery = widget.GetVariable("ObjQuery").Value;
-                    break;
-                case TrendUIObj:
-                    widgetData.ObjDurations = widget.GetVariable("ObjDurations").Value;
-                    widgetData.GetVariable("ObjParameters").Value = widget.GetVariable("ObjParameters").Value;
-                    widgetData.GetVariable("ObjColors").Value = widget.GetVariable("ObjColors").Value;
-                    widgetData.GetVariable("ObjTextParameters").Value = widget.GetVariable("ObjTextParameters").Value;
-                    widgetData.ObjQuery = widget.GetVariable("ObjQuery").Value;
-                    break;
-                case SparklineUIObj:
-                    widgetData.ObjDurations = widget.GetVariable("ObjDurations").Value;
-                    widgetData.GetVariable("ObjParameters").Value = widget.GetVariable("ObjParameters").Value;
-                    widgetData.GetVariable("ObjColors").Value = widget.GetVariable("ObjColors").Value;
-                    break;
-
-            }
-            if (widget.GetByType<GridLayoutProperties>() is GridLayoutProperties layoutProperties)
-            {
-                widgetData.ColumnStart = layoutProperties.ColumnStart;
-                widgetData.ColumnSpan = layoutProperties.ColumnSpan;
-                widgetData.RowStart = layoutProperties.RowStart;
-                widgetData.RowSpan = layoutProperties.RowSpan;
-            }
-            dashboardDataFolder.Add(widgetData);
-            i++;
         }
     }
 
@@ -319,36 +240,8 @@ public class DashboardLogic : BaseNetLogic
     {
         try
         {
-            var rowSpan = 0;
-            var columnSpan = 0;
-            var widgetNumber = 1;
-            if (dashboardDataFolder.GetNodesByType<WidgetData>() is var widgetDataCollection && widgetDataCollection.ToList().Count > 0)
-            {
-                rowSpan = widgetDataCollection.Sum(x => x.RowSpan - 1);
-                columnSpan = widgetDataCollection.Sum(x => x.ColumnSpan - 1);
-                widgetNumber = widgetDataCollection.Count();
-            }
-            var maxColumns = CalculateMaxColumnsFromWindow();
-            if ((widgetNumber + columnSpan) < maxColumns)
-            {
-                maxColumns = widgetNumber + columnSpan;
-            }
-            var maxRows = ((widgetNumber + columnSpan) / maxColumns) + rowSpan;
-            List<string> columnsLayout = [];
-            for (int i = 0; i < maxColumns; i++)
-            {
-                columnsLayout.Add("1fr");
-            }
-            List<string> rowsLayout = [];
-            for (int i = 0; i < maxRows; i++)
-            {
-                rowsLayout.Add("192");
-            }
-            for (int i = columnsLayout.Count; i < 4; i++)
-            {
-                columnsLayout.Add("0");
-            }
-            GenerateNewGridLayout(columnsLayout, rowsLayout);
+            GenerateGridColumnsAndRows(null, out var columnsLayout, out var rowsLayout);
+            ApplyNewGridLayout(columnsLayout, rowsLayout);
         }
         catch (Exception ex)
         {
@@ -359,73 +252,58 @@ public class DashboardLogic : BaseNetLogic
 
     private void RegenerateDashboard()
     {
-        foreach (var widgetData in dashboardDataFolder.GetNodesByType<WidgetData>())
+        foreach (var widgetData in WidgetDatas)
         {
-            var widget = InformationModel.MakeObject(widgetData.WidgetBrowseName, widgetData.WidgetType);
-            widget.GetVariable("ObjName").Value = widgetData.ObjName;
-            widget.GetVariable("ObjEngUnit").Value = widgetData.ObjEngUnit;
-            widget.GetVariable("ObjPointer").Value = widgetData.ObjPointer;
-            switch (widget)
-            {
-                case DataGridUIObj:
-                    widget.GetVariable("ObjDurations").Value = widgetData.ObjDurations;
-                    widget.GetVariable("ObjQuery").Value = widgetData.ObjQuery;
-                    break;
-                case TrendUIObj:
-                    widget.GetVariable("ObjDurations").Value = widgetData.ObjDurations;
-                    widget.GetVariable("ObjParameters").Value = widgetData.GetVariable("ObjParameters").Value;
-                    widget.GetVariable("ObjTextParameters").Value = widgetData.GetVariable("ObjTextParameters").Value;
-                    widget.GetVariable("ObjColors").Value = widgetData.GetVariable("ObjColors").Value;
-                    widget.GetVariable("ObjQuery").Value = widgetData.ObjQuery;
-                    if (InformationModel.Get(widget.GetVariable("ObjPointer").Value) is DataLogger sourceDatalogger)
-                    {
-                        var trendNode = widget.Find<Trend>("TrendObj");
-                        trendNode.Model = sourceDatalogger.NodeId;
-                        int[] parametersArray = widget.GetVariable("ObjParameters").Value;
-                        uint[] colorsArray = widget.GetVariable("ObjColors").Value;
-                        string[] textParametersArray = widget.GetVariable("ObjTextParameters").Value;
-                        int parametersArrayIndex = widget.GetVariable("IndexOfPensArray").Value;
-                        int colorsArrayIndex = 0;
-                        int textParametersArrayIndex = 0;
-                        foreach (var variableToLog in sourceDatalogger.VariablesToLog)
-                        {
-                            var trendPen = CreateOrUpdateTrendPen(trendNode, variableToLog);
-                            trendPen.Thickness = (float)parametersArray[parametersArrayIndex];
-                            trendPen.Enabled = parametersArray[parametersArrayIndex + 1] != 0;
-                            trendPen.Title = new LocalizedText(textParametersArray[textParametersArrayIndex], Session.ActualLocaleId);
-                            trendPen.Color = new Color(colorsArray[colorsArrayIndex]);
-                            parametersArrayIndex++;
-                            colorsArrayIndex++;
-                            textParametersArrayIndex++;
-                        }
-                    }
-                    break;
-                case SparklineUIObj:
-                    widget.GetVariable("ObjDurations").Value = widgetData.ObjDurations;
-                    widget.GetVariable("ObjParameters").Value = widgetData.GetVariable("ObjParameters").Value;
-                    widget.GetVariable("ObjColors").Value = widgetData.GetVariable("ObjColors").Value;
-                    break;
-            }
-            (widget as Item).HorizontalAlignment = HorizontalAlignment.Stretch;
-            (widget as Item).VerticalAlignment = VerticalAlignment.Stretch;
-            if (widget.GetByType<GridLayoutProperties>() is GridLayoutProperties layoutProperties)
-            {
-                layoutProperties.ColumnStart = widgetData.ColumnStart;
-                layoutProperties.ColumnSpan = widgetData.ColumnSpan;
-                layoutProperties.RowStart = widgetData.RowStart;
-                layoutProperties.RowSpan = widgetData.RowSpan;
-            }
+            var widget = GenerateUIWidgetFromData(widgetData);
             AddWidgetToGrid(widget);
         }
-        memoryCountWidgets = GetTotalCountOfWidgets();
+        memoryCountWidgets = WidgetDatas.Count;
+    }
+
+    private Item GenerateUIWidgetFromData(WidgetData widgetData)
+    {
+        var widget = InformationModel.MakeObject(widgetData.BrowseName, widgetData.WidgetType) as Item;
+        widget.SetAlias("WidgetData", widgetData);
+        switch (widget)
+        {
+            case TrendUIObj:
+                if (InformationModel.Get(widgetData.SourceNode) is DataLogger sourceDatalogger)
+                {
+                    var trendNode = widget.Find<Trend>("TrendObj");
+                    trendNode.Model = sourceDatalogger.NodeId;
+                    int[] parametersArray = widgetData.GetVariable("ConfigurationParameters").Value;
+                    uint[] configurationColors = widgetData.GetVariable("ConfigurationColors").Value;
+                    int parametersArrayBaseOffset = widgetData.IndexOfPensArray;
+                    int index = 0;
+                    foreach (var variableToLog in sourceDatalogger.VariablesToLog)
+                    {
+                        var trendPen = CreateOrUpdateTrendPen(trendNode, variableToLog);
+                        UpdateTrendPenParameters(widgetData, parametersArray, configurationColors, parametersArrayBaseOffset, index, trendPen);
+                        index++;
+                    }
+                }
+                break;
+        }
+        widget.HorizontalAlignment = HorizontalAlignment.Stretch;
+        widget.VerticalAlignment = VerticalAlignment.Stretch;
+        return widget;
+    }
+
+    private void UpdateTrendPenParameters(WidgetData widgetData, int[] parametersArray, uint[] configurationColors, int parametersArrayBaseOffset, int index, TrendPen trendPen)
+    {
+        int penOffset = index * 2;
+        trendPen.Thickness = (float)parametersArray[penOffset + parametersArrayBaseOffset];
+        trendPen.Enabled = parametersArray[penOffset + parametersArrayBaseOffset + 1] != 0;
+        trendPen.Title = new LocalizedText(widgetData.ConfigurationTextParameters[penOffset + 1], Session.ActualLocaleId);
+        trendPen.Color = new Color(configurationColors[index]);
     }
 
     private static void RegenerateDataGridColums(IUANode dataGridWidget)
     {
-        if (dataGridWidget.Find("DataGridObj") is DataGrid dataGridObj && dataGridWidget.GetVariable("ObjQuery") is IUAVariable queryVariable)
+        if (dataGridWidget.Find("DataGridObj") is DataGrid dataGridObj && dataGridWidget.GetAlias("WidgetData") is WidgetData widgetData)
         {
             dataGridObj.Columns.Clear();
-            string tableName = ExtractTableName(queryVariable.Value);
+            string tableName = ExtractTableName(widgetData.Query);
             if (Project.Current.Get(CommonLogic.LoggersFolderPath).Get(tableName) is DataLogger targetDataLogger)
             {
                 var localTimestampColumn = GenerateDataGridLabelColumn("LocalTimestamp");
@@ -472,7 +350,7 @@ public class DashboardLogic : BaseNetLogic
     private float CalculateMaxColumnsFromWindow()
     {
         float maxColumns;
-        var mainWindow = Session.FindByType<MainWindow>();
+        var mainWindow = Session.FindByType<Window>();
         if (mainWindow.Width >= 1280)
         {
             maxColumns = 4f;
@@ -487,6 +365,23 @@ public class DashboardLogic : BaseNetLogic
         }
 
         return maxColumns;
+    }
+
+    private static void SaveNewParameters(WidgetData widgetData, WidgetData editModelWidgetData)
+    {
+        widgetData.WidgetDisplayName = editModelWidgetData.WidgetDisplayName;
+        widgetData.EngineeringUnit = editModelWidgetData.EngineeringUnit;
+        widgetData.SourceNode = editModelWidgetData.SourceNode;
+        widgetData.ColumnStart = editModelWidgetData.ColumnStart;
+        widgetData.ColumnSpan = editModelWidgetData.ColumnSpan;
+        widgetData.RowStart = editModelWidgetData.RowStart;
+        widgetData.RowSpan = editModelWidgetData.RowSpan;
+        widgetData.Query = editModelWidgetData.Query;
+        widgetData.ConfigurationDurations = editModelWidgetData.ConfigurationDurations;
+        widgetData.GetVariable("ConfigurationParameters").Value = editModelWidgetData.GetVariable("ConfigurationParameters").Value;
+        widgetData.GetVariable("ConfigurationColors").Value = editModelWidgetData.GetVariable("ConfigurationColors").Value;
+        widgetData.ConfigurationTextParameters = editModelWidgetData.ConfigurationTextParameters;
+        widgetData.IndexOfPensArray = editModelWidgetData.IndexOfPensArray;
     }
 
     public TrendPen CreateOrUpdateTrendPen(Trend trendObj, VariableToLog sourceVariableToLog)
@@ -506,7 +401,6 @@ public class DashboardLogic : BaseNetLogic
     }
 
     private bool ConfigurationMode => configurationModeVariable.Value;
-    private const string AddWidgetBrowseName = "AddWidget1";
 
     private float memoryCountWidgets;
     private IUAVariable configurationModeVariable;
@@ -514,4 +408,5 @@ public class DashboardLogic : BaseNetLogic
     private Folder dashboardDataFolder;
     private DateTime lastRun;
     private DelayedTask checkConfigurationModeTask;
+    private List<WidgetData> WidgetDatas => dashboardDataFolder.GetNodesByType<WidgetData>().ToList();
 }

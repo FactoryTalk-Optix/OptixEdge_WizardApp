@@ -61,31 +61,19 @@ public class TagSelectionUIObjectLogic : BaseNetLogic
         sourceDataCollector = LogicObject.GetAlias("TagSourceDataCollector");
         if (sourceDataCollector == null)
         {
-            Log.Error(LogicObject.BrowseName, "Unable to found MQTT publisher/Datalogger/DataGrid source node");
+            Log.Error(LogicObject.BrowseName, "Unable to found the source node");
+            return;
+        }
+        selectAllVariableValue = Owner.Find<CheckBox>("SelectAllVariableValue");
+        if (selectAllVariableValue == null)
+        {
+            Log.Error(LogicObject.BrowseName, "Unable to found SelectAllVariableValue CheckBox");
             return;
         }
         IUANode fatherNode = Project.Current.Get("Model");
-        switch (sourceDataCollector)
-        {
-            case MQTTPublisher:
-                temporarySourceDataFolder = fatherNode.Get<Folder>(sourceDataCollector.Owner.BrowseName);
-                if (temporarySourceDataFolder == null)
-                {
-                    temporarySourceDataFolder = InformationModel.MakeObject<Folder>(sourceDataCollector.Owner.BrowseName);
-                    fatherNode.Add(temporarySourceDataFolder);
-                }
-                fatherNode = temporarySourceDataFolder;
-                break;
-            case NodesToPublishConfigurationEntry:
-                temporarySourceDataFolder = fatherNode.Get<Folder>(sourceDataCollector.Owner.Owner.BrowseName);
-                if (temporarySourceDataFolder == null)
-                {
-                    temporarySourceDataFolder = InformationModel.MakeObject<Folder>(sourceDataCollector.Owner.Owner.BrowseName);
-                    fatherNode.Add(temporarySourceDataFolder);
-                }
-                fatherNode = temporarySourceDataFolder;
-                break;
-        }
+        isOnlyOneSelectionAllowed = LogicObject.GetVariable("IsOnlyOneSelectionAllowed");
+        isOnlyOneSelectionAllowed.Value = sourceDataCollector is MQTTPayloadInfoEdit;
+        fatherNode = GetOrGenerateFatherNode(fatherNode);
         temporarySourceDataFolder = fatherNode.Get<Folder>(sourceDataCollector.BrowseName);
         if (temporarySourceDataFolder == null)
         {
@@ -101,12 +89,20 @@ public class TagSelectionUIObjectLogic : BaseNetLogic
         jobReadTagsConfigured = new LongRunningTask(ReadTagsConfigured, LogicObject);
         currentPageVariable.VariableChange += CurrentPageVariable_VariableChange;
         tagsReadFromField = [];
-        tagsConfigured = [];        
+        tagsConfigured = [];
         jobReadTagsConfigured.Start();
+        if (isOnlyOneSelectionAllowed.Value)
+        {
+            CheckBoxChangingValueHandler(false);
+        }
     }
 
     public override void Stop()
     {
+        if (isOnlyOneSelectionAllowed.Value)
+        {
+            CheckBoxChangingValueHandler(true);
+        }
         if (currentPageVariable != null)
         {
             currentPageVariable.VariableChange -= CurrentPageVariable_VariableChange;
@@ -128,7 +124,7 @@ public class TagSelectionUIObjectLogic : BaseNetLogic
     public void ReadTagsFromSource(NodeId fieldSource)
     {
         var fieldSourceNode = InformationModel.GetObject(fieldSource);
-        if (fieldSourceNode is CommunicationStation || fieldSourceNode is OPCUAClient )
+        if (fieldSourceNode is CommunicationStation || fieldSourceNode is OPCUAClient)
         {
             sourceField = fieldSourceNode;
             jobImportFromField.Start();
@@ -136,7 +132,7 @@ public class TagSelectionUIObjectLogic : BaseNetLogic
     }
 
     [ExportMethod]
-    public void SetCheckedStatus (bool checkedValue)
+    public void SetCheckedStatus(bool checkedValue)
     {
         foreach (var tagRow in tagsTable.GetNodesByType<TagCustomGridRow>())
         {
@@ -151,17 +147,32 @@ public class TagSelectionUIObjectLogic : BaseNetLogic
     [ExportMethod]
     public void SaveAndClose()
     {
-        switch (sourceDataCollector)
+        try
         {
-            case FTOptix.DataLogger.DataLogger:
-                LoggersLogic.Instance?.SaveTagsConfiguration(sourceDataCollector.NodeId);
-                break;
-            case FTOptix.MQTTClient.MQTTPublisher:
-                MqttClientLogic.Instance?.CreateOrUpdateTagsToPublish(sourceDataCollector.NodeId);
-                break;
-            case FTOptix.OPCUAServer.NodesToPublishConfigurationEntry:
-                OpcUaServerLogic.Instance?.SaveConfiguration(sourceDataCollector.NodeId);
-                break;
+            GenerateTagRowDataForImport();
+            switch (sourceDataCollector)
+            {
+                case FTOptix.DataLogger.DataLogger:
+                    LoggersLogic.Instance?.SaveTagsConfiguration(sourceDataCollector.NodeId);
+                    break;
+                case MQTTPublisherDataConfiguration:
+                    MqttClientLogic.Instance?.CreateOrUpdateTagsToPublish(sourceDataCollector.NodeId);
+                    break;
+                case FTOptix.OPCUAServer.NodesToPublishConfigurationEntry:
+                    OpcUaServerLogic.Instance?.SaveConfiguration(sourceDataCollector.NodeId);
+                    break;
+                case MQTTPayloadInfoEdit:
+                    MQTTPayloadInfoEditDialogLogic.LinkVariableToPayloadField(sourceDataCollector.NodeId, GetSelectedEntryVariable());
+                    break;
+                case MQTTPayloadObject mqttPayloadObject:
+                    mqttPayloadObject.Content.GetByType<NetLogicObject>()?.ExecuteMethod("GenerateTagsList");
+                    break;
+            }
+        }
+        catch (Exception ex)
+        {
+            Log.Error(LogicObject.BrowseName, $"Error during SaveAndClose: {ex.Message} \n {ex.StackTrace}");
+            NotificationsMessageHandlerLogic.Instance.RequestToastNotification(ToastBannerNotificationLevel.Error, "An error occurred during saving the selected tags. Please check the logs for more details.");
         }
         (Owner as Dialog).Close();
     }
@@ -184,34 +195,6 @@ public class TagSelectionUIObjectLogic : BaseNetLogic
             {
                 throw new InvalidDataException("No valid data read from the source");
             }
-            // Made temporary nodes
-            if (temporarySourceDataFolder == null)
-            {
-                throw new InvalidDataException("temporaryFolder is null!");
-            }
-            temporaryFolder = temporarySourceDataFolder.Get<Folder>(sourceField.BrowseName);
-            if (temporaryFolder == null)
-            {
-                temporaryFolder = InformationModel.Make<Folder>(sourceField.BrowseName);
-                temporarySourceDataFolder.Add(temporaryFolder);
-            }
-            foreach (var tagRead in tagsReadFromField)
-            {
-                if (temporaryFolder.Get(tagRead.BrowseName) is TagCustomGridRowData currentTag)
-                {
-                    currentTag.Checked = tagsConfigured.Exists(x => x.BrowseName == tagRead.VariableName);
-                    currentTag.VariableName = tagRead.VariableName;
-                    currentTag.VariableComment = tagRead.VariableComment;
-                    currentTag.VariableDataType = tagRead.VariableDataType;
-                    currentTag.VariableAddress = tagRead.VariableAddress;
-                    currentTag.VariableIsArray = tagRead.VariableIsArray;
-                    currentTag.VariableArrayDimension = tagRead.VariableArrayDimension;
-                }
-                else
-                {
-                    temporaryFolder.Add(tagRead);
-                }
-            }
             int totalPages = tagsReadFromField.Count / 16;
             if (tagsReadFromField.Count % 16 > 0)
             {
@@ -221,7 +204,7 @@ public class TagSelectionUIObjectLogic : BaseNetLogic
             // this trick can ensure the refresh in case of i change from a Plc to another and the current page is 1
             if (currentPageVariable.Value == 1)
             {
-                ChangeCurrentPage(1);
+                currentPageVariable.Value = 0;
             }
             currentPageVariable.Value = 1;
         }
@@ -231,23 +214,27 @@ public class TagSelectionUIObjectLogic : BaseNetLogic
         }
     }
 
-    private List<TagCustomGridRowData> ReadTagsFromPlc(IUANode tagsFolder, string variableNamePrefix, ref int counter)
+    private List<InternalTagCustomGridRowData> ReadTagsFromPlc(IUANode tagsFolder, string variableNamePrefix, ref int counter)
     {
-        List<TagCustomGridRowData> returnValue = [];
+        List<InternalTagCustomGridRowData> returnValue = [];
         try
-        {                     
+        {
             foreach (var tag in tagsFolder.GetNodesByType<IUAVariable>())
             {
-                string fullVariableName = string.IsNullOrEmpty(variableNamePrefix) ? tag.BrowseName : $"{variableNamePrefix}.{tag.BrowseName}"; 
-                var newTagData = InformationModel.MakeObject<TagCustomGridRowData>(counter.ToString());
-                newTagData.Checked = tagsConfigured.Exists(x => x.BrowseName == fullVariableName);
-                newTagData.VariableName = fullVariableName;
-                newTagData.VariableDataType = InformationModel.Get(tag.DataType).BrowseName;
-                newTagData.VariableDataTypeNodeId = tag.DataType;
-                newTagData.VariableComment = tag.Description?.Text ?? string.Empty;
-                newTagData.VariableIsArray = tag.ArrayDimensions.Length > 0;
-                newTagData.VariableArrayDimension = tag.ArrayDimensions;
-                newTagData.VariableNodeId = tag.NodeId;
+                string fullVariableName = string.IsNullOrEmpty(variableNamePrefix) ? tag.BrowseName : $"{variableNamePrefix}.{tag.BrowseName}";
+                var newTagData = new InternalTagCustomGridRowData
+                {
+                    BrowseName = counter.ToString(),
+                    Checked = tagsConfigured.Exists(x => x.BrowseName == fullVariableName),
+                    VariableName = fullVariableName,
+                    VariableDataType = InformationModel.Get(tag.DataType).BrowseName,
+                    VariableDataTypeNodeId = tag.DataType,
+                    VariableComment = tag.Description?.Text ?? string.Empty,
+                    VariableIsArray = tag.ArrayDimensions.Length > 0,
+                    VariableArrayDimension = tag.ArrayDimensions,
+                    VariableNodeId = tag.NodeId
+                };
+                newTagData.VariableLinkDirection = newTagData.Checked ? tagsConfigured.First(x => x.BrowseName == fullVariableName).LinkDirection : DynamicLinkMode.Read;
                 returnValue.Add(newTagData);
                 counter++;
             }
@@ -264,23 +251,16 @@ public class TagSelectionUIObjectLogic : BaseNetLogic
         return returnValue;
     }
 
-    private List<TagCustomGridRowData> ReadTagsFromOpcUa(IUANode clientStation)
+    private List<InternalTagCustomGridRowData> ReadTagsFromOpcUa(IUANode clientStation)
     {
-        List<TagCustomGridRowData> returnValue = [];
-        try
-        {
-            _ = clientStation.Get("ToDoSection");
-        }
-        catch (Exception ex)
-        {
-            Log.Error(LogicObject.BrowseName, ex.Message);
-        }
+        List<InternalTagCustomGridRowData> returnValue = [];
+        // TO DO: implement OPC UA tag reading when OPC UA Client Tag Importer is implemented at Runtime in Optix
         return returnValue;
     }
 
     private void CurrentPageVariable_VariableChange(object sender, VariableChangeEventArgs e)
     {
-        if (e.NewValue <= LogicObject.GetVariable("TotalPages").Value)
+        if ((int)e.NewValue > 0 && e.NewValue <= LogicObject.GetVariable("TotalPages").Value)
         {
             ChangeCurrentPage(e.NewValue);
         }
@@ -293,15 +273,92 @@ public class TagSelectionUIObjectLogic : BaseNetLogic
         {
             int variableDataIndex = rowIndex + variableDataOffset;
             TagCustomGridRow tableRow = tagsTable.Get<TagCustomGridRow>($"TagCustomGridRow{rowIndex + 1}");
-            if (temporaryFolder.Get(variableDataIndex.ToString()) is TagCustomGridRowData rowData)
+            if (variableDataIndex < tagsReadFromField.Count)
             {
-                tableRow.SetAlias("RowData", rowData);
+                UpdateTagRowData(rowIndex, variableDataIndex);
                 tableRow.Visible = true;
             }
             else
             {
                 tableRow.Visible = false;
             }
+        }
+        UpdateCheckBoxSelectedAll();
+    }
+
+    private void UpdateTagRowData(int rowIndex, int variableDataIndex)
+    {
+        var rowData = LogicObject.Get<TagCustomGridRowData>($"GridData/{rowIndex + 1}");
+        rowData.CheckedVariable.VariableChange -= OnRowSettingsChanged;
+        rowData.VariableLinkDirectionVariable.VariableChange -= OnRowSettingsChanged;
+        rowData.Checked = tagsReadFromField[variableDataIndex].Checked;
+        rowData.VariableName = tagsReadFromField[variableDataIndex].VariableName;
+        rowData.VariableDataType = tagsReadFromField[variableDataIndex].VariableDataType;
+        rowData.VariableComment = tagsReadFromField[variableDataIndex].VariableComment;
+        rowData.VariableAddress = tagsReadFromField[variableDataIndex].VariableAddress;
+        rowData.VariableIsArray = tagsReadFromField[variableDataIndex].VariableIsArray;
+        rowData.VariableArrayDimension = tagsReadFromField[variableDataIndex].VariableArrayDimension;
+        rowData.VariableDataTypeNodeId = tagsReadFromField[variableDataIndex].VariableDataTypeNodeId;
+        rowData.VariableLinkDirection = tagsReadFromField[variableDataIndex].VariableLinkDirection;
+        rowData.CheckedVariable.VariableChange += OnRowSettingsChanged;
+        rowData.VariableLinkDirectionVariable.VariableChange += OnRowSettingsChanged;
+    }
+
+    private void OnRowSettingsChanged(object sender, VariableChangeEventArgs e)
+    {
+        int currentPage = currentPageVariable.Value;
+        int variableDataOffset = (currentPage - 1) * 16;
+        var rowData = e.Variable.Owner as TagCustomGridRowData;
+        int rowIndex = int.Parse(rowData.BrowseName) - 1;
+        int variableDataIndex = rowIndex + variableDataOffset;
+        switch (e.Variable.BrowseName)
+        {
+            case "Checked":
+                tagsReadFromField[variableDataIndex].Checked = e.NewValue;
+                UpdateCheckBoxSelectedAll();
+                break;
+            case "VariableLinkDirection":
+                tagsReadFromField[variableDataIndex].VariableLinkDirection = (DynamicLinkMode)e.NewValue.Value;
+                break;
+        }
+    }
+
+    private void UpdateCheckBoxSelectedAll()
+    {
+        selectAllVariableValue.Checked = LogicObject.GetObject("GridData").GetNodesByType<TagCustomGridRowData>()
+                .Where(rowData => tagsTable.Get<TagCustomGridRow>($"TagCustomGridRow{rowData.BrowseName}").Visible)
+                .All(rowData => rowData.Checked);
+    }
+
+    private NodeId GetSelectedEntryVariable()
+    {
+        var selectedTag = tagsReadFromField.FirstOrDefault(x => x.Checked, null);
+        return selectedTag?.VariableNodeId ?? NodeId.Empty;
+    }
+
+    private void CheckBoxChangingValueHandler(bool unsubscribe)
+    {
+        for (int rowIndex = 0; rowIndex < 16; rowIndex++)
+        {
+            TagCustomGridRow tableRow = tagsTable.Get<TagCustomGridRow>($"TagCustomGridRow{rowIndex + 1}");
+            if (unsubscribe)
+            {
+                tableRow.Find<CheckBox>("SelectVariableValue").OnUserValueChanged -= OnCheckBoxChange;
+            }
+            else
+            {
+                tableRow.Find<CheckBox>("SelectVariableValue").OnUserValueChanged += OnCheckBoxChange;
+            }
+        }
+    }
+
+    private void OnCheckBoxChange(object sender, UserValueChangedEvent e)
+    {
+        bool checkedValue = (bool)e.NewValue;
+
+        if (isOnlyOneSelectionAllowed.Value)
+        {
+            LogicObject.GetVariable("DisableMoreSelections").Value = checkedValue;
         }
     }
 
@@ -311,9 +368,12 @@ public class TagSelectionUIObjectLogic : BaseNetLogic
         {
             IUAObject sourceNodeToDiscover = sourceDataCollectorNode switch
             {
-                FTOptix.MQTTClient.MQTTPublisher => Project.Current.GetObject($"{CommonLogic.MQTTDataFolderPath}/{sourceDataCollectorNode.Owner.BrowseName}/{sourceDataCollectorNode.BrowseName}"),
+                FTOptix.MQTTClient.MQTTPublisher => Project.Current.Get<MQTTPublisherDataConfiguration>($"{CommonLogic.MQTTPublishersDataConfigurationPath}/{sourceDataCollectorNode.Owner.BrowseName}_{sourceDataCollectorNode.BrowseName}").Data,
                 FTOptix.DataLogger.DataLogger => sourceDataCollector.GetObject("VariablesToLog"),
                 FTOptix.OPCUAServer.NodesToPublishConfigurationEntry => Project.Current.GetObject($"{CommonLogic.OPCUAServerDataFolderPath}/{sourceDataCollectorNode.Owner.Owner.BrowseName}/{sourceDataCollectorNode.BrowseName}"),
+                MQTTPublisherDataConfiguration dataConfiguration => dataConfiguration.Data,
+                MQTTPayloadInfoEdit => null,
+                MQTTPayloadObject payloadObject => MqttClientLogic.GetSourceDataFromPayloadObject(payloadObject),
                 _ => null,
             };
             tagsConfigured = CommonLogic.ReadTagsFromSourceDataCollector(sourceNodeToDiscover, sourceDataCollectorNode);
@@ -324,7 +384,73 @@ public class TagSelectionUIObjectLogic : BaseNetLogic
         }
     }
 
-    private List<TagCustomGridRowData> tagsReadFromField;
+    private void GenerateTagRowDataForImport()
+    {
+        // Made temporary nodes
+        if (temporarySourceDataFolder == null)
+        {
+            throw new InvalidDataException("temporaryFolder is null!");
+        }
+        temporaryFolder = temporarySourceDataFolder.Get<Folder>(sourceField.BrowseName);
+        if (temporaryFolder == null)
+        {
+            temporaryFolder = InformationModel.Make<Folder>(sourceField.BrowseName);
+            temporarySourceDataFolder.Add(temporaryFolder);
+        }
+        temporaryFolder.Children.Clear();
+        foreach (var tagRead in tagsReadFromField.Where(x => x.Checked))
+        {
+            temporaryFolder.Add(GenerateRowDataFromInternal(tagRead));
+        }
+    }
+
+    private static TagCustomGridRowData GenerateRowDataFromInternal(InternalTagCustomGridRowData internalData)
+    {
+        var rowData = InformationModel.MakeObject<TagCustomGridRowData>(internalData.VariableName);
+        rowData.Checked = internalData.Checked;
+        rowData.VariableName = internalData.VariableName;
+        rowData.VariableComment = internalData.VariableComment;
+        rowData.VariableDataType = internalData.VariableDataType;
+        rowData.VariableAddress = internalData.VariableAddress;
+        rowData.VariableIsArray = internalData.VariableIsArray;
+        rowData.VariableArrayDimension = internalData.VariableArrayDimension;
+        rowData.VariableDataTypeNodeId = internalData.VariableDataTypeNodeId;
+        rowData.VariableNodeId = internalData.VariableNodeId;
+        rowData.VariableStringLength = internalData.VariableStringLength;
+        rowData.VariableLinkDirection = internalData.VariableLinkDirection;
+        return rowData;
+    }
+
+    private IUANode GetOrGenerateFatherNode(IUANode fatherNode)
+    {
+        switch (sourceDataCollector)
+        {
+            case MQTTPayloadObject:
+            case MQTTPayloadInfoEdit:
+                temporarySourceDataFolder = fatherNode.Get<Folder>(sourceDataCollector.Owner.BrowseName);
+                if (temporarySourceDataFolder == null)
+                {
+                    temporarySourceDataFolder = InformationModel.MakeObject<Folder>(sourceDataCollector.Owner.BrowseName);
+                    fatherNode.Add(temporarySourceDataFolder);
+                }
+                fatherNode = temporarySourceDataFolder;
+                break;
+            case NodesToPublishConfigurationEntry:
+                LogicObject.GetVariable("EnableLinkDirection").Value = true;
+                temporarySourceDataFolder = fatherNode.Get<Folder>(sourceDataCollector.Owner.Owner.BrowseName);
+                if (temporarySourceDataFolder == null)
+                {
+                    temporarySourceDataFolder = InformationModel.MakeObject<Folder>(sourceDataCollector.Owner.Owner.BrowseName);
+                    fatherNode.Add(temporarySourceDataFolder);
+                }
+                fatherNode = temporarySourceDataFolder;
+                break;
+        }
+
+        return fatherNode;
+    }
+
+    private List<InternalTagCustomGridRowData> tagsReadFromField;
     private List<TagDataImported> tagsConfigured;
     private ColumnLayout tagsTable;
     private IUAVariable currentPageVariable;
@@ -334,4 +460,6 @@ public class TagSelectionUIObjectLogic : BaseNetLogic
     private LongRunningTask jobImportFromField;
     private LongRunningTask jobReadTagsConfigured;
     private IUAObject sourceField;
+    private IUAVariable isOnlyOneSelectionAllowed;
+    private CheckBox selectAllVariableValue;
 }

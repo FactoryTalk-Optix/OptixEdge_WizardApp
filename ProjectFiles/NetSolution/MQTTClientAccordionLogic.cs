@@ -36,12 +36,20 @@ public class MQTTClientAccordionLogic : BaseNetLogic
 {
     public override void Start()
     {
-        Accordion ownerAccordion = (Accordion) Owner.Owner;
-        CommonLogic.Instance.GenerateConfigurationWidgetFromSource(Project.Current.GetObject("MQTT/MQTT Clients"), ownerAccordion, InformationModel.Get(LogicObject.GetVariable("StationWidgetFolder").Value));
+        new LongRunningTask(GenerateWidgets, Owner.Owner, Owner).Start();        
     }
 
     public override void Stop()
     {
         // Insert code to be executed when the user-defined logic is stopped
+    }
+
+    private void GenerateWidgets(BaseTaskWrapper task, object argument)
+    {
+        if (argument is Accordion ownerAccordion)
+        {
+            CommonLogic.Instance.GenerateConfigurationWidgetFromSource(Project.Current.GetObject("MQTT/MQTT Clients"), ownerAccordion, InformationModel.Get(LogicObject.GetVariable("StationWidgetFolder").Value));
+        }
+        task.Dispose();
     }
 }

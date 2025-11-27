@@ -136,7 +136,7 @@ Children:
             - Name: DynamicLink
               Type: DynamicLink
               DataType: NodePath
-              Value: "{DataGridUIObjAlias}/ObjPointer@Pointer@Value"
+              Value: "{DataGridUIWidgetData}/SourceNode@Pointer@Value"
               Children:
               - Name: Mode
                 Type: BaseVariableType
@@ -301,7 +301,7 @@ Children:
             - Name: DynamicLink
               Type: DynamicLink
               DataType: NodePath
-              Value: "{DataGridUIObjAlias}/ObjQuery"
+              Value: "{DataGridUIWidgetData}/Query"
               Children:
               - Name: Mode
                 Type: BaseVariableType
@@ -346,7 +346,7 @@ Children:
             - Name: DynamicLink
               Type: DynamicLink
               DataType: NodePath
-              Value: "{DataGridUIObjAlias}/ObjDurations[0]"
+              Value: "{DataGridUIWidgetData}/ConfigurationDurations[0]"
               Children:
               - Name: Mode
                 Type: BaseVariableType
@@ -395,14 +395,14 @@ Children:
     DataType: HorizontalAlignment
     ModellingRule: Optional
     Value: 3
-  - Name: DataGridUIObjAlias
+  - Name: DataGridUIWidgetData
     Type: Alias
     DataType: NodeId
     Children:
     - Name: Kind
       Type: PropertyType
       DataType: NodeId
-      Value: "/Objects/OptixEdge_WizardApp/UI/UITypes/Widgets/Dashboard/UIObjects/DataGridUIObj"
+      Value: "/Objects/OptixEdge_WizardApp/Model/ObjectTypes/WidgetData"
   - Name: Height
     Type: BaseVariableType
     DataType: Size
@@ -508,14 +508,14 @@ Children:
     DataType: HorizontalAlignment
     ModellingRule: Optional
     Value: 3
-  - Name: DisplayUIObjAlias
+  - Name: DisplayUIWidgetData
     Type: Alias
     DataType: NodeId
     Children:
     - Name: Kind
       Type: PropertyType
       DataType: NodeId
-      Value: "/Types/ObjectTypes/BaseObjectType/BaseUIObject/Item/Label"
+      Value: "/Objects/OptixEdge_WizardApp/Model/ObjectTypes/WidgetData"
   - Name: Height
     Type: BaseVariableType
     DataType: Size
@@ -603,7 +603,7 @@ Children:
             - Name: DynamicLink
               Type: DynamicLink
               DataType: NodePath
-              Value: "{SparklineUIObjAlias}/ObjDurations[1]"
+              Value: "{SparklineUIWidgetData}/ConfigurationDurations[1]"
               Children:
               - Name: Mode
                 Type: BaseVariableType
@@ -629,7 +629,7 @@ Children:
             - Name: DynamicLink
               Type: DynamicLink
               DataType: NodePath
-              Value: "{SparklineUIObjAlias}/ObjDurations[0]"
+              Value: "{SparklineUIWidgetData}/ConfigurationDurations[0]"
               Children:
               - Name: Mode
                 Type: BaseVariableType
@@ -646,6 +646,178 @@ Children:
           DataType: Size
           ModellingRule: Optional
           Value: 16.0
+        - Name: LineColorString
+          Type: GridContent1
+          Children:
+          - Name: GridLayoutProperties
+            Type: GridLayoutProperties
+          - Name: Text
+            Type: BaseDataVariableType
+            DataType: LocalizedText
+            Value: {"LocaleId":"en-US","Text":"Color"}
+        - Name: LineColorValue
+          Type: RowLayout
+          Children:
+          - Name: HorizontalAlignment
+            Type: BaseVariableType
+            DataType: HorizontalAlignment
+            ModellingRule: Optional
+            Value: 3
+          - Name: VerticalAlignment
+            Type: BaseVariableType
+            DataType: VerticalAlignment
+            ModellingRule: Optional
+            Value: 3
+          - Name: ColorPreview
+            Type: Rectangle
+            Children:
+            - Name: Width
+              Type: BaseVariableType
+              DataType: Size
+              ModellingRule: Optional
+              Value: 64.0
+            - Name: Height
+              Type: BaseVariableType
+              DataType: Size
+              Value: 32.0
+            - Name: HorizontalAlignment
+              Type: BaseVariableType
+              DataType: HorizontalAlignment
+              ModellingRule: Optional
+              Value: 3
+            - Name: VerticalAlignment
+              Type: BaseVariableType
+              DataType: VerticalAlignment
+              ModellingRule: Optional
+              Value: 3
+            - Name: FillColor
+              Type: BaseDataVariableType
+              DataType: Color
+              Value: "#ffffff"
+              Children:
+              - Name: DynamicLink
+                Type: DynamicLink
+                DataType: NodePath
+                Value: "../../../../../../SparklineUIObjConfigurationLogic/LineColor"
+            - Name: RightMargin
+              Type: BaseVariableType
+              DataType: Size
+              ModellingRule: Optional
+            - Name: Style
+              Type: BaseDataVariableType
+              DataType: String
+              ModellingRule: Optional
+              Value: "GrayRounded"
+          - Name: HorizontalGap
+            Type: BaseDataVariableType
+            DataType: Size
+            ModellingRule: Optional
+            Value: 10.0
+          - Name: ChangeColorButton
+            Type: Button
+            Children:
+            - Name: Text
+              Type: BaseDataVariableType
+              DataType: LocalizedText
+              ModellingRule: Optional
+              Value: {"LocaleId":"en-US","Text":"Change Color"}
+            - Name: VerticalAlignment
+              Type: BaseVariableType
+              DataType: VerticalAlignment
+              ModellingRule: Optional
+              Value: 3
+            - Name: MouseClickEventHandler1
+              Type: EventHandler
+              Children:
+              - Name: ListenEventType
+                Type: PropertyType
+                DataType: NodeId
+                Value: "/Types/EventTypes/BaseEventType/MouseEvent/MouseClickEvent"
+              - Name: MethodsToCall
+                Type: BaseObjectType
+                Children:
+                - Name: MethodContainer1
+                  Type: BaseObjectType
+                  Children:
+                  - Name: ns=2;ObjectPointer
+                    Type: NodePointer
+                    DataType: NodeId
+                    Value: "/Objects/Commands/UICommands"
+                    Children:
+                    - Name: Kind
+                      Type: PropertyType
+                      DataType: NodeId
+                      Value: "/Types/ObjectTypes/BaseObjectType"
+                  - Name: ns=2;Method
+                    Type: BaseDataVariableType
+                    DataType: String
+                    Value: "OpenDialog"
+                  - Name: InputArguments
+                    Type: BaseObjectType
+                    Children:
+                    - Name: Dialog
+                      Type: BaseDataVariableType
+                      DataType: NodeId
+                      Description: {"NamespaceIndex":3,"TextId":"OpenDialogDialogDescription"}
+                      Value: "/Objects/OptixEdge_WizardApp/UI/UITypes/Dialogs/Function Dialogs/ColorPicker"
+                    - Name: AliasNode
+                      Type: BaseDataVariableType
+                      DataType: NodeId
+                      Description: {"NamespaceIndex":3,"TextId":"OpenDialogAliasNodeDescription"}
+                      ValueRank: ScalarOrOneDimension
+                      Children:
+                      - Name: DynamicLink
+                        Type: DynamicLink
+                        DataType: NodePath
+                        Value: "../../../../../../../../../../SparklineUIObjConfigurationLogic/LineColor@NodeId"
+                    - Name: ParentItem
+                      Type: BaseDataVariableType
+                      DataType: NodeId
+                      Description: {"NamespaceIndex":3,"TextId":"OpenDialogParentItemDescription"}
+                      Children:
+                      - Name: DynamicLink
+                        Type: DynamicLink
+                        DataType: NodePath
+                        Value: "../../../../..@NodeId"
+                  - Name: OutputArguments
+                    Type: BaseObjectType
+                    Children:
+                    - Name: DialogNodeId
+                      Type: BaseDataVariableType
+                      DataType: NodeId
+                      Description: {"NamespaceIndex":3,"TextId":"OpenDialogDialogNodeIdDescription"}
+              - Name: EventArguments
+                Type: MouseClickEvent
+                Children:
+                - Name: EventId
+                  Type: PropertyType
+                  DataType: ByteString
+                - Name: EventType
+                  Type: PropertyType
+                  DataType: NodeId
+                - Name: SourceNode
+                  Type: PropertyType
+                  DataType: NodeId
+                - Name: SourceName
+                  Type: PropertyType
+                  DataType: String
+                - Name: Time
+                  Type: PropertyType
+                  DataType: UtcTime
+                - Name: ReceiveTime
+                  Type: PropertyType
+                  DataType: UtcTime
+                - Name: Message
+                  Type: PropertyType
+                  DataType: LocalizedText
+                - Name: Severity
+                  Type: PropertyType
+                  DataType: UInt16
+            - Name: Style
+              Type: BaseDataVariableType
+              DataType: String
+              ModellingRule: Optional
+              Value: "Accent"
         - Name: YAxisMaximumLabel
           Type: GridContent1
           Children:
@@ -665,7 +837,7 @@ Children:
             - Name: DynamicLink
               Type: DynamicLink
               DataType: NodePath
-              Value: "{SparklineUIObjAlias}/ObjParameters[0]"
+              Value: "{SparklineUIWidgetData}/ConfigurationParameters[0]"
               Children:
               - Name: Mode
                 Type: BaseVariableType
@@ -700,7 +872,7 @@ Children:
             - Name: DynamicLink
               Type: DynamicLink
               DataType: NodePath
-              Value: "{SparklineUIObjAlias}/ObjParameters[1]"
+              Value: "{SparklineUIWidgetData}/ConfigurationParameters[1]"
               Children:
               - Name: Mode
                 Type: BaseVariableType
@@ -716,6 +888,178 @@ Children:
             DataType: String
             ModellingRule: Optional
             Value: "d"
+        - Name: RangeColorString
+          Type: GridContent1
+          Children:
+          - Name: GridLayoutProperties
+            Type: GridLayoutProperties
+          - Name: Text
+            Type: BaseDataVariableType
+            DataType: LocalizedText
+            Value: {"LocaleId":"en-US","Text":"Range Color"}
+        - Name: RangeColorValue
+          Type: RowLayout
+          Children:
+          - Name: HorizontalAlignment
+            Type: BaseVariableType
+            DataType: HorizontalAlignment
+            ModellingRule: Optional
+            Value: 3
+          - Name: VerticalAlignment
+            Type: BaseVariableType
+            DataType: VerticalAlignment
+            ModellingRule: Optional
+            Value: 3
+          - Name: ColorPreview
+            Type: Rectangle
+            Children:
+            - Name: Width
+              Type: BaseVariableType
+              DataType: Size
+              ModellingRule: Optional
+              Value: 64.0
+            - Name: Height
+              Type: BaseVariableType
+              DataType: Size
+              Value: 32.0
+            - Name: HorizontalAlignment
+              Type: BaseVariableType
+              DataType: HorizontalAlignment
+              ModellingRule: Optional
+              Value: 3
+            - Name: VerticalAlignment
+              Type: BaseVariableType
+              DataType: VerticalAlignment
+              ModellingRule: Optional
+              Value: 3
+            - Name: FillColor
+              Type: BaseDataVariableType
+              DataType: Color
+              Value: "#ffffff"
+              Children:
+              - Name: DynamicLink
+                Type: DynamicLink
+                DataType: NodePath
+                Value: "../../../../../../SparklineUIObjConfigurationLogic/RangeColor"
+            - Name: RightMargin
+              Type: BaseVariableType
+              DataType: Size
+              ModellingRule: Optional
+            - Name: Style
+              Type: BaseDataVariableType
+              DataType: String
+              ModellingRule: Optional
+              Value: "GrayRounded"
+          - Name: HorizontalGap
+            Type: BaseDataVariableType
+            DataType: Size
+            ModellingRule: Optional
+            Value: 10.0
+          - Name: ChangeColorButton
+            Type: Button
+            Children:
+            - Name: Text
+              Type: BaseDataVariableType
+              DataType: LocalizedText
+              ModellingRule: Optional
+              Value: {"LocaleId":"en-US","Text":"Change Color"}
+            - Name: VerticalAlignment
+              Type: BaseVariableType
+              DataType: VerticalAlignment
+              ModellingRule: Optional
+              Value: 3
+            - Name: MouseClickEventHandler1
+              Type: EventHandler
+              Children:
+              - Name: ListenEventType
+                Type: PropertyType
+                DataType: NodeId
+                Value: "/Types/EventTypes/BaseEventType/MouseEvent/MouseClickEvent"
+              - Name: MethodsToCall
+                Type: BaseObjectType
+                Children:
+                - Name: MethodContainer1
+                  Type: BaseObjectType
+                  Children:
+                  - Name: ns=2;ObjectPointer
+                    Type: NodePointer
+                    DataType: NodeId
+                    Value: "/Objects/Commands/UICommands"
+                    Children:
+                    - Name: Kind
+                      Type: PropertyType
+                      DataType: NodeId
+                      Value: "/Types/ObjectTypes/BaseObjectType"
+                  - Name: ns=2;Method
+                    Type: BaseDataVariableType
+                    DataType: String
+                    Value: "OpenDialog"
+                  - Name: InputArguments
+                    Type: BaseObjectType
+                    Children:
+                    - Name: Dialog
+                      Type: BaseDataVariableType
+                      DataType: NodeId
+                      Description: {"NamespaceIndex":3,"TextId":"OpenDialogDialogDescription"}
+                      Value: "/Objects/OptixEdge_WizardApp/UI/UITypes/Dialogs/Function Dialogs/ColorPicker"
+                    - Name: AliasNode
+                      Type: BaseDataVariableType
+                      DataType: NodeId
+                      Description: {"NamespaceIndex":3,"TextId":"OpenDialogAliasNodeDescription"}
+                      ValueRank: ScalarOrOneDimension
+                      Children:
+                      - Name: DynamicLink
+                        Type: DynamicLink
+                        DataType: NodePath
+                        Value: "../../../../../../../../../../SparklineUIObjConfigurationLogic/RangeColor@NodeId"
+                    - Name: ParentItem
+                      Type: BaseDataVariableType
+                      DataType: NodeId
+                      Description: {"NamespaceIndex":3,"TextId":"OpenDialogParentItemDescription"}
+                      Children:
+                      - Name: DynamicLink
+                        Type: DynamicLink
+                        DataType: NodePath
+                        Value: "../../../../..@NodeId"
+                  - Name: OutputArguments
+                    Type: BaseObjectType
+                    Children:
+                    - Name: DialogNodeId
+                      Type: BaseDataVariableType
+                      DataType: NodeId
+                      Description: {"NamespaceIndex":3,"TextId":"OpenDialogDialogNodeIdDescription"}
+              - Name: EventArguments
+                Type: MouseClickEvent
+                Children:
+                - Name: EventId
+                  Type: PropertyType
+                  DataType: ByteString
+                - Name: EventType
+                  Type: PropertyType
+                  DataType: NodeId
+                - Name: SourceNode
+                  Type: PropertyType
+                  DataType: NodeId
+                - Name: SourceName
+                  Type: PropertyType
+                  DataType: String
+                - Name: Time
+                  Type: PropertyType
+                  DataType: UtcTime
+                - Name: ReceiveTime
+                  Type: PropertyType
+                  DataType: UtcTime
+                - Name: Message
+                  Type: PropertyType
+                  DataType: LocalizedText
+                - Name: Severity
+                  Type: PropertyType
+                  DataType: UInt16
+            - Name: Style
+              Type: BaseDataVariableType
+              DataType: String
+              ModellingRule: Optional
+              Value: "Accent"
         - Name: RangeHighLabel
           Type: GridContent1
           Children:
@@ -735,7 +1079,7 @@ Children:
             - Name: DynamicLink
               Type: DynamicLink
               DataType: NodePath
-              Value: "{SparklineUIObjAlias}/ObjParameters[2]"
+              Value: "{SparklineUIWidgetData}/ConfigurationParameters[2]"
               Children:
               - Name: Mode
                 Type: BaseVariableType
@@ -770,7 +1114,7 @@ Children:
             - Name: DynamicLink
               Type: DynamicLink
               DataType: NodePath
-              Value: "{SparklineUIObjAlias}/ObjParameters[3]"
+              Value: "{SparklineUIWidgetData}/ConfigurationParameters[3]"
               Children:
               - Name: Mode
                 Type: BaseVariableType
@@ -809,19 +1153,32 @@ Children:
     DataType: HorizontalAlignment
     ModellingRule: Optional
     Value: 3
-  - Name: SparklineUIObjAlias
+  - Name: SparklineUIWidgetData
     Type: Alias
     DataType: NodeId
     Children:
     - Name: Kind
       Type: PropertyType
       DataType: NodeId
-      Value: "/Objects/OptixEdge_WizardApp/UI/UITypes/Widgets/Dashboard/UIObjects/SparklineUIObj"
+      Value: "/Objects/OptixEdge_WizardApp/Model/ObjectTypes/WidgetData"
   - Name: Height
     Type: BaseVariableType
     DataType: Size
     ModellingRule: Optional
     Value: -1.0
+  - Name: SparklineUIObjConfigurationLogic
+    Type: NetLogic
+    Children:
+    - Name: Thickness
+      Type: BaseDataVariableType
+      DataType: Size
+      Value: -1.0
+    - Name: LineColor
+      Type: BaseDataVariableType
+      DataType: Color
+    - Name: RangeColor
+      Type: BaseDataVariableType
+      DataType: Color
 - Name: TrendUIObjConfig
   Id: g=c7fd54d8edbf23c4375ea904fccc1aa3
   Supertype: Panel
@@ -841,14 +1198,14 @@ Children:
     DataType: HorizontalAlignment
     ModellingRule: Optional
     Value: 3
-  - Name: TrendUIObjAlias
+  - Name: TrendUIWidgetData
     Type: Alias
     DataType: NodeId
     Children:
     - Name: Kind
       Type: PropertyType
       DataType: NodeId
-      Value: "/Objects/OptixEdge_WizardApp/UI/UITypes/Widgets/Dashboard/UIObjects/TrendUIObj"
+      Value: "/Objects/OptixEdge_WizardApp/Model/ObjectTypes/WidgetData"
   - Name: Height
     Type: BaseVariableType
     DataType: Size
@@ -952,7 +1309,7 @@ Children:
               - Name: DynamicLink
                 Type: DynamicLink
                 DataType: NodePath
-                Value: "{TrendUIObjAlias}/ObjPointer@Pointer@Value"
+                Value: "{TrendUIWidgetData}/SourceNode@Pointer@Value"
                 Children:
                 - Name: Mode
                   Type: BaseVariableType
@@ -1166,7 +1523,7 @@ Children:
               - Name: DynamicLink
                 Type: DynamicLink
                 DataType: NodePath
-                Value: "{TrendUIObjAlias}/ObjQuery"
+                Value: "{TrendUIWidgetData}/Query"
                 Children:
                 - Name: Mode
                   Type: BaseVariableType
@@ -1210,7 +1567,7 @@ Children:
               - Name: DynamicLink
                 Type: DynamicLink
                 DataType: NodePath
-                Value: "{TrendUIObjAlias}/ObjDurations[0]"
+                Value: "{TrendUIWidgetData}/ConfigurationDurations[0]"
                 Children:
                 - Name: Mode
                   Type: BaseVariableType
@@ -1246,7 +1603,7 @@ Children:
               - Name: DynamicLink
                 Type: DynamicLink
                 DataType: NodePath
-                Value: "{TrendUIObjAlias}/ObjDurations[1]"
+                Value: "{TrendUIWidgetData}/ConfigurationDurations[1]"
                 Children:
                 - Name: Mode
                   Type: BaseVariableType
@@ -1290,7 +1647,7 @@ Children:
               - Name: DynamicLink
                 Type: DynamicLink
                 DataType: NodePath
-                Value: "{TrendUIObjAlias}/ObjParameters[0]"
+                Value: "{TrendUIWidgetData}/ConfigurationParameters[0]"
                 Children:
                 - Name: Mode
                   Type: BaseVariableType
@@ -1392,7 +1749,7 @@ Children:
               - Name: DynamicLink
                 Type: DynamicLink
                 DataType: NodePath
-                Value: "{TrendUIObjAlias}/ObjParameters[2]"
+                Value: "{TrendUIWidgetData}/ConfigurationParameters[2]"
                 Children:
                 - Name: Mode
                   Type: BaseVariableType
@@ -1473,7 +1830,7 @@ Children:
               - Name: DynamicLink
                 Type: DynamicLink
                 DataType: NodePath
-                Value: "{TrendUIObjAlias}/ObjParameters[1]"
+                Value: "{TrendUIWidgetData}/ConfigurationParameters[1]"
                 Children:
                 - Name: Mode
                   Type: BaseVariableType
@@ -1683,7 +2040,7 @@ Children:
           - Name: DynamicLink
             Type: DynamicLink
             DataType: NodePath
-            Value: "{TrendPenUIObjConfigAlias}@BrowseName"
+            Value: "../../../../TrendPenUIObjectConfigurationLogic/PenBrowseName"
         - Name: TopMargin
           Type: BaseVariableType
           DataType: Size
@@ -1771,7 +2128,7 @@ Children:
             - Name: DynamicLink
               Type: DynamicLink
               DataType: NodePath
-              Value: "{TrendPenUIObjConfigAlias}/Enabled"
+              Value: "../../../../../TrendPenUIObjectConfigurationLogic/Enabled"
               Children:
               - Name: Mode
                 Type: BaseVariableType
@@ -1850,7 +2207,7 @@ Children:
             - Name: DynamicLink
               Type: DynamicLink
               DataType: NodePath
-              Value: "{TrendPenUIObjConfigAlias}/Title"
+              Value: "../../../../../TrendPenUIObjectConfigurationLogic/Title"
               Children:
               - Name: Mode
                 Type: BaseVariableType
@@ -1908,7 +2265,7 @@ Children:
             - Name: DynamicLink
               Type: DynamicLink
               DataType: NodePath
-              Value: "{TrendPenUIObjConfigAlias}/Thickness"
+              Value: "../../../../../TrendPenUIObjectConfigurationLogic/Thickness"
               Children:
               - Name: Mode
                 Type: BaseVariableType
@@ -1989,7 +2346,7 @@ Children:
               - Name: DynamicLink
                 Type: DynamicLink
                 DataType: NodePath
-                Value: "{TrendPenUIObjConfigAlias}/Color"
+                Value: "../../../../../../TrendPenUIObjectConfigurationLogic/Color"
             - Name: RightMargin
               Type: BaseVariableType
               DataType: Size
@@ -2050,7 +2407,7 @@ Children:
                       Type: BaseDataVariableType
                       DataType: NodeId
                       Description: {"NamespaceIndex":3,"TextId":"OpenDialogDialogDescription"}
-                      Value: "/Objects/OptixEdge_WizardApp/UI/UITypes/Dialogs/ColorPicker"
+                      Value: "/Objects/OptixEdge_WizardApp/UI/UITypes/Dialogs/Function Dialogs/ColorPicker"
                     - Name: AliasNode
                       Type: BaseDataVariableType
                       DataType: NodeId
@@ -2060,7 +2417,7 @@ Children:
                       - Name: DynamicLink
                         Type: DynamicLink
                         DataType: NodePath
-                        Value: "{TrendPenUIObjConfigAlias}/Color@NodeId"
+                        Value: "../../../../../../../../../../TrendPenUIObjectConfigurationLogic/Color@NodeId"
                     - Name: ParentItem
                       Type: BaseDataVariableType
                       DataType: NodeId
@@ -2128,11 +2485,33 @@ Children:
       DataType: HorizontalAlignment
       ModellingRule: Optional
       Value: 3
-  - Name: TrendPenUIObjConfigAlias
+  - Name: TrendWidgetData
     Type: Alias
     DataType: NodeId
     Children:
     - Name: Kind
       Type: PropertyType
       DataType: NodeId
-      Value: "/Types/VariableTypes/BaseVariableType/BaseDataVariableType/TrendPen"
+      Value: "/Objects/OptixEdge_WizardApp/Model/ObjectTypes/WidgetData"
+  - Name: PenIndex
+    Type: BaseDataVariableType
+    DataType: Int32
+  - Name: TrendPenUIObjectConfigurationLogic
+    Type: NetLogic
+    Children:
+    - Name: Title
+      Type: BaseDataVariableType
+      DataType: LocalizedText
+    - Name: Enabled
+      Type: BaseDataVariableType
+      DataType: ns=0;Boolean
+    - Name: Thickness
+      Type: BaseDataVariableType
+      DataType: Size
+      Value: -1.0
+    - Name: PenBrowseName
+      Type: BaseDataVariableType
+      DataType: LocalizedText
+    - Name: Color
+      Type: BaseDataVariableType
+      DataType: Color

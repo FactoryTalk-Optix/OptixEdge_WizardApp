@@ -122,3 +122,117 @@ Children:
     Type: BaseDataVariableType
     DataType: String
     Value: "EdgeEmbeddedDatabase"
+  - Class: Reference
+    Target: ns=59;i=67
+    Direction: Forward
+- Name: TemporaryDatabase
+  Id: g=fc8abeba6b2f5bf11755028133aee905
+  Type: SQLiteStore
+  Children:
+  - Name: Tables
+    Id: g=00ed9de03de826dbb5e0a97cfb891d49
+    Type: BaseObjectType
+    Children:
+    - Name: PayloadReview
+      Id: g=3dce2020a5366fa702c76784fcfac18d
+      Type: SQLiteStoreTable
+      Children:
+      - Class: Reference
+        Target: ns=59;i=12
+        Direction: Forward
+      - Class: Reference
+        Target: ns=59;i=15
+        Direction: Forward
+      - Class: Reference
+        Target: ns=59;i=21
+        Direction: Forward
+      - Class: Reference
+        Target: ns=59;i=20
+        Direction: Forward
+      - Name: Columns
+        Id: g=a869142f3c0bd9e316bcd4bcab419cce
+        Type: BaseObjectType
+        Children:
+        - Name: ItemType
+          Id: g=d242689261f538cf9ce15c778b52b09a
+          Type: StoreColumn
+          DataType: String
+        - Name: Quantity
+          Id: g=526aa12c4d173fbdce5237b10828e992
+          Type: StoreColumn
+          DataType: UInt32
+  - Class: Reference
+    Target: ns=65;i=30
+    Direction: Forward
+  - Class: Reference
+    Target: ns=65;i=33
+    Direction: Forward
+  - Name: MaxColumnNameLength
+    Id: g=78a7cfdf9aafefb1a4c5b28bb6b88690
+    Type: BaseDataVariableType
+    DataType: UInt32
+    AccessLevel: Read
+  - Name: MaxColumnCount
+    Id: g=8550e7efa907510447b412faac1c8927
+    Type: BaseDataVariableType
+    DataType: UInt32
+    AccessLevel: Read
+  - Name: DataTypeCompatibilityMap
+    Id: g=0578c5d621d0e25eb16015618be9936a
+    Type: BaseDataVariableType
+    DataType: NodeId
+    AccessLevel: Read
+    ValueRank: OneOrMoreDimensions
+    ArrayDimensions: [0,0]
+  - Name: Status
+    Id: g=d42797e2be719b7bb37ced325ad54327
+    Type: PropertyType
+    DataType: StoreStatus
+    AccessLevel: Read
+    Value: 2
+  - Class: Reference
+    Target: ns=59;i=22
+    Direction: Forward
+  - Class: Reference
+    Target: ns=59;i=6
+    Direction: Forward
+  - Class: Reference
+    Target: ns=59;i=8
+    Direction: Forward
+  - Class: Reference
+    Target: ns=59;i=25
+    Direction: Forward
+  - Class: Reference
+    Target: ns=59;i=38
+    Direction: Forward
+  - Class: Reference
+    Target: ns=59;i=41
+    Direction: Forward
+  - Class: Reference
+    Target: ns=59;i=44
+    Direction: Forward
+  - Class: Reference
+    Target: ns=59;i=53
+    Direction: Forward
+  - Class: Reference
+    Target: ns=59;i=55
+    Direction: Forward
+  - Class: Reference
+    Target: ns=59;i=57
+    Direction: Forward
+  - Class: Reference
+    Target: ns=59;i=59
+    Direction: Forward
+  - Name: InMemory
+    Id: g=aa627dfb13bab93d0a3aacd0f28d2129
+    Type: BaseDataVariableType
+    DataType: ns=0;Boolean
+    Value: true
+  - Name: Filename
+    Id: g=669a8ca2e081588236b06c71e9e6483e
+    Type: BaseDataVariableType
+    DataType: String
+    Value: "TemporaryDatabase"
+  - Class: Reference
+    Target: ns=59;i=67
+    Direction: Forward

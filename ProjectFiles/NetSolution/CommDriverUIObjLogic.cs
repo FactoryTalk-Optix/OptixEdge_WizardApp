@@ -39,16 +39,22 @@ public class CommDriverUIObjLogic : BaseNetLogic
 {
     public override void Start()
     {
-        Accordion ownerAccordion = (Accordion) Owner.Owner;
-        if (ownerAccordion.GetAlias("CommDriverNode") is IUAObject communicationDriver)
-        {
-            CommonLogic.Instance.GenerateConfigurationWidgetFromSource(communicationDriver, ownerAccordion, InformationModel.Get(LogicObject.GetVariable("StationWidgetFolder").Value));
-        }
+        new LongRunningTask(GenerateWidgets, null, LogicObject).Start();
     }
 
     public override void Stop()
     {
         // nothing to do
+    }
+
+    private void GenerateWidgets(BaseTaskWrapper task, object arguments)
+    {
+        Accordion ownerAccordion = (Accordion)Owner.Owner;
+        if (ownerAccordion.GetAlias("CommDriverNode") is IUAObject communicationDriver)
+        {
+            CommonLogic.Instance.GenerateConfigurationWidgetFromSource(communicationDriver, ownerAccordion, InformationModel.Get(LogicObject.GetVariable("StationWidgetFolder").Value));
+        }
+        task.Dispose();
     }
     
 }

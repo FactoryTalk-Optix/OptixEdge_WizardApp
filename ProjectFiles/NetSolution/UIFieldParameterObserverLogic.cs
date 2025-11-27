@@ -29,26 +29,65 @@ using FTOptix.DataLogger;
 using FTOptix.MQTTClient;
 using FTOptix.Core;
 using FTOptix.NativeUI;
+using System.Linq;
+using System.Collections.Generic;
 #endregion
 
 public class UIFieldParameterObserverLogic : BaseNetLogic
 {
     public override void Start()
     {
-        if (Owner.Owner is Accordion ownerAccordionNode && ownerAccordionNode.FindByType<StationProps>() is IUAObject stationProps)
-        {
-            enableSaveParameter = stationProps.GetVariable("EnableSave");
-            RegistertUIItemChange(Owner);
-            eventsHandled = true;
-        }
+        ownerAccordionContent = Owner as AccordionContent;
+        // Delay the subscription to ensure that all UI elements are properly initialized
+        new DelayedTask(TaskRegisterUIItemChange, Owner, 200, ownerAccordionContent).Start();
     }
 
     public override void Stop()
     {
+        UnsubscribeObserver();
+    }
+
+    [ExportMethod]
+    public void UnsubscribeObserver()
+    {
         if (eventsHandled)
         {
             UnregisterUIItemChange(Owner);
+            eventsHandled = false;
         }
+    }
+
+    [ExportMethod]
+    public void SubscribeObserver()
+    {
+        new LongRunningTask(TaskRegisterUIItemChange, Owner, ownerAccordionContent).Start();
+    }
+
+    [ExportMethod]
+    public void SubscribeObserverSingleControl(NodeId uiItemToObserve)
+    {
+        RegistertUIItemChange(InformationModel.Get(uiItemToObserve));
+    }
+
+    [ExportMethod]
+    public void UnsubscribeObserverSingleControl(NodeId uiItemToObserve)
+    {
+        enableSaveParameter.Value = true;
+        UnregisterUIItemChange(InformationModel.Get(uiItemToObserve));
+    }
+
+    private void TaskRegisterUIItemChange(BaseTaskWrapper task, object argument)
+    {
+        if (argument is IUANode nodeToAnalyze)
+        {
+            if (ownerAccordionContent.Owner is Accordion ownerAccordionNode && ownerAccordionNode.FindByType<StationProps>() is IUAObject stationProps)
+            {
+                enableSaveParameter = stationProps.GetVariable("EnableSave");
+                RegistertUIItemChange(nodeToAnalyze);
+                eventsHandled = true;
+            }
+        }
+        task.Dispose();
     }
 
     private void RegistertUIItemChange(IUANode nodeToAnalyze)
@@ -60,22 +99,53 @@ public class UIFieldParameterObserverLogic : BaseNetLogic
                 switch (children)
                 {
                     case TextBox textBox:
-                        textBox.OnUserTextChanged += OnUserTextChanged;
+                        textBox.TextVariable.VariableChange += OnVariableChanged;
                         break;
                     case ComboBox comboBox:
-                        comboBox.OnUserSelectionChanged += OnUserSelectionChanged;
+                        comboBox.SelectedItemVariable.VariableChange += OnVariableChanged;
                         break;
                     case SpinBox spinBox:
-                        spinBox.OnUserValueChanged += OnUserValueChanged;
+                        spinBox.ValueVariable.VariableChange += OnVariableChanged;
                         break;
                     case Switch uiSwitch:
-                        uiSwitch.OnUserValueChanged += OnUserValueChanged;
+                        uiSwitch.CheckedVariable.VariableChange += OnVariableChanged;
                         break;
                     case DurationPicker durationPicker:
-                        durationPicker.OnUserValueChanged += OnUserValueChanged;
+                        durationPicker.ValueVariable.VariableChange += OnVariableChanged;
+                        break;
+                    case CheckBox checkBox:
+                        checkBox.CheckedVariable.VariableChange += OnVariableChanged;
+                        break;
+                    case DateTimePicker dateTimePicker:
+                        dateTimePicker.ValueVariable.VariableChange += OnVariableChanged;
+                        break;
+                    case Button:
+                        // Buttons do not require registration as they do not have user interaction events
+                        break;
+                    case Label:
+                        // Labels do not require registration as they do not have user interaction events
+                        break;
+                    case IUAVariable:
+                        // Avoid registration of variables that are not UI related
+                        break;
+                    case TagViewer tagViewer:
+                        tagViewer.GetVariable("CounterDeleteAction").VariableChange += OnVariableChanged;
+                        break;
+                    case FileValueContainer fileValueContainer:
+                        if (fileValueContainer.Find<IUAVariable>("PathSelected") is IUAVariable pathSelected)
+                        {
+                            pathSelected.VariableChange += OnVariableChanged;
+                        }
                         break;
                     case Accordion accordion:
-                        RegistertUIItemChange(accordion.Content);
+                        // Avoid multiple registration of the same UIFieldParameterObserverLogic in case of nested accordions
+                        if (accordion.Content.Get("UIFieldParameterObserverLogic") == null)
+                        {
+                            RegistertUIItemChange(accordion.Content);
+                        }
+                        break;
+                    case MQTTPayloadFieldBase mqttPayloadField:
+                        RegistertUIItemChange(mqttPayloadField);
                         break;
                     default:
                         RegistertUIItemChange(children);
@@ -94,22 +164,53 @@ public class UIFieldParameterObserverLogic : BaseNetLogic
                 switch (children)
                 {
                     case TextBox textBox:
-                        textBox.OnUserTextChanged -= OnUserTextChanged;
+                        textBox.TextVariable.VariableChange -= OnVariableChanged;
                         break;
                     case ComboBox comboBox:
-                        comboBox.OnUserSelectionChanged -= OnUserSelectionChanged;
+                        comboBox.SelectedItemVariable.VariableChange -= OnVariableChanged;
                         break;
                     case SpinBox spinBox:
-                        spinBox.OnUserValueChanged -= OnUserValueChanged;
+                        spinBox.ValueVariable.VariableChange -= OnVariableChanged;
                         break;
                     case FTOptix.UI.Switch uiSwitch:
-                        uiSwitch.OnUserValueChanged -= OnUserValueChanged;
+                        uiSwitch.CheckedVariable.VariableChange -= OnVariableChanged;
                         break;
                     case DurationPicker durationPicker:
-                        durationPicker.OnUserValueChanged -= OnUserValueChanged;
+                        durationPicker.ValueVariable.VariableChange -= OnVariableChanged;
+                        break;
+                    case CheckBox checkBox:
+                        checkBox.CheckedVariable.VariableChange -= OnVariableChanged;
+                        break;
+                    case DateTimePicker dateTimePicker:
+                        dateTimePicker.ValueVariable.VariableChange -= OnVariableChanged;
+                        break;
+                    case Button:
+                        // Buttons do not require unregistration as they do not have user interaction events
+                        break;
+                    case Label:
+                        // Labels do not require unregistration as they do not have user interaction events
+                        break;
+                    case IUAVariable:
+                        // Avoid unregistration of variables that are not UI related
+                        break;
+                    case TagViewer tagViewer:
+                        tagViewer.GetVariable("CounterDeleteAction").VariableChange -= OnVariableChanged;
+                        break;
+                    case FileValueContainer fileValueContainer:
+                        if (fileValueContainer.Find<IUAVariable>("PathSelected") is IUAVariable pathSelected)
+                        {
+                            pathSelected.VariableChange -= OnVariableChanged;
+                        }
                         break;
                     case Accordion accordion:
-                        UnregisterUIItemChange(accordion.Content);
+                        // Avoid multiple unregistration of the same UIFieldParameterObserverLogic in case of nested accordions
+                        if (accordion.Content.Get("UIFieldParameterObserverLogic") == null)
+                        {
+                            UnregisterUIItemChange(accordion.Content);
+                        }
+                        break;
+                    case MQTTPayloadFieldBase mqttPayloadField:
+                        UnregisterUIItemChange(mqttPayloadField);
                         break;
                     default:
                         UnregisterUIItemChange(children);
@@ -119,17 +220,15 @@ public class UIFieldParameterObserverLogic : BaseNetLogic
         }
     }
 
-    private void OnUserValueChanged(object sender, UserValueChangedEvent e) => ParameterChanged();
+    private void OnVariableChanged(object sender, VariableChangeEventArgs e) => ParameterChanged();
 
-    private void OnUserSelectionChanged(object sender, UserSelectionChangedEvent e) => ParameterChanged();
-
-    private void OnUserTextChanged(object sender, UserTextChangedEvent e) => ParameterChanged();
-
-    private void ParameterChanged()
+    [ExportMethod]
+    public void ParameterChanged()
     {
         enableSaveParameter.Value = true;
     }
 
     bool eventsHandled = false;
     IUAVariable enableSaveParameter;
+    AccordionContent ownerAccordionContent;
 }

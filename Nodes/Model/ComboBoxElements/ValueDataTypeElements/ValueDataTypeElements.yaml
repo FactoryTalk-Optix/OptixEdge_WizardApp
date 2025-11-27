@@ -1,0 +1,48 @@
+Name: ValueDataTypeElements
+Id: g=4ffbb44866d99b239d9839171044927c
+Type: FolderType
+Children:
+- Name: 0
+  Id: g=62e6254b8b1a183ae5b2a50d77f524c0
+  Type: BaseDataVariableType
+  DataType: Int16
+- Name: 1
+  Type: BaseDataVariableType
+  DataType: Int32
+- Name: 2
+  Type: BaseDataVariableType
+  DataType: Int64
+- Name: 3
+  Type: BaseDataVariableType
+  DataType: UInt16
+- Name: 4
+  Type: BaseDataVariableType
+  DataType: UInt32
+- Name: 5
+  Type: BaseDataVariableType
+  DataType: UInt64
+- Name: 6
+  Type: BaseDataVariableType
+  DataType: Byte
+- Name: 7
+  Type: BaseDataVariableType
+  DataType: SByte
+- Name: 8
+  Type: BaseDataVariableType
+  DataType: Float
+- Name: 9
+  Type: BaseDataVariableType
+  DataType: Double
+- Name: 10
+  Type: BaseDataVariableType
+  DataType: DateTime
+- Name: 11
+  Type: BaseDataVariableType
+  DataType: Duration
+- Name: 12
+  Type: BaseDataVariableType
+  DataType: String
+  Value: "0"
+- Name: 13
+  Type: BaseDataVariableType
+  DataType: ns=0;Boolean

@@ -308,3 +308,509 @@ Children:
     ValueRank: OneDimension
     ArrayDimensions: [0]
     Value: [{"TypeId":{"Id":7594},"Body":{"Value":0,"DisplayName":{"LocaleId":"en-US","Text":"TopLeft"},"Description":{"NamespaceIndex":-1,"LocaleId":"","Text":""}}},{"TypeId":{"Id":7594},"Body":{"Value":1,"DisplayName":{"LocaleId":"en-US","Text":"TopRight"},"Description":{"NamespaceIndex":-1,"LocaleId":"","Text":""}}},{"TypeId":{"Id":7594},"Body":{"Value":2,"DisplayName":{"LocaleId":"en-US","Text":"TopCenter"},"Description":{"NamespaceIndex":-1,"LocaleId":"","Text":""}}},{"TypeId":{"Id":7594},"Body":{"Value":3,"DisplayName":{"LocaleId":"en-US","Text":"CenterLeft"},"Description":{"NamespaceIndex":-1,"LocaleId":"","Text":""}}},{"TypeId":{"Id":7594},"Body":{"Value":4,"DisplayName":{"LocaleId":"en-US","Text":"CenterRight"},"Description":{"NamespaceIndex":-1,"LocaleId":"","Text":""}}},{"TypeId":{"Id":7594},"Body":{"Value":5,"DisplayName":{"LocaleId":"en-US","Text":"CenterCenter"},"Description":{"NamespaceIndex":-1,"LocaleId":"","Text":""}}},{"TypeId":{"Id":7594},"Body":{"Value":6,"DisplayName":{"LocaleId":"en-US","Text":"BottomLeft"},"Description":{"NamespaceIndex":-1,"LocaleId":"","Text":""}}},{"TypeId":{"Id":7594},"Body":{"Value":7,"DisplayName":{"LocaleId":"en-US","Text":"BottomRight"},"Description":{"NamespaceIndex":-1,"LocaleId":"","Text":""}}},{"TypeId":{"Id":7594},"Body":{"Value":8,"DisplayName":{"LocaleId":"en-US","Text":"BottomCenter"},"Description":{"NamespaceIndex":-1,"LocaleId":"","Text":""}}}]
+- Class: DataType
+  Name: LinkDirection
+  Id: g=28fd70e904be9fe1931e312420020175
+  Supertype: Enumeration
+  EnumDefinition: 
+   {
+    "Name": "LinkDirection",
+    "DataType": {
+     "IdType": 2,
+     "Id": "28fd70e904be9fe1931e312420020175",
+     "Namespace": 7
+    },
+    "Fields": [{
+      "Name": "Value0",
+      "Value": 0,
+      "DisplayName": {
+       "LocaleId": "en-US",
+       "Text": "R"
+      },
+      "Description": {
+       "LocaleId": "en-US",
+       "Text": "Read"
+      }
+     },{
+      "Name": "Value1",
+      "Value": 1,
+      "DisplayName": {
+       "LocaleId": "en-US",
+       "Text": "W"
+      },
+      "Description": {
+       "LocaleId": "en-US",
+       "Text": "Write"
+      }
+     },{
+      "Name": "Value2",
+      "Value": 2,
+      "DisplayName": {
+       "LocaleId": "en-US",
+       "Text": "R/W"
+      },
+      "Description": {
+       "LocaleId": "en-US",
+       "Text": "Read & Write"
+      }
+     }]
+   }
+  Children:
+  - Name: ns=0;EnumValues
+    Type: BaseDataVariableType
+    DataType: EnumValueType
+    ModellingRule: None
+    ValueRank: OneDimension
+    ArrayDimensions: [0]
+    Value: [{"TypeId":{"Id":7594},"Body":{"Value":0,"DisplayName":{"LocaleId":"en-US","Text":"R"},"Description":{"LocaleId":"en-US","Text":"Read"}}},{"TypeId":{"Id":7594},"Body":{"Value":1,"DisplayName":{"LocaleId":"en-US","Text":"W"},"Description":{"LocaleId":"en-US","Text":"Write"}}},{"TypeId":{"Id":7594},"Body":{"Value":2,"DisplayName":{"LocaleId":"en-US","Text":"R/W"},"Description":{"LocaleId":"en-US","Text":"Read & Write"}}}]
+- Class: DataType
+  Name: FileSelectorEntryType
+  Id: g=92dc45fa38ee72804e2d49988290e3d8
+  Supertype: Enumeration
+  EnumDefinition: 
+   {
+    "Name": "FileSelectorEntryType",
+    "DataType": {
+     "IdType": 2,
+     "Id": "92dc45fa38ee72804e2d49988290e3d8",
+     "Namespace": 7
+    },
+    "Fields": [{
+      "Name": "Value0",
+      "Value": 0,
+      "DisplayName": {
+       "LocaleId": "en-US",
+       "Text": "File"
+      }
+     },{
+      "Name": "Value1",
+      "Value": 1,
+      "DisplayName": {
+       "LocaleId": "en-US",
+       "Text": "Folder"
+      }
+     },{
+      "Name": "Value2",
+      "Value": 2,
+      "DisplayName": {
+       "LocaleId": "en-US",
+       "Text": "Current folder"
+      }
+     }]
+   }
+  Children:
+  - Name: ns=0;EnumValues
+    Type: BaseDataVariableType
+    DataType: EnumValueType
+    ModellingRule: None
+    ValueRank: OneDimension
+    ArrayDimensions: [0]
+    Value: [{"TypeId":{"Id":7594},"Body":{"Value":0,"DisplayName":{"LocaleId":"en-US","Text":"File"},"Description":{"NamespaceIndex":-1,"LocaleId":"","Text":""}}},{"TypeId":{"Id":7594},"Body":{"Value":1,"DisplayName":{"LocaleId":"en-US","Text":"Folder"},"Description":{"NamespaceIndex":-1,"LocaleId":"","Text":""}}},{"TypeId":{"Id":7594},"Body":{"Value":2,"DisplayName":{"LocaleId":"en-US","Text":"Current folder"},"Description":{"NamespaceIndex":-1,"LocaleId":"","Text":""}}}]
+- Class: DataType
+  Name: ConfirmOverwriteFileResult
+  Id: g=6f2960d57ebc28bd54cf0fc2bcebcda3
+  Supertype: Enumeration
+  EnumDefinition: 
+   {
+    "Name": "ConfirmOverwriteFileResult",
+    "DataType": {
+     "IdType": 2,
+     "Id": "6f2960d57ebc28bd54cf0fc2bcebcda3",
+     "Namespace": 7
+    },
+    "Fields": [{
+      "Name": "Value0",
+      "Value": 1,
+      "DisplayName": {
+       "LocaleId": "en-US",
+       "Text": "Confirmed"
+      }
+     },{
+      "Name": "Value1",
+      "Value": 99,
+      "DisplayName": {
+       "LocaleId": "en-US",
+       "Text": "Cancel"
+      }
+     },{
+      "Name": "Value2",
+      "Value": 0,
+      "DisplayName": {
+       "LocaleId": "en-US",
+       "Text": "No entry"
+      }
+     }]
+   }
+  Children:
+  - Name: ns=0;EnumValues
+    Type: BaseDataVariableType
+    DataType: EnumValueType
+    ModellingRule: None
+    ValueRank: OneDimension
+    ArrayDimensions: [0]
+    Value: [{"TypeId":{"Id":7594},"Body":{"Value":1,"DisplayName":{"LocaleId":"en-US","Text":"Confirmed"},"Description":{"NamespaceIndex":-1,"LocaleId":"","Text":""}}},{"TypeId":{"Id":7594},"Body":{"Value":99,"DisplayName":{"LocaleId":"en-US","Text":"Cancel"},"Description":{"NamespaceIndex":-1,"LocaleId":"","Text":""}}},{"TypeId":{"Id":7594},"Body":{"Value":0,"DisplayName":{"LocaleId":"en-US","Text":"No entry"},"Description":{"NamespaceIndex":-1,"LocaleId":"","Text":""}}}]
+- Class: DataType
+  Name: MQTTPublisherPayloadKind
+  Id: g=6813da2447cede6596b0cd2ee4aea41d
+  Supertype: Enumeration
+  EnumDefinition: 
+   {
+    "Name": "MQTTPublisherPayloadKind",
+    "DataType": {
+     "IdType": 2,
+     "Id": "6813da2447cede6596b0cd2ee4aea41d",
+     "Namespace": 7
+    },
+    "Fields": [{
+      "Name": "Value0",
+      "Value": 0,
+      "DisplayName": {
+       "LocaleId": "en-US",
+       "Text": "FactoryTalk Optix"
+      }
+     },{
+      "Name": "Value1",
+      "Value": 1,
+      "DisplayName": {
+       "LocaleId": "en-US",
+       "Text": "Custom"
+      }
+     }]
+   }
+  Children:
+  - Name: ns=0;EnumValues
+    Type: BaseDataVariableType
+    DataType: EnumValueType
+    ModellingRule: None
+    ValueRank: OneDimension
+    ArrayDimensions: [0]
+    Value: [{"TypeId":{"Id":7594},"Body":{"Value":0,"DisplayName":{"LocaleId":"en-US","Text":"FactoryTalk Optix"},"Description":{"NamespaceIndex":-1,"LocaleId":"","Text":""}}},{"TypeId":{"Id":7594},"Body":{"Value":1,"DisplayName":{"LocaleId":"en-US","Text":"Custom"},"Description":{"NamespaceIndex":-1,"LocaleId":"","Text":""}}}]
+- Class: DataType
+  Name: MQTTPayloadFieldKind
+  Id: g=0efb5c9623c5414eb5b9a97bc810f98a
+  Supertype: Enumeration
+  EnumDefinition: 
+   {
+    "Name": "MQTTPayloadFieldKind",
+    "DataType": {
+     "IdType": 2,
+     "Id": "0efb5c9623c5414eb5b9a97bc810f98a",
+     "Namespace": 7
+    },
+    "Fields": [{
+      "Name": "Value0",
+      "Value": 0,
+      "DisplayName": {
+       "LocaleId": "en-US",
+       "Text": "Field"
+      },
+      "Description": {
+       "LocaleId": "en-US",
+       "Text": "JSON field key-value"
+      }
+     },{
+      "Name": "Value1",
+      "Value": 1,
+      "DisplayName": {
+       "LocaleId": "en-US",
+       "Text": "Array Field"
+      },
+      "Description": {
+       "LocaleId": "en-US",
+       "Text": "JSON field key-array value"
+      }
+     },{
+      "Name": "Value2",
+      "Value": 2,
+      "DisplayName": {
+       "LocaleId": "en-US",
+       "Text": "Nested object"
+      },
+      "Description": {
+       "LocaleId": "en-US",
+       "Text": "JSON nested object container"
+      }
+     },{
+      "Name": "Value3",
+      "Value": 3,
+      "DisplayName": {
+       "LocaleId": "en-US",
+       "Text": "Variables container"
+      },
+      "Description": {
+       "LocaleId": "en-US",
+       "Text": "Placeholder filled with variable collection"
+      }
+     },{
+      "Name": "Value4",
+      "Value": 4,
+      "DisplayName": {
+       "LocaleId": "en-US",
+       "Text": "Array Nested object"
+      },
+      "Description": {
+       "LocaleId": "en-US",
+       "Text": "JSON array of nested object"
+      }
+     },{
+      "Name": "Value5",
+      "Value": 5,
+      "DisplayName": {
+       "LocaleId": "en-US",
+       "Text": "Root node"
+      },
+      "Description": {
+       "LocaleId": "en-US",
+       "Text": "JSON root node"
+      }
+     },{
+      "Name": "Value6",
+      "Value": 6,
+      "DisplayName": {
+       "LocaleId": "en-US",
+       "Text": "Local timestamp"
+      },
+      "Description": {
+       "LocaleId": "en-US",
+       "Text": "Timestamp field filled with actual localtime"
+      }
+     },{
+      "Name": "Value7",
+      "Value": 7,
+      "DisplayName": {
+       "LocaleId": "en-US",
+       "Text": "UTC timestamp"
+      },
+      "Description": {
+       "LocaleId": "en-US",
+       "Text": "Timestamp field filled with UTC timestamp"
+      }
+     },{
+      "Name": "Value8",
+      "Value": 8,
+      "DisplayName": {
+       "LocaleId": "en-US",
+       "Text": "Array Nested object element"
+      },
+      "Description": {
+       "LocaleId": "en-US",
+       "Text": "JSON nested object container in array"
+      }
+     }]
+   }
+  Children:
+  - Name: ns=0;EnumValues
+    Type: BaseDataVariableType
+    DataType: EnumValueType
+    ModellingRule: None
+    ValueRank: OneDimension
+    ArrayDimensions: [0]
+    Value: [{"TypeId":{"Id":7594},"Body":{"Value":0,"DisplayName":{"LocaleId":"en-US","Text":"Field"},"Description":{"LocaleId":"en-US","Text":"JSON field key-value"}}},{"TypeId":{"Id":7594},"Body":{"Value":1,"DisplayName":{"LocaleId":"en-US","Text":"Array Field"},"Description":{"LocaleId":"en-US","Text":"JSON field key-array value"}}},{"TypeId":{"Id":7594},"Body":{"Value":2,"DisplayName":{"LocaleId":"en-US","Text":"Nested object"},"Description":{"LocaleId":"en-US","Text":"JSON nested object container"}}},{"TypeId":{"Id":7594},"Body":{"Value":3,"DisplayName":{"LocaleId":"en-US","Text":"Variables container"},"Description":{"LocaleId":"en-US","Text":"Placeholder filled with variable collection"}}},{"TypeId":{"Id":7594},"Body":{"Value":4,"DisplayName":{"LocaleId":"en-US","Text":"Array Nested object"},"Description":{"LocaleId":"en-US","Text":"JSON array of nested object"}}},{"TypeId":{"Id":7594},"Body":{"Value":5,"DisplayName":{"LocaleId":"en-US","Text":"Root node"},"Description":{"LocaleId":"en-US","Text":"JSON root node"}}},{"TypeId":{"Id":7594},"Body":{"Value":6,"DisplayName":{"LocaleId":"en-US","Text":"Local timestamp"},"Description":{"LocaleId":"en-US","Text":"Timestamp field filled with actual localtime"}}},{"TypeId":{"Id":7594},"Body":{"Value":7,"DisplayName":{"LocaleId":"en-US","Text":"UTC timestamp"},"Description":{"LocaleId":"en-US","Text":"Timestamp field filled with UTC timestamp"}}},{"TypeId":{"Id":7594},"Body":{"Value":8,"DisplayName":{"LocaleId":"en-US","Text":"Array Nested object element"},"Description":{"LocaleId":"en-US","Text":"JSON nested object container in array"}}}]
+- Class: DataType
+  Name: MQTTPayloadFieldKindUIField
+  Id: g=4a5ed31c9fefb003ffdeac710afa126a
+  Supertype: Enumeration
+  EnumDefinition: 
+   {
+    "Name": "MQTTPayloadFieldKindUIField",
+    "DataType": {
+     "IdType": 2,
+     "Id": "4a5ed31c9fefb003ffdeac710afa126a",
+     "Namespace": 7
+    },
+    "Fields": [{
+      "Name": "Value0",
+      "Value": 0,
+      "DisplayName": {
+       "LocaleId": "en-US",
+       "Text": "Field"
+      },
+      "Description": {
+       "LocaleId": "en-US",
+       "Text": "JSON field key-value"
+      }
+     },{
+      "Name": "Value1",
+      "Value": 1,
+      "DisplayName": {
+       "LocaleId": "en-US",
+       "Text": "Array Field"
+      },
+      "Description": {
+       "LocaleId": "en-US",
+       "Text": "JSON field key-array value"
+      }
+     },{
+      "Name": "Value2",
+      "Value": 6,
+      "DisplayName": {
+       "LocaleId": "en-US",
+       "Text": "Local timestamp field"
+      },
+      "Description": {
+       "LocaleId": "en-US",
+       "Text": "Timestamp field filled with actual localtime"
+      }
+     },{
+      "Name": "Value3",
+      "Value": 7,
+      "DisplayName": {
+       "LocaleId": "en-US",
+       "Text": "UTC timestamp field"
+      },
+      "Description": {
+       "LocaleId": "en-US",
+       "Text": "Timestamp field filled with UTC timestamp"
+      }
+     }]
+   }
+  Children:
+  - Name: ns=0;EnumValues
+    Type: BaseDataVariableType
+    DataType: EnumValueType
+    ModellingRule: None
+    ValueRank: OneDimension
+    ArrayDimensions: [0]
+    Value: [{"TypeId":{"Id":7594},"Body":{"Value":0,"DisplayName":{"LocaleId":"en-US","Text":"Field"},"Description":{"LocaleId":"en-US","Text":"JSON field key-value"}}},{"TypeId":{"Id":7594},"Body":{"Value":1,"DisplayName":{"LocaleId":"en-US","Text":"Array Field"},"Description":{"LocaleId":"en-US","Text":"JSON field key-array value"}}},{"TypeId":{"Id":7594},"Body":{"Value":6,"DisplayName":{"LocaleId":"en-US","Text":"Local timestamp field"},"Description":{"LocaleId":"en-US","Text":"Timestamp field filled with actual localtime"}}},{"TypeId":{"Id":7594},"Body":{"Value":7,"DisplayName":{"LocaleId":"en-US","Text":"UTC timestamp field"},"Description":{"LocaleId":"en-US","Text":"Timestamp field filled with UTC timestamp"}}}]
+- Class: DataType
+  Name: CloseDialogRequest
+  Id: g=a690f62f54add1e9e5e965d4372c3c15
+  Supertype: Enumeration
+  EnumDefinition: 
+   {
+    "Name": "CloseDialogRequest",
+    "DataType": {
+     "IdType": 2,
+     "Id": "a690f62f54add1e9e5e965d4372c3c15",
+     "Namespace": 7
+    },
+    "Fields": [{
+      "Name": "Value0",
+      "Value": 0,
+      "DisplayName": {
+       "LocaleId": "en-US",
+       "Text": "Default"
+      }
+     },{
+      "Name": "Value1",
+      "Value": 1,
+      "DisplayName": {
+       "LocaleId": "en-US",
+       "Text": "Close without save"
+      }
+     },{
+      "Name": "Value2",
+      "Value": 2,
+      "DisplayName": {
+       "LocaleId": "en-US",
+       "Text": "Close and save"
+      }
+     }]
+   }
+  Children:
+  - Name: ns=0;EnumValues
+    Type: BaseDataVariableType
+    DataType: EnumValueType
+    ModellingRule: None
+    ValueRank: OneDimension
+    ArrayDimensions: [0]
+    Value: [{"TypeId":{"Id":7594},"Body":{"Value":0,"DisplayName":{"LocaleId":"en-US","Text":"Default"},"Description":{"NamespaceIndex":-1,"LocaleId":"","Text":""}}},{"TypeId":{"Id":7594},"Body":{"Value":1,"DisplayName":{"LocaleId":"en-US","Text":"Close without save"},"Description":{"NamespaceIndex":-1,"LocaleId":"","Text":""}}},{"TypeId":{"Id":7594},"Body":{"Value":2,"DisplayName":{"LocaleId":"en-US","Text":"Close and save"},"Description":{"NamespaceIndex":-1,"LocaleId":"","Text":""}}}]
+- Class: DataType
+  Name: MQTTPayloadFieldKindUIAdd
+  Id: g=077aef014bd9fc981a5e25860604352a
+  Supertype: Enumeration
+  EnumDefinition: 
+   {
+    "Name": "MQTTPayloadFieldKindUIAdd",
+    "DataType": {
+     "IdType": 2,
+     "Id": "077aef014bd9fc981a5e25860604352a",
+     "Namespace": 7
+    },
+    "Fields": [{
+      "Name": "Value0",
+      "Value": 0,
+      "DisplayName": {
+       "LocaleId": "en-US",
+       "Text": "Field"
+      },
+      "Description": {
+       "LocaleId": "en-US",
+       "Text": "A basic JSON key-value pair"
+      }
+     },{
+      "Name": "Value1",
+      "Value": 1,
+      "DisplayName": {
+       "LocaleId": "en-US",
+       "Text": "Array Field"
+      },
+      "Description": {
+       "LocaleId": "en-US",
+       "Text": "A JSON key with an array of values"
+      }
+     },{
+      "Name": "Value2",
+      "Value": 2,
+      "DisplayName": {
+       "LocaleId": "en-US",
+       "Text": "Nested object"
+      },
+      "Description": {
+       "LocaleId": "en-US",
+       "Text": "A JSON object nested within another object"
+      }
+     },{
+      "Name": "Value3",
+      "Value": 3,
+      "DisplayName": {
+       "LocaleId": "en-US",
+       "Text": "Variables container"
+      },
+      "Description": {
+       "LocaleId": "en-US",
+       "Text": "A placeholder populated with variables."
+      }
+     },{
+      "Name": "Value4",
+      "Value": 4,
+      "DisplayName": {
+       "LocaleId": "en-US",
+       "Text": "Array Nested object"
+      },
+      "Description": {
+       "LocaleId": "en-US",
+       "Text": "A JSON array containing multiple nested objects"
+      }
+     },{
+      "Name": "Value5",
+      "Value": 6,
+      "DisplayName": {
+       "LocaleId": "en-US",
+       "Text": "Local timestamp field"
+      },
+      "Description": {
+       "LocaleId": "en-US",
+       "Text": "A timestamp field filled with the current local time"
+      }
+     },{
+      "Name": "Value6",
+      "Value": 7,
+      "DisplayName": {
+       "LocaleId": "en-US",
+       "Text": "UTC timestamp field"
+      },
+      "Description": {
+       "LocaleId": "en-US",
+       "Text": "A timestamp field filled with the current UTC time"
+      }
+     }]
+   }
+  Children:
+  - Name: ns=0;EnumValues
+    Type: BaseDataVariableType
+    DataType: EnumValueType
+    ModellingRule: None
+    ValueRank: OneDimension
+    ArrayDimensions: [0]
+    Value: [{"TypeId":{"Id":7594},"Body":{"Value":0,"DisplayName":{"LocaleId":"en-US","Text":"Field"},"Description":{"LocaleId":"en-US","Text":"A basic JSON key-value pair"}}},{"TypeId":{"Id":7594},"Body":{"Value":1,"DisplayName":{"LocaleId":"en-US","Text":"Array Field"},"Description":{"LocaleId":"en-US","Text":"A JSON key with an array of values"}}},{"TypeId":{"Id":7594},"Body":{"Value":2,"DisplayName":{"LocaleId":"en-US","Text":"Nested object"},"Description":{"LocaleId":"en-US","Text":"A JSON object nested within another object"}}},{"TypeId":{"Id":7594},"Body":{"Value":3,"DisplayName":{"LocaleId":"en-US","Text":"Variables container"},"Description":{"LocaleId":"en-US","Text":"A placeholder populated with variables."}}},{"TypeId":{"Id":7594},"Body":{"Value":4,"DisplayName":{"LocaleId":"en-US","Text":"Array Nested object"},"Description":{"LocaleId":"en-US","Text":"A JSON array containing multiple nested objects"}}},{"TypeId":{"Id":7594},"Body":{"Value":6,"DisplayName":{"LocaleId":"en-US","Text":"Local timestamp field"},"Description":{"LocaleId":"en-US","Text":"A timestamp field filled with the current local time"}}},{"TypeId":{"Id":7594},"Body":{"Value":7,"DisplayName":{"LocaleId":"en-US","Text":"UTC timestamp field"},"Description":{"LocaleId":"en-US","Text":"A timestamp field filled with the current UTC time"}}}]

@@ -80,29 +80,30 @@ public class NotificationsMessageHandlerLogic : BaseNetLogic
             toastConfigurationData.DurationOnScreen = toastToGenerate.DurationOnScreen;
             toastConfigurationData.CounterVariable = toastToGenerate.DurationOnScreen;
             toastBannerTemporaryConfigurationFodler.Add(toastConfigurationData);
-            var dialogType = InformationModel.Get<DialogType>( OptixEdge_WizardApp.ObjectTypes.ToastNotification);
+            var dialogType = InformationModel.Get<DialogType>(OptixEdge_WizardApp.ObjectTypes.ToastNotification);
             UICommands.OpenDialog(Owner, dialogType, toastConfigurationData.NodeId);
         }
         if (globalBanner != null && !globalBanner.Visible && bannerRequestQueue.TryDequeue(out NotificationMessageConfiguration bannerMessageToDisplay))
         {
             globalBanner.GetVariable("NotificationLevel").Value = (int)bannerMessageToDisplay.Level;
             globalBanner.GetVariable("MessageToDisplay").Value = new LocalizedText(bannerMessageToDisplay.Messagge, "");
+            globalBanner.GetVariable("AlwaysOn").Value = bannerMessageToDisplay.AlwaysOn;
             globalBanner.Visible = true;
         }
     }
 
-    public void RequestToastNotification (ToastBannerNotificationLevel level, string message, ToastPosition position = ToastPosition.BottomCenter, int durationOnScreen = -1)
+    public void RequestToastNotification(ToastBannerNotificationLevel level, string message, ToastPosition position = ToastPosition.BottomCenter, int durationOnScreen = -1)
     {
         var duration = durationOnScreen;
         if (duration == -1)
         {
             duration = level switch
             {
-                ToastBannerNotificationLevel.Error => 4000,
-                ToastBannerNotificationLevel.Warning => 2400,
-                ToastBannerNotificationLevel.Info => 1300,
-                ToastBannerNotificationLevel.Success => 1600,
-                _ => 2000
+                ToastBannerNotificationLevel.Error => 6000,
+                ToastBannerNotificationLevel.Warning => 3500,
+                ToastBannerNotificationLevel.Info => 2000,
+                ToastBannerNotificationLevel.Success => 2500,
+                _ => 4000
             };
         }
         var toastConfigurationData = new NotificationMessageConfiguration()
@@ -115,7 +116,7 @@ public class NotificationsMessageHandlerLogic : BaseNetLogic
         toastRequestQueue.Enqueue(toastConfigurationData);
     }
 
-    public void RequestBannerNotification(ToastBannerNotificationLevel level, string message)
+    public void RequestBannerNotification(ToastBannerNotificationLevel level, string message, bool alwaysOn = false)
     {
         if (globalBanner != null)
         {
@@ -123,6 +124,7 @@ public class NotificationsMessageHandlerLogic : BaseNetLogic
             {
                 Level = level,
                 Messagge = message,
+                AlwaysOn = alwaysOn
             };
             bannerRequestQueue.Enqueue(bannerConfigurationData);
         }
@@ -136,36 +138,36 @@ public class NotificationsMessageHandlerLogic : BaseNetLogic
 
     private ConcurrentQueue<NotificationMessageConfiguration> bannerRequestQueue;
 
-    private Folder toastBannerTemporaryConfigurationFodler; 
+    private Folder toastBannerTemporaryConfigurationFodler;
 
 }
 
-    public record NotificationMessageConfiguration
-    {
-        public ToastBannerNotificationLevel Level { get; init; } = ToastBannerNotificationLevel.Info;
-        public ToastPosition Position { get; init; } = ToastPosition.BottomCenter;
-        public string Messagge { get; init; } = String.Empty;
+public record NotificationMessageConfiguration
+{
+    public ToastBannerNotificationLevel Level { get; init; } = ToastBannerNotificationLevel.Info;
+    public ToastPosition Position { get; init; } = ToastPosition.BottomCenter;
+    public string Messagge { get; init; } = String.Empty;
+    public int DurationOnScreen { get; init; } = 3000;
+    public bool AlwaysOn { get; init; } = false;
+}
 
-        public int DurationOnScreen {get; init; } = 3000;
-    }
-    
-    public enum ToastBannerNotificationLevel
-    {
-        Error = 0,
-        Info = 1,
-        Success = 2,
-        Warning = 3
-    }
+public enum ToastBannerNotificationLevel
+{
+    Error = 0,
+    Info = 1,
+    Success = 2,
+    Warning = 3
+}
 
-    public enum ToastPosition
-    {
-        TopLeft = 0,
-        TopRight = 1,
-        TopCenter = 2,
-        CenterLeft = 3,
-        CenterRight = 4,
-        CenterCenter = 5,
-        BottomLeft = 6,
-        BottomRight = 7,
-        BottomCenter = 8
-    }
+public enum ToastPosition
+{
+    TopLeft = 0,
+    TopRight = 1,
+    TopCenter = 2,
+    CenterLeft = 3,
+    CenterRight = 4,
+    CenterCenter = 5,
+    BottomLeft = 6,
+    BottomRight = 7,
+    BottomCenter = 8
+}

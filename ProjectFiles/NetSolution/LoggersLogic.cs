@@ -81,21 +81,30 @@ public class LoggersLogic : BaseNetLogic
                 var sourceStation = (DataLogger)widgetNode.GetAlias(stationNodeAlias);
                 if (sourceStation == null)
                 {
+                    // Temporarily impersonate root to perform the creation in the right context
+                    var sessionHandler = LogicObject.Context.Sessions.ImpersonateRootTemporary();
                     sourceStation = InformationModel.Make<DataLogger>(editStation.BrowseName);
                     ApplyProperties(sourceStation, editStation, 0);
                     Project.Current.Get<Folder>(CommonLogic.LoggersFolderPath).Add(sourceStation);
+                    // Return to UI session context
+                    sessionHandler.Dispose();
                     widgetNode.SetAlias(stationNodeAlias, sourceStation);
                     if (InformationModel.GetObject(sourceStation.Store) is Store loggerStore && loggerStore.Tables.Get(sourceStation.BrowseName) is Table loggerStoreTable)
                     {
                         loggerStoreTable.RecordLimit = widgetNode.GetVariable("TableRecordLimits").Value;
                     }
+                    CommonLogic.GenerateAndAttachTagViewer(widgetNode, CommonLogic.TagViewerCommunicationDriverAliasSourceLink);
                     NotificationsMessageHandlerLogic.Instance.RequestToastNotification(ToastBannerNotificationLevel.Success, $"New datalogger successfully created");
                 }
                 else
                 {
+                    // Temporarily impersonate root to perform the creation in the right context
+                    var sessionHandler = LogicObject.Context.Sessions.ImpersonateRootTemporary();
                     sourceStation.Stop();
                     ApplyProperties(sourceStation, editStation, widgetNode.GetVariable("TableRecordLimits").Value);
                     sourceStation.Start();
+                    // Return to UI session context
+                    sessionHandler.Dispose();
                     NotificationsMessageHandlerLogic.Instance.RequestToastNotification(ToastBannerNotificationLevel.Success, $"Parameters for Datalogger {sourceStation.BrowseName} successfully saved.");
                 }
                 widgetNode.Find("StationActions").GetVariable("EnableImport").Value = true;

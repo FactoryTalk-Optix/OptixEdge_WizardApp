@@ -1,0 +1,38 @@
+<svg width="496" height="80" xmlns="http://www.w3.org/2000/svg">
+  <!-- Step 1 -->
+  <circle id="step-1" cx="50" cy="32" r="20" fill="#ccc"/>
+  <text id="label-1" x="50" y="37" text-anchor="middle" fill="white" font-size="16" font-family="Noto Sans">1</text>
+  <text x="50" y="67" text-anchor="middle" fill="#333" font-size="12" font-family="Noto Sans">Start</text>
+
+  <!-- Connecting bar between step 1 and 2 -->
+  <rect id="line1" x="75" y="30" width="50" height="4" rx="2" ry="2" fill="#ccc"/>
+
+  <!-- Step 2 -->
+  <circle id="step-2" cx="150" cy="32" r="20" fill="#ccc"/>
+  <text id="label-2" x="150" y="37" text-anchor="middle" fill="white" font-size="16" font-family="Noto Sans">2</text>
+  <text x="150" y="67" text-anchor="middle" fill="#333" font-size="12" font-family="Noto Sans">Check</text>
+
+  <!-- Connecting bar between step 2 and 3 -->
+  <rect id="line2" x="175" y="30" width="50" height="4" rx="2" ry="2" fill="#ccc"/>
+
+  <!-- Step 3 -->
+  <circle id="step-3" cx="250" cy="32" r="20" fill="#ccc"/>
+  <text id="label-3" x="250" y="37" text-anchor="middle" fill="white" font-size="16" font-family="Noto Sans">3</text>
+  <text x="250" y="67" text-anchor="middle" fill="#333" font-size="12" font-family="Noto Sans">Approval</text>
+
+  <!-- Connecting bar between step 3 and 4 -->
+  <rect id="line3" x="275" y="30" width="50" height="4" rx="2" ry="2" fill="#ccc"/>
+
+  <!-- Step 4 -->
+  <circle id="step-4" cx="350" cy="32" r="20" fill="#ccc"/>
+  <text id="label-4" x="350" y="37" text-anchor="middle" fill="white" font-size="16" font-family="Noto Sans">4</text>
+  <text x="350" y="67" text-anchor="middle" fill="#333" font-size="12" font-family="Noto Sans">Confirm</text>
+
+  <!-- Connecting bar between step 4 and final check -->
+  <rect id="line4" x="375" y="30" width="50" height="4" rx="2" ry="2" fill="#ccc"/>
+
+  <!-- Final check step with transparent fill -->
+  <circle id="step-check" cx="450" cy="32" r="20" fill="none" stroke="#235d9f" stroke-width="2"/>
+  <polyline id="check-icon" points="440,32 448,40 460,24" fill="none" stroke="#235d9f" stroke-width="3"/>
+  <text x="450" y="67" text-anchor="middle" fill="#235d9f" font-size="12" font-family="Noto Sans">Done</text>
+</svg>

@@ -159,22 +159,25 @@ Children:
         Type: BaseDataVariableType
         DataType: Color
         Value: "#ffffff"
-    - Name: Transparent1
+    - Name: GreyButton
       Type: ButtonStyle
       Children:
       - Name: Color
         Type: BaseDataVariableType
         DataType: Color
+        Value: "#b3b3b3"
       - Name: BorderColor
         Type: BaseDataVariableType
         DataType: Color
-        Value: "#b3b3b3"
-      - Name: BorderWidth
+        Value: "#cfcfcf"
+      - Name: TextColor
         Type: BaseDataVariableType
-        DataType: Size
-      - Name: Radius
+        DataType: Color
+        Value: "#ffffff"
+      - Name: PressedColor
         Type: BaseDataVariableType
-        DataType: Size
+        DataType: Color
+        Value: "#9fccff3a"
   - Name: InputBoxStyles
     Type: BaseObjectType
     Children:
@@ -301,6 +304,17 @@ Children:
     Children:
     - Name: Default
       Type: DataListStyle
+    - Name: InfoDialogChoose
+      Type: DataListStyle
+      Children:
+      - Name: HeaderFontWeight
+        Type: BaseDataVariableType
+        DataType: FontWeightEnum
+        Value: 400
+      - Name: HeaderFontItalic
+        Type: BaseDataVariableType
+        DataType: ns=0;Boolean
+        Value: true
   - Name: ToolTipStyles
     Type: BaseObjectType
     Children:
@@ -363,6 +377,17 @@ Children:
     Children:
     - Name: Default
       Type: LabelStyle
+    - Name: AdditionalInfo
+      Type: LabelStyle
+      Children:
+      - Name: FontItalic
+        Type: BaseDataVariableType
+        DataType: ns=0;Boolean
+        Value: true
+      - Name: TextColor
+        Type: BaseDataVariableType
+        DataType: Color
+        Value: "#b3b3b3"
   - Name: RadioButtonStyles
     Type: BaseObjectType
     Children:
@@ -430,10 +455,30 @@ Children:
     Type: BaseDataVariableType
     DataType: String
     Value: "0.0.0.0"
+    Children:
+    - Name: DynamicLink
+      Type: DynamicLink
+      DataType: NodePath
+      Value: "../../../Model/ApplicationSettings/WPEConfiguration/IPAddress"
+      Children:
+      - Name: Mode
+        Type: BaseVariableType
+        DataType: DynamicLinkMode
+        Value: 2
   - Name: Port
     Type: BaseDataVariableType
     DataType: UInt16
     Value: 8443
+    Children:
+    - Name: DynamicLink
+      Type: DynamicLink
+      DataType: NodePath
+      Value: "../../../Model/ApplicationSettings/WPEConfiguration/Port"
+      Children:
+      - Name: Mode
+        Type: BaseVariableType
+        DataType: DynamicLinkMode
+        Value: 2
   - Name: StartWindow
     Type: NodePointer
     DataType: NodeId
@@ -543,13 +588,62 @@ Children:
         Type: BaseVariableType
         DataType: ns=0;Boolean
         AccessLevel: Read
-  - Name: MaxNumberOfConnections
-    Type: BaseDataVariableType
-    DataType: UInt32
-    Value: 1
+      - Name: ScaleFactor
+        Type: BaseDataVariableType
+        DataType: Double
+        Value: 1.0
+      - Class: Reference
+        Target: ns=1;i=324
+        Direction: Forward
+      - Name: BearerAccessToken
+        Type: BaseVariableType
+        DataType: String
+        AccessLevel: Read
   - Name: VirtualKeyboard
     Type: BaseDataVariableType
     DataType: VirtualKeyboardEngineTypeEnum
+  - Name: Hostname
+    Type: BaseDataVariableType
+    DataType: String
+    Children:
+    - Name: DynamicLink
+      Type: DynamicLink
+      DataType: NodePath
+      Value: "../../../Model/ApplicationSettings/WPEConfiguration/Hostname"
+      Children:
+      - Name: Mode
+        Type: BaseVariableType
+        DataType: DynamicLinkMode
+        Value: 2
+  - Name: Certificate
+    Type: PropertyGroup
+    Children:
+    - Name: CertificateFile
+      Type: BaseDataVariableType
+      DataType: ResourceUri
+      Children:
+      - Name: DynamicLink
+        Type: DynamicLink
+        DataType: NodePath
+        Value: "../../../../Model/ApplicationSettings/WPEConfiguration/CertificateFile"
+        Children:
+        - Name: Mode
+          Type: BaseVariableType
+          DataType: DynamicLinkMode
+          Value: 2
+    - Name: PrivateKeyFile
+      Type: BaseDataVariableType
+      DataType: ResourceUri
+      Children:
+      - Name: DynamicLink
+        Type: DynamicLink
+        DataType: NodePath
+        Value: "../../../../Model/ApplicationSettings/WPEConfiguration/PrivateKey"
+        Children:
+        - Name: Mode
+          Type: BaseVariableType
+          DataType: DynamicLinkMode
+          Value: 2
 - Name: MainWindow
   Id: g=01a7e8933afd7c95fe894b0859308138
   Supertype: Window
@@ -859,6 +953,88 @@ Children:
         DataType: VerticalAlignment
         ModellingRule: Optional
         Value: 3
+      - Name: FillerPanel
+        Type: Panel
+        Children:
+        - Name: Width
+          Type: BaseVariableType
+          DataType: Size
+          ModellingRule: Optional
+          Value: 300.0
+        - Name: Height
+          Type: BaseVariableType
+          DataType: Size
+          ModellingRule: Optional
+          Value: 300.0
+        - Name: HorizontalAlignment
+          Type: BaseVariableType
+          DataType: HorizontalAlignment
+          ModellingRule: Optional
+          Value: 3
+        - Name: VerticalAlignment
+          Type: BaseVariableType
+          DataType: VerticalAlignment
+          ModellingRule: Optional
+          Value: 3
+      - Name: WebServerRunning
+        Type: Label
+        Children:
+        - Name: Text
+          Type: BaseDataVariableType
+          DataType: LocalizedText
+          Children:
+          - Name: StringFormatter1
+            Type: StringFormatter
+            Children:
+            - Name: Format
+              Type: BaseDataVariableType
+              DataType: LocalizedText
+              ReferenceType: HasParameter
+              ModellingRule: Optional
+              Value: {"LocaleId":"en-US","Text":"Web server running at https://{#ipbind}:{#port:d}"}
+            - Name: ns=2;Sourceipbind
+              Type: BaseDataVariableType
+              DataType: BaseDataType
+              ReferenceType: HasSource
+              Children:
+              - Name: DynamicLink
+                Type: DynamicLink
+                DataType: NodePath
+                Value: "/Objects/OptixEdge_WizardApp/Model/WPEConfigurationOnStartup/IPAddress"
+            - Name: ns=2;Sourceport
+              Type: BaseDataVariableType
+              DataType: BaseDataType
+              ReferenceType: HasSource
+              Children:
+              - Name: DynamicLink
+                Type: DynamicLink
+                DataType: NodePath
+                Value: "/Objects/OptixEdge_WizardApp/Model/WPEConfigurationOnStartup/Port"
+        - Name: VerticalAlignment
+          Type: BaseVariableType
+          DataType: VerticalAlignment
+          ModellingRule: Optional
+          Value: 3
+        - Name: Style
+          Type: BaseDataVariableType
+          DataType: String
+          ModellingRule: Optional
+          Value: "Default"
+        - Name: TextColor
+          Type: BaseDataVariableType
+          DataType: Color
+          ModellingRule: Optional
+          Value: "#ffffff"
+        - Name: TextVerticalAlignment
+          Type: BaseVariableType
+          DataType: TextVerticalAlignment
+          ModellingRule: Optional
+          Value: 1
+        - Name: RightMargin
+          Type: BaseVariableType
+          DataType: Size
+          ModellingRule: Optional
+          Value: 16.0
   - Name: FullScreen
     Type: BaseDataVariableType
     DataType: ns=0;Boolean
@@ -1473,6 +1649,260 @@ Children:
         Type: BaseDataVariableType
         DataType: ns=0;Boolean
         Value: true
+    - Name: RestartApplicationRequestBanner
+      Type: BannerMessage
+      Children:
+      - Name: Background
+        Type: Rectangle
+        Children:
+        - Name: FillColor
+          Type: BaseDataVariableType
+          DataType: Color
+          Value: "#3e4144"
+          Children:
+          - Name: ConditionalConverter1
+            Type: ConditionalConverter
+            Children:
+            - Name: Condition
+              Type: BaseDataVariableType
+              DataType: ns=0;Boolean
+              ReferenceType: HasSource
+              Children:
+              - Name: DynamicLink
+                Type: DynamicLink
+                DataType: NodePath
+                Value: "../../../../UseNotificationLevelColorBackground"
+            - Name: TrueValue
+              Type: BaseDataVariableType
+              DataType: Color
+              ReferenceType: HasParameter
+              Children:
+              - Name: MessageTypeBackgroundColor1
+                Type: ToasBannerBackgroundColor
+                Children:
+                - Name: Source
+                  Type: BaseDataVariableType
+                  DataType: BaseDataType
+                  ReferenceType: HasSource
+                  Children:
+                  - Name: DynamicLink
+                    Type: DynamicLink
+                    DataType: NodePath
+                    Value: "../../../../../../NotificationLevel"
+        - Name: BorderThickness
+          Type: BaseDataVariableType
+          DataType: Size
+          ModellingRule: Optional
+      - Name: Close
+        Type: Image
+        Children:
+        - Name: Path
+          Type: BaseDataVariableType
+          DataType: ResourceUri
+          Value: "ns=7;%PROJECTDIR%/imgs/icons/close-sm-inverted.svg"
+        - Name: DynamicColor
+          Type: BaseDataVariableType
+          DataType: Color
+          Value: "#000000"
+          Children:
+          - Name: MessageTypeTextColor1
+            Type: ToasBannerTypeTextColor
+            Children:
+            - Name: Source
+              Type: BaseDataVariableType
+              DataType: BaseDataType
+              ReferenceType: HasSource
+              Children:
+              - Name: DynamicLink
+                Type: DynamicLink
+                DataType: NodePath
+                Value: "../../../../NotificationLevel"
+        - Name: Action
+          Type: Button
+          Children:
+          - Name: MouseClickEventHandler1
+            Type: EventHandler
+            Children:
+            - Name: ListenEventType
+              Type: PropertyType
+              DataType: NodeId
+              Value: "/Types/EventTypes/BaseEventType/MouseEvent/MouseClickEvent"
+            - Name: MethodsToCall
+              Type: BaseObjectType
+              Children:
+              - Name: MethodContainer1
+                Type: BaseObjectType
+                Children:
+                - Name: ObjectPointer
+                  Type: NodePointer
+                  DataType: NodeId
+                  Value: "/Objects/Commands/VariableCommands"
+                  Children:
+                  - Name: Kind
+                    Type: PropertyType
+                    DataType: NodeId
+                    Value: "/Types/ObjectTypes/BaseObjectType"
+                - Name: Method
+                  Type: BaseDataVariableType
+                  DataType: String
+                  Value: "Set"
+                - Name: InputArguments
+                  Type: BaseObjectType
+                  Children:
+                  - Name: VariableToModify
+                    Type: BaseDataVariableType
+                    DataType: VariablePointer
+                    Children:
+                    - Name: DynamicLink
+                      Type: DynamicLink
+                      DataType: NodePath
+                      Value: "../../../../../../../Visible@NodeId"
+                  - Name: Value
+                    Type: BaseDataVariableType
+                    DataType: ns=0;Boolean
+                  - Name: ArrayIndex
+                    Type: BaseDataVariableType
+                    DataType: UInt32
+                    ValueRank: ScalarOrOneDimension
+            - Name: EventArguments
+              Type: MouseClickEvent
+              Children:
+              - Name: EventId
+                Type: PropertyType
+                DataType: ByteString
+              - Name: EventType
+                Type: PropertyType
+                DataType: NodeId
+              - Name: SourceNode
+                Type: PropertyType
+                DataType: NodeId
+              - Name: SourceName
+                Type: PropertyType
+                DataType: String
+              - Name: Time
+                Type: PropertyType
+                DataType: UtcTime
+              - Name: ReceiveTime
+                Type: PropertyType
+                DataType: UtcTime
+              - Name: Message
+                Type: PropertyType
+                DataType: LocalizedText
+              - Name: Severity
+                Type: PropertyType
+                DataType: UInt16
+          - Name: Visible
+            Type: BaseDataVariableType
+            DataType: ns=0;Boolean
+            Value: true
+        - Name: Visible
+          Type: BaseDataVariableType
+          DataType: ns=0;Boolean
+          Value: true
+          Children:
+          - Name: DynamicLink
+            Type: DynamicLink
+            DataType: NodePath
+            Value: "../../ShowCloseButton"
+      - Name: NotificationLevel
+        Type: BaseDataVariableType
+        DataType: ToasBannerNotificationLevel
+        Value: 1
+      - Name: Content
+        Type: RowLayout
+        Children:
+        - Name: IconLeft
+          Type: Image
+          Children:
+          - Name: Path
+            Type: BaseDataVariableType
+            DataType: ResourceUri
+            Children:
+            - Name: MessageTypeIcon1
+              Type: ToasBannerTypeIcon
+              Children:
+              - Name: Source
+                Type: BaseDataVariableType
+                DataType: BaseDataType
+                ReferenceType: HasSource
+                Children:
+                - Name: DynamicLink
+                  Type: DynamicLink
+                  DataType: NodePath
+                  Value: "../../../../../NotificationLevel"
+          - Name: Visible
+            Type: BaseDataVariableType
+            DataType: ns=0;Boolean
+            Value: true
+        - Name: Title
+          Type: Label
+          Children:
+          - Name: Text
+            Type: BaseDataVariableType
+            DataType: LocalizedText
+            Children:
+            - Name: DynamicLink
+              Type: DynamicLink
+              DataType: NodePath
+              Value: "../../../MessageToDisplay"
+          - Name: TextColor
+            Type: BaseDataVariableType
+            DataType: Color
+            Value: "#ffffff"
+            Children:
+            - Name: ConditionalConverter1
+              Type: ConditionalConverter
+              Children:
+              - Name: Condition
+                Type: BaseDataVariableType
+                DataType: ns=0;Boolean
+                ReferenceType: HasSource
+                Children:
+                - Name: DynamicLink
+                  Type: DynamicLink
+                  DataType: NodePath
+                  Value: "../../../../../UseNotificationLevelColorBackground"
+              - Name: TrueValue
+                Type: BaseDataVariableType
+                DataType: Color
+                ReferenceType: HasParameter
+                Children:
+                - Name: MessageTypeTextColor1
+                  Type: ToasBannerTypeTextColor
+                  Children:
+                  - Name: Source
+                    Type: BaseDataVariableType
+                    DataType: BaseDataType
+                    ReferenceType: HasSource
+                    Children:
+                    - Name: DynamicLink
+                      Type: DynamicLink
+                      DataType: NodePath
+                      Value: "../../../../../../../NotificationLevel"
+      - Name: MessageToDisplay
+        Type: BaseDataVariableType
+        DataType: LocalizedText
+        Value: {"LocaleId":"en-US","Text":"OptixEdge needs to be restarted to apply the new web server settings."}
+      - Name: UseNotificationLevelColorBackground
+        Type: BaseDataVariableType
+        DataType: ns=0;Boolean
+      - Name: Visible
+        Type: BaseDataVariableType
+        DataType: ns=0;Boolean
+        Children:
+        - Name: DynamicLink
+          Type: DynamicLink
+          DataType: NodePath
+          Value: "/Objects/OptixEdge_WizardApp/Model/RestartApplicationRequestBannerVisibility"
+      - Name: ShowCloseButton
+        Type: BaseDataVariableType
+        DataType: ns=0;Boolean
+      - Name: BannerMessageLogic
+        Type: NetLogic
+      - Name: AlwaysOn
+        Type: BaseDataVariableType
+        DataType: ns=0;Boolean
+        Value: true
     - Name: Body
       Type: Panel
       Children:
@@ -1523,7 +1953,7 @@ Children:
               - Name: DynamicLink
                 Type: DynamicLink
                 DataType: NodePath
-                Value: "/Objects/OptixEdge_WizardApp/Model/ProjectSettings/StartFromDashboard"
+                Value: "/Objects/OptixEdge_WizardApp/Model/ApplicationSettings/StartFromDashboard"
             - Name: TrueValue
               Type: BaseDataVariableType
               DataType: NodeId
@@ -1969,7 +2399,7 @@ Children:
                 - Name: DynamicLink
                   Type: DynamicLink
                   DataType: NodePath
-                  Value: "/Objects/OptixEdge_WizardApp/Model/ProjectSettings/StartFromDashboard"
+                  Value: "/Objects/OptixEdge_WizardApp/Model/ApplicationSettings/StartFromDashboard"
               - Name: TrueValue
                 Type: BaseDataVariableType
                 DataType: Byte
