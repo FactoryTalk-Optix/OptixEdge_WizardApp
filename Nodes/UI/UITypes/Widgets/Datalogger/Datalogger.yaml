@@ -1162,7 +1162,7 @@ Children:
                         Type: DynamicLink
                         DataType: NodePath
                         Value: "../../../../SamplingMode/SelectedValue"
-            - Name: TagConfigured
+            - Name: TagImported
               Type: Accordion
               Children:
               - Name: Header

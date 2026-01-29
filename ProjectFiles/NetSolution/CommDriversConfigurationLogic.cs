@@ -110,13 +110,17 @@ public class CommDriversConfigurationLogic : BaseNetLogic
         if (newStation != null && newWidget != null)
         {
             string aliasName = CommonLogic.editAliasNameMapping.GetValueOrDefault(newStation.ObjectType.NodeId);
-            newWidget.SetAlias(aliasName, newStation);            
+            newWidget.SetAlias(aliasName, newStation);
             widgetContainer.Add(newWidget);
             newWidget.FindByType<StationProps>().GetVariable("EnableSave").Value = true;
             newWidget.FindByType<StationProps>().GetVariable("EnableImport").Value = false;
             if (Project.Current.Get<Folder>($"Model/{browseName}") == null && !string.IsNullOrEmpty(browseName))
             {
                 Project.Current.Get<Folder>("Model").Add(InformationModel.MakeObject<Folder>(browseName));
+            }
+            if (newWidget.Find("UIFieldParameterObserverLogic") is NetLogicObject uiFieldParameterObserverLogic)
+            {
+                uiFieldParameterObserverLogic.ExecuteMethod("SubscribeObserver");
             }
         }
     }

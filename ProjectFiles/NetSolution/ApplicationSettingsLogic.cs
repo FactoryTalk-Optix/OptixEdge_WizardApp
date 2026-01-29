@@ -29,6 +29,10 @@ public class ApplicationSettingsLogic : BaseNetLogic
         InitEditModel();
         editModel.WPEConfiguration.PortVariable.VariableChange += PortVariableChange;
         editModel.WPEConfiguration.IPAddressVariable.VariableChange += IPAddressVariableChange;
+        if (Owner.Find("UIFieldParameterObserverLogic") is NetLogicObject uiFieldParameterObserverLogic)
+        {
+            uiFieldParameterObserverLogic.ExecuteMethod("SubscribeObserver");
+        }
     }
 
     public override void Stop()

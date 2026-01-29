@@ -234,6 +234,7 @@ public class TagImporterUIObjectLogic : BaseNetLogic
             else
             {
                 tableRow.Visible = false;
+                ResetTagRowData(rowIndex);
             }
         }
         UpdateCheckBoxSelectedAll();
@@ -252,6 +253,22 @@ public class TagImporterUIObjectLogic : BaseNetLogic
         rowData.VariableArrayDimension = tagsReadFromSourceToDisplay[variableDataIndex].VariableArrayDimension;
         rowData.VariableDataTypeNodeId = tagsReadFromSourceToDisplay[variableDataIndex].VariableDataTypeNodeId;
         rowData.VariableStringLength = tagsReadFromSourceToDisplay[variableDataIndex].VariableStringLength;
+        rowData.CheckedVariable.VariableChange += OnRowCheckedChange;
+    }
+
+    private void ResetTagRowData(int rowIndex)
+    {
+        var rowData = LogicObject.Get<TagCustomGridRowData>($"GridData/{rowIndex + 1}");
+        rowData.CheckedVariable.VariableChange -= OnRowCheckedChange;
+        rowData.Checked = false;
+        rowData.VariableName = string.Empty;
+        rowData.VariableDataType = string.Empty;
+        rowData.VariableComment = string.Empty;
+        rowData.VariableAddress = string.Empty;
+        rowData.VariableIsArray = false;
+        rowData.VariableArrayDimension = [];
+        rowData.VariableDataTypeNodeId = NodeId.Empty;
+        rowData.VariableStringLength = 0;
         rowData.CheckedVariable.VariableChange += OnRowCheckedChange;
     }
 
@@ -1131,4 +1148,3 @@ public class TagImporterUIObjectLogic : BaseNetLogic
         public DynamicLinkMode TargetDynamicLinkMode { get; set; }
     }
 }
-

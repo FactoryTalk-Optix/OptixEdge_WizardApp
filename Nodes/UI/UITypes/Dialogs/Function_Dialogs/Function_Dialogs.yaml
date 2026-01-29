@@ -4491,6 +4491,17 @@ Children:
                 - Name: SelectedValue
                   Type: BaseDataVariableType
                   DataType: BaseDataType
+                  Children:
+                  - Name: DynamicLink
+                    Type: DynamicLink
+                    DataType: NodePath
+                    Value: "../../../../../../../../AddWidgetDialogLogic/SourceDriver"
+                    Children:
+                    - Name: Mode
+                      Type: BaseVariableType
+                      DataType: DynamicLinkMode
+                      ModellingRule: Optional
+                      Value: 2
                 - Name: SelectedItem
                   Type: NodePointer
                   DataType: NodeId
@@ -4586,6 +4597,16 @@ Children:
                     Type: PropertyType
                     DataType: NodeId
                     Value: "/Objects/OptixEdge_WizardApp/Model/ObjectTypes/ComboBoxStationData"
+                  - Name: DynamicLink
+                    Type: DynamicLink
+                    DataType: NodePath
+                    Value: "../../../../../../../../AddWidgetDialogLogic/SourceStation@Pointer@Value"
+                    Children:
+                    - Name: Mode
+                      Type: BaseVariableType
+                      DataType: DynamicLinkMode
+                      ModellingRule: Optional
+                      Value: 2
                 - Name: UISelectedItem
                   Type: BaseDataVariableType
                   DataType: NodeId
@@ -5764,6 +5785,12 @@ Children:
       Type: BaseDataVariableType
       DataType: Int32
       Value: 1
+    - Name: SourceDriver
+      Type: BaseDataVariableType
+      DataType: SourceDriver
+    - Name: SourceStation
+      Type: BaseDataVariableType
+      DataType: NodeId
   - Name: ShowSpanParameters
     Type: BaseDataVariableType
     DataType: ns=0;Boolean

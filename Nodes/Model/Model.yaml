@@ -45,7 +45,7 @@ Children:
     Id: g=51124310c16ed3fc378fdbb98a546c0e
     Type: BaseDataVariableType
     DataType: String
-    Value: "1.2.31"
+    Value: "1.2.34"
 - Name: WPEConfigurationOnStartup
   Id: g=76644632a729f3464e8b131203cdcc7d
   Type: WPEConfiguration

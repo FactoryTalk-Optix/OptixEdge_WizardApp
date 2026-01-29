@@ -31,7 +31,7 @@ Project:
   8:
    Uri: 'urn:FTOptix:WebUI'
    Module: FTOptix.WebUI
-   Version: 1.3
+   Version: 2.0
   9:
    Uri: 'urn:FTOptix:OPCUAClient'
    Module: FTOptix.OPCUAClient
@@ -91,7 +91,7 @@ Project:
   29:
    Uri: 'urn:FTOptix:WebUI:Net'
    Module: FTOptix.WebUI.Net
-   Version: 1.3
+   Version: 2.0
   30:
    Uri: 'urn:FTOptix:MelsecFX3U'
    Module: FTOptix.MelsecFX3U
@@ -167,7 +167,7 @@ Project:
   52:
    Uri: 'urn:FTOptix:MQTTClient'
    Module: FTOptix.MQTTClient
-   Version: 6.1
+   Version: 7.0
   55:
    Uri: 'urn:FTOptix:System'
    Module: FTOptix.System
@@ -211,12 +211,12 @@ Project:
   69:
    Uri: 'urn:FTOptix:MQTTClient:Net'
    Module: FTOptix.MQTTClient.Net
-   Version: 5.1
+   Version: 6.0
  Statistics:
-  TotalNodeCount: 22008
-  Objects: 4591
+  TotalNodeCount: 22035
+  Objects: 4593
   ObjectTypes: 106
-  Variables: 17224
+  Variables: 17249
   VariableTypes: 0
   DataTypes: 14
   Methods: 73

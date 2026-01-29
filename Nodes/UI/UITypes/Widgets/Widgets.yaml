@@ -437,6 +437,11 @@ Children:
           DataType: Size
           ModellingRule: Optional
           Value: 32.0
+        - Name: ReadOnly
+          Type: BaseDataVariableType
+          DataType: ns=0;Boolean
+          ModellingRule: Optional
+          Value: true
       - Name: HorizontalAlignment
         Type: BaseVariableType
         DataType: HorizontalAlignment

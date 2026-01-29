@@ -179,6 +179,7 @@ public class TagViewerLogic : BaseNetLogic
             else
             {
                 tableRow.Visible = false;
+                ResetTagRowData(rowIndex);
             }
         }
         UpdateCheckBoxSelectedAll();
@@ -197,6 +198,22 @@ public class TagViewerLogic : BaseNetLogic
         rowData.VariableArrayDimension = tagsReadFromField[variableDataIndex].VariableArrayDimension;
         rowData.VariableDataTypeNodeId = tagsReadFromField[variableDataIndex].VariableDataTypeNodeId;
         rowData.VariableLinkDirection = tagsReadFromField[variableDataIndex].VariableLinkDirection;
+        rowData.CheckedVariable.VariableChange += OnRowSettingsChanged;
+    }
+
+    private void ResetTagRowData(int rowIndex)
+    {
+        var rowData = LogicObject.Get<TagCustomGridRowData>($"GridData/{rowIndex + 1}");
+        rowData.CheckedVariable.VariableChange -= OnRowSettingsChanged;
+        rowData.Checked = false;
+        rowData.VariableName = string.Empty;
+        rowData.VariableDataType = string.Empty;
+        rowData.VariableComment = string.Empty;
+        rowData.VariableAddress = string.Empty;
+        rowData.VariableIsArray = false;
+        rowData.VariableArrayDimension = [];
+        rowData.VariableDataTypeNodeId = NodeId.Empty;
+        rowData.VariableStringLength = 0;
         rowData.CheckedVariable.VariableChange += OnRowSettingsChanged;
     }
 

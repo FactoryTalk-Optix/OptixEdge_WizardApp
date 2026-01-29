@@ -54,6 +54,10 @@ public class MqttClientLogic : BaseNetLogic
                 newWidget.SetAlias(CommonLogic.editAliasNameMapping.GetValueOrDefault(FTOptix.MQTTClient.ObjectTypes.MQTTClient), mqttClient);
                 verticalLayout.Add(newWidget);
                 newWidget.Find("StationActions").GetVariable("EnableSave").Value = true;
+                if (newWidget.Find("UIFieldParameterObserverLogic") is NetLogicObject uiFieldParameterObserverLogic)
+                {
+                    uiFieldParameterObserverLogic.ExecuteMethod("SubscribeObserver");
+                }
             }
         }
         else
@@ -86,8 +90,12 @@ public class MqttClientLogic : BaseNetLogic
                 {
                     newWidget.SetAlias(CommonLogic.editAliasNameMapping.GetValueOrDefault(FTOptix.MQTTClient.ObjectTypes.MQTTPublisher), mqttPublisher);
                     newWidget.SetAlias("MQTTClientNode", mqttClientNode);
-                    verticalLayout.Add(newWidget);                    
+                    verticalLayout.Add(newWidget);
                     newWidget.FindByType<StationProps>().GetVariable("EnableSave").Value = true;
+                    if (newWidget.Find("UIFieldParameterObserverLogic") is NetLogicObject uiFieldParameterObserverLogic)
+                    {
+                        uiFieldParameterObserverLogic.ExecuteMethod("SubscribeObserver");
+                    }
                 }
                 var payloadData = InformationModel.Make<MQTTPublisherDataConfiguration>($"{mqttClientNode.BrowseName}_{mqttPublisher.BrowseName}");
                 InitMqttPublisherPayloadConfiguration(payloadData);

@@ -62,6 +62,10 @@ public class LoggersLogic : BaseNetLogic
                 verticalLayout.Add(newWidget);
                 newWidget.FindByType<StationProps>().GetVariable("EnableSave").Value = true;
                 newWidget.FindByType<StationProps>().GetVariable("EnableImport").Value = false;
+                if (newWidget.Find("UIFieldParameterObserverLogic") is NetLogicObject uiFieldParameterObserverLogic)
+                {
+                    uiFieldParameterObserverLogic.ExecuteMethod("SubscribeObserver");
+                }
             }
         }
         else

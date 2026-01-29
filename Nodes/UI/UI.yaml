@@ -644,6 +644,12 @@ Children:
           Type: BaseVariableType
           DataType: DynamicLinkMode
           Value: 2
+  - Name: AllowedLocalSources
+    Type: BaseDataVariableType
+    DataType: String
+    ValueRank: OneDimension
+    ArrayDimensions: [0]
+    Value: ["*"]
 - Name: MainWindow
   Id: g=01a7e8933afd7c95fe894b0859308138
   Supertype: Window

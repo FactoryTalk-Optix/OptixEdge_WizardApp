@@ -1548,7 +1548,7 @@ Children:
           - Name: Content
             Type: AccordionContent
             Children:
-            - Name: GridLayout1
+            - Name: GridProperties
               Type: GridLayout
               Children:
               - Name: Width
@@ -1573,7 +1573,7 @@ Children:
                 DataType: HorizontalAlignment
                 ModellingRule: Optional
                 Value: 3
-              - Name: GridContent1
+              - Name: ProductNameLabel
                 Type: GridContent1
                 Children:
                 - Name: GridLayoutProperties
@@ -1581,9 +1581,12 @@ Children:
                 - Name: Text
                   Type: BaseDataVariableType
                   DataType: LocalizedText
-                  ModellingRule: Optional
-                  Value: {"LocaleId":"en-US","Text":"Product name"}
-              - Name: GridContent2
+                  Children:
+                  - Name: DynamicLink
+                    Type: DynamicLink
+                    DataType: NodePath
+                    Value: "/Objects/OptixEdge_WizardApp/System/System/Device/ProductName@DisplayName"
+              - Name: ProductNameValue
                 Type: GridContent1
                 Children:
                 - Name: GridLayoutProperties
@@ -1610,7 +1613,7 @@ Children:
                 DataType: Size
                 ModellingRule: Optional
                 Value: 16.0
-              - Name: GridContent17
+              - Name: CatalogNumberLabel
                 Type: GridContent1
                 Children:
                 - Name: GridLayoutProperties
@@ -1618,9 +1621,12 @@ Children:
                 - Name: Text
                   Type: BaseDataVariableType
                   DataType: LocalizedText
-                  ModellingRule: Optional
-                  Value: {"LocaleId":"en-US","Text":"Catalog number"}
-              - Name: GridContent18
+                  Children:
+                  - Name: DynamicLink
+                    Type: DynamicLink
+                    DataType: NodePath
+                    Value: "/Objects/OptixEdge_WizardApp/System/System/Device/CatalogNumber@DisplayName"
+              - Name: CatalogNumberValue
                 Type: GridContent1
                 Children:
                 - Name: GridLayoutProperties
@@ -1642,7 +1648,7 @@ Children:
                     Type: DynamicLink
                     DataType: NodePath
                     Value: "/Objects/OptixEdge_WizardApp/System/System/Device/CatalogNumber"
-              - Name: GridContent3
+              - Name: FirmwareVersionLabel
                 Type: GridContent1
                 Children:
                 - Name: GridLayoutProperties
@@ -1650,9 +1656,12 @@ Children:
                 - Name: Text
                   Type: BaseDataVariableType
                   DataType: LocalizedText
-                  ModellingRule: Optional
-                  Value: {"LocaleId":"en-US","Text":"Firmware version"}
-              - Name: GridContent4
+                  Children:
+                  - Name: DynamicLink
+                    Type: DynamicLink
+                    DataType: NodePath
+                    Value: "/Objects/OptixEdge_WizardApp/System/System/Device/FirmwareVersion@DisplayName"
+              - Name: FirmwareVersionValue
                 Type: GridContent1
                 Children:
                 - Name: GridLayoutProperties
@@ -1684,7 +1693,7 @@ Children:
                 DataType: Size
                 ModellingRule: Optional
                 Value: 16.0
-              - Name: GridContent5
+              - Name: OSVersionLabel
                 Type: GridContent1
                 Children:
                 - Name: GridLayoutProperties
@@ -1692,9 +1701,12 @@ Children:
                 - Name: Text
                   Type: BaseDataVariableType
                   DataType: LocalizedText
-                  ModellingRule: Optional
-                  Value: {"LocaleId":"en-US","Text":"OS version"}
-              - Name: GridContent6
+                  Children:
+                  - Name: DynamicLink
+                    Type: DynamicLink
+                    DataType: NodePath
+                    Value: "/Objects/OptixEdge_WizardApp/System/System/Device/OSVersion@DisplayName"
+              - Name: OSVersionValue
                 Type: GridContent1
                 Children:
                 - Name: GridLayoutProperties
@@ -1716,7 +1728,7 @@ Children:
                   Type: BaseVariableType
                   DataType: Size
                   ModellingRule: Optional
-              - Name: GridContent7
+              - Name: SystemManagerLabel
                 Type: GridContent1
                 Children:
                 - Name: GridLayoutProperties
@@ -1724,9 +1736,12 @@ Children:
                 - Name: Text
                   Type: BaseDataVariableType
                   DataType: LocalizedText
-                  ModellingRule: Optional
-                  Value: {"LocaleId":"en-US","Text":"System Manager version"}
-              - Name: GridContent8
+                  Children:
+                  - Name: DynamicLink
+                    Type: DynamicLink
+                    DataType: NodePath
+                    Value: "/Objects/OptixEdge_WizardApp/System/System/Device/SystemManagerVersion@DisplayName"
+              - Name: SystemManagerValue
                 Type: GridContent1
                 Children:
                 - Name: GridLayoutProperties
@@ -1748,7 +1763,7 @@ Children:
                   Type: BaseVariableType
                   DataType: Size
                   ModellingRule: Optional
-              - Name: GridContent9
+              - Name: LastApplicationBootupLabel
                 Type: GridContent1
                 Children:
                 - Name: GridLayoutProperties
@@ -1756,9 +1771,12 @@ Children:
                 - Name: Text
                   Type: BaseDataVariableType
                   DataType: LocalizedText
-                  ModellingRule: Optional
-                  Value: {"LocaleId":"en-US","Text":"Last application bootup time"}
-              - Name: GridContent10
+                  Children:
+                  - Name: DynamicLink
+                    Type: DynamicLink
+                    DataType: NodePath
+                    Value: "/Objects/OptixEdge_WizardApp/System/System/Device/LastApplicationUpdateTime@DisplayName"
+              - Name: LastApplicationBootupValue
                 Type: GridContent1
                 Children:
                 - Name: GridLayoutProperties
@@ -1780,7 +1798,7 @@ Children:
                   Type: BaseVariableType
                   DataType: Size
                   ModellingRule: Optional
-              - Name: GridContent11
+              - Name: LastBootupLabel
                 Type: GridContent1
                 Children:
                 - Name: GridLayoutProperties
@@ -1788,9 +1806,12 @@ Children:
                 - Name: Text
                   Type: BaseDataVariableType
                   DataType: LocalizedText
-                  ModellingRule: Optional
-                  Value: {"LocaleId":"en-US","Text":"Last bootup time"}
-              - Name: GridContent12
+                  Children:
+                  - Name: DynamicLink
+                    Type: DynamicLink
+                    DataType: NodePath
+                    Value: "/Objects/OptixEdge_WizardApp/System/System/Device/LastBootupTime@DisplayName"
+              - Name: LastBootupValue
                 Type: GridContent1
                 Children:
                 - Name: GridLayoutProperties
@@ -1812,7 +1833,7 @@ Children:
                   Type: BaseVariableType
                   DataType: Size
                   ModellingRule: Optional
-              - Name: GridContent13
+              - Name: TotalOnLabel
                 Type: GridContent1
                 Children:
                 - Name: GridLayoutProperties
@@ -1820,9 +1841,12 @@ Children:
                 - Name: Text
                   Type: BaseDataVariableType
                   DataType: LocalizedText
-                  ModellingRule: Optional
-                  Value: {"LocaleId":"en-US","Text":"Total On time"}
-              - Name: GridContent14
+                  Children:
+                  - Name: DynamicLink
+                    Type: DynamicLink
+                    DataType: NodePath
+                    Value: "/Objects/OptixEdge_WizardApp/System/System/Device/TotalOnTime@DisplayName"
+              - Name: TotalOnValue
                 Type: GridContent1
                 Children:
                 - Name: GridLayoutProperties
@@ -1858,7 +1882,7 @@ Children:
                   Type: BaseVariableType
                   DataType: Size
                   ModellingRule: Optional
-              - Name: GridContent15
+              - Name: ProtectionModeEnabledLabel
                 Type: GridContent1
                 Children:
                 - Name: GridLayoutProperties
@@ -1866,14 +1890,17 @@ Children:
                 - Name: Text
                   Type: BaseDataVariableType
                   DataType: LocalizedText
-                  ModellingRule: Optional
-                  Value: {"LocaleId":"en-US","Text":"Protection mode enabled"}
+                  Children:
+                  - Name: DynamicLink
+                    Type: DynamicLink
+                    DataType: NodePath
+                    Value: "/Objects/OptixEdge_WizardApp/System/System/Device/ProtectionModeEnabled@DisplayName"
                 - Name: Height
                   Type: BaseVariableType
                   DataType: Size
                   ModellingRule: Optional
                   Value: 32.0
-              - Name: GridContent16
+              - Name: ProtectionModeEnabledValue
                 Type: CheckBox
                 Children:
                 - Name: Checked
@@ -1898,6 +1925,10 @@ Children:
                   DataType: VerticalAlignment
                   ModellingRule: Optional
                   Value: 2
+                - Name: Enabled
+                  Type: BaseDataVariableType
+                  DataType: ns=0;Boolean
+                  ModellingRule: Optional
           - Name: Expanded
             Type: BaseDataVariableType
             DataType: ns=0;Boolean

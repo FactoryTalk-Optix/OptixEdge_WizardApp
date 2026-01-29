@@ -38,8 +38,6 @@ public class UIFieldParameterObserverLogic : BaseNetLogic
     public override void Start()
     {
         ownerAccordionContent = Owner as AccordionContent;
-        // Delay the subscription to ensure that all UI elements are properly initialized
-        new DelayedTask(TaskRegisterUIItemChange, Owner, 200, ownerAccordionContent).Start();
     }
 
     public override void Stop()
@@ -60,7 +58,8 @@ public class UIFieldParameterObserverLogic : BaseNetLogic
     [ExportMethod]
     public void SubscribeObserver()
     {
-        new LongRunningTask(TaskRegisterUIItemChange, Owner, ownerAccordionContent).Start();
+        // Delay the subscription to ensure that all UI elements are properly initialized
+        new DelayedTask(TaskRegisterUIItemChange, Owner, 1000, ownerAccordionContent).Start();
     }
 
     [ExportMethod]
@@ -220,7 +219,10 @@ public class UIFieldParameterObserverLogic : BaseNetLogic
         }
     }
 
-    private void OnVariableChanged(object sender, VariableChangeEventArgs e) => ParameterChanged();
+    private void OnVariableChanged(object sender, VariableChangeEventArgs e)
+    {        
+        ParameterChanged();
+    }
 
     [ExportMethod]
     public void ParameterChanged()

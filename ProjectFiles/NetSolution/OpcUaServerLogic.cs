@@ -72,6 +72,10 @@ public class OpcUaServerLogic : BaseNetLogic
             newWidget.SetAlias(CommonLogic.editAliasNameMapping.GetValueOrDefault(FTOptix.OPCUAServer.ObjectTypes.OPCUAServer), opcUaServer);
             newWidget.Find("StationActions").GetVariable("EnableSave").Value = true;
             verticalLayout.Add(newWidget);
+            if (newWidget.Find("UIFieldParameterObserverLogic") is NetLogicObject uiFieldParameterObserverLogic)
+            {
+                uiFieldParameterObserverLogic.ExecuteMethod("SubscribeObserver");
+            }
         }
         if (opcUaConfigurationsVariableFolder.Get(browseName) == null)
         {
@@ -119,6 +123,10 @@ public class OpcUaServerLogic : BaseNetLogic
                     verticalLayout.Add(newWidget);
                     CommonLogic.GenerateAndAttachTagViewer(newWidget, CommonLogic.TagViewerOPCUAPublisherAliasSourceLink);
                     NotificationsMessageHandlerLogic.Instance.RequestToastNotification(ToastBannerNotificationLevel.Success, $"Configuration for OPC-UA Server successfully created.");
+                    if (newWidget.Find("UIFieldParameterObserverLogic") is NetLogicObject uiFieldParameterObserverLogic)
+                    {
+                        uiFieldParameterObserverLogic.ExecuteMethod("SubscribeObserver");
+                    }
                 }
             }
         }

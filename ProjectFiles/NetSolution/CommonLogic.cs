@@ -267,6 +267,10 @@ public class CommonLogic : BaseNetLogic
                         break;
                 }
             }
+            if (newWidget.Find("UIFieldParameterObserverLogic") is NetLogicObject uiFieldParameterObserverLogic)
+            {
+                uiFieldParameterObserverLogic.ExecuteMethod("SubscribeObserver");
+            }
         }
     }
 
