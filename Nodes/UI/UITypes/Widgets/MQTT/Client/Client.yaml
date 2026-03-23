@@ -672,7 +672,7 @@ Children:
               DataType: String
               ValueRank: OneDimension
               ArrayDimensions: [0]
-              Value: ["Auto","Auto","Auto","Auto"]
+              Value: ["Auto","Auto","Auto","Auto","Auto"]
             - Name: Columns
               Type: BaseDataVariableType
               DataType: String
@@ -822,6 +822,123 @@ Children:
                 DataType: ValueChangeBehaviour
                 ModellingRule: Optional
                 Value: 1
+            - Name: ProtocolVersionString
+              Type: GridContent1
+              Children:
+              - Name: Text
+                Type: BaseDataVariableType
+                DataType: LocalizedText
+                Children:
+                - Name: DynamicLink
+                  Type: DynamicLink
+                  DataType: NodePath
+                  Value: "{EditModel}/ProtocolVersion@DisplayName"
+              - Name: GridLayoutProperties
+                Type: GridLayoutProperties
+              - Name: TopMargin
+                Type: BaseVariableType
+                DataType: Size
+                ModellingRule: Optional
+              - Name: BottomMargin
+                Type: BaseVariableType
+                DataType: Size
+                ModellingRule: Optional
+            - Name: ProtocolVersionValue
+              Type: ComboBox
+              Children:
+              - Class: Reference
+                Target: ns=3;i=480
+                Direction: Forward
+              - Name: Text
+                Type: BaseDataVariableType
+                DataType: LocalizedText
+              - Name: Model
+                Type: NodePointer
+                DataType: NodeId
+                Value: "/Types/DataTypes/BaseDataType/Enumeration/ProtocolVersionEnum"
+                Children:
+                - Name: ItemKind
+                  Type: PropertyType
+                  DataType: NodeId
+                  Value: "/Types/VariableTypes/BaseVariableType/BaseDataVariableType"
+                - Name: Kind
+                  Type: PropertyType
+                  DataType: NodeId
+              - Name: SelectedValue
+                Type: BaseDataVariableType
+                DataType: BaseDataType
+                Children:
+                - Name: DynamicLink
+                  Type: DynamicLink
+                  DataType: NodePath
+                  Value: "{EditModel}/ProtocolVersion"
+                  Children:
+                  - Name: Mode
+                    Type: BaseVariableType
+                    DataType: DynamicLinkMode
+                    ModellingRule: Optional
+                    Value: 2
+              - Name: SelectedItem
+                Type: NodePointer
+                DataType: NodeId
+                Children:
+                - Name: Kind
+                  Type: PropertyType
+                  DataType: NodeId
+                  Value: "/Types/VariableTypes/BaseVariableType/BaseDataVariableType"
+              - Name: UISelectedItem
+                Type: BaseDataVariableType
+                DataType: NodeId
+                AccessLevel: Read
+              - Name: UISelectedValue
+                Type: BaseDataVariableType
+                DataType: BaseDataType
+                AccessLevel: Read
+              - Name: Item
+                Type: Alias
+                DataType: NodeId
+                Children:
+                - Name: Kind
+                  Type: PropertyType
+                  DataType: NodeId
+                  Value: "/Types/VariableTypes/BaseVariableType/BaseDataVariableType"
+              - Name: Height
+                Type: BaseVariableType
+                DataType: Size
+                ModellingRule: Optional
+                Value: 32.0
+              - Name: DisplayValuePath
+                Type: BaseDataVariableType
+                DataType: LocalizedText
+                Children:
+                - Name: DynamicLink
+                  Type: DynamicLink
+                  DataType: NodePath
+                  Value: "{Item}@DisplayName"
+              - Name: AllowDeselection
+                Type: BaseDataVariableType
+                DataType: ns=0;Boolean
+                ModellingRule: Optional
+              - Name: Mode
+                Type: BaseVariableType
+                DataType: ComboBoxModeEnum
+                ModellingRule: Optional
+              - Name: SelectedValuePath
+                Type: BaseDataVariableType
+                DataType: BaseDataType
+                Children:
+                - Name: DynamicLink
+                  Type: DynamicLink
+                  DataType: NodePath
+                  Value: "{Item}@Value"
+              - Name: LeftMargin
+                Type: BaseVariableType
+                DataType: Size
+                ModellingRule: Optional
+              - Name: TopMargin
+                Type: BaseVariableType
+                DataType: Size
+                ModellingRule: Optional
             - Name: NodesToPublish
               Type: Accordion
               Children:

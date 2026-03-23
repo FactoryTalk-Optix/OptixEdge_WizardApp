@@ -36,6 +36,7 @@ public class MQTTPublisherAccordionLogic : BaseNetLogic
     public override void Start()
     {
         configuration = Owner.Owner.GetAlias(CommonLogic.editAliasNameMapping.GetValueOrDefault(OptixEdge_WizardApp.ObjectTypes.MQTTPublisherUIObj)) as MQTTPublisherDataConfiguration;
+        Owner.Get<NetLogicObject>("UIFieldParameterObserverLogic")?.ExecuteMethod("SubscribeObserver");
     }
 
     public override void Stop()

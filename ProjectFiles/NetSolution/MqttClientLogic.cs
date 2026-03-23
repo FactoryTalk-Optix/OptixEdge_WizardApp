@@ -262,6 +262,7 @@ public class MqttClientLogic : BaseNetLogic
         mqttClient.SSLTLSEnabled = false;
         mqttClient.ValidateBrokerCertificate = false;
         mqttClient.UserIdentityType = UserIdentityType.Anonymous;
+        CheckIfProtocolVersionExist(mqttClient);
         _ = mqttClient.UsernameVariable;
         _ = mqttClient.PasswordVariable;
         _ = mqttClient.CACertificateFileVariable;
@@ -311,6 +312,9 @@ public class MqttClientLogic : BaseNetLogic
         client.UserIdentityType = editNode.UserIdentityType;
         client.Username = editNode.Username;
         client.Password = editNode.Password;
+        CheckIfProtocolVersionExist(editNode);
+        CheckIfProtocolVersionExist(client);
+        client.GetVariable("ProtocolVersion").Value = editNode.GetVariable("ProtocolVersion").Value;
     }
 
     private static void ApplyMQTTPublisherProperties(MQTTPublisher editNode, MQTTPublisher publisher)
@@ -690,6 +694,30 @@ public class MqttClientLogic : BaseNetLogic
             return dataConfiguration.Data.GetObject(fieldInfoData.ValueDataVariablePath);
         }
         return null;
+    }
+
+    /// <summary>
+    /// Check if the ProtocolVersion variable exist under the MQTT client node, if not create it. 
+    /// This is needed to be able to manage the protocol version in a consistent way even for the MQTT client created before the implementation of this variable.
+    /// </summary>
+    /// <param name="mqttClientNode">MQTT Client object node</param>
+    public static void CheckIfProtocolVersionExist(IUAObject mqttClientNode)
+    {
+        // Retrive the namespace index of the MQTT client module to create the NodeId for the ProtocolVersion variable and its description and display name localized texts
+        var mqttClientModuleNameSpaceIndex = FTOptix.MQTTClient.ObjectTypes.MQTTClient.NamespaceIndex;
+        // Retrive the enumeration data type NodeId for the ProtocolVersion variable
+        var protocolVersionEnumDataTypeNodeId = new NodeId(mqttClientModuleNameSpaceIndex, 75u);
+        // Check if the ProtocolVersion variable already exist under the MQTT client node
+        if (mqttClientNode.IsInstanceOf(FTOptix.MQTTClient.ObjectTypes.MQTTClient) && mqttClientNode.Refs.GetVariable("ProtocolVersion") == null)
+        {
+            // Create the ProtocolVersion variable with the correct enumeration data type and add it under the MQTT client node
+            var protocolVersionVariable = InformationModel.MakeVariable("ProtocolVersion", protocolVersionEnumDataTypeNodeId);
+            protocolVersionVariable.Description = new LocalizedText(mqttClientModuleNameSpaceIndex, "ProtocolVersionDescription");
+            protocolVersionVariable.DisplayName = new LocalizedText(mqttClientModuleNameSpaceIndex, "ProtocolVersionDisplayName");
+            // Set the default value to MQTT v5, as it is the latest version and it is compatible with most of the brokers, but it can be changed by the user if needed
+            protocolVersionVariable.Value = (int)ProtocolVersion.V5;
+            mqttClientNode.Add(protocolVersionVariable);
+        }
     }
 
     private DelayedTask removeStationTask;

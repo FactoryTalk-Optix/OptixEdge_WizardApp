@@ -237,6 +237,7 @@ public class CommonLogic : BaseNetLogic
                         break;
                     case MQTTClient:
                         newWidget.GetVariable("EnableAddPublisher").Value = true;
+                        MqttClientLogic.CheckIfProtocolVersionExist(source);
                         subContent = newWidget.Find("NodesToPublish").Get<ColumnLayout>("Content/Content");
                         foreach (var publisher in source.GetNodesByType<MQTTPublisher>())
                         {
@@ -267,7 +268,7 @@ public class CommonLogic : BaseNetLogic
                         break;
                 }
             }
-            if (newWidget.Find("UIFieldParameterObserverLogic") is NetLogicObject uiFieldParameterObserverLogic)
+            if (newWidget != null && newWidget.Find("UIFieldParameterObserverLogic") is NetLogicObject uiFieldParameterObserverLogic)
             {
                 uiFieldParameterObserverLogic.ExecuteMethod("SubscribeObserver");
             }
