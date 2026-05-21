@@ -15,3 +15,6 @@ ProjectFiles/NetSolution/Private
 ProjectFiles/NetSolution/*.references
 ProjectFiles/UserDefinedModule.xml
 !*.optixt
+
+!CONTRIBUTING.md
+!SECURITY.md
