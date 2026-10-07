@@ -1,5 +1,4 @@
 Name: Client
-Id: g=d159bc367ef56e80574134171fdff39d
 Type: FolderType
 Children:
 - Name: MQTTClientUIObj
@@ -1012,154 +1011,6 @@ Children:
                           Type: DynamicLink
                           DataType: NodePath
                           Value: "../../Enabled"
-                      - Name: MouseDownEventHandler1
-                        Type: EventHandler
-                        Children:
-                        - Name: ListenEventType
-                          Type: PropertyType
-                          DataType: NodeId
-                          Value: "/Types/EventTypes/BaseEventType/MouseEvent/MouseDownEvent"
-                        - Name: MethodsToCall
-                          Type: BaseObjectType
-                          Children:
-                          - Name: MethodContainer1
-                            Type: BaseObjectType
-                            Children:
-                            - Name: ns=2;ObjectPointer
-                              Type: NodePointer
-                              DataType: NodeId
-                              Value: "/Objects/Commands/VariableCommands"
-                              Children:
-                              - Name: Kind
-                                Type: PropertyType
-                                DataType: NodeId
-                                Value: "/Types/ObjectTypes/BaseObjectType"
-                            - Name: ns=2;Method
-                              Type: BaseDataVariableType
-                              DataType: String
-                              Value: "Set"
-                            - Name: InputArguments
-                              Type: BaseObjectType
-                              Children:
-                              - Name: VariableToModify
-                                Type: BaseDataVariableType
-                                DataType: VariablePointer
-                                Children:
-                                - Name: DynamicLink
-                                  Type: DynamicLink
-                                  DataType: NodePath
-                                  Value: "../../../../../../../../../ExpandedPreviousState@NodeId"
-                              - Name: Value
-                                Type: BaseDataVariableType
-                                DataType: ns=0;Boolean
-                                Children:
-                                - Name: DynamicLink
-                                  Type: DynamicLink
-                                  DataType: NodePath
-                                  Value: "../../../../../../../../../Expanded"
-                              - Name: ArrayIndex
-                                Type: BaseDataVariableType
-                                DataType: UInt32
-                                ValueRank: ScalarOrOneDimension
-                        - Name: EventArguments
-                          Type: MouseDownEvent
-                          Children:
-                          - Name: EventId
-                            Type: PropertyType
-                            DataType: ByteString
-                          - Name: EventType
-                            Type: PropertyType
-                            DataType: NodeId
-                          - Name: SourceNode
-                            Type: PropertyType
-                            DataType: NodeId
-                          - Name: SourceName
-                            Type: PropertyType
-                            DataType: String
-                          - Name: Time
-                            Type: PropertyType
-                            DataType: UtcTime
-                          - Name: ReceiveTime
-                            Type: PropertyType
-                            DataType: UtcTime
-                          - Name: Message
-                            Type: PropertyType
-                            DataType: LocalizedText
-                          - Name: Severity
-                            Type: PropertyType
-                            DataType: UInt16
-                      - Name: MouseUpEventHandler1
-                        Type: EventHandler
-                        Children:
-                        - Name: ListenEventType
-                          Type: PropertyType
-                          DataType: NodeId
-                          Value: "/Types/EventTypes/BaseEventType/MouseEvent/MouseUpEvent"
-                        - Name: MethodsToCall
-                          Type: BaseObjectType
-                          Children:
-                          - Name: MethodContainer1
-                            Type: BaseObjectType
-                            Children:
-                            - Name: ns=2;ObjectPointer
-                              Type: NodePointer
-                              DataType: NodeId
-                              Value: "/Objects/OptixEdge_WizardApp/NetLogic/CommonLogic"
-                              Children:
-                              - Name: Kind
-                                Type: PropertyType
-                                DataType: NodeId
-                                Value: "/Types/ObjectTypes/BaseObjectType"
-                            - Name: ns=2;Method
-                              Type: BaseDataVariableType
-                              DataType: String
-                              Value: "RestoreExpandedStatus"
-                            - Name: InputArguments
-                              Type: BaseObjectType
-                              Children:
-                              - Name: Expanded
-                                Type: BaseDataVariableType
-                                DataType: NodeId
-                                Children:
-                                - Name: DynamicLink
-                                  Type: DynamicLink
-                                  DataType: NodePath
-                                  Value: "../../../../../../../../../Expanded@NodeId"
-                              - Name: value
-                                Type: BaseDataVariableType
-                                DataType: ns=0;Boolean
-                                Children:
-                                - Name: DynamicLink
-                                  Type: DynamicLink
-                                  DataType: NodePath
-                                  Value: "../../../../../../../../../ExpandedPreviousState"
-                        - Name: EventArguments
-                          Type: MouseUpEvent
-                          Children:
-                          - Name: EventId
-                            Type: PropertyType
-                            DataType: ByteString
-                          - Name: EventType
-                            Type: PropertyType
-                            DataType: NodeId
-                          - Name: SourceNode
-                            Type: PropertyType
-                            DataType: NodeId
-                          - Name: SourceName
-                            Type: PropertyType
-                            DataType: String
-                          - Name: Time
-                            Type: PropertyType
-                            DataType: UtcTime
-                          - Name: ReceiveTime
-                            Type: PropertyType
-                            DataType: UtcTime
-                          - Name: Message
-                            Type: PropertyType
-                            DataType: LocalizedText
-                          - Name: Severity
-                            Type: PropertyType
-                            DataType: UInt16
                     - Name: MouseClickEventHandler1
                       Type: EventHandler
                       Children:
@@ -1308,9 +1159,103 @@ Children:
                 DataType: HorizontalAlignment
                 ModellingRule: Optional
                 Value: 3
-              - Name: ExpandedPreviousState
-                Type: BaseDataVariableType
-                DataType: ns=0;Boolean
+              - Name: ExpandedTransitioned
+                Type: VariableTransitionEventDispatcher
+                Children:
+                - Name: Value
+                  Type: BaseVariableType
+                  DataType: Double
+                - Name: Transition
+                  Type: BaseVariableType
+                  DataType: VariableTransition
+                - Name: VariableNodePath
+                  Type: BaseVariableType
+                  DataType: NodePath
+                  Value: "../Expanded"
+                - Name: VariableTransitionEventHandler1
+                  Type: EventHandler
+                  Children:
+                  - Name: ListenEventType
+                    Type: PropertyType
+                    DataType: NodeId
+                    Value: "/Types/EventTypes/BaseEventType/VariableConditionEvent/VariableTransitionEvent"
+                  - Name: MethodsToCall
+                    Type: BaseObjectType
+                    Children:
+                    - Name: MethodContainer1
+                      Type: BaseObjectType
+                      Children:
+                      - Name: ns=2;ObjectPointer
+                        Type: NodePointer
+                        DataType: NodeId
+                        Value: "/Objects/Commands/VariableCommands"
+                        Children:
+                        - Name: Kind
+                          Type: PropertyType
+                          DataType: NodeId
+                          Value: "/Types/ObjectTypes/BaseObjectType"
+                      - Name: ns=2;Method
+                        Type: BaseDataVariableType
+                        DataType: String
+                        Value: "Set"
+                      - Name: InputArguments
+                        Type: BaseObjectType
+                        Children:
+                        - Name: VariableToModify
+                          Type: BaseDataVariableType
+                          DataType: VariablePointer
+                          Description: {"NamespaceIndex":2,"TextId":"SetVariableToModifyDescription"}
+                          Children:
+                          - Name: DynamicLink
+                            Type: DynamicLink
+                            DataType: NodePath
+                            Value: "../../../../../../Expanded@NodeId"
+                        - Name: Value
+                          Type: BaseDataVariableType
+                          DataType: ns=0;Boolean
+                          Description: {"NamespaceIndex":2,"TextId":"SetValueDescription"}
+                          Value: true
+                        - Name: ArrayIndex
+                          Type: BaseDataVariableType
+                          DataType: UInt32
+                          Description: {"NamespaceIndex":2,"TextId":"SetArrayIndexDescription"}
+                          ValueRank: ScalarOrOneDimension
+                  - Name: EventArguments
+                    Type: VariableTransitionEvent
+                    Children:
+                    - Name: VariableNodeId
+                      Type: BaseVariableType
+                      DataType: NodeId
+                    - Name: NewValue
+                      Type: BaseVariableType
+                      DataType: BaseDataType
+                    - Name: OldValue
+                      Type: BaseVariableType
+                      DataType: BaseDataType
+                    - Name: EventId
+                      Type: PropertyType
+                      DataType: ByteString
+                    - Name: EventType
+                      Type: PropertyType
+                      DataType: NodeId
+                    - Name: SourceNode
+                      Type: PropertyType
+                      DataType: NodeId
+                    - Name: SourceName
+                      Type: PropertyType
+                      DataType: String
+                    - Name: Time
+                      Type: PropertyType
+                      DataType: UtcTime
+                    - Name: ReceiveTime
+                      Type: PropertyType
+                      DataType: UtcTime
+                    - Name: Message
+                      Type: PropertyType
+                      DataType: LocalizedText
+                    - Name: Severity
+                      Type: PropertyType
+                      DataType: UInt16
         - Name: Expanded
           Type: BaseDataVariableType
           DataType: ns=0;Boolean
@@ -1730,12 +1675,12 @@ Children:
                           Type: BaseDataVariableType
                           DataType: NodeId
                           ValueRank: ScalarOrOneDimension
-                          Value: [{"IdType":0,"Id":0,"Namespace":-1},{"IdType":0,"Id":0,"Namespace":-1},{"IdType":0,"Id":0,"Namespace":-1},{"IdType":0,"Id":0,"Namespace":-1}]
+                          Value: [{"IdType":0,"Id":0,"Namespace":-1},{"IdType":0,"Id":0,"Namespace":-1},{"IdType":0,"Id":0,"Namespace":-1},{"IdType":0,"Id":0,"Namespace":-1},{"IdType":0,"Id":0,"Namespace":-1}]
                           Children:
-                          - Name: DynamicLink_1
+                          - Name: DynamicLink_0
                             Type: DynamicLink
                             DataType: NodePath
-                            Value: "../../../../../IsFolderSelection@NodeId"
+                            Value: "../../../../../PathSelected@NodeId"
                             Children:
                             - Name: ParentElementAccess
                               Type: BaseVariableType
@@ -1747,7 +1692,7 @@ Children:
                                  "Namespace": 1
                                 },
                                 "Body": {
-                                 "ArrayIndex": [1],
+                                 "ArrayIndex": [0],
                                  "FieldIndexes": []
                                 }
                                }
@@ -1770,6 +1715,25 @@ Children:
                                  "FieldIndexes": []
                                 }
                                }
+                          - Name: DynamicLink_4
+                            Type: DynamicLink
+                            DataType: NodePath
+                            Value: "../../../../../CounterAction@NodeId"
+                            Children:
+                            - Name: ParentElementAccess
+                              Type: BaseVariableType
+                              DataType: ElementAccess
+                              Value: 
+                               {
+                                "TypeId": {
+                                 "Id": 313,
+                                 "Namespace": 1
+                                },
+                                "Body": {
+                                 "ArrayIndex": [4],
+                                 "FieldIndexes": []
+                                }
+                               }
                           - Name: DynamicLink_3
                             Type: DynamicLink
                             DataType: NodePath
@@ -1789,10 +1753,10 @@ Children:
                                  "FieldIndexes": []
                                 }
                                }
-                          - Name: DynamicLink_0
+                          - Name: DynamicLink_1
                             Type: DynamicLink
                             DataType: NodePath
-                            Value: "../../../../../PathSelected@NodeId"
+                            Value: "../../../../../IsFolderSelection@NodeId"
                             Children:
                             - Name: ParentElementAccess
                               Type: BaseVariableType
@@ -1804,7 +1768,7 @@ Children:
                                  "Namespace": 1
                                 },
                                 "Body": {
-                                 "ArrayIndex": [0],
+                                 "ArrayIndex": [1],
                                  "FieldIndexes": []
                                 }
                                }
@@ -1857,13 +1821,101 @@ Children:
                     Type: DynamicLink
                     DataType: NodePath
                     Value: "../../TargetPath@Value"
-                - Name: PathSelectedChanged
+                - Name: CounterAction
+                  Type: BaseDataVariableType
+                  DataType: Int32
+                - Name: CounterActionChanged
                   Type: VariableChangedEventDispatcher
                   Children:
                   - Name: VariableNodePath
                     Type: BaseVariableType
                     DataType: NodePath
-                    Value: "../PathSelected"
+                    Value: "../CounterAction"
+                  - Name: VariableValueChangedEventHandler1
+                    Type: EventHandler
+                    Children:
+                    - Name: ListenEventType
+                      Type: PropertyType
+                      DataType: NodeId
+                      Value: "/Types/EventTypes/BaseEventType/VariableConditionEvent/VariableValueChangedEvent"
+                    - Name: MethodsToCall
+                      Type: BaseObjectType
+                      Children:
+                      - Name: MethodContainer1
+                        Type: BaseObjectType
+                        Children:
+                        - Name: ObjectPointer
+                          Type: NodePointer
+                          DataType: NodeId
+                          Value: "/Objects/Commands/VariableCommands"
+                          Children:
+                          - Name: Kind
+                            Type: PropertyType
+                            DataType: NodeId
+                            Value: "/Types/ObjectTypes/BaseObjectType"
+                        - Name: Method
+                          Type: BaseDataVariableType
+                          DataType: String
+                          Value: "Set"
+                        - Name: InputArguments
+                          Type: BaseObjectType
+                          Children:
+                          - Name: VariableToModify
+                            Type: BaseDataVariableType
+                            DataType: VariablePointer
+                            Children:
+                            - Name: DynamicLink
+                              Type: DynamicLink
+                              DataType: NodePath
+                              Value: "../../../../../../../TextBoxCurrentValue/Text@NodeId"
+                          - Name: Value
+                            Type: BaseDataVariableType
+                            DataType: LocalizedText
+                            Children:
+                            - Name: DynamicLink
+                              Type: DynamicLink
+                              DataType: NodePath
+                              Value: "../../../../../../../TextBoxCurrentValue/Text"
+                          - Name: ArrayIndex
+                            Type: BaseDataVariableType
+                            DataType: UInt32
+                            ValueRank: ScalarOrOneDimension
+                    - Name: EventArguments
+                      Type: VariableValueChangedEvent
+                      Children:
+                      - Name: VariableNodeId
+                        Type: BaseVariableType
+                        DataType: NodeId
+                      - Name: NewValue
+                        Type: BaseVariableType
+                        DataType: BaseDataType
+                      - Name: OldValue
+                        Type: BaseVariableType
+                        DataType: BaseDataType
+                      - Name: EventId
+                        Type: PropertyType
+                        DataType: ByteString
+                      - Name: EventType
+                        Type: PropertyType
+                        DataType: NodeId
+                      - Name: SourceNode
+                        Type: PropertyType
+                        DataType: NodeId
+                      - Name: SourceName
+                        Type: PropertyType
+                        DataType: String
+                      - Name: Time
+                        Type: PropertyType
+                        DataType: UtcTime
+                      - Name: ReceiveTime
+                        Type: PropertyType
+                        DataType: UtcTime
+                      - Name: Message
+                        Type: PropertyType
+                        DataType: LocalizedText
+                      - Name: Severity
+                        Type: PropertyType
+                        DataType: UInt16
               - Name: ClearButton
                 Type: Button
                 Children:
@@ -2126,12 +2178,12 @@ Children:
                           Type: BaseDataVariableType
                           DataType: NodeId
                           ValueRank: ScalarOrOneDimension
-                          Value: [{"IdType":0,"Id":0,"Namespace":-1},{"IdType":0,"Id":0,"Namespace":-1},{"IdType":0,"Id":0,"Namespace":-1},{"IdType":0,"Id":0,"Namespace":-1}]
+                          Value: [{"IdType":0,"Id":0,"Namespace":-1},{"IdType":0,"Id":0,"Namespace":-1},{"IdType":0,"Id":0,"Namespace":-1},{"IdType":0,"Id":0,"Namespace":-1},{"IdType":0,"Id":0,"Namespace":-1}]
                           Children:
-                          - Name: DynamicLink_1
+                          - Name: DynamicLink_0
                             Type: DynamicLink
                             DataType: NodePath
-                            Value: "../../../../../IsFolderSelection@NodeId"
+                            Value: "../../../../../PathSelected@NodeId"
                             Children:
                             - Name: ParentElementAccess
                               Type: BaseVariableType
@@ -2143,7 +2195,7 @@ Children:
                                  "Namespace": 1
                                 },
                                 "Body": {
-                                 "ArrayIndex": [1],
+                                 "ArrayIndex": [0],
                                  "FieldIndexes": []
                                 }
                                }
@@ -2166,6 +2218,25 @@ Children:
                                  "FieldIndexes": []
                                 }
                                }
+                          - Name: DynamicLink_4
+                            Type: DynamicLink
+                            DataType: NodePath
+                            Value: "../../../../../CounterAction@NodeId"
+                            Children:
+                            - Name: ParentElementAccess
+                              Type: BaseVariableType
+                              DataType: ElementAccess
+                              Value: 
+                               {
+                                "TypeId": {
+                                 "Id": 313,
+                                 "Namespace": 1
+                                },
+                                "Body": {
+                                 "ArrayIndex": [4],
+                                 "FieldIndexes": []
+                                }
+                               }
                           - Name: DynamicLink_3
                             Type: DynamicLink
                             DataType: NodePath
@@ -2185,10 +2256,10 @@ Children:
                                  "FieldIndexes": []
                                 }
                                }
-                          - Name: DynamicLink_0
+                          - Name: DynamicLink_1
                             Type: DynamicLink
                             DataType: NodePath
-                            Value: "../../../../../PathSelected@NodeId"
+                            Value: "../../../../../IsFolderSelection@NodeId"
                             Children:
                             - Name: ParentElementAccess
                               Type: BaseVariableType
@@ -2200,7 +2271,7 @@ Children:
                                  "Namespace": 1
                                 },
                                 "Body": {
-                                 "ArrayIndex": [0],
+                                 "ArrayIndex": [1],
                                  "FieldIndexes": []
                                 }
                                }
@@ -2253,13 +2324,101 @@ Children:
                     Type: DynamicLink
                     DataType: NodePath
                     Value: "../../TargetPath@Value"
-                - Name: PathSelectedChanged
+                - Name: CounterAction
+                  Type: BaseDataVariableType
+                  DataType: Int32
+                - Name: CounterActionChanged
                   Type: VariableChangedEventDispatcher
                   Children:
                   - Name: VariableNodePath
                     Type: BaseVariableType
                     DataType: NodePath
-                    Value: "../PathSelected"
+                    Value: "../CounterAction"
+                  - Name: VariableValueChangedEventHandler1
+                    Type: EventHandler
+                    Children:
+                    - Name: ListenEventType
+                      Type: PropertyType
+                      DataType: NodeId
+                      Value: "/Types/EventTypes/BaseEventType/VariableConditionEvent/VariableValueChangedEvent"
+                    - Name: MethodsToCall
+                      Type: BaseObjectType
+                      Children:
+                      - Name: MethodContainer1
+                        Type: BaseObjectType
+                        Children:
+                        - Name: ObjectPointer
+                          Type: NodePointer
+                          DataType: NodeId
+                          Value: "/Objects/Commands/VariableCommands"
+                          Children:
+                          - Name: Kind
+                            Type: PropertyType
+                            DataType: NodeId
+                            Value: "/Types/ObjectTypes/BaseObjectType"
+                        - Name: Method
+                          Type: BaseDataVariableType
+                          DataType: String
+                          Value: "Set"
+                        - Name: InputArguments
+                          Type: BaseObjectType
+                          Children:
+                          - Name: VariableToModify
+                            Type: BaseDataVariableType
+                            DataType: VariablePointer
+                            Children:
+                            - Name: DynamicLink
+                              Type: DynamicLink
+                              DataType: NodePath
+                              Value: "../../../../../../../TextBoxCurrentValue/Text@NodeId"
+                          - Name: Value
+                            Type: BaseDataVariableType
+                            DataType: LocalizedText
+                            Children:
+                            - Name: DynamicLink
+                              Type: DynamicLink
+                              DataType: NodePath
+                              Value: "../../../../../../../TextBoxCurrentValue/Text"
+                          - Name: ArrayIndex
+                            Type: BaseDataVariableType
+                            DataType: UInt32
+                            ValueRank: ScalarOrOneDimension
+                    - Name: EventArguments
+                      Type: VariableValueChangedEvent
+                      Children:
+                      - Name: VariableNodeId
+                        Type: BaseVariableType
+                        DataType: NodeId
+                      - Name: NewValue
+                        Type: BaseVariableType
+                        DataType: BaseDataType
+                      - Name: OldValue
+                        Type: BaseVariableType
+                        DataType: BaseDataType
+                      - Name: EventId
+                        Type: PropertyType
+                        DataType: ByteString
+                      - Name: EventType
+                        Type: PropertyType
+                        DataType: NodeId
+                      - Name: SourceNode
+                        Type: PropertyType
+                        DataType: NodeId
+                      - Name: SourceName
+                        Type: PropertyType
+                        DataType: String
+                      - Name: Time
+                        Type: PropertyType
+                        DataType: UtcTime
+                      - Name: ReceiveTime
+                        Type: PropertyType
+                        DataType: UtcTime
+                      - Name: Message
+                        Type: PropertyType
+                        DataType: LocalizedText
+                      - Name: Severity
+                        Type: PropertyType
+                        DataType: UInt16
               - Name: ClearButton
                 Type: Button
                 Children:
@@ -2504,12 +2663,12 @@ Children:
                           Type: BaseDataVariableType
                           DataType: NodeId
                           ValueRank: ScalarOrOneDimension
-                          Value: [{"IdType":0,"Id":0,"Namespace":-1},{"IdType":0,"Id":0,"Namespace":-1},{"IdType":0,"Id":0,"Namespace":-1},{"IdType":0,"Id":0,"Namespace":-1}]
+                          Value: [{"IdType":0,"Id":0,"Namespace":-1},{"IdType":0,"Id":0,"Namespace":-1},{"IdType":0,"Id":0,"Namespace":-1},{"IdType":0,"Id":0,"Namespace":-1},{"IdType":0,"Id":0,"Namespace":-1}]
                           Children:
-                          - Name: DynamicLink_1
+                          - Name: DynamicLink_0
                             Type: DynamicLink
                             DataType: NodePath
-                            Value: "../../../../../IsFolderSelection@NodeId"
+                            Value: "../../../../../PathSelected@NodeId"
                             Children:
                             - Name: ParentElementAccess
                               Type: BaseVariableType
@@ -2521,7 +2680,7 @@ Children:
                                  "Namespace": 1
                                 },
                                 "Body": {
-                                 "ArrayIndex": [1],
+                                 "ArrayIndex": [0],
                                  "FieldIndexes": []
                                 }
                                }
@@ -2544,6 +2703,25 @@ Children:
                                  "FieldIndexes": []
                                 }
                                }
+                          - Name: DynamicLink_4
+                            Type: DynamicLink
+                            DataType: NodePath
+                            Value: "../../../../../CounterAction@NodeId"
+                            Children:
+                            - Name: ParentElementAccess
+                              Type: BaseVariableType
+                              DataType: ElementAccess
+                              Value: 
+                               {
+                                "TypeId": {
+                                 "Id": 313,
+                                 "Namespace": 1
+                                },
+                                "Body": {
+                                 "ArrayIndex": [4],
+                                 "FieldIndexes": []
+                                }
+                               }
                           - Name: DynamicLink_3
                             Type: DynamicLink
                             DataType: NodePath
@@ -2563,10 +2741,10 @@ Children:
                                  "FieldIndexes": []
                                 }
                                }
-                          - Name: DynamicLink_0
+                          - Name: DynamicLink_1
                             Type: DynamicLink
                             DataType: NodePath
-                            Value: "../../../../../PathSelected@NodeId"
+                            Value: "../../../../../IsFolderSelection@NodeId"
                             Children:
                             - Name: ParentElementAccess
                               Type: BaseVariableType
@@ -2578,7 +2756,7 @@ Children:
                                  "Namespace": 1
                                 },
                                 "Body": {
-                                 "ArrayIndex": [0],
+                                 "ArrayIndex": [1],
                                  "FieldIndexes": []
                                 }
                                }
@@ -2631,13 +2809,101 @@ Children:
                     Type: DynamicLink
                     DataType: NodePath
                     Value: "../../TargetPath@Value"
-                - Name: PathSelectedChanged
+                - Name: CounterAction
+                  Type: BaseDataVariableType
+                  DataType: Int32
+                - Name: CounterActionChanged
                   Type: VariableChangedEventDispatcher
                   Children:
                   - Name: VariableNodePath
                     Type: BaseVariableType
                     DataType: NodePath
-                    Value: "../PathSelected"
+                    Value: "../CounterAction"
+                  - Name: VariableValueChangedEventHandler1
+                    Type: EventHandler
+                    Children:
+                    - Name: ListenEventType
+                      Type: PropertyType
+                      DataType: NodeId
+                      Value: "/Types/EventTypes/BaseEventType/VariableConditionEvent/VariableValueChangedEvent"
+                    - Name: MethodsToCall
+                      Type: BaseObjectType
+                      Children:
+                      - Name: MethodContainer1
+                        Type: BaseObjectType
+                        Children:
+                        - Name: ObjectPointer
+                          Type: NodePointer
+                          DataType: NodeId
+                          Value: "/Objects/Commands/VariableCommands"
+                          Children:
+                          - Name: Kind
+                            Type: PropertyType
+                            DataType: NodeId
+                            Value: "/Types/ObjectTypes/BaseObjectType"
+                        - Name: Method
+                          Type: BaseDataVariableType
+                          DataType: String
+                          Value: "Set"
+                        - Name: InputArguments
+                          Type: BaseObjectType
+                          Children:
+                          - Name: VariableToModify
+                            Type: BaseDataVariableType
+                            DataType: VariablePointer
+                            Children:
+                            - Name: DynamicLink
+                              Type: DynamicLink
+                              DataType: NodePath
+                              Value: "../../../../../../../TextBoxCurrentValue/Text@NodeId"
+                          - Name: Value
+                            Type: BaseDataVariableType
+                            DataType: LocalizedText
+                            Children:
+                            - Name: DynamicLink
+                              Type: DynamicLink
+                              DataType: NodePath
+                              Value: "../../../../../../../TextBoxCurrentValue/Text"
+                          - Name: ArrayIndex
+                            Type: BaseDataVariableType
+                            DataType: UInt32
+                            ValueRank: ScalarOrOneDimension
+                    - Name: EventArguments
+                      Type: VariableValueChangedEvent
+                      Children:
+                      - Name: VariableNodeId
+                        Type: BaseVariableType
+                        DataType: NodeId
+                      - Name: NewValue
+                        Type: BaseVariableType
+                        DataType: BaseDataType
+                      - Name: OldValue
+                        Type: BaseVariableType
+                        DataType: BaseDataType
+                      - Name: EventId
+                        Type: PropertyType
+                        DataType: ByteString
+                      - Name: EventType
+                        Type: PropertyType
+                        DataType: NodeId
+                      - Name: SourceNode
+                        Type: PropertyType
+                        DataType: NodeId
+                      - Name: SourceName
+                        Type: PropertyType
+                        DataType: String
+                      - Name: Time
+                        Type: PropertyType
+                        DataType: UtcTime
+                      - Name: ReceiveTime
+                        Type: PropertyType
+                        DataType: UtcTime
+                      - Name: Message
+                        Type: PropertyType
+                        DataType: LocalizedText
+                      - Name: Severity
+                        Type: PropertyType
+                        DataType: UInt16
               - Name: ClearButton
                 Type: Button
                 Children:

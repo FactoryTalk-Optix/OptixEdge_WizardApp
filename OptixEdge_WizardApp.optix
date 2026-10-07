@@ -7,7 +7,7 @@ Project:
  Company: ''
  Copyright: ''
  FormatVersion: 1
- ProductVersion: 1.7
+ ProductVersion: 1.8
  CoreVersion: 5.0
  EncryptionVersion: 1
  EncryptionMode: Secrets
@@ -19,19 +19,19 @@ Project:
   3:
    Uri: 'urn:FTOptix:UI'
    Module: FTOptix.UI
-   Version: 21.2
+   Version: 22.0
   4:
    Uri: 'urn:FTOptix:HMIProject'
    Module: FTOptix.HMIProject
-   Version: 9.0
+   Version: 11.0
   6:
    Uri: 'urn:FTOptix:Retentivity'
    Module: FTOptix.Retentivity
-   Version: 1.0
+   Version: 2.0
   8:
    Uri: 'urn:FTOptix:WebUI'
    Module: FTOptix.WebUI
-   Version: 2.0
+   Version: 3.0
   9:
    Uri: 'urn:FTOptix:OPCUAClient'
    Module: FTOptix.OPCUAClient
@@ -47,7 +47,7 @@ Project:
   14:
    Uri: 'urn:FTOptix:CommunicationDriver'
    Module: FTOptix.CommunicationDriver
-   Version: 3.0
+   Version: 4.0
   15:
    Uri: 'urn:FTOptix:S7TCP'
    Module: FTOptix.S7TCP
@@ -75,11 +75,11 @@ Project:
   23:
    Uri: 'urn:FTOptix:UI:Net'
    Module: FTOptix.UI.Net
-   Version: 21.2
+   Version: 22.0
   26:
    Uri: 'urn:FTOptix:Retentivity:Net'
    Module: FTOptix.Retentivity.Net
-   Version: 1.0
+   Version: 1.1
   27:
    Uri: 'urn:FTOptix:OPCUAClient:Net'
    Module: FTOptix.OPCUAClient.Net
@@ -87,11 +87,11 @@ Project:
   28:
    Uri: 'urn:FTOptix:HMIProject:Net'
    Module: FTOptix.HMIProject.Net
-   Version: 5.0
+   Version: 6.0
   29:
    Uri: 'urn:FTOptix:WebUI:Net'
    Module: FTOptix.WebUI.Net
-   Version: 2.0
+   Version: 3.0
   30:
    Uri: 'urn:FTOptix:MelsecFX3U'
    Module: FTOptix.MelsecFX3U
@@ -167,7 +167,7 @@ Project:
   52:
    Uri: 'urn:FTOptix:MQTTClient'
    Module: FTOptix.MQTTClient
-   Version: 7.0
+   Version: 9.0
   55:
    Uri: 'urn:FTOptix:System'
    Module: FTOptix.System
@@ -203,25 +203,25 @@ Project:
   67:
    Uri: 'urn:FTOptix:OPCUAServer'
    Module: FTOptix.OPCUAServer
-   Version: 2.0
+   Version: 3.0
   68:
    Uri: 'urn:FTOptix:OPCUAServer:Net'
    Module: FTOptix.OPCUAServer.Net
-   Version: 2.0
+   Version: 3.0
   69:
    Uri: 'urn:FTOptix:MQTTClient:Net'
    Module: FTOptix.MQTTClient.Net
-   Version: 6.0
+   Version: 8.0
  Statistics:
-  TotalNodeCount: 22064
-  Objects: 4596
-  ObjectTypes: 106
-  Variables: 17275
+  TotalNodeCount: 24609
+  Objects: 5146
+  ObjectTypes: 113
+  Variables: 19244
   VariableTypes: 0
-  DataTypes: 14
-  Methods: 73
-  References: 236
+  DataTypes: 15
+  Methods: 91
+  References: 260
   ReferenceTypes: 0
-  Files: 76
+  Files: 77
  Nodes:
  - File: Nodes/OptixEdge_WizardApp.yaml

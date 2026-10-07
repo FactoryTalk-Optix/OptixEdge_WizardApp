@@ -31,6 +31,7 @@ using FTOptix.Core;
 using FTOptix.NativeUI;
 using System.Linq;
 using System.Collections.Generic;
+using FTOptix.EventLogger;
 #endregion
 
 public class UIFieldParameterObserverLogic : BaseNetLogic
@@ -220,7 +221,7 @@ public class UIFieldParameterObserverLogic : BaseNetLogic
     }
 
     private void OnVariableChanged(object sender, VariableChangeEventArgs e)
-    {        
+    {
         ParameterChanged();
     }
 

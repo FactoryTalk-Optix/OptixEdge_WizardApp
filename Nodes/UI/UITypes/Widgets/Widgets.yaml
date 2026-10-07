@@ -35,17 +35,6 @@ Children:
           Type: DynamicLink
           DataType: NodePath
           Value: "../../../CommDriverName"
-    - Name: CommDriverUIObjLogic
-      Type: NetLogic
-      Children:
-      - Name: StationWidgetFolder
-        Type: NodePointer
-        DataType: NodeId
-        Value: "/Objects/OptixEdge_WizardApp/UI/UITypes/Widgets/CommDriverStationsUIObj"
-        Children:
-        - Name: Kind
-          Type: PropertyType
-          DataType: NodeId
   - Name: Content
     Type: AccordionContent
     Children:

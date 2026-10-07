@@ -3,6 +3,7 @@ using System;
 using UAManagedCore;
 using FTOptix.NetLogic;
 using FTOptix.Core;
+using FTOptix.EventLogger;
 #endregion
 
 public class SparklineUIObjConfigurationLogic : BaseNetLogic
@@ -20,6 +21,17 @@ public class SparklineUIObjConfigurationLogic : BaseNetLogic
             sparklineWidgetData = widgetData;
             GetSparklineConfiguration();            
             CheckSparklineData();
+            // If SourceNode is not set, initialize default configuration values
+            if (CommonLogic.GetOwner(Owner, OptixEdge_WizardApp.ObjectTypes.AddWidgetDialog) is IUANode addWidgetDialog && addWidgetDialog.GetVariable("IsNewWidget").Value)
+            {
+                int[] configurationParameters = widgetData.GetVariable("ConfigurationParameters").Value;
+                double[] configurationDurantions = widgetData.GetVariable("ConfigurationDurations").Value;
+                configurationDurantions[0] = 500; // Default sample rate of 500ms
+                configurationDurantions[1] = 60000; // Default 1 minute time window
+                configurationParameters[0] = 100; // Default max value on scale to 100
+                widgetData.GetVariable("ConfigurationParameters").Value = configurationParameters;
+                widgetData.GetVariable("ConfigurationDurations").Value = configurationDurantions;
+            }
             // Subscribe to variable change events to update widget data when modified
             lineColorVariable.VariableChange += UpdateData;
             rangeColorVariable.VariableChange += UpdateData;

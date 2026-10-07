@@ -372,6 +372,12 @@ Children:
           DataType: Size
           ModellingRule: Optional
           Value: 16.0
+        - Name: Rows
+          Type: BaseDataVariableType
+          DataType: String
+          ValueRank: OneDimension
+          ArrayDimensions: [0]
+          Value: ["Auto","Auto","Auto"]
     - Name: Expanded
       Type: BaseDataVariableType
       DataType: ns=0;Boolean
@@ -481,6 +487,12 @@ Children:
           DataType: Size
           ModellingRule: Optional
           Value: 16.0
+        - Name: Rows
+          Type: BaseDataVariableType
+          DataType: String
+          ValueRank: OneDimension
+          ArrayDimensions: [0]
+          Value: ["Auto"]
     - Name: Expanded
       Type: BaseDataVariableType
       DataType: ns=0;Boolean
@@ -1130,6 +1142,12 @@ Children:
             DataType: String
             ModellingRule: Optional
             Value: "d"
+        - Name: Rows
+          Type: BaseDataVariableType
+          DataType: String
+          ValueRank: OneDimension
+          ArrayDimensions: [0]
+          Value: ["Auto","Auto","Auto","Auto","Auto","Auto","Auto","Auto"]
     - Name: Expanded
       Type: BaseDataVariableType
       DataType: ns=0;Boolean
@@ -1869,6 +1887,12 @@ Children:
                     Type: DynamicLink
                     DataType: NodePath
                     Value: "../../../../AutoScaleValue/SelectedValue"
+          - Name: Rows
+            Type: BaseDataVariableType
+            DataType: String
+            ValueRank: OneDimension
+            ArrayDimensions: [0]
+            Value: ["Auto","Auto","Auto","Auto","Auto","Auto","Auto"]
       - Name: Expanded
         Type: BaseDataVariableType
         DataType: ns=0;Boolean

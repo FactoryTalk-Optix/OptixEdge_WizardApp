@@ -32,6 +32,7 @@ using System.IO;
 using System.Xml;
 using System.Collections.Generic;
 using System.Linq;
+using FTOptix.EventLogger;
 #endregion
 
 public class FileSelectorLogic : BaseNetLogic
@@ -70,6 +71,56 @@ public class FileSelectorLogic : BaseNetLogic
         {
             actualLocation.VariableChange -= ActualLocation_VariableChange;
         }
+    }
+
+    [ExportMethod]
+    public void UploadFile()
+    {
+        try
+        {
+            if (LogicObject.Get<FileListEntry>("SelectedEntry") is not FileListEntry selectedEntryVoice)
+            {
+                Log.Error(LogicObject.BrowseName, "SelectedEntry object not found or invalid!");
+                NotificationsMessageHandlerLogic.Instance.RequestToastNotification(ToastBannerNotificationLevel.Error, "Error during file upload, please check the log for more details.");
+                return;
+            }
+    
+            if (Session.Get<NetLogicObject>("FileTransferManagementLogic") is not NetLogicObject fileTransferLogic)
+            {
+                Log.Error(LogicObject.BrowseName, "No active FileTransferManagementLogic found!");
+                NotificationsMessageHandlerLogic.Instance.RequestToastNotification(ToastBannerNotificationLevel.Error, "Error during file upload, please check the log for more details.");
+                return;
+            }
+            string allowedExtensions = "*";
+            if (!string.IsNullOrEmpty(fileExtensionFilterVariable.Value))
+            {
+                allowedExtensions = fileExtensionFilterVariable.Value;
+            }
+            updateFileListRunning.Value = true;
+            string uploadFilePath = selectedEntryVoice.FileFullPath;
+            if (IsFile(selectedEntryVoice.FileFullPath))
+            {
+                uploadFilePath = Path.GetDirectoryName(selectedEntryVoice.FileFullPath);
+            }
+            fileTransferLogic.ExecuteMethod("RequestUploadTask", new object[] { FileOperationRequest.OperationType.FileUpload, uploadFilePath, allowedExtensions, LogicObject.NodeId });
+        }
+        catch (Exception)
+        {
+            updateFileListRunning.Value = false;
+        }
+
+    }
+
+    [ExportMethod]
+    public void UploadCompleteHandler(int statusCode, string uploadedFileUri, int operationType)
+    {
+        updateFileListRunning.Value = false;
+        if ((UploadFileCompletedResultCode)statusCode == UploadFileCompletedResultCode.Success)
+        {
+            NotificationsMessageHandlerLogic.Instance.RequestToastNotification(ToastBannerNotificationLevel.Success, "File upload completed successfully.");
+            folderAnalyzerTask = new LongRunningTask(UpdateDataGridEntryList, new ResourceUri(uploadedFileUri.Replace(Path.GetFileName(uploadedFileUri), "")), LogicObject);
+            folderAnalyzerTask.Start();
+        } 
     }
 
     [ExportMethod]
@@ -213,6 +264,10 @@ public class FileSelectorLogic : BaseNetLogic
         else
         {
             filePathVariable.Value = selectedEntry.EntryUri;
+            if (Owner.GetAlias("FileSelectorActionCounter") is IUAVariable actionCounter)
+            {
+                actionCounter.Value += 1;
+            }
         }
         ownerDialog.Close();
     }
@@ -473,7 +528,7 @@ public class FileSelectorLogic : BaseNetLogic
             }
         }
         Log.Debug(LogicObject.BrowseName, $"The provided ResourceUri {filePathUri.Uri} is not a valid USB root directory.");
-        return false;      
+        return false;
     }
 
     private ResourceUri SetDefaultResourceUri()

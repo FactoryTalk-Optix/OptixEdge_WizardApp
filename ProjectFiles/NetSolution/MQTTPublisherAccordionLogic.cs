@@ -29,6 +29,7 @@ using FTOptix.DataLogger;
 using FTOptix.OPCUAClient;
 using FTOptix.Core;
 using System.Collections.Generic;
+using FTOptix.EventLogger;
 #endregion
 
 public class MQTTPublisherAccordionLogic : BaseNetLogic
@@ -36,7 +37,7 @@ public class MQTTPublisherAccordionLogic : BaseNetLogic
     public override void Start()
     {
         configuration = Owner.Owner.GetAlias(CommonLogic.editAliasNameMapping.GetValueOrDefault(OptixEdge_WizardApp.ObjectTypes.MQTTPublisherUIObj)) as MQTTPublisherDataConfiguration;
-        Owner.Get<NetLogicObject>("UIFieldParameterObserverLogic")?.ExecuteMethod("SubscribeObserver");
+        new DelayedTask(RegisterUIObserver, null, TimeSpan.FromMilliseconds(800), Owner).Start();
     }
 
     public override void Stop()
@@ -87,9 +88,16 @@ public class MQTTPublisherAccordionLogic : BaseNetLogic
         }
         Owner.Owner.GetVariable("LastIndexReleased").Value = fieldIndex;
         // Call subscribe UI observer method for enable the save management on user edit
+        Owner.Get<NetLogicObject>("UIFieldParameterObserverLogic")?.ExecuteMethod("UnsubscribeObserver");
         Owner.Get<NetLogicObject>("UIFieldParameterObserverLogic")?.ExecuteMethod("SubscribeObserver");
         task.Dispose();
     }
 
+    private void RegisterUIObserver(DelayedTask task, object arguments)
+    {
+        Owner.Get<NetLogicObject>("UIFieldParameterObserverLogic")?.ExecuteMethod("SubscribeObserver");
+        task.Dispose();
+    }
+    
     MQTTPublisherDataConfiguration configuration;
 }

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="980" height="520" viewBox="0 0 980 520" font-family="Segoe UI, Arial, sans-serif">
+  <defs>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="9" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1565c0"/>
+    </marker>
+    <linearGradient id="chassis" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fafafa"/>
+      <stop offset="1" stop-color="#e3e3e3"/>
+    </linearGradient>
+    <style>
+      .title { font-size: 22px; font-weight: 700; fill: #102a43; }
+      .subtitle { font-size: 14px; fill: #486581; }
+      .label { font-size: 13px; fill: #243b53; }
+      .small { font-size: 11px; fill: #486581; }
+      .path { font-size: 16px; font-weight: 700; fill: #b71c1c; }
+      .moduleName { font-size: 13px; font-weight: 600; fill: #102a43; }
+      .slotNum { font-size: 11px; font-weight: 700; fill: #627d98; }
+      .flowlabel { font-size: 12px; font-weight: 600; fill: #1565c0; }
+    </style>
+  </defs>
+
+  <!-- Title -->
+  <text x="30" y="40" class="title">Access a ControlLogix CPU through an Ethernet (ENET) Module</text>
+  <text x="30" y="64" class="subtitle">Routed path: the network reaches the ENET module, crosses the chassis backplane, and lands on the CPU slot.</text>
+
+  <!-- PC / RSLinx -->
+  <rect x="30" y="150" width="150" height="90" rx="8" fill="#ffffff" stroke="#334e68" stroke-width="2"/>
+  <text x="105" y="185" text-anchor="middle" class="moduleName">OptixEdge</text>
+  <text x="105" y="205" text-anchor="middle" class="small">Rockwell LINX</text>
+  <text x="105" y="222" text-anchor="middle" class="small">(RSLinx)</text>
+
+  <!-- Ethernet network cloud -->
+  <ellipse cx="290" cy="195" rx="55" ry="40" fill="#e8f1fb" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="290" y="190" text-anchor="middle" class="label">Ethernet</text>
+  <text x="290" y="208" text-anchor="middle" class="small">network</text>
+
+  <!-- Connection PC -> network -->
+  <line x1="180" y1="195" x2="232" y2="195" stroke="#1565c0" stroke-width="2.5" marker-end="url(#arrow)"/>
+
+  <!-- Connection network -> ENET (IP) -->
+  <line x1="345" y1="195" x2="430" y2="195" stroke="#1565c0" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <text x="388" y="183" text-anchor="middle" class="flowlabel">&lt;ipetn&gt;</text>
+
+  <!-- Chassis -->
+  <rect x="430" y="120" width="510" height="220" rx="10" fill="url(#chassis)" stroke="#334e68" stroke-width="2"/>
+  <text x="685" y="110" text-anchor="middle" class="label">ControlLogix Chassis (Backplane)</text>
+
+  <!-- Backplane bar -->
+  <rect x="445" y="300" width="480" height="22" rx="4" fill="#cfd9e3" stroke="#9fb3c8"/>
+  <text x="685" y="316" text-anchor="middle" class="small">Backplane (slot-to-slot routing)</text>
+
+  <!-- Slot 0: ENET module -->
+  <rect x="450" y="140" width="95" height="150" rx="6" fill="#ffffff" stroke="#1565c0" stroke-width="2.5"/>
+  <text x="497" y="135" text-anchor="middle" class="slotNum">Slot 0</text>
+  <text x="497" y="200" text-anchor="middle" class="moduleName">ENET</text>
+  <text x="497" y="218" text-anchor="middle" class="small">1756-EN2T</text>
+  <text x="497" y="252" text-anchor="middle" class="small">IP = &lt;ipetn&gt;</text>
+  <circle cx="497" cy="160" r="5" fill="#2e7d32"/>
+
+  <!-- Slot 1 -->
+  <rect x="555" y="140" width="80" height="150" rx="6" fill="#f4f6f8" stroke="#9fb3c8"/>
+  <text x="595" y="135" text-anchor="middle" class="slotNum">Slot 1</text>
+  <text x="595" y="220" text-anchor="middle" class="small">I/O</text>
+
+  <!-- Slot 2: CPU -->
+  <rect x="645" y="140" width="95" height="150" rx="6" fill="#fff4e5" stroke="#e65100" stroke-width="2.5"/>
+  <text x="692" y="135" text-anchor="middle" class="slotNum">Slot 2</text>
+  <text x="692" y="200" text-anchor="middle" class="moduleName">CPU</text>
+  <text x="692" y="218" text-anchor="middle" class="small">ControlLogix</text>
+  <text x="692" y="252" text-anchor="middle" class="small">&lt;cpuslot&gt; = 2</text>
+  <circle cx="692" cy="160" r="5" fill="#e65100"/>
+
+  <!-- Slot 3 -->
+  <rect x="750" y="140" width="80" height="150" rx="6" fill="#f4f6f8" stroke="#9fb3c8"/>
+  <text x="790" y="135" text-anchor="middle" class="slotNum">Slot 3</text>
+  <text x="790" y="220" text-anchor="middle" class="small">I/O</text>
+
+  <!-- Slot 4 -->
+  <rect x="840" y="140" width="80" height="150" rx="6" fill="#f4f6f8" stroke="#9fb3c8"/>
+  <text x="880" y="135" text-anchor="middle" class="slotNum">Slot 4</text>
+  <text x="880" y="220" text-anchor="middle" class="small">I/O</text>
+
+  <!-- Routing arrows: into ENET, down backplane, up to CPU -->
+  <line x1="430" y1="195" x2="448" y2="195" stroke="#1565c0" stroke-width="2.5"/>
+  <line x1="497" y1="290" x2="497" y2="300" stroke="#b71c1c" stroke-width="3"/>
+  <path d="M497,311 L692,311" stroke="#b71c1c" stroke-width="3" fill="none"/>
+  <line x1="692" y1="311" x2="692" y2="292" stroke="#b71c1c" stroke-width="3" marker-end="url(#arrow)"/>
+  <text x="595" y="340" text-anchor="middle" class="flowlabel">across Backplane → CPU slot</text>
+
+  <!-- Path callout -->
+  <rect x="30" y="400" width="910" height="80" rx="10" fill="#fdecea" stroke="#b71c1c" stroke-width="1.5"/>
+  <text x="50" y="432" class="label">Communication Path:</text>
+  <text x="50" y="462" class="path">&lt;ipetn&gt; \ Backplane \ &lt;cpuslot&gt;</text>
+  <text x="430" y="445" class="small">• &lt;ipetn&gt; = IP address of the Ethernet module (e.g. 192.168.1.10)</text>
+  <text x="430" y="465" class="small">• &lt;cpuslot&gt; = backplane slot number where the CPU resides (e.g. 2)</text>
+</svg>

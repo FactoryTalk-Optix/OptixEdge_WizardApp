@@ -27,7 +27,12 @@ Children:
     Type: BaseDataVariableType
     DataType: ns=0;Boolean
     ReferenceType: HasProperty
-    Value: true
+  - Class: Reference
+    Target: ns=6;i=8
+    Direction: Forward
+  - Class: Reference
+    Target: ns=6;i=14
+    Direction: Forward
 - Name: AlarmsRetentivityStorage
   Type: RetentivityStorage
   Children:
@@ -54,7 +59,12 @@ Children:
     Type: BaseDataVariableType
     DataType: ns=0;Boolean
     ReferenceType: HasProperty
-    Value: true
+  - Class: Reference
+    Target: ns=6;i=8
+    Direction: Forward
+  - Class: Reference
+    Target: ns=6;i=14
+    Direction: Forward
 - Name: DataSourcesStorage
   Type: RetentivityStorage
   Children:
@@ -129,6 +139,12 @@ Children:
     Type: BaseDataVariableType
     DataType: ns=0;Boolean
     ReferenceType: HasProperty
+  - Class: Reference
+    Target: ns=6;i=8
+    Direction: Forward
+  - Class: Reference
+    Target: ns=6;i=14
+    Direction: Forward
 - Name: DataDestinationsStorage
   Type: RetentivityStorage
   Children:
@@ -215,33 +231,12 @@ Children:
     Type: BaseDataVariableType
     DataType: ns=0;Boolean
     ReferenceType: HasProperty
-- Name: ApplicationConfigurationsStorage
-  Type: RetentivityStorage
-  Children:
-  - Name: Nodes
-    Type: BaseObjectType
-    Children:
-    - Name: Settings
-      Type: NodePointer
-      DataType: NodeId
-      Value: "/Objects/OptixEdge_WizardApp/Model/ApplicationSettings"
-      Children:
-      - Name: Kind
-        Type: PropertyType
-        DataType: NodeId
-      - Name: NodeClass
-        Type: PropertyType
-        DataType: NodePointerNodeClass
-        Value: 2
-  - Name: WriteDelay
-    Type: BaseDataVariableType
-    DataType: Duration
-    ReferenceType: HasProperty
-  - Name: DeltaObserverEnabled
-    Type: BaseDataVariableType
-    DataType: ns=0;Boolean
-    ReferenceType: HasProperty
-    Value: true
+  - Class: Reference
+    Target: ns=6;i=8
+    Direction: Forward
+  - Class: Reference
+    Target: ns=6;i=14
+    Direction: Forward
 - Name: UIStorage
   Type: RetentivityStorage
   Children:
@@ -268,4 +263,212 @@ Children:
     Type: BaseDataVariableType
     DataType: ns=0;Boolean
     ReferenceType: HasProperty
+  - Class: Reference
+    Target: ns=6;i=8
+    Direction: Forward
+  - Class: Reference
+    Target: ns=6;i=14
+    Direction: Forward
+- Name: ApplicationConfigurationsStorage
+  Id: g=914c516cd055aea8e7c822f75b60a251
+  Type: RetentivityStorage
+  Children:
+  - Name: Nodes
+    Type: BaseObjectType
+    Children:
+    - Name: Settings
+      Type: NodePointer
+      DataType: NodeId
+      Value: "/Objects/OptixEdge_WizardApp/Model/ApplicationSettings"
+      Children:
+      - Name: Kind
+        Type: PropertyType
+        DataType: NodeId
+      - Name: NodeClass
+        Type: PropertyType
+        DataType: NodePointerNodeClass
+        Value: 2
+    - Name: RAEIP
+      Type: NodePointer
+      DataType: NodeId
+      Value: "/Objects/OptixEdge_WizardApp/CommDrivers/RAEtherNet_IP"
+      Children:
+      - Name: Kind
+        Type: PropertyType
+        DataType: NodeId
+      - Name: NodeClass
+        Type: PropertyType
+        DataType: NodePointerNodeClass
+        Value: 2
+    - Name: S7TCP
+      Type: NodePointer
+      DataType: NodeId
+      Value: "/Objects/OptixEdge_WizardApp/CommDrivers/S7TCP"
+      Children:
+      - Name: Kind
+        Type: PropertyType
+        DataType: NodeId
+      - Name: NodeClass
+        Type: PropertyType
+        DataType: NodePointerNodeClass
+        Value: 2
+    - Name: ModbusTCP
+      Type: NodePointer
+      DataType: NodeId
+      Value: "/Objects/OptixEdge_WizardApp/CommDrivers/ModbusTCP"
+      Children:
+      - Name: Kind
+        Type: PropertyType
+        DataType: NodeId
+      - Name: NodeClass
+        Type: PropertyType
+        DataType: NodePointerNodeClass
+        Value: 2
+    - Name: 'OPC-UA'
+      Type: NodePointer
+      DataType: NodeId
+      Value: "/Objects/OptixEdge_WizardApp/OPC-UA/OPC-UA Clients"
+      Children:
+      - Name: Kind
+        Type: PropertyType
+        DataType: NodeId
+      - Name: NodeClass
+        Type: PropertyType
+        DataType: NodePointerNodeClass
+        Value: 2
+    - Name: S7Profinet
+      Type: NodePointer
+      DataType: NodeId
+      Value: "/Objects/OptixEdge_WizardApp/CommDrivers/S7TIAProfinet"
+      Children:
+      - Name: Kind
+        Type: PropertyType
+        DataType: NodeId
+      - Name: NodeClass
+        Type: PropertyType
+        DataType: NodePointerNodeClass
+        Value: 2
+    - Name: Stores
+      Type: NodePointer
+      DataType: NodeId
+      Value: "/Objects/OptixEdge_WizardApp/DataStores"
+      Children:
+      - Name: Kind
+        Type: PropertyType
+        DataType: NodeId
+      - Name: NodeClass
+        Type: PropertyType
+        DataType: NodePointerNodeClass
+        Value: 2
+    - Name: MQTT Clients
+      Type: NodePointer
+      DataType: NodeId
+      Value: "/Objects/OptixEdge_WizardApp/MQTT/MQTT Clients"
+      Children:
+      - Name: Kind
+        Type: PropertyType
+        DataType: NodeId
+      - Name: NodeClass
+        Type: PropertyType
+        DataType: NodePointerNodeClass
+        Value: 2
+    - Name: MQTT Publisher Configurations
+      Type: NodePointer
+      DataType: NodeId
+      Value: "/Objects/OptixEdge_WizardApp/MQTT Data Configurations"
+      Children:
+      - Name: Kind
+        Type: PropertyType
+        DataType: NodeId
+      - Name: NodeClass
+        Type: PropertyType
+        DataType: NodePointerNodeClass
+        Value: 2
+    - Name: Loggers
+      Type: NodePointer
+      DataType: NodeId
+      Value: "/Objects/OptixEdge_WizardApp/Loggers"
+      Children:
+      - Name: Kind
+        Type: PropertyType
+        DataType: NodeId
+      - Name: NodeClass
+        Type: PropertyType
+        DataType: NodePointerNodeClass
+        Value: 2
+    - Name: OPC UA Server
+      Type: NodePointer
+      DataType: NodeId
+      Value: "/Objects/OptixEdge_WizardApp/OPC-UA/OPC-UA Server"
+      Children:
+      - Name: Kind
+        Type: PropertyType
+        DataType: NodeId
+      - Name: NodeClass
+        Type: PropertyType
+        DataType: NodePointerNodeClass
+        Value: 2
+    - Name: OPCUA Server Data
+      Type: NodePointer
+      DataType: NodeId
+      Value: "/Objects/OptixEdge_WizardApp/OPC UA Data"
+      Children:
+      - Name: Kind
+        Type: PropertyType
+        DataType: NodeId
+      - Name: NodeClass
+        Type: PropertyType
+        DataType: NodePointerNodeClass
+        Value: 2
+    - Name: Dashboard
+      Type: NodePointer
+      DataType: NodeId
+      Value: "/Objects/OptixEdge_WizardApp/Model/DashboardCollection"
+      Children:
+      - Name: Kind
+        Type: PropertyType
+        DataType: NodeId
+      - Name: NodeClass
+        Type: PropertyType
+        DataType: NodePointerNodeClass
+        Value: 2
+    - Name: Users
+      Type: NodePointer
+      DataType: NodeId
+      Value: "/Objects/OptixEdge_WizardApp/Security"
+      Children:
+      - Name: Kind
+        Type: PropertyType
+        DataType: NodeId
+      - Name: NodeClass
+        Type: PropertyType
+        DataType: NodePointerNodeClass
+        Value: 2
+    - Name: Alarms
+      Type: NodePointer
+      DataType: NodeId
+      Value: "/Objects/OptixEdge_WizardApp/Alarms"
+      Children:
+      - Name: Kind
+        Type: PropertyType
+        DataType: NodeId
+      - Name: NodeClass
+        Type: PropertyType
+        DataType: NodePointerNodeClass
+        Value: 2
+  - Name: WriteDelay
+    Type: BaseDataVariableType
+    DataType: Duration
+    ReferenceType: HasProperty
+    Value: "0:00:00:00.1000000"
+  - Name: DeltaObserverEnabled
+    Type: BaseDataVariableType
+    DataType: ns=0;Boolean
+    ReferenceType: HasProperty
     Value: true
+  - Class: Reference
+    Target: ns=6;i=8
+    Direction: Forward
+  - Class: Reference
+    Target: ns=6;i=14
+    Direction: Forward

@@ -6,6 +6,8 @@ using FTOptix.HMIProject;
 using FTOptix.NetLogic;
 using FTOptix.DataLogger;
 using FTOptix.Core;
+using FTOptix.UI;
+using FTOptix.EventLogger;
 #endregion
 
 public class TrendUIObjConfigLogic : BaseNetLogic
@@ -18,6 +20,15 @@ public class TrendUIObjConfigLogic : BaseNetLogic
             if (InformationModel.Get(trendWidgetData.SourceNode) is DataLogger loggerSource)
             {
                 GeneratePensWidgetFromData(loggerSource);
+            }
+            if (CommonLogic.GetOwner(Owner, OptixEdge_WizardApp.ObjectTypes.AddWidgetDialog) is IUANode addWidgetDialog && addWidgetDialog.GetVariable("IsNewWidget").Value)
+            {
+                int[] configurationParameters = trendWidgetData.GetVariable("ConfigurationParameters").Value;
+                double[] configurationDurantions = trendWidgetData.GetVariable("ConfigurationDurations").Value;
+                configurationDurantions[1] = 60000; // Default 1 minute time window
+                configurationParameters[0] = 1; // Autoscale enabled by default
+                trendWidgetData.GetVariable("ConfigurationParameters").Value = configurationParameters;
+                trendWidgetData.GetVariable("ConfigurationDurations").Value = configurationDurantions;
             }
         }
     }

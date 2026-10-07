@@ -33,6 +33,7 @@ using System.Threading;
 using System.Linq;
 using FTOptix.AuditSigning;
 using FTOptix.NativeUI;
+using FTOptix.EventLogger;
 #endregion
 
 public class OpcUaServerLogic : BaseNetLogic
@@ -94,12 +95,13 @@ public class OpcUaServerLogic : BaseNetLogic
     [ExportMethod]
     public void CreateConfiguration(NodeId opcUaServer, NodeId widgetOwner)
     {
-        if (InformationModel.Get(opcUaServer) is OPCUAServer opcUaServerNode)
+        if (InformationModel.Get(opcUaServer) is OPCUAServer opcUaServerNode && InformationModel.Get(widgetOwner) is ColumnLayout verticalLayout)
         {
             var opcUaConfigurationsVariableFolder = Project.Current.Get($"{CommonLogic.OPCUAServerDataFolderPath}/{opcUaServerNode.BrowseName}");
             var nodeToPublishCollection = opcUaServerNode.GetObject("NodesToPublish");
+            var prefixBrowseName = "Configuration";
             int countCurrentPublisher = nodeToPublishCollection.GetNodesByType<NodesToPublishConfigurationEntry>().Count();
-            string browseName = $"Configuration{countCurrentPublisher + 1}";
+            string browseName = $"{prefixBrowseName}{countCurrentPublisher + 1}";
             if (nodeToPublishCollection.Get(browseName) == null)
             {
                 var configuration = InformationModel.MakeObject<NodesToPublishConfigurationEntry>(browseName);
@@ -116,17 +118,14 @@ public class OpcUaServerLogic : BaseNetLogic
                 nodesPointer.Value = configurationFolder.NodeId;
                 configuration.Nodes.Add(nodesPointer);
                 nodeToPublishCollection.Add(configuration);
-                if (InformationModel.Get(widgetOwner) is ColumnLayout verticalLayout)
+                var newWidget = InformationModel.MakeObject<OPCUAServerNodesToPublishUIObj>(browseName);
+                newWidget.SetAlias(CommonLogic.editAliasNameMapping.GetValueOrDefault(FTOptix.OPCUAServer.ObjectTypes.NodesToPublishConfigurationEntry), configuration);
+                verticalLayout.Add(newWidget);
+                CommonLogic.GenerateAndAttachTagViewer(newWidget, CommonLogic.TagViewerOPCUAPublisherAliasSourceLink);
+                NotificationsMessageHandlerLogic.Instance.RequestToastNotification(ToastBannerNotificationLevel.Success, $"Configuration for OPC-UA Server successfully created.");
+                if (newWidget.Find("UIFieldParameterObserverLogic") is NetLogicObject uiFieldParameterObserverLogic)
                 {
-                    var newWidget = InformationModel.MakeObject<OPCUAServerNodesToPublishUIObj>(browseName);
-                    newWidget.SetAlias(CommonLogic.editAliasNameMapping.GetValueOrDefault(FTOptix.OPCUAServer.ObjectTypes.NodesToPublishConfigurationEntry), configuration);
-                    verticalLayout.Add(newWidget);
-                    CommonLogic.GenerateAndAttachTagViewer(newWidget, CommonLogic.TagViewerOPCUAPublisherAliasSourceLink);
-                    NotificationsMessageHandlerLogic.Instance.RequestToastNotification(ToastBannerNotificationLevel.Success, $"Configuration for OPC-UA Server successfully created.");
-                    if (newWidget.Find("UIFieldParameterObserverLogic") is NetLogicObject uiFieldParameterObserverLogic)
-                    {
-                        uiFieldParameterObserverLogic.ExecuteMethod("SubscribeObserver");
-                    }
+                    uiFieldParameterObserverLogic.ExecuteMethod("SubscribeObserver");
                 }
             }
         }
@@ -318,7 +317,7 @@ public class OpcUaServerLogic : BaseNetLogic
 
     private void DeleteStationTask(DelayedTask task, object arguments)
     {
-        IUANode[] nodesToDelete = (IUANode[])arguments; 
+        IUANode[] nodesToDelete = (IUANode[])arguments;
         if ((nodesToDelete[0] is OPCUAServer || nodesToDelete[0] is NodesToPublishConfigurationEntry) && nodesToDelete[1] is Item opcUAServerWidget)
         {
             OPCUAServer sourceStation = null;
@@ -326,7 +325,7 @@ public class OpcUaServerLogic : BaseNetLogic
             {
                 string stationNodeAlias = CommonLogic.sourceAliasNameMapping.GetValueOrDefault(editStation.ObjectType.NodeId);
                 sourceStation = (OPCUAServer)opcUAServerWidget.GetAlias(stationNodeAlias);
-            } 
+            }
             try
             {
                 nodesToDelete[1].Delete();
@@ -334,10 +333,10 @@ public class OpcUaServerLogic : BaseNetLogic
             catch
             {
                 // nothing important
-            }          
+            }
             switch (nodesToDelete[0])
             {
-                case OPCUAServer:              
+                case OPCUAServer:
                     Project.Current.Get($"{CommonLogic.OPCUAServerDataFolderPath}/{nodesToDelete[0].BrowseName}")?.Delete();
                     try
                     {
@@ -351,10 +350,10 @@ public class OpcUaServerLogic : BaseNetLogic
                     {
                         if (sourceStation != null)
                         {
-                            string sourceStationName = sourceStation.BrowseName;     
-                            sourceStation.Delete();               
+                            string sourceStationName = sourceStation.BrowseName;
+                            sourceStation.Delete();
                             NotificationsMessageHandlerLogic.Instance.RequestToastNotification(ToastBannerNotificationLevel.Success, $"OPC-UA Server {sourceStationName} successfully deleted.");
-                        } 
+                        }
                     }
                     catch
                     {

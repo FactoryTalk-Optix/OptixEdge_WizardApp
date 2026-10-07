@@ -24,6 +24,7 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Security.Cryptography.X509Certificates;
 using FTOptix.NativeUI;
+using FTOptix.EventLogger;
 #endregion
 
 public class LogsWatcherLogic : BaseNetLogic
@@ -76,10 +77,10 @@ public class LogsWatcherLogic : BaseNetLogic
         {
             Project.Current.GetVariable("Model/RuntimeExceedBannerVisibilty").Value = true;
         }
-        Match match = Regex.Match(message, @"(\d+)\s+feature\s+tokens");
-        if (match.Success)
+        Match match = Regex.Match(message, @"(\d+)\s+(?i:Standard\s+Feature\s+Tokens)");
+        if (match.Success && int.TryParse(match.Groups[1].Value, out int tokenCount))
         { 
-            Project.Current.GetVariable("Model/CurrentTokenUsage").Value = match.Groups[1].Value;
+            Project.Current.GetVariable("Model/CurrentTokenUsage").Value = tokenCount;
         }
     }
 

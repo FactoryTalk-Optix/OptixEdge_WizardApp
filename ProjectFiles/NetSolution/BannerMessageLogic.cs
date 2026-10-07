@@ -29,6 +29,7 @@ using FTOptix.DataLogger;
 using FTOptix.MQTTClient;
 using FTOptix.Core;
 using FTOptix.NativeUI;
+using FTOptix.EventLogger;
 #endregion
 
 public class BannerMessageLogic : BaseNetLogic

@@ -20,6 +20,7 @@ using FTOptix.System;
 using System.Diagnostics.CodeAnalysis;
 using FTOptix.CommunicationDriver;
 using System.IO;
+using FTOptix.EventLogger;
 #endregion
 
 public class MqttClientLogic : BaseNetLogic
@@ -41,15 +42,16 @@ public class MqttClientLogic : BaseNetLogic
     [ExportMethod]
     public void CreateNewMqttClient(NodeId widgetOwner)
     {
-        var mqttClientFolder = Project.Current.Get<Folder>(CommonLogic.MQTTClientFolderPath);
-        int countCurrentClient = mqttClientFolder.GetNodesByType<MQTTClient>().Count();
-        string browseName = $"MQTTClient{countCurrentClient + 1}";
-        if (mqttClientFolder.Get(browseName) == null)
+        if (InformationModel.Get(widgetOwner) is ColumnLayout verticalLayout)
         {
-            var mqttClient = InformationModel.MakeObject<MQTTClient>(browseName);
-            InitMqttClientNode(mqttClient);
-            if (InformationModel.Get(widgetOwner) is ColumnLayout verticalLayout)
+            var prefixBrowseName = "MQTTClient";
+            var mqttClientFolder = Project.Current.Get<Folder>(CommonLogic.MQTTClientFolderPath);
+            int countCurrentClient = CommonLogic.GetFirstAvailableNumber(verticalLayout.GetNodesByType<MQTTClientUIObj>().Select(x => x.BrowseName), prefixBrowseName);
+            string browseName = $"{prefixBrowseName}{countCurrentClient}";
+            if (mqttClientFolder.Get(browseName) == null)
             {
+                var mqttClient = InformationModel.MakeObject<MQTTClient>(browseName);
+                InitMqttClientNode(mqttClient);                
                 var newWidget = InformationModel.MakeObject<MQTTClientUIObj>(browseName);
                 newWidget.SetAlias(CommonLogic.editAliasNameMapping.GetValueOrDefault(FTOptix.MQTTClient.ObjectTypes.MQTTClient), mqttClient);
                 verticalLayout.Add(newWidget);
@@ -58,11 +60,11 @@ public class MqttClientLogic : BaseNetLogic
                 {
                     uiFieldParameterObserverLogic.ExecuteMethod("SubscribeObserver");
                 }
-            }
         }
-        else
-        {
-            NotificationsMessageHandlerLogic.Instance.RequestBannerNotification(ToastBannerNotificationLevel.Warning, "Cannot add the new MQTT client, already exist in the system");
+            else
+            {
+                NotificationsMessageHandlerLogic.Instance.RequestBannerNotification(ToastBannerNotificationLevel.Warning, "Cannot add the new MQTT client, already exist in the system");
+            }
         }
     }
 
@@ -77,25 +79,24 @@ public class MqttClientLogic : BaseNetLogic
     [ExportMethod]
     public void CreatePublisher(NodeId mqttClient, NodeId widgetOwner)
     {
-        if (InformationModel.GetObject(mqttClient) is MQTTClient mqttClientNode)
+        if (InformationModel.GetObject(mqttClient) is MQTTClient mqttClientNode && InformationModel.Get(widgetOwner) is ColumnLayout verticalLayout)
         {
-            int countCurrentPublisher = mqttClientNode.GetNodesByType<MQTTPublisher>().Count();
-            string browseName = $"Publisher{countCurrentPublisher + 1}";
+            var prefixBrowseName = "Publisher";
+            int countCurrentPublisher = CommonLogic.GetFirstAvailableNumber(verticalLayout.GetNodesByType<MQTTPublisherUIObj>().Select(x => x.BrowseName), prefixBrowseName);
+            string browseName = $"{prefixBrowseName}{countCurrentPublisher}";
             if (mqttClientNode.Get(browseName) == null)
             {
                 var mqttPublisher = InformationModel.MakeObject<MQTTPublisher>(browseName);
                 InitMqttPublisherNode(mqttPublisher);
+                // Create the publisher widget and set the alias to the publisher node and the mqtt client node
                 var newWidget = InformationModel.MakeObject<MQTTPublisherUIObj>(browseName);
-                if (InformationModel.Get(widgetOwner) is ColumnLayout verticalLayout)
+                newWidget.SetAlias(CommonLogic.editAliasNameMapping.GetValueOrDefault(FTOptix.MQTTClient.ObjectTypes.MQTTPublisher), mqttPublisher);
+                newWidget.SetAlias("MQTTClientNode", mqttClientNode);
+                verticalLayout.Add(newWidget);
+                newWidget.FindByType<StationProps>().GetVariable("EnableSave").Value = true;
+                if (newWidget.Find("UIFieldParameterObserverLogic") is NetLogicObject uiFieldParameterObserverLogic)
                 {
-                    newWidget.SetAlias(CommonLogic.editAliasNameMapping.GetValueOrDefault(FTOptix.MQTTClient.ObjectTypes.MQTTPublisher), mqttPublisher);
-                    newWidget.SetAlias("MQTTClientNode", mqttClientNode);
-                    verticalLayout.Add(newWidget);
-                    newWidget.FindByType<StationProps>().GetVariable("EnableSave").Value = true;
-                    if (newWidget.Find("UIFieldParameterObserverLogic") is NetLogicObject uiFieldParameterObserverLogic)
-                    {
-                        uiFieldParameterObserverLogic.ExecuteMethod("SubscribeObserver");
-                    }
+                    uiFieldParameterObserverLogic.ExecuteMethod("SubscribeObserver");
                 }
                 var payloadData = InformationModel.Make<MQTTPublisherDataConfiguration>($"{mqttClientNode.BrowseName}_{mqttPublisher.BrowseName}");
                 InitMqttPublisherPayloadConfiguration(payloadData);
@@ -103,7 +104,7 @@ public class MqttClientLogic : BaseNetLogic
             }
             else
             {
-                NotificationsMessageHandlerLogic.Instance.RequestBannerNotification(ToastBannerNotificationLevel.Warning, $"Cannot add the new publisher to {mqttClientNode.BrowseName}, already exist");
+                NotificationsMessageHandlerLogic.Instance.RequestToastNotification(ToastBannerNotificationLevel.Warning, $"Cannot add the new publisher to {mqttClientNode.BrowseName}, already exist");
             }
         }
     }
@@ -153,7 +154,7 @@ public class MqttClientLogic : BaseNetLogic
                 NotificationsMessageHandlerLogic.Instance.RequestToastNotification(ToastBannerNotificationLevel.Success, $"Settings successfully updated for MQTT client {editStation.BrowseName}.");
             }
             widgetNode.GetVariable("EnableAddPublisher").Value = true;
-            widgetNode.Find("StationActions").GetVariable("EnableSave").Value = false;
+            widgetNode.Find("StationActions").GetVariable("EnableSave").Value = false;       
         }
         catch (Exception ex)
         {
@@ -182,12 +183,13 @@ public class MqttClientLogic : BaseNetLogic
                 ApplyProperties(sourceStation, editStation);
                 mqttClientOwner.Stop();
                 mqttClientOwner.Add(sourceStation);
-                RegenerateMQTTPublisherDataConfiguration(widgetNode.GetAlias(CommonLogic.editAliasNameMapping.GetValueOrDefault(OptixEdge_WizardApp.ObjectTypes.MQTTPublisherUIObj)) as MQTTPublisherDataConfiguration, sourceStation);
-                CommonLogic.GenerateAndAttachTagViewer(widgetNode, CommonLogic.TagViewerMQTTPublisherAliasSourceLink);
+                RegenerateMQTTPublisherDataConfiguration(widgetNode.GetAlias(CommonLogic.editAliasNameMapping.GetValueOrDefault(OptixEdge_WizardApp.ObjectTypes.MQTTPublisherUIObj)) as MQTTPublisherDataConfiguration, sourceStation);                
                 mqttClientOwner.Start();
+                widgetNode.SetAlias(stationNodeAlias, sourceStation);
+                CommonLogic.Instance.ConfigureMQTTPublisherDataConfiguration(sourceStation, widgetNode);
                 // Return to UI session context
                 sessionHandler.Dispose();
-                widgetNode.SetAlias(stationNodeAlias, sourceStation);
+                CommonLogic.GenerateAndAttachTagViewer(widgetNode, CommonLogic.TagViewerMQTTPublisherAliasSourceLink);
                 NotificationsMessageHandlerLogic.Instance.RequestToastNotification(ToastBannerNotificationLevel.Success, $"Publisher created successfully on {mqttClientOwner.BrowseName}.");
             }
             else
@@ -210,6 +212,11 @@ public class MqttClientLogic : BaseNetLogic
             }
             widgetNode.Find("StationActions").GetVariable("EnableSave").Value = false;
             widgetNode.Find("StationActions").GetVariable("EnableImport").Value = true;
+            if (widgetNode.Find("UIFieldParameterObserverLogic") is NetLogicObject uiFieldParameterObserverLogic)
+            {
+                uiFieldParameterObserverLogic.ExecuteMethod("UnsubscribeObserver");
+                uiFieldParameterObserverLogic.ExecuteMethod("SubscribeObserver");
+            }
 
         }
         catch (Exception ex)
@@ -227,15 +234,7 @@ public class MqttClientLogic : BaseNetLogic
         {
             if (InformationModel.GetObject(mqttDataConfiguration) is MQTTPublisherDataConfiguration mqttDataConfigurationNode)
             {
-
-                CreateOrUpdateTags(mqttDataConfigurationNode);
-                if (InformationModel.Get(mqttDataConfigurationNode.MQTTPublisherNode) is MQTTPublisher mqttPublisher)
-                {
-                    MQTTClient mqttClient = (MQTTClient)mqttPublisher.Owner;
-                    mqttClient.Stop();
-                    RegenerateMQTTPublisherDataConfiguration(mqttDataConfigurationNode, mqttPublisher);
-                    mqttClient.Start();
-                }
+                CreateOrUpdateTags(mqttDataConfigurationNode, mqttDataConfigurationNode.Owner != null);
             }
             else
             {
@@ -388,7 +387,7 @@ public class MqttClientLogic : BaseNetLogic
         }
     }
 
-    private void CreateOrUpdateTags(MQTTPublisherDataConfiguration mqttDataConfiguration)
+    private void CreateOrUpdateTags(MQTTPublisherDataConfiguration mqttDataConfiguration, bool forceDLValue = false)
     {
         if (Project.Current.Get($"Model/{mqttDataConfiguration.BrowseName}") is not IUAObject temporaryFolder)
         {
@@ -420,6 +419,10 @@ public class MqttClientLogic : BaseNetLogic
                     if (InformationModel.GetVariable(tagData.VariableNodeId) is IUAVariable sourceTag)
                     {
                         targetTag.SetDynamicLink(sourceTag);
+                        if (targetTag.GetVariable("DynamicLink") is DynamicLink dlVariable && forceDLValue)
+                        {
+                            dlVariable.Value = DynamicLinkPath.MakeAbsolutePath(sourceTag);
+                        }
                     }
                     else
                     {

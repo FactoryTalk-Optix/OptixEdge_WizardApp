@@ -29,6 +29,7 @@ using FTOptix.MQTTClient;
 using FTOptix.OPCUAServer;
 using FTOptix.DataLogger;
 using FTOptix.OPCUAClient;
+using FTOptix.EventLogger;
 #endregion
 
 public class ArrayEditorLogic : BaseNetLogic

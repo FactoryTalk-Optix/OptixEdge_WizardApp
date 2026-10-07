@@ -30,6 +30,7 @@ using FTOptix.OPCUAClient;
 using FTOptix.Core;
 using System.Collections.Generic;
 using System.Linq;
+using FTOptix.EventLogger;
 #endregion
 
 public class MQTTPayloadObjectLogic : BaseNetLogic

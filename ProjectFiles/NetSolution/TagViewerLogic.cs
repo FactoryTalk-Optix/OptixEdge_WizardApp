@@ -36,6 +36,7 @@ using FTOptix.MQTTClient;
 using FTOptix.AuditSigning;
 using FTOptix.NativeUI;
 using System.Runtime.CompilerServices;
+using FTOptix.EventLogger;
 #endregion
 
 public class TagViewerLogic : BaseNetLogic
@@ -98,6 +99,24 @@ public class TagViewerLogic : BaseNetLogic
         }
         CommonLogic.DisposeTask(jobReadTagsConfigured);
         CommonLogic.DisposeTask(childrenObserverTask);
+    }
+
+    [ExportMethod]
+    public void ApplyBulkFilter(bool Deselect)
+    {
+        if (LogicObject.GetNodesByType<TagsFilterArguments>().FirstOrDefault() is TagsFilterArguments tagFilterArguments)
+        {
+            var tagsToApply = tagFilterArguments.ReturnFilterList.ToList();
+            if (tagsToApply.Count > 0)
+            {
+                foreach (var tagRow in tagsReadFromField.Where(x => tagsToApply.Contains(x.VariableName)))
+                {
+                    tagRow.Checked = !Deselect;
+                }
+                LogicObject.GetVariable("TagSelected").Value = tagsReadFromField.Any(x => x.Checked);
+                ChangeCurrentPage(currentPageVariable.Value);
+            }        
+        }
     }
 
     [ExportMethod]
@@ -171,7 +190,7 @@ public class TagViewerLogic : BaseNetLogic
         {
             int variableDataIndex = rowIndex + variableDataOffset;
             TagCustomGridRow tableRow = tagsTable.Get<TagCustomGridRow>($"TagCustomGridRow{rowIndex + 1}");
-            if (variableDataIndex < tagsReadFromField.Count)
+            if (variableDataIndex < tagsReadFromFieldToDisplay.Count)
             {
                 UpdateTagRowData(rowIndex, variableDataIndex);
                 tableRow.Visible = true;
@@ -189,15 +208,15 @@ public class TagViewerLogic : BaseNetLogic
     {
         var rowData = LogicObject.Get<TagCustomGridRowData>($"GridData/{rowIndex + 1}");
         rowData.CheckedVariable.VariableChange -= OnRowSettingsChanged;
-        rowData.Checked = tagsReadFromField[variableDataIndex].Checked;
-        rowData.VariableName = tagsReadFromField[variableDataIndex].VariableName;
-        rowData.VariableDataType = tagsReadFromField[variableDataIndex].VariableDataType;
-        rowData.VariableComment = tagsReadFromField[variableDataIndex].VariableComment;
-        rowData.VariableAddress = tagsReadFromField[variableDataIndex].VariableAddress;
-        rowData.VariableIsArray = tagsReadFromField[variableDataIndex].VariableIsArray;
-        rowData.VariableArrayDimension = tagsReadFromField[variableDataIndex].VariableArrayDimension;
-        rowData.VariableDataTypeNodeId = tagsReadFromField[variableDataIndex].VariableDataTypeNodeId;
-        rowData.VariableLinkDirection = tagsReadFromField[variableDataIndex].VariableLinkDirection;
+        rowData.Checked = tagsReadFromFieldToDisplay[variableDataIndex].Checked;
+        rowData.VariableName = tagsReadFromFieldToDisplay[variableDataIndex].VariableName;
+        rowData.VariableDataType = tagsReadFromFieldToDisplay[variableDataIndex].VariableDataType;
+        rowData.VariableComment = tagsReadFromFieldToDisplay[variableDataIndex].VariableComment;
+        rowData.VariableAddress = tagsReadFromFieldToDisplay[variableDataIndex].VariableAddress;
+        rowData.VariableIsArray = tagsReadFromFieldToDisplay[variableDataIndex].VariableIsArray;
+        rowData.VariableArrayDimension = tagsReadFromFieldToDisplay[variableDataIndex].VariableArrayDimension;
+        rowData.VariableDataTypeNodeId = tagsReadFromFieldToDisplay[variableDataIndex].VariableDataTypeNodeId;
+        rowData.VariableLinkDirection = tagsReadFromFieldToDisplay[variableDataIndex].VariableLinkDirection;
         rowData.CheckedVariable.VariableChange += OnRowSettingsChanged;
     }
 
@@ -224,8 +243,8 @@ public class TagViewerLogic : BaseNetLogic
         var rowData = e.Variable.Owner as TagCustomGridRowData;
         int rowIndex = int.Parse(rowData.BrowseName) - 1;
         int variableDataIndex = rowIndex + variableDataOffset;
-        tagsReadFromField[variableDataIndex].Checked = e.NewValue;
-        LogicObject.GetVariable("TagSelected").Value = tagsReadFromField.Any(x => x.Checked);
+        tagsReadFromFieldToDisplay[variableDataIndex].Checked = e.NewValue;
+        LogicObject.GetVariable("TagSelected").Value = tagsReadFromFieldToDisplay.Any(x => x.Checked);
         // Check if all visible rows are checked - read directly from UI
         UpdateCheckBoxSelectedAll();
     }
@@ -309,6 +328,7 @@ public class TagViewerLogic : BaseNetLogic
             };
             tagsReadFromField.Add(tagDisplay);
         }
+        UpdateArraySourceVariableBrowseName();
         UpdateDataGrid(true);
         runningUpdate = false;
     }
@@ -383,6 +403,16 @@ public class TagViewerLogic : BaseNetLogic
                 memoryChildrenCount = sourceNode.Children.Count;
             }
         }  
+    }
+
+    private void UpdateArraySourceVariableBrowseName()
+    {
+        var tagFilterObject = LogicObject.GetNodesByType<TagsFilterArguments>().FirstOrDefault();
+        var arrayBrowseName = tagsReadFromField.Select(x => x.VariableName).ToArray();
+        if (arrayBrowseName != null)
+        {
+            tagFilterObject.SourceListVariableName = arrayBrowseName;
+        }
     }
 
     private List<InternalTagCustomGridRowData> tagsReadFromField;

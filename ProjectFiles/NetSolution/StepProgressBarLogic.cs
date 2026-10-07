@@ -8,6 +8,7 @@ using System.IO;
 using System.Xml.Serialization;
 using ProgressBarSVG;
 using FTOptix.Core;
+using FTOptix.EventLogger;
 #endregion
 
 public class StepProgressBarLogic : BaseNetLogic

@@ -2,6 +2,7 @@
 using UAManagedCore;
 using FTOptix.NetLogic;
 using FTOptix.Core;
+using FTOptix.EventLogger;
 #endregion
 
 public class TrendPenUIObjectConfigurationLogic : BaseNetLogic

@@ -29,6 +29,7 @@ using FTOptix.DataLogger;
 using FTOptix.OPCUAClient;
 using FTOptix.Core;
 using System.Collections.Generic;
+using FTOptix.EventLogger;
 #endregion
 
 public class MQTTPayloadInfoEditDialogLogic : BaseNetLogic

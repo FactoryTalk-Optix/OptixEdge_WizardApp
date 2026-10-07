@@ -30,6 +30,7 @@ using FTOptix.OPCUAClient;
 using FTOptix.Core;
 using FTOptix.NativeUI;
 using System.Linq;
+using FTOptix.EventLogger;
 #endregion
 
 public class CommunicationStatusViewLogic : BaseNetLogic

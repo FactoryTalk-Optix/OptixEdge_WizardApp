@@ -20,6 +20,8 @@ using FTOptix.Store;
 using FTOptix.DataLogger;
 using FTOptix.MQTTClient;
 using L5Sharp.Core;
+using FTOptix.EventLogger;
+using System.Security.Cryptography.X509Certificates;
 #endregion
 
 public class CommonLogic : BaseNetLogic
@@ -120,7 +122,7 @@ public class CommonLogic : BaseNetLogic
         {
             eventRegistration.Dispose();
         }
-    }
+    }  
 
     #region Methods exposed to Optix
     [ExportMethod]
@@ -226,8 +228,7 @@ public class CommonLogic : BaseNetLogic
             foreach (var source in sourceNode.GetNodesByType<IUAObject>().Where(x => x is CommunicationStation || x is OPCUAClient || x is DataLogger || x is MQTTClient || x is OPCUAServer))
             {
                 newWidget = GenerateConfigurationWidget(source, widgetTypeName, sourceWidgetFolder);
-                content.Add(newWidget);
-                var subContent = newWidget.Get<ColumnLayout>("Content/Content");
+                content.Add(newWidget);                
                 switch (source)
                 {
                     case CommunicationStation:
@@ -238,15 +239,7 @@ public class CommonLogic : BaseNetLogic
                     case MQTTClient:
                         newWidget.GetVariable("EnableAddPublisher").Value = true;
                         MqttClientLogic.CheckIfProtocolVersionExist(source);
-                        subContent = newWidget.Find("NodesToPublish").Get<ColumnLayout>("Content/Content");
-                        foreach (var publisher in source.GetNodesByType<MQTTPublisher>())
-                        {
-                            var newSubWidget = GenerateConfigurationWidget(publisher, sourceWidgetMapping.GetValueOrDefault(source.ObjectType.NodeId), sourceWidgetFolder);
-                            subContent.Add(newSubWidget);
-                            GenerateAndAttachTagViewer(newSubWidget, TagViewerMQTTPublisherAliasSourceLink);
-                            newSubWidget.Find("StationActions").GetVariable("EnableImport").Value = true;
-                            MqttClientLogic.GeneratePayloadWidget(newSubWidget.GetAlias(CommonLogic.editAliasNameMapping.GetValueOrDefault(OptixEdge_WizardApp.ObjectTypes.MQTTPublisherUIObj)), newSubWidget.Find("Payload").Get<ColumnLayout>("Content/Content"), newSubWidget.Find<IUAVariable>("CurrentSelectedField"), newSubWidget.Find<IUAVariable>("LastIndexReleased"));
-                        }
+                        new LongRunningTask(GenerateAndAttachSubWidget, new object[] { source, sourceWidgetFolder, newWidget }, LogicObject).Start();
                         break;
                     case DataLogger logger:
                         newWidget.FindByType<StationProps>().GetVariable("EnableImport").Value = true;
@@ -259,20 +252,56 @@ public class CommonLogic : BaseNetLogic
                         break;
                     case OPCUAServer:
                         newWidget.GetVariable("EnableAddConfiguration").Value = true;
-                        subContent = newWidget.Find("NodesToPublish").Get<ColumnLayout>("Content/Content");
-                        foreach (var configuration in source.GetObject("NodesToPublish").GetNodesByType<NodesToPublishConfigurationEntry>())
-                        {
-                            var subWidget = GenerateSubConfigurationWidget(configuration, source.ObjectType.NodeId, sourceWidgetFolder, subContent);
-                            GenerateAndAttachTagViewer(subWidget, TagViewerOPCUAPublisherAliasSourceLink);
-                        }
+                        new LongRunningTask(GenerateAndAttachSubWidget, new object[] { source, sourceWidgetFolder, newWidget }, LogicObject).Start();
                         break;
                 }
             }
             if (newWidget != null && newWidget.Find("UIFieldParameterObserverLogic") is NetLogicObject uiFieldParameterObserverLogic)
             {
-                uiFieldParameterObserverLogic.ExecuteMethod("SubscribeObserver");
+                new DelayedTask(AttachUIObserver, uiFieldParameterObserverLogic, 500, LogicObject).Start();
             }
         }
+    }
+
+    private void GenerateAndAttachSubWidget(LongRunningTask task, object arguments)
+    {
+        object[] args = (object[])arguments;
+        var source = (IUAObject)args[0];
+        var sourceWidgetFolder = (IUAObject)args[1];
+        var newWidget = (IUAObject)args[2];
+        var subContent = newWidget.Get<ColumnLayout>("Content/Content");
+        switch (source)
+        {
+            case MQTTClient:
+                subContent = newWidget.Find("NodesToPublish").Get<ColumnLayout>("Content/Content");
+                foreach (var publisher in source.GetNodesByType<MQTTPublisher>())
+                {
+                    var newSubWidget = GenerateConfigurationWidget(publisher, sourceWidgetMapping.GetValueOrDefault(source.ObjectType.NodeId), sourceWidgetFolder);
+                    subContent.Add(newSubWidget);
+                    GenerateAndAttachTagViewer(newSubWidget, TagViewerMQTTPublisherAliasSourceLink);
+                    newSubWidget.Find("StationActions").GetVariable("EnableImport").Value = true;
+                    MqttClientLogic.GeneratePayloadWidget(newSubWidget.GetAlias(CommonLogic.editAliasNameMapping.GetValueOrDefault(OptixEdge_WizardApp.ObjectTypes.MQTTPublisherUIObj)), newSubWidget.Find("Payload").Get<ColumnLayout>("Content/Content"), newSubWidget.Find<IUAVariable>("CurrentSelectedField"), newSubWidget.Find<IUAVariable>("LastIndexReleased"));
+                }
+                break;
+            case OPCUAServer:
+                subContent = newWidget.Find("NodesToPublish").Get<ColumnLayout>("Content/Content");
+                foreach (var configuration in source.GetObject("NodesToPublish").GetNodesByType<NodesToPublishConfigurationEntry>())
+                {
+                    var subWidget = GenerateSubConfigurationWidget(configuration, source.ObjectType.NodeId, sourceWidgetFolder, subContent);
+                    GenerateAndAttachTagViewer(subWidget, TagViewerOPCUAPublisherAliasSourceLink);
+                }
+                break;
+        }
+        task.Dispose();
+    }
+
+    private void AttachUIObserver(DelayedTask task, object argument)
+    {
+        if (argument is NetLogicObject uiFieldParameterObserverLogic)
+        {
+            uiFieldParameterObserverLogic.ExecuteMethod("SubscribeObserver");
+        }
+        task.Dispose();
     }
 
     public static void GenerateAndAttachTagViewer(IUAObject newWidget, string linkToSourceValue)
@@ -528,6 +557,58 @@ public class CommonLogic : BaseNetLogic
         return null;
     }
 
+    public static string GetRuntimeVersion()
+    {
+        // Get FTOptix Runtime version from FTOptixRuntime.xml
+        // Path: 3 levels up from ProjectFiles -> FTOptixApplication/FTOptixRuntime.xml
+        try
+        {
+            var projectPath = ResourceUri.FromProjectRelativePath("").Uri;
+            // ProjectFiles -> ProjectName -> Projects -> FTOptixApplication
+            var ftOptixAppDir = System.IO.Directory.GetParent(projectPath)? // Current project
+                .Parent?  // Projects
+                .Parent?  // FTOptixApplication
+                .FullName;
+
+            if (ftOptixAppDir != null)
+            {
+                var runtimeXmlPath = System.IO.Path.Combine(ftOptixAppDir, "FTOptixRuntime.xml");
+                if (System.IO.File.Exists(runtimeXmlPath))
+                {
+                    var xmlContent = System.IO.File.ReadAllText(runtimeXmlPath);
+                    var match = System.Text.RegularExpressions.Regex.Match(xmlContent, @"<RuntimeVersion>([\d.]+)</RuntimeVersion>");
+                    if (match.Success)
+                    {
+                        return match.Groups[1].Value;
+                    }
+                }
+            }
+
+        }
+        catch (Exception ex)
+        {
+            return $"Error retrieving runtime version: {ex.Message}";
+        }
+        return string.Empty;
+    }
+
+    public static int GetFirstAvailableNumber(IEnumerable<string> existingNames, string prefix)
+    {
+        var numbers = new HashSet<int>();
+        foreach (var name in existingNames)
+        {
+            if (name.StartsWith(prefix))
+            {
+                var suffix = name.Substring(prefix.Length);
+                if (int.TryParse(suffix, out int number))
+                {
+                    numbers.Add(number);
+                }
+            }
+        }
+        return FindMissingNumber(numbers.ToList());
+    }
+
     private IUAObject GenerateConfigurationWidget(IUANode widgetSourceNode, string widgetTypeName, IUANode widgetTypeFolder)
     {
         NodeId widgetSourceType = NodeId.Empty;
@@ -564,7 +645,7 @@ public class CommonLogic : BaseNetLogic
         return newWidget;
     }
 
-    private void ConfigureMQTTPublisherDataConfiguration(MQTTPublisher publisher, IUAObject widgetNode)
+    public void ConfigureMQTTPublisherDataConfiguration(MQTTPublisher publisher, IUAObject widgetNode)
     {
         var configurationData = Project.Current.Get<MQTTPublisherDataConfiguration>($"{MQTTPublishersDataConfigurationPath}/{publisher.Owner.BrowseName}_{publisher.BrowseName}");
         //Only for mantain compability with configuration of 1.1.7 (need to generate MQTTPublisherDataConfiguration)
@@ -741,7 +822,29 @@ public class CommonLogic : BaseNetLogic
     private List<IEventRegistration> eventRegistrationList;
 }
 
-public class TagDataImported
+public class CommunicationDriverObserver() : IReferenceObserver
+{
+    public void OnReferenceAdded(IUANode sourceNode, IUANode targetNode, NodeId referenceTypeId, ulong senderId)
+    {
+        CommonLogic.PopulateComboBoxElements();
+    }
+
+    public void OnReferenceRemoved(IUANode sourceNode, IUANode targetNode, NodeId referenceTypeId, ulong senderId)
+    {
+        CommonLogic.PopulateComboBoxElements();
+    }
+}
+
+public record BackupManifest
+{
+    public string WizardAppVersion { get; set; }
+    public string RuntimeVersion { get; set; }
+    public string BackupDate { get; set; }
+    public string OS { get; set; }
+    public string Architecture { get; set; }
+}
+
+public record TagDataImported
 {
     public string BrowseName { get; set; }
     public NodeId NodeId { get; set; }
@@ -751,7 +854,7 @@ public class TagDataImported
     public DynamicLinkMode LinkDirection { get; set; } = DynamicLinkMode.Read;
 }
 
-public class TagDataFromCSV
+public record TagDataFromCSV
 {
     public string Driver { get; set; }
     public string Name { get; set; }
@@ -778,22 +881,29 @@ public record InternalTagCustomGridRowData
     public DynamicLinkMode VariableLinkDirection { get; set; }
 }
 
+public record FileOperationRequest
+{
+    public enum OperationType
+    {
+        Backup,
+        BackupData,
+        Restore,
+        RestoreData,
+        FileUpload,
+        FileDownload        
+    }
+
+    public OperationType Operation { get; init; }
+    public Guid OperationID { get; init; }
+    public NodeId NetLogicToNotify { get; init; }
+    public string FullDestinationPath {get; init; }
+    public bool CopyFileToDestination {get ; init; } = false;
+    public string FileExtensionFilter {get; init; }
+}
+
 public enum ConfirmOverwriteFileResult
 {
     NoEntry = 0,
     Confirmed = 1,
     Cancelled = 99
-}
-
-public class CommunicationDriverObserver() : IReferenceObserver
-{
-    public void OnReferenceAdded(IUANode sourceNode, IUANode targetNode, NodeId referenceTypeId, ulong senderId)
-    {
-        CommonLogic.PopulateComboBoxElements();
-    }
-
-    public void OnReferenceRemoved(IUANode sourceNode, IUANode targetNode, NodeId referenceTypeId, ulong senderId)
-    {
-        CommonLogic.PopulateComboBoxElements();
-    }
 }

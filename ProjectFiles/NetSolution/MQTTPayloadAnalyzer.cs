@@ -17,6 +17,7 @@ using System.Text.RegularExpressions;
 using System.Globalization;
 using FTOptix.OPCUAServer;
 using System.Linq;
+using FTOptix.EventLogger;
 #endregion
 
 public class MQTTPayloadAnalyzer : BaseNetLogic

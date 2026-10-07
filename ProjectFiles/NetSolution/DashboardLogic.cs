@@ -12,6 +12,8 @@ using FTOptix.NetLogic;
 using FTOptix.CoreBase;
 using FTOptix.Core;
 using FTOptix.DataLogger;
+using FTOptix.EventLogger;
+using System.Threading;
 #endregion
 
 public class DashboardLogic : BaseNetLogic
@@ -72,7 +74,8 @@ public class DashboardLogic : BaseNetLogic
         dashboardDataFolder.Add(widgetDataToAdd);
         var newUIWidget = GenerateUIWidgetFromData(widgetDataToAdd);
         RegenerateGridLayout();
-        AddWidgetToGrid(newUIWidget); 
+        AddWidgetToGrid(newUIWidget);
+        Thread.Sleep(10);
     }
 
     public void UpdateWidgetData(WidgetData editModelWidgetData)
@@ -88,31 +91,37 @@ public class DashboardLogic : BaseNetLogic
             }
             // Update all properties except WidgetType
             SaveNewParameters(widgetData, editModelWidgetData);
-            if (widgetGrid.Get(widgetData.BrowseName) is TrendUIObj trendToUpdate)
+            switch (widgetGrid.Get(widgetData.BrowseName))
             {
-                // Update only Trend specific properties
-                if (InformationModel.Get(widgetData.SourceNode) is DataLogger sourceDatalogger)
-                {
-                    var trendNode = trendToUpdate.Find<Trend>("TrendObj");
-                    // Get the list of BrowseNames from VariablesToLog
-                    var variablesToLogNames = sourceDatalogger.VariablesToLog.Select(v => v.BrowseName).ToHashSet();
-                    // Get pens that don't exist in VariablesToLog and remove them
-                    foreach (var penToRemove in trendNode.Pens.Where(p => !variablesToLogNames.Contains(p.BrowseName)))
-                    {
-                        trendNode.Pens.Remove(penToRemove);
-                    }
-                    trendNode.Model = sourceDatalogger.NodeId;
-                    int[] parametersArray = widgetData.GetVariable("ConfigurationParameters").Value;
-                    uint[] configurationColors = widgetData.GetVariable("ConfigurationColors").Value;
-                    int parametersArrayBaseOffset = widgetData.IndexOfPensArray;
-                    int index = 0;
-                    foreach (var variableToLog in sourceDatalogger.VariablesToLog)
-                    {
-                        var trendPen = CreateOrUpdateTrendPen(trendNode, variableToLog);
-                        UpdateTrendPenParameters(widgetData, parametersArray, configurationColors, parametersArrayBaseOffset, index, trendPen);
-                        index++;
-                    }
-                }
+                case TrendUIObj trendToUpdate:
+                    UpdateTrendProperties(widgetData, trendToUpdate);
+                    break;
+            }
+        }
+    }
+
+    private void UpdateTrendProperties(WidgetData widgetData, TrendUIObj trendToUpdate)
+    {
+        if (InformationModel.Get(widgetData.SourceNode) is DataLogger sourceDatalogger)
+        {
+            var trendNode = trendToUpdate.Find<Trend>("TrendObj");
+            // Get the list of BrowseNames from VariablesToLog
+            var variablesToLogNames = sourceDatalogger.VariablesToLog.Select(v => v.BrowseName).ToHashSet();
+            // Get pens that don't exist in VariablesToLog and remove them
+            foreach (var penToRemove in trendNode.Pens.Where(p => !variablesToLogNames.Contains(p.BrowseName)))
+            {
+                trendNode.Pens.Remove(penToRemove);
+            }
+            trendNode.Model = sourceDatalogger.NodeId;
+            int[] parametersArray = widgetData.GetVariable("ConfigurationParameters").Value;
+            uint[] configurationColors = widgetData.GetVariable("ConfigurationColors").Value;
+            int parametersArrayBaseOffset = widgetData.IndexOfPensArray;
+            int index = 0;
+            foreach (var variableToLog in sourceDatalogger.VariablesToLog)
+            {
+                var trendPen = CreateOrUpdateTrendPen(trendNode, variableToLog);
+                UpdateTrendPenParameters(widgetData, parametersArray, configurationColors, parametersArrayBaseOffset, index, trendPen);
+                index++;
             }
         }
     }
@@ -156,7 +165,7 @@ public class DashboardLogic : BaseNetLogic
     }
     #endregion
 
-     private void RegenerateGridLayout(WidgetData editWidgetData = null)
+    private void RegenerateGridLayout(WidgetData editWidgetData = null)
     {
         if (widgetGrid != null && (DateTime.Now - lastRun).TotalMilliseconds > 250)
         {
@@ -168,6 +177,8 @@ public class DashboardLogic : BaseNetLogic
             }
         }
     }
+
+
 
     private void GenerateGridColumnsAndRows(WidgetData editWidgetData, out List<string> targetColumnsLayout, out List<string> targetRowsLayout)
     {

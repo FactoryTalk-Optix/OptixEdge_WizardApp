@@ -48,6 +48,7 @@ using System.Collections.Immutable;
 using System.ComponentModel.Design;
 using System.Runtime.CompilerServices;
 using FTOptix.MQTTClient;
+using FTOptix.EventLogger;
 #endregion
 
 public class TagImporterUIObjectLogic : BaseNetLogic
@@ -187,6 +188,23 @@ public class TagImporterUIObjectLogic : BaseNetLogic
     }
 
     [ExportMethod]
+    public void ApplyBulkFilter(bool Deselect)
+    {
+        if (LogicObject.GetNodesByType<TagsFilterArguments>().FirstOrDefault() is TagsFilterArguments tagFilterArguments)
+        {
+            var tagsToApply = tagFilterArguments.ReturnFilterList.ToList();
+            if (tagsToApply.Count > 0)
+            {
+                foreach (var tagRow in tagsReadFromSourceToDisplay.Where(x => tagsToApply.Contains(x.VariableName)))
+                {
+                    tagRow.Checked = !Deselect;
+                }
+                ChangeCurrentPage(currentPageVariable.Value);
+            }        
+        }
+    }
+
+    [ExportMethod]
     public void SaveAndClose(bool onlineImport)
     {
         // Temporarily impersonate root to perform the import in the right context
@@ -302,7 +320,15 @@ public class TagImporterUIObjectLogic : BaseNetLogic
             }
             else
             {
-                tagsReadFromSourceToDisplay.AddRange(tagsReadFromSource.Where(x => x.VariableName.StartsWith(e.NewValue, StringComparison.InvariantCultureIgnoreCase) || x.VariableName.Contains(e.NewValue, StringComparison.InvariantCultureIgnoreCase)));
+                var filteredTags = tagsReadFromSource.Where(x => x.VariableName.StartsWith(e.NewValue, StringComparison.InvariantCultureIgnoreCase) || x.VariableName.Contains(e.NewValue, StringComparison.InvariantCultureIgnoreCase));
+                if (filteredTags != null && filteredTags.Any())
+                {
+                    tagsReadFromSourceToDisplay.AddRange(filteredTags);
+                }
+                else
+                {
+                    tagsReadFromSourceToDisplay.Clear(); 
+                }
             }
             UpdateDataGrid();
         }
@@ -399,6 +425,7 @@ public class TagImporterUIObjectLogic : BaseNetLogic
         {
             throw new InvalidDataException("No valid data read from file");
         }
+        UpdateArraySourceVariableBrowseName();
         int totalPages = tagsReadFromSourceToDisplay.Count / 16;
         if (tagsReadFromSourceToDisplay.Count % 16 > 0)
         {
@@ -412,6 +439,16 @@ public class TagImporterUIObjectLogic : BaseNetLogic
         else
         {
             currentPageVariable.Value = 1;
+        }
+    }
+
+    private void UpdateArraySourceVariableBrowseName()
+    {
+        var tagFilterObject = LogicObject.GetNodesByType<TagsFilterArguments>().FirstOrDefault();
+        var arrayBrowseName = tagsReadFromSource.Select(x => x.VariableName).ToArray();
+        if (arrayBrowseName != null && arrayBrowseName.Length > 0)
+        {
+            tagFilterObject.SourceListVariableName = arrayBrowseName;
         }
     }
 

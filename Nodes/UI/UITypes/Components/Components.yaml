@@ -849,6 +849,30 @@ Children:
   - Name: PageName
     Type: BaseDataVariableType
     DataType: LocalizedText
+  - Name: BaseScreenLogic
+    Type: NetLogic
+    Children:
+    - Name: ContentStartingPoint
+      Type: NodePointer
+      DataType: NodeId
+      Children:
+      - Name: Kind
+        Type: PropertyType
+        DataType: NodeId
+        Value: "/Types/ObjectTypes/BaseObjectType/BaseUIObject/Item/Container/ColumnLayout"
+      - Name: DynamicLink
+        Type: DynamicLink
+        DataType: NodePath
+        Value: "../../Content/ContentScrollView/Content@NodeId"
+        Children:
+        - Name: Mode
+          Type: BaseVariableType
+          DataType: DynamicLinkMode
+          ModellingRule: Optional
+          Value: 2
+  - Name: RunInitUILogic
+    Type: BaseDataVariableType
+    DataType: ns=0;Boolean
 - Name: Divider
   Id: g=1c457dc99c821446467b675b50111a13
   Supertype: Rectangle
@@ -2426,34 +2450,30 @@ Children:
         DataType: NodePath
         Value: "../../ShowCheckBox"
   - Name: VariableNameString
-    Type: Label
+    Type: EditableLabel
     Children:
     - Name: Text
       Type: BaseDataVariableType
       DataType: LocalizedText
+      Value: {"LocaleId":"en-US","Text":"EditableLabel1"}
       Children:
       - Name: DynamicLink
         Type: DynamicLink
         DataType: NodePath
         Value: "{RowData}/VariableName"
-    - Name: VerticalAlignment
-      Type: BaseVariableType
-      DataType: VerticalAlignment
+    - Name: Elide
+      Type: BaseDataVariableType
+      DataType: ElideEnum
       ModellingRule: Optional
-      Value: 2
-    - Name: TextHorizontalAlignment
-      Type: BaseVariableType
-      DataType: TextHorizontalAlignment
+    - Name: WordWrap
+      Type: BaseDataVariableType
+      DataType: ns=0;Boolean
       ModellingRule: Optional
-    - Name: TextVerticalAlignment
-      Type: BaseVariableType
-      DataType: TextVerticalAlignment
-      ModellingRule: Optional
-      Value: 1
+      Value: true
     - Name: Width
       Type: BaseVariableType
       DataType: Size
-      Value: 320.0
+      Value: 736.0
       Children:
       - Name: ConditionalConverter1
         Type: ConditionalConverter
@@ -2472,18 +2492,115 @@ Children:
           DataType: Size
           ReferenceType: HasParameter
           ModellingRule: Optional
-          Value: 240.0
+          Value: 656.0
         - Name: FalseValue
           Type: BaseDataVariableType
           DataType: Size
           ReferenceType: HasParameter
           ModellingRule: Optional
-          Value: 320.0
-    - Name: Elide
-      Type: BaseDataVariableType
-      DataType: ElideEnum
+          Value: 736.0
+    - Name: VerticalAlignment
+      Type: BaseVariableType
+      DataType: VerticalAlignment
       ModellingRule: Optional
       Value: 3
+    - Name: TextVerticalAlignment
+      Type: BaseVariableType
+      DataType: TextVerticalAlignment
+      ModellingRule: Optional
+      Value: 1
+    - Name: FontSize
+      Type: BaseDataVariableType
+      DataType: Size
+      ModellingRule: Optional
+      Value: 16.0
+    - Name: Editable
+      Type: BaseDataVariableType
+      DataType: ns=0;Boolean
+      ModellingRule: Optional
+      Value: true
+    - Name: ModifiedTextHandler1
+      Type: EventHandler
+      Children:
+      - Name: ListenEventType
+        Type: PropertyType
+        DataType: NodeId
+        Value: "/Types/EventTypes/BaseEventType/UserTextChanged"
+      - Name: MethodsToCall
+        Type: BaseObjectType
+        Children:
+        - Name: MethodContainer1
+          Type: BaseObjectType
+          Children:
+          - Name: ns=2;ObjectPointer
+            Type: NodePointer
+            DataType: NodeId
+            Value: "/Objects/Commands/VariableCommands"
+            Children:
+            - Name: Kind
+              Type: PropertyType
+              DataType: NodeId
+              Value: "/Types/ObjectTypes/BaseObjectType"
+          - Name: ns=2;Method
+            Type: BaseDataVariableType
+            DataType: String
+            Value: "Set"
+          - Name: InputArguments
+            Type: BaseObjectType
+            Children:
+            - Name: VariableToModify
+              Type: BaseDataVariableType
+              DataType: VariablePointer
+              Description: {"NamespaceIndex":2,"TextId":"SetVariableToModifyDescription"}
+              Children:
+              - Name: DynamicLink
+                Type: DynamicLink
+                DataType: NodePath
+                Value: "../../../../../Text@NodeId"
+            - Name: Value
+              Type: BaseDataVariableType
+              DataType: LocalizedText
+              Description: {"NamespaceIndex":2,"TextId":"SetValueDescription"}
+              Children:
+              - Name: DynamicLink
+                Type: DynamicLink
+                DataType: NodePath
+                Value: "{RowData}/VariableName"
+            - Name: ArrayIndex
+              Type: BaseDataVariableType
+              DataType: UInt32
+              Description: {"NamespaceIndex":2,"TextId":"SetArrayIndexDescription"}
+              ValueRank: ScalarOrOneDimension
+      - Name: EventArguments
+        Type: UserTextChanged
+        Children:
+        - Name: NewText
+          Type: BaseDataVariableType
+          DataType: LocalizedText
+        - Name: EventId
+          Type: PropertyType
+          DataType: ByteString
+        - Name: EventType
+          Type: PropertyType
+          DataType: NodeId
+        - Name: SourceNode
+          Type: PropertyType
+          DataType: NodeId
+        - Name: SourceName
+          Type: PropertyType
+          DataType: String
+        - Name: Time
+          Type: PropertyType
+          DataType: UtcTime
+        - Name: ReceiveTime
+          Type: PropertyType
+          DataType: UtcTime
+        - Name: Message
+          Type: PropertyType
+          DataType: LocalizedText
+        - Name: Severity
+          Type: PropertyType
+          DataType: UInt16
   - Name: DataTypeString
     Type: Label
     Children:
@@ -2582,7 +2699,7 @@ Children:
     Type: BaseVariableType
     DataType: Size
     ModellingRule: Optional
-    Value: 32.0
+    Value: 40.0
   - Name: HorizontalGap
     Type: BaseDataVariableType
     DataType: Size
@@ -2815,12 +2932,12 @@ Children:
             DataType: NodeId
             Description: {"NamespaceIndex":3,"TextId":"OpenDialogAliasNodeDescription"}
             ValueRank: ScalarOrOneDimension
-            Value: [{"IdType":0,"Id":0,"Namespace":-1},{"IdType":0,"Id":0,"Namespace":-1},{"IdType":0,"Id":0,"Namespace":-1},{"IdType":0,"Id":0,"Namespace":-1}]
+            Value: [{"IdType":0,"Id":0,"Namespace":-1},{"IdType":0,"Id":0,"Namespace":-1},{"IdType":0,"Id":0,"Namespace":-1},{"IdType":0,"Id":0,"Namespace":-1},{"IdType":0,"Id":0,"Namespace":-1}]
             Children:
-            - Name: DynamicLink_1
+            - Name: DynamicLink_0
               Type: DynamicLink
               DataType: NodePath
-              Value: "../../../../../IsFolderSelection@NodeId"
+              Value: "../../../../../PathSelected@NodeId"
               Children:
               - Name: ParentElementAccess
                 Type: BaseVariableType
@@ -2832,7 +2949,7 @@ Children:
                    "Namespace": 1
                   },
                   "Body": {
-                   "ArrayIndex": [1],
+                   "ArrayIndex": [0],
                    "FieldIndexes": []
                   }
                  }
@@ -2855,6 +2972,25 @@ Children:
                    "FieldIndexes": []
                   }
                  }
+            - Name: DynamicLink_4
+              Type: DynamicLink
+              DataType: NodePath
+              Value: "../../../../../CounterAction@NodeId"
+              Children:
+              - Name: ParentElementAccess
+                Type: BaseVariableType
+                DataType: ElementAccess
+                Value: 
+                 {
+                  "TypeId": {
+                   "Id": 313,
+                   "Namespace": 1
+                  },
+                  "Body": {
+                   "ArrayIndex": [4],
+                   "FieldIndexes": []
+                  }
+                 }
             - Name: DynamicLink_3
               Type: DynamicLink
               DataType: NodePath
@@ -2874,10 +3010,10 @@ Children:
                    "FieldIndexes": []
                   }
                  }
-            - Name: DynamicLink_0
+            - Name: DynamicLink_1
               Type: DynamicLink
               DataType: NodePath
-              Value: "../../../../../PathSelected@NodeId"
+              Value: "../../../../../IsFolderSelection@NodeId"
               Children:
               - Name: ParentElementAccess
                 Type: BaseVariableType
@@ -2889,7 +3025,7 @@ Children:
                    "Namespace": 1
                   },
                   "Body": {
-                   "ArrayIndex": [0],
+                   "ArrayIndex": [1],
                    "FieldIndexes": []
                   }
                  }
@@ -2939,13 +3075,16 @@ Children:
   - Name: PathSelected
     Type: BaseDataVariableType
     DataType: ResourceUri
-  - Name: PathSelectedChanged
+  - Name: CounterAction
+    Type: BaseDataVariableType
+    DataType: Int32
+  - Name: CounterActionChanged
     Type: VariableChangedEventDispatcher
     Children:
     - Name: VariableNodePath
       Type: BaseVariableType
       DataType: NodePath
-      Value: "../PathSelected"
+      Value: "../CounterAction"
 - Name: FileValueContainer
   Id: g=1b2888921116dfd29638161cf208c0ce
   Supertype: RowLayout
@@ -3077,12 +3216,12 @@ Children:
               Type: BaseDataVariableType
               DataType: NodeId
               ValueRank: ScalarOrOneDimension
-              Value: [{"IdType":0,"Id":0,"Namespace":-1},{"IdType":0,"Id":0,"Namespace":-1},{"IdType":0,"Id":0,"Namespace":-1},{"IdType":0,"Id":0,"Namespace":-1}]
+              Value: [{"IdType":0,"Id":0,"Namespace":-1},{"IdType":0,"Id":0,"Namespace":-1},{"IdType":0,"Id":0,"Namespace":-1},{"IdType":0,"Id":0,"Namespace":-1},{"IdType":0,"Id":0,"Namespace":-1}]
               Children:
-              - Name: DynamicLink_1
+              - Name: DynamicLink_0
                 Type: DynamicLink
                 DataType: NodePath
-                Value: "../../../../../IsFolderSelection@NodeId"
+                Value: "../../../../../PathSelected@NodeId"
                 Children:
                 - Name: ParentElementAccess
                   Type: BaseVariableType
@@ -3094,7 +3233,7 @@ Children:
                      "Namespace": 1
                     },
                     "Body": {
-                     "ArrayIndex": [1],
+                     "ArrayIndex": [0],
                      "FieldIndexes": []
                     }
                    }
@@ -3117,6 +3256,25 @@ Children:
                      "FieldIndexes": []
                     }
                    }
+              - Name: DynamicLink_4
+                Type: DynamicLink
+                DataType: NodePath
+                Value: "../../../../../CounterAction@NodeId"
+                Children:
+                - Name: ParentElementAccess
+                  Type: BaseVariableType
+                  DataType: ElementAccess
+                  Value: 
+                   {
+                    "TypeId": {
+                     "Id": 313,
+                     "Namespace": 1
+                    },
+                    "Body": {
+                     "ArrayIndex": [4],
+                     "FieldIndexes": []
+                    }
+                   }
               - Name: DynamicLink_3
                 Type: DynamicLink
                 DataType: NodePath
@@ -3136,10 +3294,10 @@ Children:
                      "FieldIndexes": []
                     }
                    }
-              - Name: DynamicLink_0
+              - Name: DynamicLink_1
                 Type: DynamicLink
                 DataType: NodePath
-                Value: "../../../../../PathSelected@NodeId"
+                Value: "../../../../../IsFolderSelection@NodeId"
                 Children:
                 - Name: ParentElementAccess
                   Type: BaseVariableType
@@ -3151,7 +3309,7 @@ Children:
                      "Namespace": 1
                     },
                     "Body": {
-                     "ArrayIndex": [0],
+                     "ArrayIndex": [1],
                      "FieldIndexes": []
                     }
                    }
@@ -3223,13 +3381,6 @@ Children:
           DataType: DynamicLinkMode
           ModellingRule: Optional
           Value: 2
-    - Name: PathSelectedChanged
-      Type: VariableChangedEventDispatcher
-      Children:
-      - Name: VariableNodePath
-        Type: BaseVariableType
-        DataType: NodePath
-        Value: "../PathSelected"
     - Name: Text
       Type: BaseDataVariableType
       DataType: LocalizedText
@@ -3255,6 +3406,104 @@ Children:
       DataType: VerticalAlignment
       ModellingRule: Optional
       Value: 3
+    - Name: CounterAction
+      Type: BaseDataVariableType
+      DataType: Int32
+    - Name: CounterActionChanged
+      Type: VariableChangedEventDispatcher
+      Children:
+      - Name: VariableNodePath
+        Type: BaseVariableType
+        DataType: NodePath
+        Value: "../CounterAction"
+      - Name: VariableValueChangedEventHandler1
+        Type: EventHandler
+        Children:
+        - Name: ListenEventType
+          Type: PropertyType
+          DataType: NodeId
+          Value: "/Types/EventTypes/BaseEventType/VariableConditionEvent/VariableValueChangedEvent"
+        - Name: MethodsToCall
+          Type: BaseObjectType
+          Children:
+          - Name: MethodContainer1
+            Type: BaseObjectType
+            Children:
+            - Name: ns=2;ObjectPointer
+              Type: NodePointer
+              DataType: NodeId
+              Value: "/Objects/Commands/VariableCommands"
+              Children:
+              - Name: Kind
+                Type: PropertyType
+                DataType: NodeId
+                Value: "/Types/ObjectTypes/BaseObjectType"
+            - Name: ns=2;Method
+              Type: BaseDataVariableType
+              DataType: String
+              Value: "Set"
+            - Name: InputArguments
+              Type: BaseObjectType
+              Children:
+              - Name: VariableToModify
+                Type: BaseDataVariableType
+                DataType: VariablePointer
+                Description: {"NamespaceIndex":2,"TextId":"SetVariableToModifyDescription"}
+                Children:
+                - Name: DynamicLink
+                  Type: DynamicLink
+                  DataType: NodePath
+                  Value: "../../../../../../../TextBoxCurrentValue/Text@NodeId"
+              - Name: Value
+                Type: BaseDataVariableType
+                DataType: LocalizedText
+                Description: {"NamespaceIndex":2,"TextId":"SetValueDescription"}
+                Children:
+                - Name: DynamicLink
+                  Type: DynamicLink
+                  DataType: NodePath
+                  Value: "../../../../../../../TextBoxCurrentValue/Text"
+              - Name: ArrayIndex
+                Type: BaseDataVariableType
+                DataType: UInt32
+                Description: {"NamespaceIndex":2,"TextId":"SetArrayIndexDescription"}
+                ValueRank: ScalarOrOneDimension
+        - Name: EventArguments
+          Type: VariableValueChangedEvent
+          Children:
+          - Name: VariableNodeId
+            Type: BaseVariableType
+            DataType: NodeId
+          - Name: NewValue
+            Type: BaseVariableType
+            DataType: BaseDataType
+          - Name: OldValue
+            Type: BaseVariableType
+            DataType: BaseDataType
+          - Name: EventId
+            Type: PropertyType
+            DataType: ByteString
+          - Name: EventType
+            Type: PropertyType
+            DataType: NodeId
+          - Name: SourceNode
+            Type: PropertyType
+            DataType: NodeId
+          - Name: SourceName
+            Type: PropertyType
+            DataType: String
+          - Name: Time
+            Type: PropertyType
+            DataType: UtcTime
+          - Name: ReceiveTime
+            Type: PropertyType
+            DataType: UtcTime
+          - Name: Message
+            Type: PropertyType
+            DataType: LocalizedText
+          - Name: Severity
+            Type: PropertyType
+            DataType: UInt16
   - Name: HorizontalGap
     Type: BaseDataVariableType
     DataType: Size

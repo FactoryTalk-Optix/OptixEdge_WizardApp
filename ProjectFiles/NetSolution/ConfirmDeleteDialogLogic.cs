@@ -34,6 +34,7 @@ using FTOptix.InfluxDBStoreRemote;
 using System.Reflection;
 using FTOptix.AuditSigning;
 using FTOptix.NativeUI;
+using FTOptix.EventLogger;
 #endregion
 
 public class ConfirmDeleteDialogLogic : BaseNetLogic

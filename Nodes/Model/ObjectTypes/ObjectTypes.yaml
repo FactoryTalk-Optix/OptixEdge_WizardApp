@@ -345,3 +345,30 @@ Children:
     Type: BaseDataVariableType
     DataType: BaseDataType
     Value: {"Type":6,"Body":0}
+- Name: TagsFilterArguments
+  Id: g=5c04f9f1b0096991d3eecb36edbe6a0b
+  Supertype: BaseObjectType
+  Children:
+  - Name: SourceListVariableName
+    Type: BaseDataVariableType
+    DataType: String
+    ValueRank: OneDimension
+    ArrayDimensions: [0]
+  - Name: ReturnFilterList
+    Type: BaseDataVariableType
+    DataType: String
+    ValueRank: OneDimension
+    ArrayDimensions: [0]
+  - Name: Deselect
+    Type: BaseDataVariableType
+    DataType: ns=0;Boolean
+  - Name: IDCounter
+    Type: BaseDataVariableType
+    DataType: Int32
+  - Name: EnableLinkDirection
+    Type: BaseDataVariableType
+    DataType: ns=0;Boolean
+  - Name: LinkDirection
+    Type: BaseDataVariableType
+    DataType: LinkDirection
+    Value: 2

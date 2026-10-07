@@ -21,6 +21,7 @@ using FTOptix.MQTTBroker;
 using System.Runtime.CompilerServices;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading;
+using FTOptix.EventLogger;
 #endregion
 
 public class MQTTPublisherDataLogic : BaseNetLogic

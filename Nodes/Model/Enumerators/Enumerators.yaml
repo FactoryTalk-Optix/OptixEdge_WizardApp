@@ -814,3 +814,53 @@ Children:
     ValueRank: OneDimension
     ArrayDimensions: [0]
     Value: [{"TypeId":{"Id":7594},"Body":{"Value":0,"DisplayName":{"LocaleId":"en-US","Text":"Field"},"Description":{"LocaleId":"en-US","Text":"A basic JSON key-value pair"}}},{"TypeId":{"Id":7594},"Body":{"Value":1,"DisplayName":{"LocaleId":"en-US","Text":"Array Field"},"Description":{"LocaleId":"en-US","Text":"A JSON key with an array of values"}}},{"TypeId":{"Id":7594},"Body":{"Value":2,"DisplayName":{"LocaleId":"en-US","Text":"Nested object"},"Description":{"LocaleId":"en-US","Text":"A JSON object nested within another object"}}},{"TypeId":{"Id":7594},"Body":{"Value":3,"DisplayName":{"LocaleId":"en-US","Text":"Variables container"},"Description":{"LocaleId":"en-US","Text":"A placeholder populated with variables."}}},{"TypeId":{"Id":7594},"Body":{"Value":4,"DisplayName":{"LocaleId":"en-US","Text":"Array Nested object"},"Description":{"LocaleId":"en-US","Text":"A JSON array containing multiple nested objects"}}},{"TypeId":{"Id":7594},"Body":{"Value":6,"DisplayName":{"LocaleId":"en-US","Text":"Local timestamp field"},"Description":{"LocaleId":"en-US","Text":"A timestamp field filled with the current local time"}}},{"TypeId":{"Id":7594},"Body":{"Value":7,"DisplayName":{"LocaleId":"en-US","Text":"UTC timestamp field"},"Description":{"LocaleId":"en-US","Text":"A timestamp field filled with the current UTC time"}}}]
+- Class: DataType
+  Name: FileOperationTypeRequest
+  Id: g=a88c8aa1f38a3ee0441adb03d1428c3b
+  Supertype: Enumeration
+  EnumDefinition: 
+   {
+    "Name": "FileOperationTypeRequest",
+    "DataType": {
+     "IdType": 2,
+     "Id": "a88c8aa1f38a3ee0441adb03d1428c3b",
+     "Namespace": 7
+    },
+    "Fields": [{
+      "Name": "Value0",
+      "Value": 0,
+      "DisplayName": {
+       "LocaleId": "en-US",
+       "Text": "FileUpload"
+      }
+     },{
+      "Name": "Value1",
+      "Value": 1,
+      "DisplayName": {
+       "LocaleId": "en-US",
+       "Text": "FileDownload"
+      }
+     },{
+      "Name": "Value2",
+      "Value": 2,
+      "DisplayName": {
+       "LocaleId": "en-US",
+       "Text": "Backup"
+      }
+     },{
+      "Name": "Value3",
+      "Value": 3,
+      "DisplayName": {
+       "LocaleId": "en-US",
+       "Text": "Restore"
+      }
+     }]
+   }
+  Children:
+  - Name: ns=0;EnumValues
+    Type: BaseDataVariableType
+    DataType: EnumValueType
+    ModellingRule: None
+    ValueRank: OneDimension
+    ArrayDimensions: [0]
+    Value: [{"TypeId":{"Id":7594},"Body":{"Value":0,"DisplayName":{"LocaleId":"en-US","Text":"FileUpload"},"Description":{"NamespaceIndex":-1,"LocaleId":"","Text":""}}},{"TypeId":{"Id":7594},"Body":{"Value":1,"DisplayName":{"LocaleId":"en-US","Text":"FileDownload"},"Description":{"NamespaceIndex":-1,"LocaleId":"","Text":""}}},{"TypeId":{"Id":7594},"Body":{"Value":2,"DisplayName":{"LocaleId":"en-US","Text":"Backup"},"Description":{"NamespaceIndex":-1,"LocaleId":"","Text":""}}},{"TypeId":{"Id":7594},"Body":{"Value":3,"DisplayName":{"LocaleId":"en-US","Text":"Restore"},"Description":{"NamespaceIndex":-1,"LocaleId":"","Text":""}}}]

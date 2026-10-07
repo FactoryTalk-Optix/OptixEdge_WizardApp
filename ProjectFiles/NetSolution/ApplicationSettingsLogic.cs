@@ -6,6 +6,7 @@ using FTOptix.HMIProject;
 using FTOptix.NetLogic;
 using FTOptix.CoreBase;
 using FTOptix.Core;
+using FTOptix.EventLogger;
 #endregion
 
 public class ApplicationSettingsLogic : BaseNetLogic

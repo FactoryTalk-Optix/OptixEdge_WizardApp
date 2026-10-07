@@ -21,6 +21,7 @@ using System.Threading.Tasks;
 using System.Globalization;
 using System.Security.Cryptography;
 using FTOptix.NativeUI;
+using FTOptix.EventLogger;
 #endregion
 
 public class LoggersLogic : BaseNetLogic
@@ -42,21 +43,22 @@ public class LoggersLogic : BaseNetLogic
     [ExportMethod]
     public void CreateNewDatalogger(NodeId widgetOwner)
     {
-        var loggersFolder = Project.Current.Get<Folder>(CommonLogic.LoggersFolderPath);
-        int countCurrentLoggers = loggersFolder.GetNodesByType<DataLogger>().Count();
-        string browseName = $"DataLogger{countCurrentLoggers + 1}";
-        var store = Project.Current.Get<Store>("DataStores/EdgeEmbeddedDatabase");
-        if (loggersFolder.Get(browseName) == null)
+        if (InformationModel.Get(widgetOwner) is ColumnLayout verticalLayout)
         {
-            var newLogger = InformationModel.Make<DataLogger>(browseName);
-            newLogger.Store = store.NodeId;
-            newLogger.SamplingMode = FTOptix.DataLogger.SamplingMode.Periodic;
-            newLogger.SamplingPeriod = 1000;
-            newLogger.PollingPeriod = 1000;
-            newLogger.LogLocalTime = true;
-            newLogger.TableName = browseName;
-            if (InformationModel.Get(widgetOwner) is ColumnLayout verticalLayout)
+            var loggersFolder = Project.Current.Get<Folder>(CommonLogic.LoggersFolderPath);
+            var prefixBrowseName = "DataLogger";
+            int countCurrentLoggers = CommonLogic.GetFirstAvailableNumber(verticalLayout.GetNodesByType<DataloggerUIObj>().Select(x => x.BrowseName), prefixBrowseName);
+            string browseName = $"{prefixBrowseName}{countCurrentLoggers}";
+            var store = Project.Current.Get<Store>("DataStores/EdgeEmbeddedDatabase");
+            if (loggersFolder.Get(browseName) == null)
             {
+                var newLogger = InformationModel.Make<DataLogger>(browseName);
+                newLogger.Store = store.NodeId;
+                newLogger.SamplingMode = FTOptix.DataLogger.SamplingMode.Periodic;
+                newLogger.SamplingPeriod = 1000;
+                newLogger.PollingPeriod = 1000;
+                newLogger.LogLocalTime = true;
+                newLogger.TableName = browseName;
                 var newWidget = InformationModel.MakeObject<DataloggerUIObj>(browseName);
                 newWidget.SetAlias(CommonLogic.editAliasNameMapping.GetValueOrDefault(newLogger.ObjectType.NodeId), newLogger);
                 verticalLayout.Add(newWidget);
@@ -67,10 +69,10 @@ public class LoggersLogic : BaseNetLogic
                     uiFieldParameterObserverLogic.ExecuteMethod("SubscribeObserver");
                 }
             }
-        }
-        else
-        {
-            NotificationsMessageHandlerLogic.Instance.RequestBannerNotification(ToastBannerNotificationLevel.Warning, "Cannot add the new datalogger, already exist in the system");
+            else
+            {
+                NotificationsMessageHandlerLogic.Instance.RequestBannerNotification(ToastBannerNotificationLevel.Warning, "Cannot add the new datalogger, already exist in the system");
+            }
         }
     }
 
@@ -174,17 +176,17 @@ public class LoggersLogic : BaseNetLogic
             }
             try
             {
-                editStation.Delete();                
+                editStation.Delete();
             }
             catch
             {
                 // nothing important
             }
             try
-            {              
+            {
                 if (InformationModel.GetObject(sourceStation?.Store) is Store loggerStore && loggerStore.Tables.Get(sourceStation.BrowseName) is Table loggerStoreTable)
                 {
-                    sourceStation.Stop();                    
+                    sourceStation.Stop();
                     loggerStoreTable.Delete();
                     try
                     {
@@ -197,10 +199,10 @@ public class LoggersLogic : BaseNetLogic
                 }
                 if (sourceStation != null)
                 {
-                    string sourceStationName = sourceStation.BrowseName;     
-                    sourceStation.Delete();               
+                    string sourceStationName = sourceStation.BrowseName;
+                    sourceStation.Delete();
                     NotificationsMessageHandlerLogic.Instance.RequestToastNotification(ToastBannerNotificationLevel.Success, $"Data logger {sourceStationName} successfully deleted.");
-                } 
+                }
             }
             catch
             {
@@ -239,7 +241,7 @@ public class LoggersLogic : BaseNetLogic
                     }
                     else
                     {
-                        targetTag = InformationModel.MakeVariable(variableName, OpcUa.DataTypes.BaseDataType, FTOptix.DataLogger.VariableTypes.VariableToLog) as VariableToLog;                        
+                        targetTag = InformationModel.MakeVariable(variableName, OpcUa.DataTypes.BaseDataType, FTOptix.DataLogger.VariableTypes.VariableToLog) as VariableToLog;
                     }
                     targetTag.Description = new(tagData.VariableComment, Session.ActualLocaleId);
                     variablesToLog.Add(targetTag);
@@ -254,7 +256,7 @@ public class LoggersLogic : BaseNetLogic
                     createdTags++;
                 }
             }
-            deletedTags += DeleteMissingTag(logger, dataFromTagImporter.Where(x => !x.Checked).ToList());            
+            deletedTags += DeleteMissingTag(logger, dataFromTagImporter.Where(x => !x.Checked).ToList());
         }
         NotificationsMessageHandlerLogic.Instance.RequestToastNotification(ToastBannerNotificationLevel.Info, $"Added {createdTags}, removed {deletedTags} variables on the logger {logger.BrowseName}");
     }

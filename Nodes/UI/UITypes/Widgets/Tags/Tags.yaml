@@ -79,7 +79,7 @@ Children:
     - Name: Content
       Type: ColumnLayout
       Children:
-      - Name: HorizontalLayout1
+      - Name: Filter
         Type: RowLayout
         Children:
         - Name: FileFilterLabel
@@ -137,6 +137,116 @@ Children:
           DataType: Size
           ModellingRule: Optional
           Value: 16.0
+        - Name: BulkSelect
+          Type: Button
+          Children:
+          - Name: Text
+            Type: BaseDataVariableType
+            DataType: LocalizedText
+            ModellingRule: Optional
+            Value: {"LocaleId":"en-US","Text":"Select Variables Using Pattern"}
+          - Name: MouseClickEventHandler1
+            Type: EventHandler
+            Children:
+            - Name: ListenEventType
+              Type: PropertyType
+              DataType: NodeId
+              Value: "/Types/EventTypes/BaseEventType/MouseEvent/MouseClickEvent"
+            - Name: MethodsToCall
+              Type: BaseObjectType
+              Children:
+              - Name: MethodContainer1
+                Type: BaseObjectType
+                Children:
+                - Name: ns=2;ObjectPointer
+                  Type: NodePointer
+                  DataType: NodeId
+                  Value: "/Objects/Commands/UICommands"
+                  Children:
+                  - Name: Kind
+                    Type: PropertyType
+                    DataType: NodeId
+                    Value: "/Types/ObjectTypes/BaseObjectType"
+                - Name: ns=2;Method
+                  Type: BaseDataVariableType
+                  DataType: String
+                  Value: "OpenDialog"
+                - Name: InputArguments
+                  Type: BaseObjectType
+                  Children:
+                  - Name: Dialog
+                    Type: BaseDataVariableType
+                    DataType: NodeId
+                    Description: {"NamespaceIndex":3,"TextId":"OpenDialogDialogDescription"}
+                    Value: "/Objects/OptixEdge_WizardApp/UI/UITypes/Dialogs/Tags Dialogs/TagsFilterSelection"
+                  - Name: AliasNode
+                    Type: BaseDataVariableType
+                    DataType: NodeId
+                    Description: {"NamespaceIndex":3,"TextId":"OpenDialogAliasNodeDescription"}
+                    ValueRank: ScalarOrOneDimension
+                    Children:
+                    - Name: DynamicLink
+                      Type: DynamicLink
+                      DataType: NodePath
+                      Value: "../../../../../../../../../TagViewerLogic/TagsFilterArguments@NodeId"
+                  - Name: ParentItem
+                    Type: BaseDataVariableType
+                    DataType: NodeId
+                    Description: {"NamespaceIndex":3,"TextId":"OpenDialogParentItemDescription"}
+                    Children:
+                    - Name: DynamicLink
+                      Type: DynamicLink
+                      DataType: NodePath
+                      Value: "../../../../..@NodeId"
+                - Name: OutputArguments
+                  Type: BaseObjectType
+                  Children:
+                  - Name: DialogNodeId
+                    Type: BaseDataVariableType
+                    DataType: NodeId
+                    Description: {"NamespaceIndex":3,"TextId":"OpenDialogDialogNodeIdDescription"}
+            - Name: EventArguments
+              Type: MouseClickEvent
+              Children:
+              - Name: EventId
+                Type: PropertyType
+                DataType: ByteString
+              - Name: EventType
+                Type: PropertyType
+                DataType: NodeId
+              - Name: SourceNode
+                Type: PropertyType
+                DataType: NodeId
+              - Name: SourceName
+                Type: PropertyType
+                DataType: String
+              - Name: Time
+                Type: PropertyType
+                DataType: UtcTime
+              - Name: ReceiveTime
+                Type: PropertyType
+                DataType: UtcTime
+              - Name: Message
+                Type: PropertyType
+                DataType: LocalizedText
+              - Name: Severity
+                Type: PropertyType
+                DataType: UInt16
+          - Name: Style
+            Type: BaseDataVariableType
+            DataType: String
+            ModellingRule: Optional
+            Value: "Accent"
+          - Name: Height
+            Type: BaseVariableType
+            DataType: Size
+            ModellingRule: Optional
+            Value: -1.0
+          - Name: Width
+            Type: BaseVariableType
+            DataType: Size
+            ModellingRule: Optional
+            Value: 256.0
         - Name: DeleteTags
           Type: Button
           Children:
@@ -630,11 +740,12 @@ Children:
                     DataType: NodePath
                     Value: "../../ShowCheckBox"
               - Name: VariableNameString
-                Type: Label
+                Type: EditableLabel
                 Children:
                 - Name: Text
                   Type: BaseDataVariableType
                   DataType: LocalizedText
+                  Value: {"LocaleId":"en-US","Text":"EditableLabel1"}
                   Children:
                   - Name: DynamicLink
                     Type: DynamicLink
@@ -643,7 +754,7 @@ Children:
                 - Name: Width
                   Type: BaseVariableType
                   DataType: Size
-                  Value: 320.0
+                  Value: 736.0
                   Children:
                   - Name: ConditionalConverter1
                     Type: ConditionalConverter
@@ -657,6 +768,85 @@ Children:
                         Type: DynamicLink
                         DataType: NodePath
                         Value: "../../../../ShowLinkDirection"
+                - Name: ModifiedTextHandler1
+                  Type: EventHandler
+                  Children:
+                  - Name: ListenEventType
+                    Type: PropertyType
+                    DataType: NodeId
+                    Value: "/Types/EventTypes/BaseEventType/UserTextChanged"
+                  - Name: MethodsToCall
+                    Type: BaseObjectType
+                    Children:
+                    - Name: MethodContainer1
+                      Type: BaseObjectType
+                      Children:
+                      - Name: ObjectPointer
+                        Type: NodePointer
+                        DataType: NodeId
+                        Value: "/Objects/Commands/VariableCommands"
+                        Children:
+                        - Name: Kind
+                          Type: PropertyType
+                          DataType: NodeId
+                          Value: "/Types/ObjectTypes/BaseObjectType"
+                      - Name: Method
+                        Type: BaseDataVariableType
+                        DataType: String
+                        Value: "Set"
+                      - Name: InputArguments
+                        Type: BaseObjectType
+                        Children:
+                        - Name: VariableToModify
+                          Type: BaseDataVariableType
+                          DataType: VariablePointer
+                          Children:
+                          - Name: DynamicLink
+                            Type: DynamicLink
+                            DataType: NodePath
+                            Value: "../../../../../Text@NodeId"
+                        - Name: Value
+                          Type: BaseDataVariableType
+                          DataType: LocalizedText
+                          Children:
+                          - Name: DynamicLink
+                            Type: DynamicLink
+                            DataType: NodePath
+                            Value: "{RowData}/VariableName"
+                        - Name: ArrayIndex
+                          Type: BaseDataVariableType
+                          DataType: UInt32
+                          ValueRank: ScalarOrOneDimension
+                  - Name: EventArguments
+                    Type: UserTextChanged
+                    Children:
+                    - Name: NewText
+                      Type: BaseDataVariableType
+                      DataType: LocalizedText
+                    - Name: EventId
+                      Type: PropertyType
+                      DataType: ByteString
+                    - Name: EventType
+                      Type: PropertyType
+                      DataType: NodeId
+                    - Name: SourceNode
+                      Type: PropertyType
+                      DataType: NodeId
+                    - Name: SourceName
+                      Type: PropertyType
+                      DataType: String
+                    - Name: Time
+                      Type: PropertyType
+                      DataType: UtcTime
+                    - Name: ReceiveTime
+                      Type: PropertyType
+                      DataType: UtcTime
+                    - Name: Message
+                      Type: PropertyType
+                      DataType: LocalizedText
+                    - Name: Severity
+                      Type: PropertyType
+                      DataType: UInt16
               - Name: DataTypeString
                 Type: Label
                 Children:
@@ -879,11 +1069,12 @@ Children:
                     DataType: NodePath
                     Value: "../../ShowCheckBox"
               - Name: VariableNameString
-                Type: Label
+                Type: EditableLabel
                 Children:
                 - Name: Text
                   Type: BaseDataVariableType
                   DataType: LocalizedText
+                  Value: {"LocaleId":"en-US","Text":"EditableLabel1"}
                   Children:
                   - Name: DynamicLink
                     Type: DynamicLink
@@ -892,7 +1083,7 @@ Children:
                 - Name: Width
                   Type: BaseVariableType
                   DataType: Size
-                  Value: 320.0
+                  Value: 736.0
                   Children:
                   - Name: ConditionalConverter1
                     Type: ConditionalConverter
@@ -906,6 +1097,85 @@ Children:
                         Type: DynamicLink
                         DataType: NodePath
                         Value: "../../../../ShowLinkDirection"
+                - Name: ModifiedTextHandler1
+                  Type: EventHandler
+                  Children:
+                  - Name: ListenEventType
+                    Type: PropertyType
+                    DataType: NodeId
+                    Value: "/Types/EventTypes/BaseEventType/UserTextChanged"
+                  - Name: MethodsToCall
+                    Type: BaseObjectType
+                    Children:
+                    - Name: MethodContainer1
+                      Type: BaseObjectType
+                      Children:
+                      - Name: ObjectPointer
+                        Type: NodePointer
+                        DataType: NodeId
+                        Value: "/Objects/Commands/VariableCommands"
+                        Children:
+                        - Name: Kind
+                          Type: PropertyType
+                          DataType: NodeId
+                          Value: "/Types/ObjectTypes/BaseObjectType"
+                      - Name: Method
+                        Type: BaseDataVariableType
+                        DataType: String
+                        Value: "Set"
+                      - Name: InputArguments
+                        Type: BaseObjectType
+                        Children:
+                        - Name: VariableToModify
+                          Type: BaseDataVariableType
+                          DataType: VariablePointer
+                          Children:
+                          - Name: DynamicLink
+                            Type: DynamicLink
+                            DataType: NodePath
+                            Value: "../../../../../Text@NodeId"
+                        - Name: Value
+                          Type: BaseDataVariableType
+                          DataType: LocalizedText
+                          Children:
+                          - Name: DynamicLink
+                            Type: DynamicLink
+                            DataType: NodePath
+                            Value: "{RowData}/VariableName"
+                        - Name: ArrayIndex
+                          Type: BaseDataVariableType
+                          DataType: UInt32
+                          ValueRank: ScalarOrOneDimension
+                  - Name: EventArguments
+                    Type: UserTextChanged
+                    Children:
+                    - Name: NewText
+                      Type: BaseDataVariableType
+                      DataType: LocalizedText
+                    - Name: EventId
+                      Type: PropertyType
+                      DataType: ByteString
+                    - Name: EventType
+                      Type: PropertyType
+                      DataType: NodeId
+                    - Name: SourceNode
+                      Type: PropertyType
+                      DataType: NodeId
+                    - Name: SourceName
+                      Type: PropertyType
+                      DataType: String
+                    - Name: Time
+                      Type: PropertyType
+                      DataType: UtcTime
+                    - Name: ReceiveTime
+                      Type: PropertyType
+                      DataType: UtcTime
+                    - Name: Message
+                      Type: PropertyType
+                      DataType: LocalizedText
+                    - Name: Severity
+                      Type: PropertyType
+                      DataType: UInt16
               - Name: DataTypeString
                 Type: Label
                 Children:
@@ -1128,11 +1398,12 @@ Children:
                     DataType: NodePath
                     Value: "../../ShowCheckBox"
               - Name: VariableNameString
-                Type: Label
+                Type: EditableLabel
                 Children:
                 - Name: Text
                   Type: BaseDataVariableType
                   DataType: LocalizedText
+                  Value: {"LocaleId":"en-US","Text":"EditableLabel1"}
                   Children:
                   - Name: DynamicLink
                     Type: DynamicLink
@@ -1141,7 +1412,7 @@ Children:
                 - Name: Width
                   Type: BaseVariableType
                   DataType: Size
-                  Value: 320.0
+                  Value: 736.0
                   Children:
                   - Name: ConditionalConverter1
                     Type: ConditionalConverter
@@ -1155,6 +1426,85 @@ Children:
                         Type: DynamicLink
                         DataType: NodePath
                         Value: "../../../../ShowLinkDirection"
+                - Name: ModifiedTextHandler1
+                  Type: EventHandler
+                  Children:
+                  - Name: ListenEventType
+                    Type: PropertyType
+                    DataType: NodeId
+                    Value: "/Types/EventTypes/BaseEventType/UserTextChanged"
+                  - Name: MethodsToCall
+                    Type: BaseObjectType
+                    Children:
+                    - Name: MethodContainer1
+                      Type: BaseObjectType
+                      Children:
+                      - Name: ObjectPointer
+                        Type: NodePointer
+                        DataType: NodeId
+                        Value: "/Objects/Commands/VariableCommands"
+                        Children:
+                        - Name: Kind
+                          Type: PropertyType
+                          DataType: NodeId
+                          Value: "/Types/ObjectTypes/BaseObjectType"
+                      - Name: Method
+                        Type: BaseDataVariableType
+                        DataType: String
+                        Value: "Set"
+                      - Name: InputArguments
+                        Type: BaseObjectType
+                        Children:
+                        - Name: VariableToModify
+                          Type: BaseDataVariableType
+                          DataType: VariablePointer
+                          Children:
+                          - Name: DynamicLink
+                            Type: DynamicLink
+                            DataType: NodePath
+                            Value: "../../../../../Text@NodeId"
+                        - Name: Value
+                          Type: BaseDataVariableType
+                          DataType: LocalizedText
+                          Children:
+                          - Name: DynamicLink
+                            Type: DynamicLink
+                            DataType: NodePath
+                            Value: "{RowData}/VariableName"
+                        - Name: ArrayIndex
+                          Type: BaseDataVariableType
+                          DataType: UInt32
+                          ValueRank: ScalarOrOneDimension
+                  - Name: EventArguments
+                    Type: UserTextChanged
+                    Children:
+                    - Name: NewText
+                      Type: BaseDataVariableType
+                      DataType: LocalizedText
+                    - Name: EventId
+                      Type: PropertyType
+                      DataType: ByteString
+                    - Name: EventType
+                      Type: PropertyType
+                      DataType: NodeId
+                    - Name: SourceNode
+                      Type: PropertyType
+                      DataType: NodeId
+                    - Name: SourceName
+                      Type: PropertyType
+                      DataType: String
+                    - Name: Time
+                      Type: PropertyType
+                      DataType: UtcTime
+                    - Name: ReceiveTime
+                      Type: PropertyType
+                      DataType: UtcTime
+                    - Name: Message
+                      Type: PropertyType
+                      DataType: LocalizedText
+                    - Name: Severity
+                      Type: PropertyType
+                      DataType: UInt16
               - Name: DataTypeString
                 Type: Label
                 Children:
@@ -1377,11 +1727,12 @@ Children:
                     DataType: NodePath
                     Value: "../../ShowCheckBox"
               - Name: VariableNameString
-                Type: Label
+                Type: EditableLabel
                 Children:
                 - Name: Text
                   Type: BaseDataVariableType
                   DataType: LocalizedText
+                  Value: {"LocaleId":"en-US","Text":"EditableLabel1"}
                   Children:
                   - Name: DynamicLink
                     Type: DynamicLink
@@ -1390,7 +1741,7 @@ Children:
                 - Name: Width
                   Type: BaseVariableType
                   DataType: Size
-                  Value: 320.0
+                  Value: 736.0
                   Children:
                   - Name: ConditionalConverter1
                     Type: ConditionalConverter
@@ -1404,6 +1755,85 @@ Children:
                         Type: DynamicLink
                         DataType: NodePath
                         Value: "../../../../ShowLinkDirection"
+                - Name: ModifiedTextHandler1
+                  Type: EventHandler
+                  Children:
+                  - Name: ListenEventType
+                    Type: PropertyType
+                    DataType: NodeId
+                    Value: "/Types/EventTypes/BaseEventType/UserTextChanged"
+                  - Name: MethodsToCall
+                    Type: BaseObjectType
+                    Children:
+                    - Name: MethodContainer1
+                      Type: BaseObjectType
+                      Children:
+                      - Name: ObjectPointer
+                        Type: NodePointer
+                        DataType: NodeId
+                        Value: "/Objects/Commands/VariableCommands"
+                        Children:
+                        - Name: Kind
+                          Type: PropertyType
+                          DataType: NodeId
+                          Value: "/Types/ObjectTypes/BaseObjectType"
+                      - Name: Method
+                        Type: BaseDataVariableType
+                        DataType: String
+                        Value: "Set"
+                      - Name: InputArguments
+                        Type: BaseObjectType
+                        Children:
+                        - Name: VariableToModify
+                          Type: BaseDataVariableType
+                          DataType: VariablePointer
+                          Children:
+                          - Name: DynamicLink
+                            Type: DynamicLink
+                            DataType: NodePath
+                            Value: "../../../../../Text@NodeId"
+                        - Name: Value
+                          Type: BaseDataVariableType
+                          DataType: LocalizedText
+                          Children:
+                          - Name: DynamicLink
+                            Type: DynamicLink
+                            DataType: NodePath
+                            Value: "{RowData}/VariableName"
+                        - Name: ArrayIndex
+                          Type: BaseDataVariableType
+                          DataType: UInt32
+                          ValueRank: ScalarOrOneDimension
+                  - Name: EventArguments
+                    Type: UserTextChanged
+                    Children:
+                    - Name: NewText
+                      Type: BaseDataVariableType
+                      DataType: LocalizedText
+                    - Name: EventId
+                      Type: PropertyType
+                      DataType: ByteString
+                    - Name: EventType
+                      Type: PropertyType
+                      DataType: NodeId
+                    - Name: SourceNode
+                      Type: PropertyType
+                      DataType: NodeId
+                    - Name: SourceName
+                      Type: PropertyType
+                      DataType: String
+                    - Name: Time
+                      Type: PropertyType
+                      DataType: UtcTime
+                    - Name: ReceiveTime
+                      Type: PropertyType
+                      DataType: UtcTime
+                    - Name: Message
+                      Type: PropertyType
+                      DataType: LocalizedText
+                    - Name: Severity
+                      Type: PropertyType
+                      DataType: UInt16
               - Name: DataTypeString
                 Type: Label
                 Children:
@@ -1626,11 +2056,12 @@ Children:
                     DataType: NodePath
                     Value: "../../ShowCheckBox"
               - Name: VariableNameString
-                Type: Label
+                Type: EditableLabel
                 Children:
                 - Name: Text
                   Type: BaseDataVariableType
                   DataType: LocalizedText
+                  Value: {"LocaleId":"en-US","Text":"EditableLabel1"}
                   Children:
                   - Name: DynamicLink
                     Type: DynamicLink
@@ -1639,7 +2070,7 @@ Children:
                 - Name: Width
                   Type: BaseVariableType
                   DataType: Size
-                  Value: 320.0
+                  Value: 736.0
                   Children:
                   - Name: ConditionalConverter1
                     Type: ConditionalConverter
@@ -1653,6 +2084,85 @@ Children:
                         Type: DynamicLink
                         DataType: NodePath
                         Value: "../../../../ShowLinkDirection"
+                - Name: ModifiedTextHandler1
+                  Type: EventHandler
+                  Children:
+                  - Name: ListenEventType
+                    Type: PropertyType
+                    DataType: NodeId
+                    Value: "/Types/EventTypes/BaseEventType/UserTextChanged"
+                  - Name: MethodsToCall
+                    Type: BaseObjectType
+                    Children:
+                    - Name: MethodContainer1
+                      Type: BaseObjectType
+                      Children:
+                      - Name: ObjectPointer
+                        Type: NodePointer
+                        DataType: NodeId
+                        Value: "/Objects/Commands/VariableCommands"
+                        Children:
+                        - Name: Kind
+                          Type: PropertyType
+                          DataType: NodeId
+                          Value: "/Types/ObjectTypes/BaseObjectType"
+                      - Name: Method
+                        Type: BaseDataVariableType
+                        DataType: String
+                        Value: "Set"
+                      - Name: InputArguments
+                        Type: BaseObjectType
+                        Children:
+                        - Name: VariableToModify
+                          Type: BaseDataVariableType
+                          DataType: VariablePointer
+                          Children:
+                          - Name: DynamicLink
+                            Type: DynamicLink
+                            DataType: NodePath
+                            Value: "../../../../../Text@NodeId"
+                        - Name: Value
+                          Type: BaseDataVariableType
+                          DataType: LocalizedText
+                          Children:
+                          - Name: DynamicLink
+                            Type: DynamicLink
+                            DataType: NodePath
+                            Value: "{RowData}/VariableName"
+                        - Name: ArrayIndex
+                          Type: BaseDataVariableType
+                          DataType: UInt32
+                          ValueRank: ScalarOrOneDimension
+                  - Name: EventArguments
+                    Type: UserTextChanged
+                    Children:
+                    - Name: NewText
+                      Type: BaseDataVariableType
+                      DataType: LocalizedText
+                    - Name: EventId
+                      Type: PropertyType
+                      DataType: ByteString
+                    - Name: EventType
+                      Type: PropertyType
+                      DataType: NodeId
+                    - Name: SourceNode
+                      Type: PropertyType
+                      DataType: NodeId
+                    - Name: SourceName
+                      Type: PropertyType
+                      DataType: String
+                    - Name: Time
+                      Type: PropertyType
+                      DataType: UtcTime
+                    - Name: ReceiveTime
+                      Type: PropertyType
+                      DataType: UtcTime
+                    - Name: Message
+                      Type: PropertyType
+                      DataType: LocalizedText
+                    - Name: Severity
+                      Type: PropertyType
+                      DataType: UInt16
               - Name: DataTypeString
                 Type: Label
                 Children:
@@ -1875,11 +2385,12 @@ Children:
                     DataType: NodePath
                     Value: "../../ShowCheckBox"
               - Name: VariableNameString
-                Type: Label
+                Type: EditableLabel
                 Children:
                 - Name: Text
                   Type: BaseDataVariableType
                   DataType: LocalizedText
+                  Value: {"LocaleId":"en-US","Text":"EditableLabel1"}
                   Children:
                   - Name: DynamicLink
                     Type: DynamicLink
@@ -1888,7 +2399,7 @@ Children:
                 - Name: Width
                   Type: BaseVariableType
                   DataType: Size
-                  Value: 320.0
+                  Value: 736.0
                   Children:
                   - Name: ConditionalConverter1
                     Type: ConditionalConverter
@@ -1902,6 +2413,85 @@ Children:
                         Type: DynamicLink
                         DataType: NodePath
                         Value: "../../../../ShowLinkDirection"
+                - Name: ModifiedTextHandler1
+                  Type: EventHandler
+                  Children:
+                  - Name: ListenEventType
+                    Type: PropertyType
+                    DataType: NodeId
+                    Value: "/Types/EventTypes/BaseEventType/UserTextChanged"
+                  - Name: MethodsToCall
+                    Type: BaseObjectType
+                    Children:
+                    - Name: MethodContainer1
+                      Type: BaseObjectType
+                      Children:
+                      - Name: ObjectPointer
+                        Type: NodePointer
+                        DataType: NodeId
+                        Value: "/Objects/Commands/VariableCommands"
+                        Children:
+                        - Name: Kind
+                          Type: PropertyType
+                          DataType: NodeId
+                          Value: "/Types/ObjectTypes/BaseObjectType"
+                      - Name: Method
+                        Type: BaseDataVariableType
+                        DataType: String
+                        Value: "Set"
+                      - Name: InputArguments
+                        Type: BaseObjectType
+                        Children:
+                        - Name: VariableToModify
+                          Type: BaseDataVariableType
+                          DataType: VariablePointer
+                          Children:
+                          - Name: DynamicLink
+                            Type: DynamicLink
+                            DataType: NodePath
+                            Value: "../../../../../Text@NodeId"
+                        - Name: Value
+                          Type: BaseDataVariableType
+                          DataType: LocalizedText
+                          Children:
+                          - Name: DynamicLink
+                            Type: DynamicLink
+                            DataType: NodePath
+                            Value: "{RowData}/VariableName"
+                        - Name: ArrayIndex
+                          Type: BaseDataVariableType
+                          DataType: UInt32
+                          ValueRank: ScalarOrOneDimension
+                  - Name: EventArguments
+                    Type: UserTextChanged
+                    Children:
+                    - Name: NewText
+                      Type: BaseDataVariableType
+                      DataType: LocalizedText
+                    - Name: EventId
+                      Type: PropertyType
+                      DataType: ByteString
+                    - Name: EventType
+                      Type: PropertyType
+                      DataType: NodeId
+                    - Name: SourceNode
+                      Type: PropertyType
+                      DataType: NodeId
+                    - Name: SourceName
+                      Type: PropertyType
+                      DataType: String
+                    - Name: Time
+                      Type: PropertyType
+                      DataType: UtcTime
+                    - Name: ReceiveTime
+                      Type: PropertyType
+                      DataType: UtcTime
+                    - Name: Message
+                      Type: PropertyType
+                      DataType: LocalizedText
+                    - Name: Severity
+                      Type: PropertyType
+                      DataType: UInt16
               - Name: DataTypeString
                 Type: Label
                 Children:
@@ -2124,11 +2714,12 @@ Children:
                     DataType: NodePath
                     Value: "../../ShowCheckBox"
               - Name: VariableNameString
-                Type: Label
+                Type: EditableLabel
                 Children:
                 - Name: Text
                   Type: BaseDataVariableType
                   DataType: LocalizedText
+                  Value: {"LocaleId":"en-US","Text":"EditableLabel1"}
                   Children:
                   - Name: DynamicLink
                     Type: DynamicLink
@@ -2137,7 +2728,7 @@ Children:
                 - Name: Width
                   Type: BaseVariableType
                   DataType: Size
-                  Value: 320.0
+                  Value: 736.0
                   Children:
                   - Name: ConditionalConverter1
                     Type: ConditionalConverter
@@ -2151,6 +2742,85 @@ Children:
                         Type: DynamicLink
                         DataType: NodePath
                         Value: "../../../../ShowLinkDirection"
+                - Name: ModifiedTextHandler1
+                  Type: EventHandler
+                  Children:
+                  - Name: ListenEventType
+                    Type: PropertyType
+                    DataType: NodeId
+                    Value: "/Types/EventTypes/BaseEventType/UserTextChanged"
+                  - Name: MethodsToCall
+                    Type: BaseObjectType
+                    Children:
+                    - Name: MethodContainer1
+                      Type: BaseObjectType
+                      Children:
+                      - Name: ObjectPointer
+                        Type: NodePointer
+                        DataType: NodeId
+                        Value: "/Objects/Commands/VariableCommands"
+                        Children:
+                        - Name: Kind
+                          Type: PropertyType
+                          DataType: NodeId
+                          Value: "/Types/ObjectTypes/BaseObjectType"
+                      - Name: Method
+                        Type: BaseDataVariableType
+                        DataType: String
+                        Value: "Set"
+                      - Name: InputArguments
+                        Type: BaseObjectType
+                        Children:
+                        - Name: VariableToModify
+                          Type: BaseDataVariableType
+                          DataType: VariablePointer
+                          Children:
+                          - Name: DynamicLink
+                            Type: DynamicLink
+                            DataType: NodePath
+                            Value: "../../../../../Text@NodeId"
+                        - Name: Value
+                          Type: BaseDataVariableType
+                          DataType: LocalizedText
+                          Children:
+                          - Name: DynamicLink
+                            Type: DynamicLink
+                            DataType: NodePath
+                            Value: "{RowData}/VariableName"
+                        - Name: ArrayIndex
+                          Type: BaseDataVariableType
+                          DataType: UInt32
+                          ValueRank: ScalarOrOneDimension
+                  - Name: EventArguments
+                    Type: UserTextChanged
+                    Children:
+                    - Name: NewText
+                      Type: BaseDataVariableType
+                      DataType: LocalizedText
+                    - Name: EventId
+                      Type: PropertyType
+                      DataType: ByteString
+                    - Name: EventType
+                      Type: PropertyType
+                      DataType: NodeId
+                    - Name: SourceNode
+                      Type: PropertyType
+                      DataType: NodeId
+                    - Name: SourceName
+                      Type: PropertyType
+                      DataType: String
+                    - Name: Time
+                      Type: PropertyType
+                      DataType: UtcTime
+                    - Name: ReceiveTime
+                      Type: PropertyType
+                      DataType: UtcTime
+                    - Name: Message
+                      Type: PropertyType
+                      DataType: LocalizedText
+                    - Name: Severity
+                      Type: PropertyType
+                      DataType: UInt16
               - Name: DataTypeString
                 Type: Label
                 Children:
@@ -2373,11 +3043,12 @@ Children:
                     DataType: NodePath
                     Value: "../../ShowCheckBox"
               - Name: VariableNameString
-                Type: Label
+                Type: EditableLabel
                 Children:
                 - Name: Text
                   Type: BaseDataVariableType
                   DataType: LocalizedText
+                  Value: {"LocaleId":"en-US","Text":"EditableLabel1"}
                   Children:
                   - Name: DynamicLink
                     Type: DynamicLink
@@ -2386,7 +3057,7 @@ Children:
                 - Name: Width
                   Type: BaseVariableType
                   DataType: Size
-                  Value: 320.0
+                  Value: 736.0
                   Children:
                   - Name: ConditionalConverter1
                     Type: ConditionalConverter
@@ -2400,6 +3071,85 @@ Children:
                         Type: DynamicLink
                         DataType: NodePath
                         Value: "../../../../ShowLinkDirection"
+                - Name: ModifiedTextHandler1
+                  Type: EventHandler
+                  Children:
+                  - Name: ListenEventType
+                    Type: PropertyType
+                    DataType: NodeId
+                    Value: "/Types/EventTypes/BaseEventType/UserTextChanged"
+                  - Name: MethodsToCall
+                    Type: BaseObjectType
+                    Children:
+                    - Name: MethodContainer1
+                      Type: BaseObjectType
+                      Children:
+                      - Name: ObjectPointer
+                        Type: NodePointer
+                        DataType: NodeId
+                        Value: "/Objects/Commands/VariableCommands"
+                        Children:
+                        - Name: Kind
+                          Type: PropertyType
+                          DataType: NodeId
+                          Value: "/Types/ObjectTypes/BaseObjectType"
+                      - Name: Method
+                        Type: BaseDataVariableType
+                        DataType: String
+                        Value: "Set"
+                      - Name: InputArguments
+                        Type: BaseObjectType
+                        Children:
+                        - Name: VariableToModify
+                          Type: BaseDataVariableType
+                          DataType: VariablePointer
+                          Children:
+                          - Name: DynamicLink
+                            Type: DynamicLink
+                            DataType: NodePath
+                            Value: "../../../../../Text@NodeId"
+                        - Name: Value
+                          Type: BaseDataVariableType
+                          DataType: LocalizedText
+                          Children:
+                          - Name: DynamicLink
+                            Type: DynamicLink
+                            DataType: NodePath
+                            Value: "{RowData}/VariableName"
+                        - Name: ArrayIndex
+                          Type: BaseDataVariableType
+                          DataType: UInt32
+                          ValueRank: ScalarOrOneDimension
+                  - Name: EventArguments
+                    Type: UserTextChanged
+                    Children:
+                    - Name: NewText
+                      Type: BaseDataVariableType
+                      DataType: LocalizedText
+                    - Name: EventId
+                      Type: PropertyType
+                      DataType: ByteString
+                    - Name: EventType
+                      Type: PropertyType
+                      DataType: NodeId
+                    - Name: SourceNode
+                      Type: PropertyType
+                      DataType: NodeId
+                    - Name: SourceName
+                      Type: PropertyType
+                      DataType: String
+                    - Name: Time
+                      Type: PropertyType
+                      DataType: UtcTime
+                    - Name: ReceiveTime
+                      Type: PropertyType
+                      DataType: UtcTime
+                    - Name: Message
+                      Type: PropertyType
+                      DataType: LocalizedText
+                    - Name: Severity
+                      Type: PropertyType
+                      DataType: UInt16
               - Name: DataTypeString
                 Type: Label
                 Children:
@@ -2622,11 +3372,12 @@ Children:
                     DataType: NodePath
                     Value: "../../ShowCheckBox"
               - Name: VariableNameString
-                Type: Label
+                Type: EditableLabel
                 Children:
                 - Name: Text
                   Type: BaseDataVariableType
                   DataType: LocalizedText
+                  Value: {"LocaleId":"en-US","Text":"EditableLabel1"}
                   Children:
                   - Name: DynamicLink
                     Type: DynamicLink
@@ -2635,7 +3386,7 @@ Children:
                 - Name: Width
                   Type: BaseVariableType
                   DataType: Size
-                  Value: 320.0
+                  Value: 736.0
                   Children:
                   - Name: ConditionalConverter1
                     Type: ConditionalConverter
@@ -2649,6 +3400,85 @@ Children:
                         Type: DynamicLink
                         DataType: NodePath
                         Value: "../../../../ShowLinkDirection"
+                - Name: ModifiedTextHandler1
+                  Type: EventHandler
+                  Children:
+                  - Name: ListenEventType
+                    Type: PropertyType
+                    DataType: NodeId
+                    Value: "/Types/EventTypes/BaseEventType/UserTextChanged"
+                  - Name: MethodsToCall
+                    Type: BaseObjectType
+                    Children:
+                    - Name: MethodContainer1
+                      Type: BaseObjectType
+                      Children:
+                      - Name: ObjectPointer
+                        Type: NodePointer
+                        DataType: NodeId
+                        Value: "/Objects/Commands/VariableCommands"
+                        Children:
+                        - Name: Kind
+                          Type: PropertyType
+                          DataType: NodeId
+                          Value: "/Types/ObjectTypes/BaseObjectType"
+                      - Name: Method
+                        Type: BaseDataVariableType
+                        DataType: String
+                        Value: "Set"
+                      - Name: InputArguments
+                        Type: BaseObjectType
+                        Children:
+                        - Name: VariableToModify
+                          Type: BaseDataVariableType
+                          DataType: VariablePointer
+                          Children:
+                          - Name: DynamicLink
+                            Type: DynamicLink
+                            DataType: NodePath
+                            Value: "../../../../../Text@NodeId"
+                        - Name: Value
+                          Type: BaseDataVariableType
+                          DataType: LocalizedText
+                          Children:
+                          - Name: DynamicLink
+                            Type: DynamicLink
+                            DataType: NodePath
+                            Value: "{RowData}/VariableName"
+                        - Name: ArrayIndex
+                          Type: BaseDataVariableType
+                          DataType: UInt32
+                          ValueRank: ScalarOrOneDimension
+                  - Name: EventArguments
+                    Type: UserTextChanged
+                    Children:
+                    - Name: NewText
+                      Type: BaseDataVariableType
+                      DataType: LocalizedText
+                    - Name: EventId
+                      Type: PropertyType
+                      DataType: ByteString
+                    - Name: EventType
+                      Type: PropertyType
+                      DataType: NodeId
+                    - Name: SourceNode
+                      Type: PropertyType
+                      DataType: NodeId
+                    - Name: SourceName
+                      Type: PropertyType
+                      DataType: String
+                    - Name: Time
+                      Type: PropertyType
+                      DataType: UtcTime
+                    - Name: ReceiveTime
+                      Type: PropertyType
+                      DataType: UtcTime
+                    - Name: Message
+                      Type: PropertyType
+                      DataType: LocalizedText
+                    - Name: Severity
+                      Type: PropertyType
+                      DataType: UInt16
               - Name: DataTypeString
                 Type: Label
                 Children:
@@ -2871,11 +3701,12 @@ Children:
                     DataType: NodePath
                     Value: "../../ShowCheckBox"
               - Name: VariableNameString
-                Type: Label
+                Type: EditableLabel
                 Children:
                 - Name: Text
                   Type: BaseDataVariableType
                   DataType: LocalizedText
+                  Value: {"LocaleId":"en-US","Text":"EditableLabel1"}
                   Children:
                   - Name: DynamicLink
                     Type: DynamicLink
@@ -2884,7 +3715,7 @@ Children:
                 - Name: Width
                   Type: BaseVariableType
                   DataType: Size
-                  Value: 320.0
+                  Value: 736.0
                   Children:
                   - Name: ConditionalConverter1
                     Type: ConditionalConverter
@@ -2898,6 +3729,85 @@ Children:
                         Type: DynamicLink
                         DataType: NodePath
                         Value: "../../../../ShowLinkDirection"
+                - Name: ModifiedTextHandler1
+                  Type: EventHandler
+                  Children:
+                  - Name: ListenEventType
+                    Type: PropertyType
+                    DataType: NodeId
+                    Value: "/Types/EventTypes/BaseEventType/UserTextChanged"
+                  - Name: MethodsToCall
+                    Type: BaseObjectType
+                    Children:
+                    - Name: MethodContainer1
+                      Type: BaseObjectType
+                      Children:
+                      - Name: ObjectPointer
+                        Type: NodePointer
+                        DataType: NodeId
+                        Value: "/Objects/Commands/VariableCommands"
+                        Children:
+                        - Name: Kind
+                          Type: PropertyType
+                          DataType: NodeId
+                          Value: "/Types/ObjectTypes/BaseObjectType"
+                      - Name: Method
+                        Type: BaseDataVariableType
+                        DataType: String
+                        Value: "Set"
+                      - Name: InputArguments
+                        Type: BaseObjectType
+                        Children:
+                        - Name: VariableToModify
+                          Type: BaseDataVariableType
+                          DataType: VariablePointer
+                          Children:
+                          - Name: DynamicLink
+                            Type: DynamicLink
+                            DataType: NodePath
+                            Value: "../../../../../Text@NodeId"
+                        - Name: Value
+                          Type: BaseDataVariableType
+                          DataType: LocalizedText
+                          Children:
+                          - Name: DynamicLink
+                            Type: DynamicLink
+                            DataType: NodePath
+                            Value: "{RowData}/VariableName"
+                        - Name: ArrayIndex
+                          Type: BaseDataVariableType
+                          DataType: UInt32
+                          ValueRank: ScalarOrOneDimension
+                  - Name: EventArguments
+                    Type: UserTextChanged
+                    Children:
+                    - Name: NewText
+                      Type: BaseDataVariableType
+                      DataType: LocalizedText
+                    - Name: EventId
+                      Type: PropertyType
+                      DataType: ByteString
+                    - Name: EventType
+                      Type: PropertyType
+                      DataType: NodeId
+                    - Name: SourceNode
+                      Type: PropertyType
+                      DataType: NodeId
+                    - Name: SourceName
+                      Type: PropertyType
+                      DataType: String
+                    - Name: Time
+                      Type: PropertyType
+                      DataType: UtcTime
+                    - Name: ReceiveTime
+                      Type: PropertyType
+                      DataType: UtcTime
+                    - Name: Message
+                      Type: PropertyType
+                      DataType: LocalizedText
+                    - Name: Severity
+                      Type: PropertyType
+                      DataType: UInt16
               - Name: DataTypeString
                 Type: Label
                 Children:
@@ -3120,11 +4030,12 @@ Children:
                     DataType: NodePath
                     Value: "../../ShowCheckBox"
               - Name: VariableNameString
-                Type: Label
+                Type: EditableLabel
                 Children:
                 - Name: Text
                   Type: BaseDataVariableType
                   DataType: LocalizedText
+                  Value: {"LocaleId":"en-US","Text":"EditableLabel1"}
                   Children:
                   - Name: DynamicLink
                     Type: DynamicLink
@@ -3133,7 +4044,7 @@ Children:
                 - Name: Width
                   Type: BaseVariableType
                   DataType: Size
-                  Value: 320.0
+                  Value: 736.0
                   Children:
                   - Name: ConditionalConverter1
                     Type: ConditionalConverter
@@ -3147,6 +4058,85 @@ Children:
                         Type: DynamicLink
                         DataType: NodePath
                         Value: "../../../../ShowLinkDirection"
+                - Name: ModifiedTextHandler1
+                  Type: EventHandler
+                  Children:
+                  - Name: ListenEventType
+                    Type: PropertyType
+                    DataType: NodeId
+                    Value: "/Types/EventTypes/BaseEventType/UserTextChanged"
+                  - Name: MethodsToCall
+                    Type: BaseObjectType
+                    Children:
+                    - Name: MethodContainer1
+                      Type: BaseObjectType
+                      Children:
+                      - Name: ObjectPointer
+                        Type: NodePointer
+                        DataType: NodeId
+                        Value: "/Objects/Commands/VariableCommands"
+                        Children:
+                        - Name: Kind
+                          Type: PropertyType
+                          DataType: NodeId
+                          Value: "/Types/ObjectTypes/BaseObjectType"
+                      - Name: Method
+                        Type: BaseDataVariableType
+                        DataType: String
+                        Value: "Set"
+                      - Name: InputArguments
+                        Type: BaseObjectType
+                        Children:
+                        - Name: VariableToModify
+                          Type: BaseDataVariableType
+                          DataType: VariablePointer
+                          Children:
+                          - Name: DynamicLink
+                            Type: DynamicLink
+                            DataType: NodePath
+                            Value: "../../../../../Text@NodeId"
+                        - Name: Value
+                          Type: BaseDataVariableType
+                          DataType: LocalizedText
+                          Children:
+                          - Name: DynamicLink
+                            Type: DynamicLink
+                            DataType: NodePath
+                            Value: "{RowData}/VariableName"
+                        - Name: ArrayIndex
+                          Type: BaseDataVariableType
+                          DataType: UInt32
+                          ValueRank: ScalarOrOneDimension
+                  - Name: EventArguments
+                    Type: UserTextChanged
+                    Children:
+                    - Name: NewText
+                      Type: BaseDataVariableType
+                      DataType: LocalizedText
+                    - Name: EventId
+                      Type: PropertyType
+                      DataType: ByteString
+                    - Name: EventType
+                      Type: PropertyType
+                      DataType: NodeId
+                    - Name: SourceNode
+                      Type: PropertyType
+                      DataType: NodeId
+                    - Name: SourceName
+                      Type: PropertyType
+                      DataType: String
+                    - Name: Time
+                      Type: PropertyType
+                      DataType: UtcTime
+                    - Name: ReceiveTime
+                      Type: PropertyType
+                      DataType: UtcTime
+                    - Name: Message
+                      Type: PropertyType
+                      DataType: LocalizedText
+                    - Name: Severity
+                      Type: PropertyType
+                      DataType: UInt16
               - Name: DataTypeString
                 Type: Label
                 Children:
@@ -3369,11 +4359,12 @@ Children:
                     DataType: NodePath
                     Value: "../../ShowCheckBox"
               - Name: VariableNameString
-                Type: Label
+                Type: EditableLabel
                 Children:
                 - Name: Text
                   Type: BaseDataVariableType
                   DataType: LocalizedText
+                  Value: {"LocaleId":"en-US","Text":"EditableLabel1"}
                   Children:
                   - Name: DynamicLink
                     Type: DynamicLink
@@ -3382,7 +4373,7 @@ Children:
                 - Name: Width
                   Type: BaseVariableType
                   DataType: Size
-                  Value: 320.0
+                  Value: 736.0
                   Children:
                   - Name: ConditionalConverter1
                     Type: ConditionalConverter
@@ -3396,6 +4387,85 @@ Children:
                         Type: DynamicLink
                         DataType: NodePath
                         Value: "../../../../ShowLinkDirection"
+                - Name: ModifiedTextHandler1
+                  Type: EventHandler
+                  Children:
+                  - Name: ListenEventType
+                    Type: PropertyType
+                    DataType: NodeId
+                    Value: "/Types/EventTypes/BaseEventType/UserTextChanged"
+                  - Name: MethodsToCall
+                    Type: BaseObjectType
+                    Children:
+                    - Name: MethodContainer1
+                      Type: BaseObjectType
+                      Children:
+                      - Name: ObjectPointer
+                        Type: NodePointer
+                        DataType: NodeId
+                        Value: "/Objects/Commands/VariableCommands"
+                        Children:
+                        - Name: Kind
+                          Type: PropertyType
+                          DataType: NodeId
+                          Value: "/Types/ObjectTypes/BaseObjectType"
+                      - Name: Method
+                        Type: BaseDataVariableType
+                        DataType: String
+                        Value: "Set"
+                      - Name: InputArguments
+                        Type: BaseObjectType
+                        Children:
+                        - Name: VariableToModify
+                          Type: BaseDataVariableType
+                          DataType: VariablePointer
+                          Children:
+                          - Name: DynamicLink
+                            Type: DynamicLink
+                            DataType: NodePath
+                            Value: "../../../../../Text@NodeId"
+                        - Name: Value
+                          Type: BaseDataVariableType
+                          DataType: LocalizedText
+                          Children:
+                          - Name: DynamicLink
+                            Type: DynamicLink
+                            DataType: NodePath
+                            Value: "{RowData}/VariableName"
+                        - Name: ArrayIndex
+                          Type: BaseDataVariableType
+                          DataType: UInt32
+                          ValueRank: ScalarOrOneDimension
+                  - Name: EventArguments
+                    Type: UserTextChanged
+                    Children:
+                    - Name: NewText
+                      Type: BaseDataVariableType
+                      DataType: LocalizedText
+                    - Name: EventId
+                      Type: PropertyType
+                      DataType: ByteString
+                    - Name: EventType
+                      Type: PropertyType
+                      DataType: NodeId
+                    - Name: SourceNode
+                      Type: PropertyType
+                      DataType: NodeId
+                    - Name: SourceName
+                      Type: PropertyType
+                      DataType: String
+                    - Name: Time
+                      Type: PropertyType
+                      DataType: UtcTime
+                    - Name: ReceiveTime
+                      Type: PropertyType
+                      DataType: UtcTime
+                    - Name: Message
+                      Type: PropertyType
+                      DataType: LocalizedText
+                    - Name: Severity
+                      Type: PropertyType
+                      DataType: UInt16
               - Name: DataTypeString
                 Type: Label
                 Children:
@@ -3618,11 +4688,12 @@ Children:
                     DataType: NodePath
                     Value: "../../ShowCheckBox"
               - Name: VariableNameString
-                Type: Label
+                Type: EditableLabel
                 Children:
                 - Name: Text
                   Type: BaseDataVariableType
                   DataType: LocalizedText
+                  Value: {"LocaleId":"en-US","Text":"EditableLabel1"}
                   Children:
                   - Name: DynamicLink
                     Type: DynamicLink
@@ -3631,7 +4702,7 @@ Children:
                 - Name: Width
                   Type: BaseVariableType
                   DataType: Size
-                  Value: 320.0
+                  Value: 736.0
                   Children:
                   - Name: ConditionalConverter1
                     Type: ConditionalConverter
@@ -3645,6 +4716,85 @@ Children:
                         Type: DynamicLink
                         DataType: NodePath
                         Value: "../../../../ShowLinkDirection"
+                - Name: ModifiedTextHandler1
+                  Type: EventHandler
+                  Children:
+                  - Name: ListenEventType
+                    Type: PropertyType
+                    DataType: NodeId
+                    Value: "/Types/EventTypes/BaseEventType/UserTextChanged"
+                  - Name: MethodsToCall
+                    Type: BaseObjectType
+                    Children:
+                    - Name: MethodContainer1
+                      Type: BaseObjectType
+                      Children:
+                      - Name: ObjectPointer
+                        Type: NodePointer
+                        DataType: NodeId
+                        Value: "/Objects/Commands/VariableCommands"
+                        Children:
+                        - Name: Kind
+                          Type: PropertyType
+                          DataType: NodeId
+                          Value: "/Types/ObjectTypes/BaseObjectType"
+                      - Name: Method
+                        Type: BaseDataVariableType
+                        DataType: String
+                        Value: "Set"
+                      - Name: InputArguments
+                        Type: BaseObjectType
+                        Children:
+                        - Name: VariableToModify
+                          Type: BaseDataVariableType
+                          DataType: VariablePointer
+                          Children:
+                          - Name: DynamicLink
+                            Type: DynamicLink
+                            DataType: NodePath
+                            Value: "../../../../../Text@NodeId"
+                        - Name: Value
+                          Type: BaseDataVariableType
+                          DataType: LocalizedText
+                          Children:
+                          - Name: DynamicLink
+                            Type: DynamicLink
+                            DataType: NodePath
+                            Value: "{RowData}/VariableName"
+                        - Name: ArrayIndex
+                          Type: BaseDataVariableType
+                          DataType: UInt32
+                          ValueRank: ScalarOrOneDimension
+                  - Name: EventArguments
+                    Type: UserTextChanged
+                    Children:
+                    - Name: NewText
+                      Type: BaseDataVariableType
+                      DataType: LocalizedText
+                    - Name: EventId
+                      Type: PropertyType
+                      DataType: ByteString
+                    - Name: EventType
+                      Type: PropertyType
+                      DataType: NodeId
+                    - Name: SourceNode
+                      Type: PropertyType
+                      DataType: NodeId
+                    - Name: SourceName
+                      Type: PropertyType
+                      DataType: String
+                    - Name: Time
+                      Type: PropertyType
+                      DataType: UtcTime
+                    - Name: ReceiveTime
+                      Type: PropertyType
+                      DataType: UtcTime
+                    - Name: Message
+                      Type: PropertyType
+                      DataType: LocalizedText
+                    - Name: Severity
+                      Type: PropertyType
+                      DataType: UInt16
               - Name: DataTypeString
                 Type: Label
                 Children:
@@ -3867,11 +5017,12 @@ Children:
                     DataType: NodePath
                     Value: "../../ShowCheckBox"
               - Name: VariableNameString
-                Type: Label
+                Type: EditableLabel
                 Children:
                 - Name: Text
                   Type: BaseDataVariableType
                   DataType: LocalizedText
+                  Value: {"LocaleId":"en-US","Text":"EditableLabel1"}
                   Children:
                   - Name: DynamicLink
                     Type: DynamicLink
@@ -3880,7 +5031,7 @@ Children:
                 - Name: Width
                   Type: BaseVariableType
                   DataType: Size
-                  Value: 320.0
+                  Value: 736.0
                   Children:
                   - Name: ConditionalConverter1
                     Type: ConditionalConverter
@@ -3894,6 +5045,85 @@ Children:
                         Type: DynamicLink
                         DataType: NodePath
                         Value: "../../../../ShowLinkDirection"
+                - Name: ModifiedTextHandler1
+                  Type: EventHandler
+                  Children:
+                  - Name: ListenEventType
+                    Type: PropertyType
+                    DataType: NodeId
+                    Value: "/Types/EventTypes/BaseEventType/UserTextChanged"
+                  - Name: MethodsToCall
+                    Type: BaseObjectType
+                    Children:
+                    - Name: MethodContainer1
+                      Type: BaseObjectType
+                      Children:
+                      - Name: ObjectPointer
+                        Type: NodePointer
+                        DataType: NodeId
+                        Value: "/Objects/Commands/VariableCommands"
+                        Children:
+                        - Name: Kind
+                          Type: PropertyType
+                          DataType: NodeId
+                          Value: "/Types/ObjectTypes/BaseObjectType"
+                      - Name: Method
+                        Type: BaseDataVariableType
+                        DataType: String
+                        Value: "Set"
+                      - Name: InputArguments
+                        Type: BaseObjectType
+                        Children:
+                        - Name: VariableToModify
+                          Type: BaseDataVariableType
+                          DataType: VariablePointer
+                          Children:
+                          - Name: DynamicLink
+                            Type: DynamicLink
+                            DataType: NodePath
+                            Value: "../../../../../Text@NodeId"
+                        - Name: Value
+                          Type: BaseDataVariableType
+                          DataType: LocalizedText
+                          Children:
+                          - Name: DynamicLink
+                            Type: DynamicLink
+                            DataType: NodePath
+                            Value: "{RowData}/VariableName"
+                        - Name: ArrayIndex
+                          Type: BaseDataVariableType
+                          DataType: UInt32
+                          ValueRank: ScalarOrOneDimension
+                  - Name: EventArguments
+                    Type: UserTextChanged
+                    Children:
+                    - Name: NewText
+                      Type: BaseDataVariableType
+                      DataType: LocalizedText
+                    - Name: EventId
+                      Type: PropertyType
+                      DataType: ByteString
+                    - Name: EventType
+                      Type: PropertyType
+                      DataType: NodeId
+                    - Name: SourceNode
+                      Type: PropertyType
+                      DataType: NodeId
+                    - Name: SourceName
+                      Type: PropertyType
+                      DataType: String
+                    - Name: Time
+                      Type: PropertyType
+                      DataType: UtcTime
+                    - Name: ReceiveTime
+                      Type: PropertyType
+                      DataType: UtcTime
+                    - Name: Message
+                      Type: PropertyType
+                      DataType: LocalizedText
+                    - Name: Severity
+                      Type: PropertyType
+                      DataType: UInt16
               - Name: DataTypeString
                 Type: Label
                 Children:
@@ -4116,11 +5346,12 @@ Children:
                     DataType: NodePath
                     Value: "../../ShowCheckBox"
               - Name: VariableNameString
-                Type: Label
+                Type: EditableLabel
                 Children:
                 - Name: Text
                   Type: BaseDataVariableType
                   DataType: LocalizedText
+                  Value: {"LocaleId":"en-US","Text":"EditableLabel1"}
                   Children:
                   - Name: DynamicLink
                     Type: DynamicLink
@@ -4129,7 +5360,7 @@ Children:
                 - Name: Width
                   Type: BaseVariableType
                   DataType: Size
-                  Value: 320.0
+                  Value: 736.0
                   Children:
                   - Name: ConditionalConverter1
                     Type: ConditionalConverter
@@ -4143,6 +5374,85 @@ Children:
                         Type: DynamicLink
                         DataType: NodePath
                         Value: "../../../../ShowLinkDirection"
+                - Name: ModifiedTextHandler1
+                  Type: EventHandler
+                  Children:
+                  - Name: ListenEventType
+                    Type: PropertyType
+                    DataType: NodeId
+                    Value: "/Types/EventTypes/BaseEventType/UserTextChanged"
+                  - Name: MethodsToCall
+                    Type: BaseObjectType
+                    Children:
+                    - Name: MethodContainer1
+                      Type: BaseObjectType
+                      Children:
+                      - Name: ObjectPointer
+                        Type: NodePointer
+                        DataType: NodeId
+                        Value: "/Objects/Commands/VariableCommands"
+                        Children:
+                        - Name: Kind
+                          Type: PropertyType
+                          DataType: NodeId
+                          Value: "/Types/ObjectTypes/BaseObjectType"
+                      - Name: Method
+                        Type: BaseDataVariableType
+                        DataType: String
+                        Value: "Set"
+                      - Name: InputArguments
+                        Type: BaseObjectType
+                        Children:
+                        - Name: VariableToModify
+                          Type: BaseDataVariableType
+                          DataType: VariablePointer
+                          Children:
+                          - Name: DynamicLink
+                            Type: DynamicLink
+                            DataType: NodePath
+                            Value: "../../../../../Text@NodeId"
+                        - Name: Value
+                          Type: BaseDataVariableType
+                          DataType: LocalizedText
+                          Children:
+                          - Name: DynamicLink
+                            Type: DynamicLink
+                            DataType: NodePath
+                            Value: "{RowData}/VariableName"
+                        - Name: ArrayIndex
+                          Type: BaseDataVariableType
+                          DataType: UInt32
+                          ValueRank: ScalarOrOneDimension
+                  - Name: EventArguments
+                    Type: UserTextChanged
+                    Children:
+                    - Name: NewText
+                      Type: BaseDataVariableType
+                      DataType: LocalizedText
+                    - Name: EventId
+                      Type: PropertyType
+                      DataType: ByteString
+                    - Name: EventType
+                      Type: PropertyType
+                      DataType: NodeId
+                    - Name: SourceNode
+                      Type: PropertyType
+                      DataType: NodeId
+                    - Name: SourceName
+                      Type: PropertyType
+                      DataType: String
+                    - Name: Time
+                      Type: PropertyType
+                      DataType: UtcTime
+                    - Name: ReceiveTime
+                      Type: PropertyType
+                      DataType: UtcTime
+                    - Name: Message
+                      Type: PropertyType
+                      DataType: LocalizedText
+                    - Name: Severity
+                      Type: PropertyType
+                      DataType: UInt16
               - Name: DataTypeString
                 Type: Label
                 Children:
@@ -4365,11 +5675,12 @@ Children:
                     DataType: NodePath
                     Value: "../../ShowCheckBox"
               - Name: VariableNameString
-                Type: Label
+                Type: EditableLabel
                 Children:
                 - Name: Text
                   Type: BaseDataVariableType
                   DataType: LocalizedText
+                  Value: {"LocaleId":"en-US","Text":"EditableLabel1"}
                   Children:
                   - Name: DynamicLink
                     Type: DynamicLink
@@ -4378,7 +5689,7 @@ Children:
                 - Name: Width
                   Type: BaseVariableType
                   DataType: Size
-                  Value: 320.0
+                  Value: 736.0
                   Children:
                   - Name: ConditionalConverter1
                     Type: ConditionalConverter
@@ -4392,6 +5703,85 @@ Children:
                         Type: DynamicLink
                         DataType: NodePath
                         Value: "../../../../ShowLinkDirection"
+                - Name: ModifiedTextHandler1
+                  Type: EventHandler
+                  Children:
+                  - Name: ListenEventType
+                    Type: PropertyType
+                    DataType: NodeId
+                    Value: "/Types/EventTypes/BaseEventType/UserTextChanged"
+                  - Name: MethodsToCall
+                    Type: BaseObjectType
+                    Children:
+                    - Name: MethodContainer1
+                      Type: BaseObjectType
+                      Children:
+                      - Name: ObjectPointer
+                        Type: NodePointer
+                        DataType: NodeId
+                        Value: "/Objects/Commands/VariableCommands"
+                        Children:
+                        - Name: Kind
+                          Type: PropertyType
+                          DataType: NodeId
+                          Value: "/Types/ObjectTypes/BaseObjectType"
+                      - Name: Method
+                        Type: BaseDataVariableType
+                        DataType: String
+                        Value: "Set"
+                      - Name: InputArguments
+                        Type: BaseObjectType
+                        Children:
+                        - Name: VariableToModify
+                          Type: BaseDataVariableType
+                          DataType: VariablePointer
+                          Children:
+                          - Name: DynamicLink
+                            Type: DynamicLink
+                            DataType: NodePath
+                            Value: "../../../../../Text@NodeId"
+                        - Name: Value
+                          Type: BaseDataVariableType
+                          DataType: LocalizedText
+                          Children:
+                          - Name: DynamicLink
+                            Type: DynamicLink
+                            DataType: NodePath
+                            Value: "{RowData}/VariableName"
+                        - Name: ArrayIndex
+                          Type: BaseDataVariableType
+                          DataType: UInt32
+                          ValueRank: ScalarOrOneDimension
+                  - Name: EventArguments
+                    Type: UserTextChanged
+                    Children:
+                    - Name: NewText
+                      Type: BaseDataVariableType
+                      DataType: LocalizedText
+                    - Name: EventId
+                      Type: PropertyType
+                      DataType: ByteString
+                    - Name: EventType
+                      Type: PropertyType
+                      DataType: NodeId
+                    - Name: SourceNode
+                      Type: PropertyType
+                      DataType: NodeId
+                    - Name: SourceName
+                      Type: PropertyType
+                      DataType: String
+                    - Name: Time
+                      Type: PropertyType
+                      DataType: UtcTime
+                    - Name: ReceiveTime
+                      Type: PropertyType
+                      DataType: UtcTime
+                    - Name: Message
+                      Type: PropertyType
+                      DataType: LocalizedText
+                    - Name: Severity
+                      Type: PropertyType
+                      DataType: UInt16
               - Name: DataTypeString
                 Type: Label
                 Children:
@@ -6072,6 +7462,131 @@ Children:
         - Name: VariableLinkDirection
           Type: BaseDataVariableType
           DataType: LinkDirection
+    - Class: Method
+      Name: ApplyBulkFilter
+      Children:
+      - Name: ns=0;InputArguments
+        Type: BaseVariableType
+        DataType: Argument
+        ReferenceType: HasProperty
+        ValueRank: OneDimension
+        ArrayDimensions: [0]
+        Value: [{"TypeId":{"Id":296},"Body":{"Name":"Deselect","DataType":{"Id":1},"ValueRank":-1,"ArrayDimensions":[],"Description":{"NamespaceIndex":-1,"LocaleId":"","Text":""}}}]
+    - Name: TagsFilterArguments
+      Type: TagsFilterArguments
+      Children:
+      - Name: SourceListVariableName
+        Type: BaseDataVariableType
+        DataType: String
+        ValueRank: OneDimension
+        ArrayDimensions: [0]
+      - Name: ReturnFilterList
+        Type: BaseDataVariableType
+        DataType: String
+        ValueRank: OneDimension
+        ArrayDimensions: [0]
+      - Name: Deselect
+        Type: BaseDataVariableType
+        DataType: ns=0;Boolean
+      - Name: IDCounter
+        Type: BaseDataVariableType
+        DataType: Int32
+      - Name: IDCounterChanged
+        Type: VariableChangedEventDispatcher
+        Children:
+        - Name: VariableNodePath
+          Type: BaseVariableType
+          DataType: NodePath
+          Value: "../IDCounter"
+        - Name: VariableValueChangedEventHandler1
+          Type: EventHandler
+          Children:
+          - Name: ListenEventType
+            Type: PropertyType
+            DataType: NodeId
+            Value: "/Types/EventTypes/BaseEventType/VariableConditionEvent/VariableValueChangedEvent"
+          - Name: MethodsToCall
+            Type: BaseObjectType
+            Children:
+            - Name: MethodContainer1
+              Type: BaseObjectType
+              Children:
+              - Name: ns=2;ObjectPointer
+                Type: NodePointer
+                DataType: NodeId
+                Children:
+                - Name: Kind
+                  Type: PropertyType
+                  DataType: NodeId
+                  Value: "/Types/ObjectTypes/BaseObjectType"
+                - Name: DynamicLink
+                  Type: DynamicLink
+                  DataType: NodePath
+                  Value: "../../../../../..@NodeId"
+                  Children:
+                  - Name: Mode
+                    Type: BaseVariableType
+                    DataType: DynamicLinkMode
+                    ModellingRule: Optional
+                    Value: 2
+              - Name: ns=2;Method
+                Type: BaseDataVariableType
+                DataType: String
+                Value: "ApplyBulkFilter"
+              - Name: InputArguments
+                Type: BaseObjectType
+                Children:
+                - Name: Deselect
+                  Type: BaseDataVariableType
+                  DataType: ns=0;Boolean
+                  Children:
+                  - Name: DynamicLink
+                    Type: DynamicLink
+                    DataType: NodePath
+                    Value: "../../../../../../Deselect"
+          - Name: EventArguments
+            Type: VariableValueChangedEvent
+            Children:
+            - Name: VariableNodeId
+              Type: BaseVariableType
+              DataType: NodeId
+            - Name: NewValue
+              Type: BaseVariableType
+              DataType: BaseDataType
+            - Name: OldValue
+              Type: BaseVariableType
+              DataType: BaseDataType
+            - Name: EventId
+              Type: PropertyType
+              DataType: ByteString
+            - Name: EventType
+              Type: PropertyType
+              DataType: NodeId
+            - Name: SourceNode
+              Type: PropertyType
+              DataType: NodeId
+            - Name: SourceName
+              Type: PropertyType
+              DataType: String
+            - Name: Time
+              Type: PropertyType
+              DataType: UtcTime
+            - Name: ReceiveTime
+              Type: PropertyType
+              DataType: UtcTime
+            - Name: Message
+              Type: PropertyType
+              DataType: LocalizedText
+            - Name: Severity
+              Type: PropertyType
+              DataType: UInt16
+      - Name: EnableLinkDirection
+        Type: BaseDataVariableType
+        DataType: ns=0;Boolean
+      - Name: LinkDirection
+        Type: BaseDataVariableType
+        DataType: LinkDirection
+        Value: 2
   - Name: TagSourceDataCollector
     Type: Alias
     DataType: NodeId

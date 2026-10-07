@@ -47,6 +47,7 @@ using System.Collections.Immutable;
 using FTOptix.AuditSigning;
 using System.IO;
 using System.Diagnostics;
+using FTOptix.EventLogger;
 #endregion
 
 public class CommDriversConfigurationLogic : BaseNetLogic
@@ -78,30 +79,33 @@ public class CommDriversConfigurationLogic : BaseNetLogic
         switch (InformationModel.Get(destinationDriver))
         {
             case FTOptix.Modbus.Driver modbusDriver:
-                browseName = $"ModbusStation{countCurrentClient + 1}";
+                var prefixBrowseName = modbusDriver.Protocol == ModbusProtocol.ModbusTCPProtocol ? "ModbusTCPStation" : "ModbusRTUStation";
+                countCurrentClient = CommonLogic.GetFirstAvailableNumber(widgetContainer.GetNodesByType<ModbusStationUIObject>().Select(x => x.BrowseName), prefixBrowseName);
+                browseName = $"{prefixBrowseName}{countCurrentClient}";
                 newStation = InformationModel.MakeObject<FTOptix.Modbus.Station>(browseName);
                 InitModbusStationProperties(newStation as FTOptix.Modbus.Station, modbusDriver);
                 newWidget = InformationModel.MakeObject<ModbusStationUIObject>(browseName);
                 break;
-            case FTOptix.MelsecFX3U.Driver:
-                browseName = $"MelsecFX3U{countCurrentClient + 1}";
-                newStation = InformationModel.MakeObject<FTOptix.MelsecFX3U.Station>(browseName);
-                newWidget = null;
-                break;
             case FTOptix.S7TCP.Driver:
-                browseName = $"S7TCP{countCurrentClient + 1}";
+                prefixBrowseName = "S7TCP";
+                countCurrentClient = CommonLogic.GetFirstAvailableNumber(widgetContainer.GetNodesByType<S7TCPStationUIObject>().Select(x => x.BrowseName), prefixBrowseName);
+                browseName = $"{prefixBrowseName}{countCurrentClient}";
                 newStation = InformationModel.MakeObject<FTOptix.S7TCP.Station>(browseName);
                 InitS7TCPStationProperties(newStation as FTOptix.S7TCP.Station);
                 newWidget = InformationModel.MakeObject<S7TCPStationUIObject>(browseName);
                 break;
             case FTOptix.RAEtherNetIP.Driver:
-                browseName = $"RAEtherNetIP{countCurrentClient + 1}";
+                prefixBrowseName = "RAEtherNetIP";
+                countCurrentClient = CommonLogic.GetFirstAvailableNumber(widgetContainer.GetNodesByType<RAEthernetIPStationUIObject>().Select(x => x.BrowseName), prefixBrowseName);
+                browseName = $"{prefixBrowseName}{countCurrentClient}";
                 newStation = InformationModel.MakeObject<FTOptix.RAEtherNetIP.Station>(browseName);
                 InitRAEIPStationProperties(newStation as FTOptix.RAEtherNetIP.Station);
                 newWidget = InformationModel.MakeObject<RAEthernetIPStationUIObject>(browseName);
                 break;
             case FTOptix.S7TiaProfinet.Driver:
-                browseName = $"S7TiaProfinet{countCurrentClient + 1}";
+                prefixBrowseName = "S7TiaProfinet";
+                countCurrentClient = CommonLogic.GetFirstAvailableNumber(widgetContainer.GetNodesByType<S7TIAProfinetStationUIObject>().Select(x => x.BrowseName), prefixBrowseName);
+                browseName = $"{prefixBrowseName}{countCurrentClient}";
                 newStation = InformationModel.MakeObject<FTOptix.S7TiaProfinet.Station>(browseName);
                 InitS7ProfinetStationProperties(newStation as FTOptix.S7TiaProfinet.Station);
                 newWidget = InformationModel.MakeObject<S7TIAProfinetStationUIObject>(browseName);

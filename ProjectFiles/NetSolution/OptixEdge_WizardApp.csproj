@@ -16,8 +16,9 @@
     <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="L5Sharp" Version="5.3.0"/>
+    <PackageReference Include="L5Sharp" Version="7.2.0"/>
     <PackageReference Include="CsvHelper" Version="33.1.0"/>
+    <PackageReference Include="SharpZipLib" Version="1.4.2"/>
   </ItemGroup>
   <Import Project="OptixEdge_WizardApp.references"/>
 </Project>

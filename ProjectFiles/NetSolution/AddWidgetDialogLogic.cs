@@ -10,12 +10,15 @@ using FTOptix.NetLogic;
 using FTOptix.CommunicationDriver;
 using System.Security.Cryptography;
 using FTOptix.Core;
+using FTOptix.EventLogger;
 #endregion
 
 public class AddWidgetDialogLogic : BaseNetLogic
 {
+    public static AddWidgetDialogLogic Instance { get; private set; }
     public override void Start()
     {
+        Instance = this;
         nodeFactory = LogicObject.Context.NodeFactory as NodeFactory;
         ownerDialog = (Dialog)Owner;
         if (DashboardLogic.Instance == null)
@@ -48,16 +51,23 @@ public class AddWidgetDialogLogic : BaseNetLogic
             editModelWidgetData = nodeFactory.CloneNode(widgetData, widgetData.NodeId.NamespaceIndex, NamingRuleType.None);
             Owner.Find<ComboBox>("WidgetSelectionValue").Enabled = false;
             Owner.SetAlias("WidgetUIObjAlias", editModelWidgetData);
-            InitSourceDriver(editModelWidgetData.WidgetType, editModelWidgetData);
         }
         if (!InitializeVariables())
         {
             ownerDialog.Close();
             return;
         }
+        Owner.GetVariable("IsNewWidget").Value = toAdd;
         CheckWidgetType(editModelWidgetData.WidgetType);
         ResolveWidgetType();
         widgetObjectType.VariableChange += WidgetObjectType_VariableChange;
+        if (editModelWidgetData.SourceNode != NodeId.Empty && InformationModel.Get(editModelWidgetData.SourceNode) is IUAVariable sourceVariable)
+        {
+            if (Owner.FindByType<LinkedVariableToField>() is LinkedVariableToField linkedVariableToField)
+            {
+                linkedVariableToField.GetByType<Label>().Text = sourceVariable.BrowseName;
+            }
+        }
     }
 
     public override void Stop()
@@ -67,7 +77,7 @@ public class AddWidgetDialogLogic : BaseNetLogic
         rowSpan.VariableChange -= OnVariableChange;
         columnStart.VariableChange -= OnVariableChange;
         rowStart.VariableChange -= OnVariableChange;
-        sourceDriver.VariableChange -= OnDriverChange;
+        Instance = null;
     }
 
     [ExportMethod]
@@ -93,11 +103,35 @@ public class AddWidgetDialogLogic : BaseNetLogic
         ownerDialog.Close();
     }
 
+    [ExportMethod]
+    public void UnlinkVariableFromValue()
+    {
+        // Clear the node pointer to remove variable binding
+        editModelWidgetData.SourceNode = NodeId.Empty;
+        if (Owner.FindByType<LinkedVariableToField>() is LinkedVariableToField linkedVariableToField)
+        {
+            linkedVariableToField.GetByType<Label>().Text = string.Empty;
+        }
+    }
+
+    public void LinkVariableToWidgetSource(NodeId sourceVariableToLink)
+    {
+        if (InformationModel.GetVariable(sourceVariableToLink) is IUAVariable sourceVariable)
+        {
+            editModelWidgetData.SourceNode = sourceVariable.NodeId;
+            if (Owner.FindByType<LinkedVariableToField>() is LinkedVariableToField linkedVariableToField)
+            {
+                linkedVariableToField.GetByType<Label>().Text = sourceVariable.BrowseName;
+            }
+        }  
+    }
+
     private void WidgetObjectType_VariableChange(object sender, VariableChangeEventArgs e)
     {
         if (toAdd && InformationModel.Get(e.NewValue) is IUAObjectType objectType)
         {
             editModelWidgetData.WidgetType = objectType.NodeId;
+            UnlinkVariableFromValue();
             CheckWidgetType(editModelWidgetData.WidgetType);
         }
     }
@@ -148,52 +182,6 @@ public class AddWidgetDialogLogic : BaseNetLogic
         }
     }
 
-    private void InitSourceDriver(NodeId widgetType, WidgetData editModelWidgetData)
-    {
-        if (!IsPlcVariableSourceWidget(widgetType))
-        {
-            return;
-        }
-        if (InformationModel.Get(editModelWidgetData.SourceNode) is IUAVariable sourceVariable)
-        {
-            LogicObject.GetVariable("SourceDriver").Value = sourceVariable switch
-            {
-                FTOptix.S7TCP.Tag => (UAValue)(uint)SourceDriver.S7TCP,
-                FTOptix.S7TiaProfinet.Tag => (UAValue)(uint)SourceDriver.S7Profinet,
-                FTOptix.Modbus.Tag => (UAValue)(uint)SourceDriver.Modbus,
-                FTOptix.RAEtherNetIP.Tag => (UAValue)(uint)SourceDriver.RAEtherNetIP,
-                _ => (UAValue)(uint)SourceDriver.RAEtherNetIP,
-            };
-            if (CommonLogic.GetOwner(sourceVariable, FTOptix.CommunicationDriver.ObjectTypes.CommunicationStation) is CommunicationStation sourceStation && sourceStation.Owner is CommunicationDriver sourceDriver)
-            {
-                string folderName = sourceDriver switch
-                {
-                    FTOptix.S7TCP.Driver => "S7TCP",
-                    FTOptix.S7TiaProfinet.Driver => "S7Profinet",
-                    FTOptix.Modbus.Driver modbusDriver => modbusDriver.Protocol == FTOptix.Modbus.ModbusProtocol.ModbusTCPProtocol ? "ModbusTCP" : "ModbusRTU",
-                    FTOptix.RAEtherNetIP.Driver => "RAEIP",
-                    _ => "RAEIP",
-                };
-                LogicObject.GetVariable("SourceStation").Value = GetComboBoxStationData(folderName, sourceStation.NodeId);
-            }
-        }
-    }
-
-    private static NodeId GetComboBoxStationData(string folderName, NodeId sourceStation)
-    {
-        if (Project.Current.Get(CommonLogic.CommDriverComboBoxElementsPath).Get<Folder>(folderName) is Folder driverFolder)
-        {
-            foreach (ComboBoxStationData ComboBoxStationData in driverFolder.GetNodesByType<ComboBoxStationData>())
-            {
-                if (ComboBoxStationData.StationNodeId == sourceStation)
-                {
-                    return ComboBoxStationData.NodeId;
-                }
-            }
-        }
-        return NodeId.Empty;
-    }
-
     private bool InitializeVariables()
     {
         columnStart = LogicObject.GetVariable("ColumnStart");
@@ -220,12 +208,6 @@ public class AddWidgetDialogLogic : BaseNetLogic
             Log.Error(LogicObject.BrowseName, "RowSpan variable is null! Fatal error!");
             return false;
         }
-        sourceDriver = LogicObject.GetVariable("SourceDriver");
-        if (sourceDriver == null)
-        {
-            Log.Error(LogicObject.BrowseName, "SourceDriver variable is null! Fatal error!");
-            return false;
-        }
         columnSpan.Value = editModelWidgetData.ColumnSpan;
         rowSpan.Value = editModelWidgetData.RowSpan;
         columnStart.Value = editModelWidgetData.ColumnStart + 1;
@@ -234,7 +216,6 @@ public class AddWidgetDialogLogic : BaseNetLogic
         rowSpan.VariableChange += OnVariableChange;
         columnStart.VariableChange += OnVariableChange;
         rowStart.VariableChange += OnVariableChange;
-        sourceDriver.VariableChange += OnDriverChange;
         return true;
     }
 
@@ -250,27 +231,12 @@ public class AddWidgetDialogLogic : BaseNetLogic
         editModelWidgetData.RowStart = rowStart.Value - 1;
     }
 
-    private void OnDriverChange(object sender, VariableChangeEventArgs e)
-    {
-        LogicObject.GetVariable("SourceStation").Value = NodeId.Empty;
-        editModelWidgetData.SourceNode = NodeId.Empty;
-    }
-
-    private enum SourceDriver
-    {
-        RAEtherNetIP,
-        S7TCP,
-        Modbus,
-        S7Profinet
-    }
-
     private WidgetData editModelWidgetData;
     private IUAVariable widgetObjectType;
     private IUAVariable columnStart;
     private IUAVariable rowStart;
     private IUAVariable columnSpan;
     private IUAVariable rowSpan;
-    private IUAVariable sourceDriver;
     private NodeFactory nodeFactory;
     private bool toAdd;
     private Dialog ownerDialog;
