@@ -1,4 +1,4 @@
-# 🧠 OptixEdge Wizard Application 1.2.2.28 ![FTOptix](https://img.shields.io/badge/FTOptix%20Version-1.8.0.555-blue)
+# 🧠 OptixEdge Wizard Application 1.2.2.29 ![FTOptix](https://img.shields.io/badge/FTOptix%20Version-1.8.1.21-blue)
 
 **WizardApp** is a pre-installed, open-source FactoryTalk Optix project designed to turn any **OptixEdge** device into a fully functional industrial gateway - right out of the box.
 

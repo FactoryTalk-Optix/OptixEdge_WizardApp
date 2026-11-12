@@ -195,6 +195,7 @@ public class OpcUaServerLogic : BaseNetLogic
         opcUAServer.ProductName = "Allen-Bradley 2800E OptixEdge_WizardApp";
         opcUAServer.MinimumMessageSecurityMode = FTOptix.OPCUAServer.MessageSecurityMode.None;
         opcUAServer.MinimumSecurityPolicy = FTOptix.OPCUAServer.SecurityPolicy.None;
+        opcUAServer.EnableAnonymousAccess = true;
         _ = opcUAServer.UseNodePathInNodeIdsVariable;
         _ = opcUAServer.MaxArrayLengthVariable;
         _ = opcUAServer.ServerCertificateFileVariable;
@@ -216,6 +217,7 @@ public class OpcUaServerLogic : BaseNetLogic
         stationNode.ProductURI = editNode.ProductURI;
         stationNode.ProductName = editNode.ProductName;
         stationNode.ManufacturerName = editNode.ManufacturerName;
+        stationNode.EnableAnonymousAccess = editNode.EnableAnonymousAccess;
     }
 
     private void CreateOrUpdateTask(LongRunningTask task, object argument)
